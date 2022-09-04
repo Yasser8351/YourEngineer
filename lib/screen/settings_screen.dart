@@ -1,177 +1,117 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 
+import '../widget/text_widget.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _getAppBar(context),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  AppConfig.emal,
-                  //style: AppStyle.textSettingsScreenScreenTitle,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Card(
-              elevation: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 14),
-                  buildCardItem(context, AppConfig.signUp, Icons.verified_user,
-                      () => Navigator.of(context).pushNamed(AppConfig.login)),
-                  buildDivider(),
-                  buildCardItem(context, AppConfig.emal, Icons.front_hand,
-                      () => Navigator.of(context).pushNamed(AppConfig.login)),
-                  const SizedBox(height: 14),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            Card(
-              elevation: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 14),
-                  buildCardItem(context, AppConfig.emal, Icons.star, () => {}),
-                  buildDivider(),
-                  buildCardItem(context, AppConfig.emal, Icons.phone, () => {}),
-                  buildDivider(),
-                  buildCardItem(context, AppConfig.emal, Icons.app_settings_alt,
-                      () => Navigator.of(context).pushNamed(AppConfig.login)),
-                  buildDivider(),
-                  buildCardItem(context, AppConfig.emal, Icons.share_outlined,
-                      () async {
-                    // await Share.share(AppConfig.shareDiscreption);
-                  }),
-                  buildDivider(),
-
-                  // buildDivider(),
-                  // buildCardItem(
-                  //     context,
-                  //     AppConfig.snedNotifcation,
-                  //     Icons.send,
-                  //     () => Navigator.of(context)
-                  //         .pushNamed(SnedNotifcationScreen.routeName)),
-                  const SizedBox(height: 14),
-                ],
-              ),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20, left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              buildCardItem(
+                  context,
+                  AppConfig.profile,
+                  Icons.person_pin_outlined,
+                  () => Navigator.of(context).pushNamed(AppConfig.profile)),
+              buildDivider(),
+              buildCardItem(
+                  context,
+                  AppConfig.notifcation,
+                  Icons.notifications_outlined,
+                  () => Navigator.of(context).pushNamed(AppConfig.login)),
+              buildDivider(),
+              buildCardItem(
+                  context,
+                  AppConfig.termsOfServices,
+                  Icons.front_hand_outlined,
+                  () => Navigator.of(context).pushNamed(AppConfig.login)),
+              buildDivider(),
+              buildCardItem(
+                  context, AppConfig.privacyPolicy, Icons.security, () => {}),
+              buildDivider(),
+              buildCardItem(context, AppConfig.language,
+                  Icons.change_circle_outlined, () => {}),
+              buildDivider(),
+              buildCardItem(
+                  context, AppConfig.faq, Icons.note_alt_outlined, () => {}),
+              buildDivider(),
+              buildCardItem(context, AppConfig.support,
+                  Icons.support_agent_rounded, () => {}),
+              buildDivider(),
+              buildCardItem(context, AppConfig.logout, Icons.logout,
+                  () => Navigator.of(context).pushNamed(AppConfig.login), true),
+              buildDivider(),
+              const SizedBox(height: 20),
+              TextWidget(
+                  title: AppConfig.version,
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.secondary),
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-buildDivider() {
-  return const Divider(
-    height: 30,
-  );
-}
-
-buildCardItem(
-    BuildContext context, String title, IconData icons, Function() onTap) {
-  return GestureDetector(
-    onTap: () => onTap(),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(Icons.navigate_before, size: 27, color: Colors.grey.shade600),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                title,
-                // style: AppStyle.textSettingsScreenScreenScendry
-              ),
-              const SizedBox(width: 16),
-              Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffFD4C4C),
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                  height: 30,
-                  width: 30,
-                  child: Icon(icons, size: 17, color: Colors.white)),
-            ],
-          ),
-        ],
+  _getAppBar(BuildContext context) {
+    return AppBar(
+      title: const Padding(
+        padding: EdgeInsets.only(top: 10),
+        child: TextWidget(
+            title: AppConfig.settings, fontSize: 18, color: Colors.white),
       ),
-    ),
-  );
-}
+      // leading: IconButton(
+      //   onPressed: () {
+      //     Navigator.of(context).pop();
+      //   },
+      //   icon: const Icon(Icons.navigate_before, size: 40),
+      //   color: Colors.white,
+      // ),
+    );
+  }
 
-buildCardAboutApp(
-    BuildContext context, String title, String icons, Function() onTap) {
-  return GestureDetector(
-    onTap: () => onTap(),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            " ${AppConfig.emal} ",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey.shade600,
-            ),
+  buildDivider() {
+    return const Divider(
+      height: 10,
+    );
+  }
+
+  buildCardItem(
+      BuildContext context, String title, IconData icons, Function() onTap,
+      [bool isLogout = false]) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: ListTile(
+        leading: Icon(icons,
+            color: isLogout
+                ? Colors.red
+                : Theme.of(context).colorScheme.secondary),
+        title: Align(
+          alignment: Alignment.bottomLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: TextWidget(
+                title: title,
+                fontSize: 18,
+                color: isLogout
+                    ? Colors.red
+                    : Theme.of(context).colorScheme.onSecondary),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 17,
-                  color: Color.fromARGB(255, 29, 29, 29),
-                ),
-              ),
-              const SizedBox(width: 16),
-              // Image.asset(
-              //   AppConfig.logoWithoutBackgroundPng,
-              //   height: 30,
-              //   width: 30,
-              // ),
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xffFD4C4C),
-                  borderRadius: BorderRadius.circular(3),
-                ),
-                height: 30,
-                width: 30,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    // child: SvgPicture.asset(
-                    //   icons,
-                    //   // height: 205,
-                    //   // width: 205,
-                    // ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
+        trailing: Icon(Icons.navigate_next,
+            size: 30,
+            color: isLogout
+                ? Colors.red
+                : Theme.of(context).colorScheme.secondary),
       ),
-    ),
-  );
+    );
+  }
 }

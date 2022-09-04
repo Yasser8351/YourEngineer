@@ -3,6 +3,7 @@ import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/screen/add_project_screen.dart';
 import 'package:your_engineer/screen/forgot_password_screen.dart';
 import 'package:your_engineer/screen/login_screen.dart';
+import 'package:your_engineer/screen/profile_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
 
 import 'screen/tab_screen.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           error: Colors.white,
 
           surface: Color.fromARGB(255, 46, 231, 0),
-          onSurface: Color.fromARGB(137, 175, 0, 0),
+          onSurface: Colors.white,
           brightness: Brightness.light,
         ),
         primarySwatch: Colors.blue,
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         AppConfig.forgetPassword: (ctx) => const ForgotPasswordScreen(),
         AppConfig.tabScreen: (ctx) => const TabScreen(),
         AppConfig.addProjectScreen: (ctx) => const AddProjectScreen(),
+        AppConfig.profile: (ctx) => const ProfileScreen(),
       },
     );
   }

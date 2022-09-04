@@ -1,4 +1,5 @@
 class AppConfig {
+  static const String appName = "Your Engineer";
   static const String engineer = "Engineer";
   static const String projectOwner = "Project Owner";
   static const String emal = "email";
@@ -12,7 +13,6 @@ class AppConfig {
   static const String firstName = "first Name";
   static const String lastName = "last Name";
   static const String agreeTotermsOfServices = "By joining, you agree to";
-  static const String termsOfServices = "Terms of service";
   static const String tabScreen = "tab Screen";
   static const String settings = "Settings";
   static const String home = "Home";
@@ -26,8 +26,22 @@ class AppConfig {
       "No message yet \n Start a conversation with best engineers, \n and get the jop done.";
   static const String noProjectYet = "No project yet";
   static const String addSomeProject = "add some project";
+  static const String notifcation = "Notifcations";
+  static const String termsOfServices = "Terms of service";
+  static const String privacyPolicy = "Privacy Policy";
+  static const String language = "Language";
+  static const String logout = "Logout";
+  static const String faq = "FAQ";
+  static const String profile = "My Profile";
+  static const String version = "version 1.0.0";
+  static const String support = "Support";
+  static const String personalProfile = "Personal Profile";
+  static const String reviews = "Reviews";
+  static const String businessFair = "Business Fair";
+  static const String paymentHistory = "Payment History";
 
-  ////////
-  //static const String  ="";
-
+  ////////////////////////////////
+  /*
+  static const String  ="";
+  */
 }
