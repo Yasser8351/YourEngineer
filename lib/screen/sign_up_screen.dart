@@ -24,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: _getAppBar(),
+      appBar: _getAppBar(context),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -100,11 +100,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  _getAppBar() {
+  _getAppBar(BuildContext context) {
     return AppBar(
-      title: const TextWidget(
-          title: AppConfig.signUpWithEmail, fontSize: 18, color: Colors.white),
-      leading: const Icon(Icons.navigate_before),
+      title: const Padding(
+        padding: EdgeInsets.only(top: 10),
+        child: TextWidget(
+            title: AppConfig.signUpWithEmail,
+            fontSize: 18,
+            color: Colors.white),
+      ),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        icon: const Icon(Icons.navigate_before, size: 40),
+        color: Colors.white,
+      ),
     );
   }
 }

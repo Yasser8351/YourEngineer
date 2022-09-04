@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/screen/post_screen.dart';
+import 'package:your_engineer/screen/project_screen.dart';
 
 import '../app_config/app_config.dart';
 import 'chat_screen.dart';
@@ -24,10 +24,10 @@ class _TabScreenState extends State<TabScreen> {
   }
 
   final List<Widget> _pages = [
-    const HomeScreen(),
-    const ChatScreen(),
-    const PostScreen(),
     const SettingsScreen(),
+    const ProjectScreen(),
+    const ChatScreen(),
+    const HomeScreen(),
   ];
 
   @override
@@ -78,7 +78,7 @@ class _TabScreenState extends State<TabScreen> {
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.content_paste_go),
-                      label: AppConfig.post,
+                      label: AppConfig.project,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.chat_bubble_outline_rounded),
