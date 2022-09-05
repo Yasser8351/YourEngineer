@@ -69,7 +69,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: TextWidget(
-                        title: 3.0.toString(),
+                        title: topEngineerRatingModel.engineerRating.toString(),
                         fontSize: 15,
                         color: colorScheme.secondary,
                       ),

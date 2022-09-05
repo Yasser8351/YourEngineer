@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
+import 'package:your_engineer/widget/search_widget.dart';
 import 'package:your_engineer/widget/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
@@ -27,8 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
     TopEngineerRatingModel(
       engineerName: "Ahmed Ali",
       engineerspecialist: "Civil Engineer",
-      imageUrl: AppImage.img4,
+      imageUrl: AppImage.img11,
       engineerRating: 3.5,
+    ),
+    TopEngineerRatingModel(
+      engineerName: "Omer Osman",
+      engineerspecialist: "Civil Engineer",
+      imageUrl: AppImage.img12,
+      engineerRating: 1.5,
     ),
   ];
   List<PopulerServicesModel> listPopulerServices = [
@@ -57,11 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
               // Headar of Screen
               // that contains text App name and icons of notifcation
               const TextWithIconWidget(),
-              //
+              // Space
+              const SizedBox(height: 20),
               // SearchWidget
-              //
-
-              const SizedBox(height: 50),
+              SearchWidget(onTap: () {}),
+              // Space
+              const SizedBox(height: 35),
 
               // Text Populer Services and See All
               RowWithTwoText(

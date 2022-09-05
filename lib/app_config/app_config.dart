@@ -40,6 +40,7 @@ class AppConfig {
   static const String businessFair = "Business Fair";
   static const String paymentHistory = "Payment History";
   static const String history = "History";
+  static const String search = "Search";
 
   static const String seeAll = "See All";
   static const String topEngineerRating = "Top Engineer Rating";
