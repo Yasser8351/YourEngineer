@@ -27,7 +27,7 @@ class AppConfig {
   static const String noProjectYet = "No project yet";
   static const String addSomeProject = "add some project";
   static const String notifcation = "Notifcations";
-  static const String termsOfServices = "Terms of service";
+  static const String termsOfServices = "  Terms of service";
   static const String privacyPolicy = "Privacy Policy";
   static const String language = "Language";
   static const String logout = "Logout";
@@ -39,7 +39,11 @@ class AppConfig {
   static const String reviews = "Reviews";
   static const String businessFair = "Business Fair";
   static const String paymentHistory = "Payment History";
+  static const String history = "History";
 
+  static const String seeAll = "See All";
+  static const String topEngineerRating = "Top Engineer Rating";
+  static const String populerServices = "Populer Services";
   ////////////////////////////////
   /*
   static const String  ="";

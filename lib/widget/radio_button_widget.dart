@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_config/app_config.dart';
+
 class RadioButtonWidget extends StatefulWidget {
   const RadioButtonWidget({Key? key}) : super(key: key);
 
@@ -9,19 +10,18 @@ class RadioButtonWidget extends StatefulWidget {
 }
 
 class _RadioButtonWidgetState extends State<RadioButtonWidget> {
-    int? _value = 2;
+  int? _value = 2;
 
   @override
   Widget build(BuildContext context) {
-
-
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(children: [
           Row(
             children: [
               Radio<int>(
+                  activeColor: Theme.of(context).colorScheme.primary,
                   value: 1,
                   groupValue: _value,
                   onChanged: (value) {
@@ -29,15 +29,22 @@ class _RadioButtonWidgetState extends State<RadioButtonWidget> {
                       _value = value;
                     });
                   }),
-              Text(
-                AppConfig.engineer,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(
+                  AppConfig.engineer,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 18,
+                  ),
+                ),
               ),
             ],
           ),
           Row(
             children: [
               Radio<int>(
+                  activeColor: Theme.of(context).colorScheme.primary,
                   value: 2,
                   groupValue: _value,
                   onChanged: (value) {
@@ -45,17 +52,20 @@ class _RadioButtonWidgetState extends State<RadioButtonWidget> {
                       _value = value;
                     });
                   }),
-              Text(
-                AppConfig.projectOwner,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(
+                  AppConfig.projectOwner,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 18,
+                  ),
+                ),
               ),
             ],
           )
         ]),
-       
       ],
     );
-  
-    
   }
 }

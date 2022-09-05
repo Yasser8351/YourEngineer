@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CardWithImage extends StatelessWidget {
-  const CardWithImage({
+class CardDecoration extends StatelessWidget {
+  const CardDecoration({
     Key? key,
     required this.height,
     required this.width,
     required this.child,
-    required this.colors,
     required this.onTap,
   }) : super(key: key);
   final double height;
   final double width;
   final Widget child;
-  final Color colors;
   final Function() onTap;
 
   @override
@@ -23,10 +21,10 @@ class CardWithImage extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          color: colors,
+          //border: Border.all(color: colors),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: child,
+        child: Card(borderOnForeground: true, elevation: 5, child: child),
       ),
     );
   }

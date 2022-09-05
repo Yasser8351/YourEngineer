@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/button_widget.dart';
+import 'package:your_engineer/widget/radio_button_widget.dart';
 
 import 'package:your_engineer/widget/text_faild_widget.dart';
 import 'package:your_engineer/widget/text_widget.dart';
@@ -29,7 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: size.width * 0.04,
-            vertical: size.height * .08,
+            vertical: size.height * .06,
           ),
           child: Column(
             children: [
@@ -67,6 +68,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   icon: const Icon(Icons.remove_red_eye),
                   obscure: true,
                   inputType: TextInputType.text),
+              SizedBox(height: size.height * .025),
+              const RadioButtonWidget(),
               SizedBox(height: size.height * .045),
               ButtonWidget(
                 title: AppConfig.signUp,

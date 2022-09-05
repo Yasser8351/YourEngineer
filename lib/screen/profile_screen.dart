@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SizedBox(
       height: 60,
       child: ListView.separated(
-          separatorBuilder: (context, index) => const SizedBox(width: 20),
+          separatorBuilder: (context, index) => const SizedBox(width: 27),
           scrollDirection: Axis.horizontal,
           itemCount: profileList.length,
           itemBuilder: (context, index) {
@@ -64,17 +64,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Icon(
                         profileList[index].icon,
-                        size: 25,
+                        size: 22,
                         color: colorScheme.onSurface,
                       ),
                       const SizedBox(
-                        width: 5,
+                        width: 3,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 7),
                         child: TextWidget(
                           title: profileList[index].title,
-                          fontSize: 20,
+                          fontSize: 17,
                           color: colorScheme.onSurface,
                         ),
                       ),
@@ -118,17 +118,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     TextWidget(
                         title: "Yasser Abubaker",
-                        fontSize: 20,
+                        fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),
                     TextWidget(
                         title: "yasser8351@gmail.com",
-                        fontSize: 20,
+                        fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),
                     TextWidget(
                         title: "Your balance \$200.0 ",
-                        fontSize: 20,
+                        fontSize: 18,
                         color: colorScheme.onSecondary),
                   ],
                 ),
@@ -164,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Padding(
         padding: const EdgeInsets.only(right: 0, left: 0),
         child: CardWithImage(
-          height: size.height * .65,
+          height: size.height * .7,
           width: size.width,
           colors: colorScheme.onSurface,
           onTap: () {},
@@ -172,11 +172,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
             child: Builder(builder: (context) {
               if (expandedIndex == 1) {
-                return const Text(AppConfig.reviews);
+                return buildReviews(
+                    colorScheme.background, colorScheme.primary);
               } else if (expandedIndex == 2) {
-                return const Text(AppConfig.businessFair);
+                return buildBusinessFair(
+                    colorScheme.background, colorScheme.primary, size);
               } else if (expandedIndex == 3) {
-                return const Text(AppConfig.paymentHistory);
+                return buildPaymentHistory(
+                    colorScheme.background, colorScheme.primary);
               }
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -192,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title:
                         "Architect with 2 more than years experience In the field of architectural and interior design.",
                     fontSize: 16,
-                    color: colorScheme.secondary,
+                    color: colorScheme.onSecondary,
                     isTextStart: true,
                   ),
                   const SizedBox(height: 10),
@@ -216,9 +219,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  buildRowItem(String title, String description, ColorScheme colorScheme) {
+  buildPaymentHistory(Color color, Color color2) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      children: [
+        buildRowReviews(AppConfig.history, AppConfig.seeAll, color, color2),
+        const SizedBox(height: 10),
+        buildRowItem("Shipped by PayPal", "\$250 -", colorScheme,
+            isPadingZero: true),
+        const SizedBox(height: 5),
+        buildRowItem("yasser8351@gmail.com", "12/07/2022", colorScheme),
+        const Divider(),
+        const SizedBox(height: 20),
+        buildRowItem("Profit from completing", "\$250 +", colorScheme,
+            isPadingZero: true),
+        const SizedBox(height: 5),
+        buildRowItem(
+            "an architectural design project", "09/01/2021", colorScheme),
+        const Divider(),
+        const SizedBox(height: 20),
+        buildRowItem("Shipped by PayPal", "\$600 -", colorScheme,
+            isPadingZero: true),
+        const SizedBox(height: 5),
+        buildRowItem("yasser8351@gmail.com", "01/10/2021", colorScheme),
+        const Divider(),
+      ],
+    );
+  }
+
+  buildRowItem(String title, String description, ColorScheme colorScheme,
+      {bool isPadingZero = false}) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.only(bottom: isPadingZero ? 0 : 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -230,12 +262,142 @@ class _ProfileScreenState extends State<ProfileScreen> {
           TextWidget(
             title: description,
             fontSize: 16,
-            color: colorScheme.secondary,
+            color: colorScheme.onSecondary,
           ),
         ],
       ),
     );
   }
+
+  buildRowReviews(
+      String title, String description, Color colorScheme, Color colorScheme2) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          TextWidget(
+            title: title,
+            fontSize: 18,
+            color: colorScheme,
+          ),
+          TextWidget(
+            title: description,
+            fontSize: 18,
+            color: colorScheme2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  buildReviews(Color color, Color color2) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      children: [
+        buildRowReviews(
+            "12  ${AppConfig.reviews}", AppConfig.seeAll, color, color2),
+        const SizedBox(height: 10),
+        buildRowItem("House map design", "completed", colorScheme),
+        buildRowItem("Review", "5.0", colorScheme),
+        buildRowItem("Project completion date", "12/01/2022", colorScheme),
+        const Divider(),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15, top: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const CircleAvatar(
+                radius: 30.0,
+                backgroundImage: AssetImage(AppImage.img2),
+              ),
+              const SizedBox(width: 10),
+              TextWidget(
+                title: "Mohammed Ali \n project owner",
+                fontSize: 16,
+                color: colorScheme.onSecondary,
+              ),
+            ],
+          ),
+        ),
+        TextWidget(
+          title: "Thank you very much for completing the project",
+          fontSize: 16,
+          color: colorScheme.onSecondary,
+          isTextStart: true,
+        ),
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15, top: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const CircleAvatar(
+                radius: 30.0,
+                backgroundImage: AssetImage(AppImage.img),
+              ),
+              const SizedBox(width: 10),
+              TextWidget(
+                title: "Yasser Abubaker \n engineer",
+                fontSize: 16,
+                color: colorScheme.onSecondary,
+              ),
+            ],
+          ),
+        ),
+        TextWidget(
+          title: "Thank you Mohammed Ali.",
+          fontSize: 16,
+          color: colorScheme.onSecondary,
+          isTextStart: true,
+        ),
+      ],
+    );
+  }
+
+  buildBusinessFair(Color color, Color color2, Size size) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          buildRowReviews(
+              "4  ${AppConfig.project}", AppConfig.seeAll, color, color2),
+          const SizedBox(height: 10),
+          Image.asset(
+            AppImage.img5,
+            height: 290,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(height: 13),
+          buildRowItem(
+              "Break design in Saudi Arabia", "12/01/2022", colorScheme),
+          const SizedBox(height: 10),
+          Image.asset(
+            AppImage.img7,
+            height: 290,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(height: 13),
+          buildRowItem("Gas station design", "07/09/2021", colorScheme),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
   _getAppBar(BuildContext context) {
     return AppBar(
@@ -255,4 +417,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
 */
-}
+
