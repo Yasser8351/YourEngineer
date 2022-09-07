@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/app_config/app_config.dart';
+
 import 'package:your_engineer/model/message_model.dart';
+import 'package:your_engineer/widget/chat_room_widget.dart';
 
 import '../app_config/app_image.dart';
-import '../widget/chat_widget.dart';
+import '../widget/text_widget.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+class ChatRoomScreen extends StatefulWidget {
+  const ChatRoomScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChatRoomScreen> createState() => _ChatRoomScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatRoomScreenState extends State<ChatRoomScreen> {
   List<MessageModel> listChat = [
     MessageModel(
         name: "Ahmed Ali",
@@ -38,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.white),
+      appBar: _getAppBar(context, 'recevier Name'),
       body: SingleChildScrollView(
         // child: NoData(
         //   textMessage: AppConfig.noMessageYet,
@@ -47,18 +48,12 @@ class _ChatScreenState extends State<ChatScreen> {
         // ),
         child: Column(
           children: [
-            ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
+            ListView.builder(
                 shrinkWrap: true,
                 itemCount: listChat.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(AppConfig.chatRoom);
-                    },
-                    child: ChatWidget(
-                      messageModel: listChat[index],
-                    ),
+                  return ChatRoomWidget(
+                    messageModel: listChat[index],
                   );
                 }),
           ],
@@ -66,4 +61,20 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+}
+
+_getAppBar(BuildContext context, String recevierName) {
+  return AppBar(
+    title: Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: TextWidget(title: recevierName, fontSize: 18, color: Colors.white),
+    ),
+    leading: IconButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+      icon: const Icon(Icons.navigate_before, size: 40),
+      color: Colors.white,
+    ),
+  );
 }

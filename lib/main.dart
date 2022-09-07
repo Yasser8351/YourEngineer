@@ -6,6 +6,7 @@ import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/screen/profile_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
 
+import 'screen/chat_room_screen.dart';
 import 'screen/tab_screen.dart';
 
 void main() {
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         AppConfig.tabScreen: (ctx) => const TabScreen(),
         AppConfig.addProjectScreen: (ctx) => const AddProjectScreen(),
         AppConfig.profile: (ctx) => const ProfileScreen(),
+        AppConfig.chatRoom: (ctx) => const ChatRoomScreen(),
       },
     );
   }

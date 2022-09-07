@@ -84,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextWidget(
-                      title: AppConfig.agreeTotermsOfServices,
+                      title: "  ${AppConfig.agreeTotermsOfServices}",
                       fontSize: 15,
                       color: colorScheme.onSecondary,
                     ),

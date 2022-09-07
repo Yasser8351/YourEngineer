@@ -23,18 +23,18 @@ class SearchWidget extends StatelessWidget {
         },
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
-          focusColor: Colors.grey,
-          fillColor: Colors.grey,
-          disabledBorder: OutlineInputBorder(
-            // borderSide: const BorderSide(
-            //     color: Color.fromARGB(255, 31, 30, 30), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-                color: Color.fromARGB(255, 202, 202, 202), width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
+          //focusColor: Colors.grey,
+          // fillColor: Colors.grey,
+          // disabledBorder: OutlineInputBorder(
+          //   // borderSide: const BorderSide(
+          //   //     color: Color.fromARGB(255, 31, 30, 30), width: 1.0),
+          //   borderRadius: BorderRadius.circular(10.0),
+          // ),
+          // focusedBorder: OutlineInputBorder(
+          //   borderSide: const BorderSide(
+          //       color: Color.fromARGB(255, 202, 202, 202), width: 1.0),
+          //   borderRadius: BorderRadius.circular(10.0),
+          // ),
           suffixIcon: IconButton(
             icon: const Icon(
               Icons.clear,
