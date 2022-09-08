@@ -39,7 +39,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _getAppBar(context, 'recevier Name'),
+      appBar: _getAppBar(context, 'Ahmed Ali'),
       body: SingleChildScrollView(
         // child: NoData(
         //   textMessage: AppConfig.noMessageYet,

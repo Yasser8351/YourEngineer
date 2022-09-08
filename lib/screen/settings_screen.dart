@@ -26,22 +26,28 @@ class SettingsScreen extends StatelessWidget {
                   context,
                   AppConfig.notifcation,
                   Icons.notifications_outlined,
-                  () => Navigator.of(context).pushNamed(AppConfig.login)),
+                  () => Navigator.of(context).pushNamed(AppConfig.notifcation)),
               buildDivider(),
               buildCardItem(
                   context,
                   AppConfig.termsOfServices,
                   Icons.front_hand_outlined,
-                  () => Navigator.of(context).pushNamed(AppConfig.login)),
+                  () => Navigator.of(context)
+                      .pushNamed(AppConfig.termsOfServices)),
               buildDivider(),
               buildCardItem(
-                  context, AppConfig.privacyPolicy, Icons.security, () => {}),
+                  context,
+                  AppConfig.privacyPolicy,
+                  Icons.security,
+                  () => {
+                        Navigator.of(context).pushNamed(AppConfig.privacyPolicy)
+                      }),
               buildDivider(),
               buildCardItem(context, AppConfig.language,
                   Icons.change_circle_outlined, () => {}),
               buildDivider(),
-              buildCardItem(
-                  context, AppConfig.faq, Icons.note_alt_outlined, () => {}),
+              buildCardItem(context, AppConfig.faq, Icons.note_alt_outlined,
+                  () => {Navigator.of(context).pushNamed(AppConfig.faq)}),
               buildDivider(),
               buildCardItem(context, AppConfig.support,
                   Icons.support_agent_rounded, () => {}),

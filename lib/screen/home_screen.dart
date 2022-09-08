@@ -63,7 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
               // Headar of Screen
               // that contains text App name and icons of notifcation
-              const TextWithIconWidget(),
+              TextWithIconWidget(
+                  onTapNotifications: () =>
+                      Navigator.of(context).pushNamed(AppConfig.notifcation)),
               // Space
               const SizedBox(height: 20),
               // SearchWidget

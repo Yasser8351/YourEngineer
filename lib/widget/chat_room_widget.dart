@@ -26,12 +26,12 @@ class ChatRoomWidget extends StatelessWidget {
           ),
           onTap: () {}),
       // trailing: Text(messageModel.messageTime),
-      leading: CircleAvatar(
-        radius: 30.0,
-        backgroundImage: AssetImage(
-          messageModel.imgeUrl,
-        ),
-      ),
+      // leading: CircleAvatar(
+      //   radius: 30.0,
+      //   backgroundImage: AssetImage(
+      //     messageModel.imgeUrl,
+      //   ),
+      // ),
     );
   }
 }
