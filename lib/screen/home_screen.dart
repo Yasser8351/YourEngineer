@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     PopulerServicesModel(
         titleServices: "Architectural Design", imageUrlServices: AppImage.img9),
     PopulerServicesModel(
-        titleServices: "Interior Design", imageUrlServices: AppImage.img8),
+        titleServices: "Autocad Diagram", imageUrlServices: AppImage.img8),
     PopulerServicesModel(
         titleServices: "3D Design", imageUrlServices: AppImage.img7),
   ];

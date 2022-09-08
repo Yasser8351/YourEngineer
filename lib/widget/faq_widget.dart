@@ -22,14 +22,20 @@ class FAQWidget extends StatelessWidget {
     //   onTap: onTap,
     // );
 
-    return ListTile(
-      title: Align(
-        alignment: Alignment.centerRight,
-        child: Text(faqModel.title),
-      ),
-      subtitle: Align(
-        alignment: Alignment.centerRight,
-        child: Text(faqModel.discreption),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: ListTile(
+        title: Text(
+          faqModel.title,
+          textAlign: TextAlign.end,
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: Text(
+            faqModel.discreption,
+            textAlign: TextAlign.end,
+          ),
+        ),
       ),
     );
   }
