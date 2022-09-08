@@ -22,6 +22,8 @@ class AppConfig {
   static const String send = "Send";
   static const String noData = "No data found";
   static const String addProjectScreen = "Add Project";
+  static const String noMessageSuppoerYet =
+      "If you have any problem, contact with support directly";
   static const String noMessageYet =
       "No message yet \n Start a conversation with best engineers, \n and get the jop done.";
   static const String noProjectYet = "No project yet";
@@ -41,6 +43,7 @@ class AppConfig {
   static const String paymentHistory = "Payment History";
   static const String history = "History";
   static const String search = "Search";
+  static const String sendMessage = "send message";
 
   static const String seeAll = "See All";
   static const String topEngineerRating = "Top Engineer Rating";

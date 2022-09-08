@@ -8,6 +8,7 @@ import 'package:your_engineer/screen/notifcation_screen.dart';
 import 'package:your_engineer/screen/privacy_policy_screen.dart';
 import 'package:your_engineer/screen/profile_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
+import 'package:your_engineer/screen/support_chat_screen.dart';
 
 import 'screen/terms_of_services_screen.dart';
 import 'screen/chat_room_screen.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         AppConfig.termsOfServices: (ctx) => const TermsOfServicesScreen(),
         AppConfig.privacyPolicy: (ctx) => const PrivacyPolicyScreen(),
         AppConfig.faq: (ctx) => const FAQScreen(),
+        AppConfig.support: (ctx) => const SupportChatScreen(),
       },
     );
   }

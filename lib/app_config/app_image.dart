@@ -15,4 +15,5 @@ class AppImage {
   static const img11 = "$root/img11.jpg";
   static const img12 = "$root/img12.jpg";
   static const divider = "$root/divider.png";
+  static const support = "$root/support.png";
 }

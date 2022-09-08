@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/message_model.dart';
+import 'package:your_engineer/screen/support_chat_screen.dart';
 
 import '../app_config/app_image.dart';
 import '../widget/chat_widget.dart';
@@ -38,7 +38,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.white),
       body: SingleChildScrollView(
         // child: NoData(
         //   textMessage: AppConfig.noMessageYet,
@@ -47,20 +46,27 @@ class _ChatScreenState extends State<ChatScreen> {
         // ),
         child: Column(
           children: [
+            const SizedBox(height: 20),
             ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
-                shrinkWrap: true,
-                itemCount: listChat.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(AppConfig.chatRoom);
-                    },
-                    child: ChatWidget(
-                      messageModel: listChat[index],
-                    ),
-                  );
-                }),
+              separatorBuilder: (context, index) => const Divider(),
+              shrinkWrap: true,
+              itemCount: listChat.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SupportChatScreen(
+                              imageUrl: listChat[index].imgeUrl,
+                              name: listChat[index].name,
+                            )));
+                    // Navigator.of(context).pushNamed(AppConfig.chatRoom);
+                  },
+                  child: ChatWidget(
+                    messageModel: listChat[index],
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -36,12 +36,12 @@ class SettingsScreen extends StatelessWidget {
                       .pushNamed(AppConfig.termsOfServices)),
               buildDivider(),
               buildCardItem(
-                  context,
-                  AppConfig.privacyPolicy,
-                  Icons.security,
-                  () => {
-                        Navigator.of(context).pushNamed(AppConfig.privacyPolicy)
-                      }),
+                context,
+                AppConfig.privacyPolicy,
+                Icons.security,
+                () =>
+                    {Navigator.of(context).pushNamed(AppConfig.privacyPolicy)},
+              ),
               buildDivider(),
               buildCardItem(context, AppConfig.language,
                   Icons.change_circle_outlined, () => {}),
@@ -49,8 +49,12 @@ class SettingsScreen extends StatelessWidget {
               buildCardItem(context, AppConfig.faq, Icons.note_alt_outlined,
                   () => {Navigator.of(context).pushNamed(AppConfig.faq)}),
               buildDivider(),
-              buildCardItem(context, AppConfig.support,
-                  Icons.support_agent_rounded, () => {}),
+              buildCardItem(
+                context,
+                AppConfig.support,
+                Icons.support_agent_rounded,
+                () => {Navigator.of(context).pushNamed(AppConfig.support)},
+              ),
               buildDivider(),
               buildCardItem(context, AppConfig.logout, Icons.logout,
                   () => Navigator.of(context).pushNamed(AppConfig.login), true),

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../model/message_model.dart';
+import 'full_image.dart';
 
 class ChatWidget extends StatelessWidget {
-  const ChatWidget({
-    Key? key,
-    required this.messageModel,
-  }) : super(key: key);
+  const ChatWidget({Key? key, required this.messageModel}) : super(key: key);
 
   final MessageModel messageModel;
 
@@ -16,10 +14,16 @@ class ChatWidget extends StatelessWidget {
       title: Text(messageModel.name),
       subtitle: Text(messageModel.message),
       trailing: Text(messageModel.messageTime),
-      leading: CircleAvatar(
-        radius: 30.0,
-        backgroundImage: AssetImage(
-          messageModel.imgeUrl,
+      leading: InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => FullImage(imageUrl: messageModel.imgeUrl)));
+        },
+        child: CircleAvatar(
+          radius: 30.0,
+          backgroundImage: AssetImage(
+            messageModel.imgeUrl,
+          ),
         ),
       ),
     );
