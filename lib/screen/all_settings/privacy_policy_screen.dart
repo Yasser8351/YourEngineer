@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../app_config/app_config.dart';
-import '../model/faq_model.dart';
-import '../widget/faq_widget.dart';
-import '../widget/text_widget.dart';
+import '../../app_config/app_config.dart';
+import '../../model/faq_model.dart';
+import '../../widget/faq_widget.dart';
+import '../../widget/text_widget.dart';
 
 //PrivacyPolicyScreen
 class PrivacyPolicyScreen extends StatefulWidget {

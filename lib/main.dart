@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/screen/add_project_screen.dart';
-import 'package:your_engineer/screen/faq_screen.dart';
 import 'package:your_engineer/screen/forgot_password_screen.dart';
 import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/screen/notifcation_screen.dart';
-import 'package:your_engineer/screen/privacy_policy_screen.dart';
-import 'package:your_engineer/screen/profile_screen.dart';
+import 'package:your_engineer/screen/profile/profile_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
-import 'package:your_engineer/screen/support_chat_screen.dart';
 
+import 'screen/all_settings/faq_screen.dart';
+import 'screen/all_settings/privacy_policy_screen.dart';
+import 'screen/all_settings/support_chat_screen.dart';
+import 'screen/chat/chat_room_screen.dart';
 import 'screen/terms_of_services_screen.dart';
-import 'screen/chat_room_screen.dart';
 import 'screen/tab_screen.dart';
 
 void main() {

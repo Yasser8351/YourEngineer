@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
+import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
+import 'package:your_engineer/widget/list_project_widget.dart';
 import 'package:your_engineer/widget/search_widget.dart';
 import 'package:your_engineer/widget/text_with_icon_widget.dart';
 
@@ -46,6 +48,22 @@ class _HomeScreenState extends State<HomeScreen> {
     PopulerServicesModel(
         titleServices: "3D Design", imageUrlServices: AppImage.img7),
   ];
+  List<ProjectModel> listProject = [
+    ProjectModel(
+      titleProject: 'Making tables of quantities',
+      descriptionProject:
+          'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
+    ),
+    ProjectModel(
+      titleProject: 'health club design',
+      descriptionProject:
+          'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
+    ),
+    ProjectModel(
+        titleProject: '3D design for interior design',
+        descriptionProject:
+            'Project details Project detailsProject details Project details Project details Project detailsProject details')
+  ];
 
   double rating = 3.5;
 
@@ -66,12 +84,45 @@ class _HomeScreenState extends State<HomeScreen> {
               TextWithIconWidget(
                   onTapNotifications: () =>
                       Navigator.of(context).pushNamed(AppConfig.notifcation)),
+
               // Space
               const SizedBox(height: 20),
+
               // SearchWidget
               SearchWidget(onTap: () {}),
+
               // Space
               const SizedBox(height: 35),
+
+              // Text Populer Services and See All
+              RowWithTwoText(
+                title: AppConfig.lastProject,
+                description: AppConfig.seeAll,
+                colorScheme: colorScheme.onSecondary,
+                colorScheme2: colorScheme.primary,
+              ),
+
+              // ListProjectWidget
+              SizedBox(
+                height: size.height * .25,
+                width: double.infinity,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 18),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listProject.length,
+                  itemBuilder: (context, index) {
+                    return ListProjectWidget(
+                      projectModel: listProject[index],
+                      colorScheme: colorScheme,
+                      size: size,
+                    );
+                  },
+                ),
+              ),
+
+              // Space between list in Home Screen
+              const SizedBox(height: 40),
 
               // Text Populer Services and See All
               RowWithTwoText(
@@ -98,8 +149,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              // Space between two list
-              const SizedBox(height: 50),
+              // Space between list in Home Screen
+              const SizedBox(height: 40),
 
               // Text Top Engineer Rating and See All
               RowWithTwoText(

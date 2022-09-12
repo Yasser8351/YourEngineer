@@ -65,7 +65,7 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/full_image.dart';
 
-import '../widget/text_widget.dart';
+import '../../widget/text_widget.dart';
 
 class SupportChatScreen extends StatefulWidget {
   //replace userMap with document

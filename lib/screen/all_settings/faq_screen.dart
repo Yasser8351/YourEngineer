@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/model/faq_model.dart';
 import 'package:your_engineer/widget/faq_widget.dart';
 
-import '../app_config/app_config.dart';
-import '../widget/text_widget.dart';
+import '../../app_config/app_config.dart';
+import '../../widget/text_widget.dart';
 
 //FAQScreen
 class FAQScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _FAQScreenState extends State<FAQScreen> {
     FAQModel(
         title: "ما هي الرسوم التي يدفعها صاحب المشروع؟",
         discreption:
-            "يدفع صاحب المشروع رسوم وسائل الدفع فقط وهي 2.75% وفي حال قرر العميل إعادة المبالغ التي تم شحنها في حسابه فإننا نقوم بإعادة الرسوم أيضا بشكل تلقائي.اما عمولة التطبيق فتحتسب بشكل تنازلي بناءً على قيمة حجم تعاملات المهندس طوال الوقت مع العميل نفسه ويتم اقتطاعها من أرباح المهندس وليس من صاحب المشروع. ."),
+            "يدفع صاحب المشروع رسوم وسائل الدفع فقط وهي 2.75% وفي حال قرر العميل إعادة المبالغ التي تم شحنها في حسابه فإننا نقوم بإعادة الرسوم أيضا بشكل تلقائي.اما عمولة التطبيق فتحتسب بشكل تنازلي بناءً على قيمة حجم تعاملات المهندس طوال الوقت مع العميل نفسه ويتم اقتطاعها من أرباح المهندس وليس من صاحب المشروع."),
     FAQModel(
         title: "ما هي وسائل الدفع المتاحة",
         discreption: "وسائل الدفع المتاحة هي باي بال، البطاقات الائتمانية."),

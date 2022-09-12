@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 
 import '../app_config/app_config.dart';
-import 'chat_screen.dart';
+import 'all_settings/settings_screen.dart';
+import 'chat/chat_screen.dart';
 import 'home_screen.dart';
-import 'settings_screen.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key? key}) : super(key: key);
