@@ -68,7 +68,7 @@ class ListProjectWidget extends StatelessWidget {
                         buildRowList(projectModel.createdDate, colorScheme,
                             Icons.time_to_leave),
                         buildRowList(projectModel.numberOfoffers, colorScheme,
-                            Icons.money),
+                            Icons.post_add),
                       ],
                     ),
                     CardWithImage(
@@ -103,12 +103,15 @@ buildRowList(title, colorScheme, icon) {
           color: colorScheme.secondary,
         ),
         const SizedBox(
-          width: 20,
+          width: 10,
         ),
-        TextWidget(
-          title: title,
-          fontSize: 15,
-          color: colorScheme.secondary,
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: TextWidget(
+            title: title,
+            fontSize: 15,
+            color: colorScheme.secondary,
+          ),
         ),
       ],
     ),
