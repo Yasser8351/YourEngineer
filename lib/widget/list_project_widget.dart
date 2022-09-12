@@ -41,7 +41,7 @@ class ListProjectWidget extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     color: colorScheme.onSecondary,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -52,11 +52,10 @@ class ListProjectWidget extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     color: colorScheme.onSecondary,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 10),
-                // const Spacer(), //use this widget to take the available space
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -64,15 +63,17 @@ class ListProjectWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        buildRowList("Yasser", colorScheme, Icons.person),
                         buildRowList(
-                            "15 hours ago", colorScheme, Icons.time_to_leave),
-                        buildRowList("13 offers", colorScheme, Icons.money),
+                            projectModel.postBy, colorScheme, Icons.person),
+                        buildRowList(projectModel.createdDate, colorScheme,
+                            Icons.time_to_leave),
+                        buildRowList(projectModel.numberOfoffers, colorScheme,
+                            Icons.money),
                       ],
                     ),
                     CardWithImage(
-                        height: size.height * .05,
-                        width: size.width * .1,
+                        height: size.height * .042,
+                        width: size.width * .09,
                         colors: Colors.black,
                         onTap: () {},
                         child: const Icon(
