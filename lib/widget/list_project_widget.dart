@@ -18,7 +18,6 @@ class ListProjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ColorScheme colorScheme = Theme.of(context).colorScheme;
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),

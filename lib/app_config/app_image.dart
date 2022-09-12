@@ -16,4 +16,6 @@ class AppImage {
   static const img12 = "$root/img12.jpg";
   static const divider = "$root/divider.png";
   static const support = "$root/support.png";
+  static const noDataFound = "$root/noData.png";
+  static const noInternet = "$root/noInternet.png";
 }

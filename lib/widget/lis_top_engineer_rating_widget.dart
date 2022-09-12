@@ -7,13 +7,17 @@ import 'rating_bar.dart';
 
 class ListTopEngineerRatingWidget extends StatelessWidget {
   const ListTopEngineerRatingWidget(
-      {Key? key, required this.topEngineerRatingModel})
+      {Key? key,
+      required this.topEngineerRatingModel,
+      required this.colorScheme,
+      required this.size})
       : super(key: key);
   final TopEngineerRatingModel topEngineerRatingModel;
+  final ColorScheme colorScheme;
+  final Size size;
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),

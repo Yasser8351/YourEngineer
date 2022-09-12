@@ -144,6 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     return ListPopulerServicesWidget(
                       populerServicesModel: listPopulerServices[index],
+                      colorScheme: colorScheme,
+                      size: size,
                     );
                   },
                 ),
@@ -172,6 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     return ListTopEngineerRatingWidget(
                       topEngineerRatingModel: listTopEngineerRating[index],
+                      colorScheme: colorScheme,
+                      size: size,
                     );
                   },
                 ),

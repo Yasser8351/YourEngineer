@@ -6,13 +6,17 @@ import 'card_decoration.dart';
 
 class ListPopulerServicesWidget extends StatelessWidget {
   const ListPopulerServicesWidget(
-      {Key? key, required this.populerServicesModel})
+      {Key? key,
+      required this.populerServicesModel,
+      required this.colorScheme,
+      required this.size})
       : super(key: key);
   final PopulerServicesModel populerServicesModel;
+  final ColorScheme colorScheme;
+  final Size size;
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
