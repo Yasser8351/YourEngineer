@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
@@ -34,7 +32,6 @@ class BottomNavigationCardPaymentWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
             child: Builder(
               builder: (context) {
-                log("$expandedIndex");
                 if (expandedIndex == 0) {
                   return buildPayWithPayPal(colorScheme, size);
                 }
@@ -94,7 +91,9 @@ buildPayWithPayPal(ColorScheme colorScheme, Size size) {
 }
 
 buildPayWithVisa(ColorScheme colorScheme, Size size) {
-  TextEditingController visaController = TextEditingController();
+  TextEditingController fullNAmeController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController cardNumberController = TextEditingController();
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
@@ -123,7 +122,7 @@ buildPayWithVisa(ColorScheme colorScheme, Size size) {
             color: colorScheme.primary),
       ),
       TextFaildWidget(
-        controller: visaController,
+        controller: amountController,
         label: '',
         obscure: false,
         inputType: TextInputType.text,
@@ -140,7 +139,7 @@ buildPayWithVisa(ColorScheme colorScheme, Size size) {
             color: colorScheme.primary),
       ),
       TextFaildWidget(
-        controller: visaController,
+        controller: fullNAmeController,
         label: '',
         obscure: false,
         inputType: TextInputType.text,
@@ -157,7 +156,7 @@ buildPayWithVisa(ColorScheme colorScheme, Size size) {
             color: colorScheme.primary),
       ),
       TextFaildWidget(
-        controller: visaController,
+        controller: cardNumberController,
         label: '',
         obscure: false,
         inputType: TextInputType.text,
@@ -180,20 +179,39 @@ buildTextFaild(
   Icon icon,
 ) {
   return TextField(
-    autofocus: true,
-    keyboardType: inputType,
-    obscureText: obscure,
+    // controller: widget.searchlist,
+    onSubmitted: (String v) {
+      //  widget.onSearch();
+    },
+    textInputAction: TextInputAction.search,
     decoration: InputDecoration(
-        suffixIcon: icon,
-        labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
-        )),
-    style: const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.normal,
-      fontSize: 17,
+      suffixIcon: IconButton(
+        icon: const Icon(
+          Icons.clear,
+          color: Colors.grey,
+        ),
+        iconSize: 20, //iconSize: widget.isSearch ? 0 : 18,
+        onPressed: () {
+          //  widget.clearSearch();
+        },
+      ),
+      prefixIcon: IconButton(
+        alignment: Alignment.topCenter,
+        onPressed: () {
+          //   widget.onSearch();
+        },
+        icon: const Icon(
+          Icons.search,
+          color: Colors.grey,
+        ),
+      ),
+      hintText: AppConfig.search,
+      hintStyle: const TextStyle(color: Colors.grey),
+      border: OutlineInputBorder(
+        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(5),
+        // borderSide: const BorderSide(color: Colors.black),
+      ),
     ),
-    controller: controller,
   );
 }

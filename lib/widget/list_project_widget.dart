@@ -25,7 +25,7 @@ class ListProjectWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {},
-        height: size.height,
+        height: size.height * .3,
         width: size.width * .7,
         child: SingleChildScrollView(
           child: Padding(
@@ -66,7 +66,7 @@ class ListProjectWidget extends StatelessWidget {
                         buildRowList(
                             projectModel.postBy, colorScheme, Icons.person),
                         buildRowList(projectModel.createdDate, colorScheme,
-                            Icons.time_to_leave),
+                            Icons.watch_later),
                         buildRowList(projectModel.numberOfoffers, colorScheme,
                             Icons.post_add),
                       ],
@@ -74,7 +74,8 @@ class ListProjectWidget extends StatelessWidget {
                     CardWithImage(
                         height: size.height * .042,
                         width: size.width * .09,
-                        colors: Colors.black,
+                        //colors: Colors.black,
+                        colors: const Color.fromARGB(255, 146, 146, 146),
                         onTap: () {},
                         child: const Icon(
                           Icons.arrow_forward,
