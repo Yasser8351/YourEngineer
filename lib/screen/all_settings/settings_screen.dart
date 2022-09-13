@@ -43,11 +43,19 @@ class SettingsScreen extends StatelessWidget {
                     {Navigator.of(context).pushNamed(AppConfig.privacyPolicy)},
               ),
               buildDivider(),
-              buildCardItem(context, AppConfig.language,
-                  Icons.change_circle_outlined, () => {}),
+              buildCardItem(
+                context,
+                AppConfig.language,
+                Icons.change_circle_outlined,
+                () => {Navigator.of(context).pushNamed(AppConfig.language)},
+              ),
               buildDivider(),
-              buildCardItem(context, AppConfig.faq, Icons.note_alt_outlined,
-                  () => {Navigator.of(context).pushNamed(AppConfig.faq)}),
+              buildCardItem(
+                context,
+                AppConfig.faq,
+                Icons.note_alt_outlined,
+                () => {Navigator.of(context).pushNamed(AppConfig.faq)},
+              ),
               buildDivider(),
               buildCardItem(
                 context,

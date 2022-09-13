@@ -47,12 +47,12 @@ class TextFaildChatWidget extends StatelessWidget {
           keyboardType: inputType,
           obscureText: obscure,
           //textAlign: TextAlign.right,
-          // decoration: InputDecoration(
-          //     suffixIcon: controller.text.isEmpty ? const SizedBox() : icon,
-          //     labelText: label,
-          //     border: OutlineInputBorder(
-          //       borderRadius: BorderRadius.circular(4),
-          //     )),
+          decoration: InputDecoration(
+              suffixIcon: controller.text.isEmpty ? const SizedBox() : icon,
+              labelText: label,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+              )),
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.normal,

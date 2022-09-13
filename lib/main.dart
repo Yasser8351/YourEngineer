@@ -3,8 +3,11 @@ import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/screen/add_project_screen.dart';
 import 'package:your_engineer/screen/all_settings/support_chat_screen.dart';
 import 'package:your_engineer/screen/forgot_password_screen.dart';
+import 'package:your_engineer/screen/language_screen.dart';
 import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/screen/notifcation_screen.dart';
+import 'package:your_engineer/screen/profile/pay_with_paypal.dart';
+import 'package:your_engineer/screen/profile/pay_with_visa.dart';
 import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
 import 'package:your_engineer/screen/profile/profile_user_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
@@ -57,12 +60,15 @@ class MyApp extends StatelessWidget {
         AppConfig.addProjectScreen: (ctx) => const AddProjectScreen(),
         AppConfig.profileUser: (ctx) => const ProfileUserScreen(),
         AppConfig.profileEngineer: (ctx) => const ProfileEngineerScreen(),
+        AppConfig.paypal: (ctx) => const PayWithPaypal(),
+        AppConfig.visa: (ctx) => const PayWithVisa(),
         AppConfig.chatRoom: (ctx) => const ChatRoomScreen(),
         AppConfig.notifcation: (ctx) => const NotifcationScreen(),
         AppConfig.termsOfServices: (ctx) => const TermsOfServicesScreen(),
         AppConfig.privacyPolicy: (ctx) => const PrivacyPolicyScreen(),
         AppConfig.faq: (ctx) => const FAQScreen(),
         AppConfig.support: (ctx) => const SupportChatScreen(),
+        AppConfig.language: (ctx) => const LanguageScreen(),
       },
     );
   }

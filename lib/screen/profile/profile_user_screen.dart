@@ -38,7 +38,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                 size: size,
                 colorScheme: colorScheme,
                 onTap: () {
-                  Navigator.of(context).pushNamed(AppConfig.profileEngineer);
+                  Navigator.of(context).pushNamed(AppConfig.paypal);
                 },
               ),
               const SizedBox(height: 35),
