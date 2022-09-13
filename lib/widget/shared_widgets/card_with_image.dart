@@ -8,12 +8,14 @@ class CardWithImage extends StatelessWidget {
     required this.child,
     required this.colors,
     required this.onTap,
+    this.isBorderRadiusTopLefZero = false,
   }) : super(key: key);
   final double height;
   final double width;
   final Widget child;
   final Color colors;
   final Function() onTap;
+  final bool isBorderRadiusTopLefZero;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,14 @@ class CardWithImage extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           color: colors,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: isBorderRadiusTopLefZero
+              ? const BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                  bottomLeft: Radius.zero,
+                  bottomRight: Radius.zero,
+                )
+              : BorderRadius.circular(10),
         ),
         child: child,
       ),

@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
                   context,
                   AppConfig.profile,
                   Icons.person_pin_outlined,
-                  () => Navigator.of(context).pushNamed(AppConfig.profile)),
+                  () => Navigator.of(context).pushNamed(AppConfig.profileUser)),
               buildDivider(),
               buildCardItem(
                   context,

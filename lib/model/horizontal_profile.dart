@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
-class HorizontalProfile {
+class ListHorizontalProfile {
   String title;
   IconData icon;
+  String image;
 
-  HorizontalProfile(this.title, this.icon);
+  ListHorizontalProfile(this.title, this.icon, {this.image = ''});
 }

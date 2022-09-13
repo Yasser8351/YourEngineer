@@ -5,7 +5,8 @@ import 'package:your_engineer/screen/all_settings/support_chat_screen.dart';
 import 'package:your_engineer/screen/forgot_password_screen.dart';
 import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/screen/notifcation_screen.dart';
-import 'package:your_engineer/screen/profile/profile_screen.dart';
+import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
+import 'package:your_engineer/screen/profile/profile_user_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
 
 import 'screen/all_settings/faq_screen.dart';
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
         AppConfig.forgetPassword: (ctx) => const ForgotPasswordScreen(),
         AppConfig.tabScreen: (ctx) => const TabScreen(),
         AppConfig.addProjectScreen: (ctx) => const AddProjectScreen(),
-        AppConfig.profile: (ctx) => const ProfileScreen(),
+        AppConfig.profileUser: (ctx) => const ProfileUserScreen(),
+        AppConfig.profileEngineer: (ctx) => const ProfileEngineerScreen(),
         AppConfig.chatRoom: (ctx) => const ChatRoomScreen(),
         AppConfig.notifcation: (ctx) => const NotifcationScreen(),
         AppConfig.termsOfServices: (ctx) => const TermsOfServicesScreen(),

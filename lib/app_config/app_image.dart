@@ -18,4 +18,6 @@ class AppImage {
   static const support = "$root/support.png";
   static const noDataFound = "$root/noData.png";
   static const noInternet = "$root/noInternet.png";
+  static const paypal = "$root/paypal.png";
+  static const visa = "$root/visa.png";
 }
