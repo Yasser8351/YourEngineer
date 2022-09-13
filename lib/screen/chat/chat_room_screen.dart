@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:your_engineer/model/message_model.dart';
-import 'package:your_engineer/widget/chat_room_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/chat_room_widget.dart';
 
 import '../../app_config/app_image.dart';
-import '../../widget/text_widget.dart';
+import '../../widget/shared_widgets/text_widget.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({Key? key}) : super(key: key);

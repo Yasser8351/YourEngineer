@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../app_config/app_config.dart';
+import '../../app_config/app_config.dart';
 
 class RadioButtonWidget extends StatefulWidget {
   const RadioButtonWidget({Key? key}) : super(key: key);

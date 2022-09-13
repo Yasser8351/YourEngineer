@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/widget/text_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import 'badge.dart';
 
@@ -19,12 +19,6 @@ class TextWithIconWidget extends StatelessWidget {
           fontSize: 20,
           color: Theme.of(context).colorScheme.onSecondary,
         ),
-        // IconButton(
-        //   onPressed: onTapNotifications,
-        //   iconSize: 30,
-        //   icon: const Icon(Icons.notifications_none),
-        //   color: Theme.of(context).colorScheme.onSecondary,
-        // ),
         Badge(
           value: '1',
           color: Colors.green,

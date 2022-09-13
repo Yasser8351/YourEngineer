@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_config/app_config.dart';
-import '../widget/text_widget.dart';
+import '../widget/shared_widgets/text_widget.dart';
 
 class AddProjectScreen extends StatefulWidget {
   const AddProjectScreen({Key? key}) : super(key: key);

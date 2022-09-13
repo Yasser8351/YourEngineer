@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
-import 'package:your_engineer/widget/card_with_image.dart';
+import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
-import '../../widget/text_widget.dart';
+import '../../widget/shared_widgets/text_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);

@@ -4,13 +4,13 @@ import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
-import 'package:your_engineer/widget/search_widget.dart';
-import 'package:your_engineer/widget/text_with_icon_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/search_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
 import '../model/top_engineer_rating_model.dart';
 import '../widget/list_populer_services_widget.dart';
-import '../widget/row_two_with_text.dart';
+import '../widget/shared_widgets/row_two_with_text.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/model/faq_model.dart';
-import 'package:your_engineer/widget/faq_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/faq_widget.dart';
 
 import '../../app_config/app_config.dart';
-import '../../widget/text_widget.dart';
+import '../../widget/shared_widgets/text_widget.dart';
 
 //FAQScreen
 class FAQScreen extends StatefulWidget {

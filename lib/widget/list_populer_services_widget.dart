@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
-import 'package:your_engineer/widget/text_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
-import 'card_decoration.dart';
+import 'shared_widgets/card_decoration.dart';
 
 class ListPopulerServicesWidget extends StatelessWidget {
   const ListPopulerServicesWidget(

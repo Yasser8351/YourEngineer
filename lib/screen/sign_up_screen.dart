@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/widget/button_widget.dart';
-import 'package:your_engineer/widget/radio_button_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/radio_button_widget.dart';
 
-import 'package:your_engineer/widget/text_faild_widget.dart';
-import 'package:your_engineer/widget/text_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/text_faild_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../app_config/app_config.dart';
+
+import '../../app_config/app_config.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({Key? key, required this.onTap}) : super(key: key);

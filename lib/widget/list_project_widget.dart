@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/widget/card_with_image.dart';
+import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../model/project_model.dart';
-import 'card_decoration.dart';
-import 'text_widget.dart';
+import 'shared_widgets/card_decoration.dart';
+import 'shared_widgets/text_widget.dart';
 
 class ListProjectWidget extends StatelessWidget {
   const ListProjectWidget(

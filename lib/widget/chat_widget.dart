@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/message_model.dart';
-import 'full_image.dart';
+import 'shared_widgets/full_image.dart';
 
 class ChatWidget extends StatelessWidget {
   const ChatWidget({Key? key, required this.messageModel}) : super(key: key);

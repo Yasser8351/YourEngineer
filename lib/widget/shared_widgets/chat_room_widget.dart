@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/widget/card_decoration.dart';
+import 'package:your_engineer/widget/shared_widgets/card_decoration.dart';
 
-import '../model/message_model.dart';
+import '../../model/message_model.dart';
 
 class ChatRoomWidget extends StatelessWidget {
   const ChatRoomWidget({

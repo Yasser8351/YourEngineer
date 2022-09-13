@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/model/notifcation_model.dart';
 
 import '../app_config/app_config.dart';
-import '../widget/notifcation_model.dart';
-import '../widget/text_widget.dart';
+import '../widget/notifcation_widget.dart';
+import '../widget/shared_widgets/text_widget.dart';
 
 class NotifcationScreen extends StatefulWidget {
   const NotifcationScreen({Key? key}) : super(key: key);

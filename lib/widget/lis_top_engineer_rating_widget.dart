@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
-import 'package:your_engineer/widget/text_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
-import 'card_decoration.dart';
-import 'rating_bar.dart';
+import 'shared_widgets/card_decoration.dart';
+import 'shared_widgets/rating_bar.dart';
 
 class ListTopEngineerRatingWidget extends StatelessWidget {
   const ListTopEngineerRatingWidget(

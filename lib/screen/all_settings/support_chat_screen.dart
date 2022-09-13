@@ -1,77 +1,12 @@
-// import 'package:flutter/material.dart';
-
-// import '../app_config/app_config.dart';
-// import '../widget/text_faild_widget_chat.dart';
-// import '../widget/text_widget.dart';
-
-// class SupportChatScreen extends StatelessWidget {
-//   const SupportChatScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // ColorScheme colorScheme = Theme.of(context).colorScheme;
-//     // final size = MediaQuery.of(context).size;
-//     TextEditingController controller = TextEditingController();
-//     return Scaffold(
-//       appBar: _getAppBar(context),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           children: [
-//             // NoData(
-//             //   isPostScreen: false,
-//             //   textMessage: AppConfig.noMessageSuppoerYet,
-//             //   imageUrlAssets: AppImage.noData,
-//             //   onTap: (() {
-//             //     //go To AddPostScreen
-//             //     Navigator.of(context).pushNamed(AppConfig.addProjectScreen);
-//             //   }),
-//             // ),
-
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 10),
-//               child: TextFaildChatWidget(
-//                   controller: controller,
-//                   label: AppConfig.sendMessage,
-//                   obscure: false,
-//                   inputType: TextInputType.text,
-//                   icon: const Icon(Icons.send, color: Colors.red)),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   _getAppBar(BuildContext context) {
-//     return AppBar(
-//       title: const Padding(
-//         padding: EdgeInsets.only(top: 10),
-//         child: TextWidget(
-//             title: AppConfig.support, fontSize: 18, color: Colors.white),
-//       ),
-//       leading: IconButton(
-//         onPressed: () {
-//           Navigator.of(context).pop();
-//         },
-//         icon: const Icon(Icons.navigate_before, size: 40),
-//         color: Colors.white,
-//       ),
-//     );
-//   }
-// }
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/widget/full_image.dart';
+import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 
-import '../../widget/text_widget.dart';
+import '../../widget/shared_widgets/text_widget.dart';
 
 class SupportChatScreen extends StatefulWidget {
-  //replace userMap with document
-  // final Map<String, dynamic> userMap;
-  // //final  DocumentSnapshot = document
-
   const SupportChatScreen(
       {Key? key,
       this.SupportChatScreenId = "",

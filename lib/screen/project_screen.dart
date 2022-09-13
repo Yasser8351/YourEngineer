@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../app_config/app_config.dart';
 import '../app_config/app_image.dart';
-import '../widget/no_data.dart';
+import '../widget/shared_widgets/no_data.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({Key? key}) : super(key: key);
