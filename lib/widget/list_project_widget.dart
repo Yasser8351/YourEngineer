@@ -75,7 +75,7 @@ class ListProjectWidget extends StatelessWidget {
                         height: size.height * .042,
                         width: size.width * .09,
                         //colors: Colors.black,
-                        colors: const Color.fromARGB(255, 146, 146, 146),
+                        colors: colorScheme.primary,
                         onTap: () {},
                         child: const Icon(
                           Icons.arrow_forward,
@@ -92,7 +92,7 @@ class ListProjectWidget extends StatelessWidget {
   }
 }
 
-buildRowList(title, colorScheme, icon) {
+buildRowList(title, ColorScheme colorScheme, icon) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 3),
     child: Row(
@@ -101,7 +101,7 @@ buildRowList(title, colorScheme, icon) {
         Icon(
           icon,
           size: 20,
-          color: colorScheme.secondary,
+          color: colorScheme.primary,
         ),
         const SizedBox(
           width: 10,
