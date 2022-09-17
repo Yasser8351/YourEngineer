@@ -30,6 +30,13 @@ class SettingsScreen extends StatelessWidget {
               buildDivider(),
               buildCardItem(
                   context,
+                  AppConfig.addProjectScreen,
+                  Icons.content_paste_go,
+                  () => Navigator.of(context)
+                      .pushNamed(AppConfig.addProjectScreen)),
+              buildDivider(),
+              buildCardItem(
+                  context,
                   AppConfig.termsOfServices,
                   Icons.front_hand_outlined,
                   () => Navigator.of(context)

@@ -34,6 +34,8 @@ class AppConfig {
   static const String language = "Language";
   static const String logout = "Logout";
   static const String faq = "FAQ";
+  static const String subServices = "Sub Services";
+  static const String servicesDetail = "Services Detail";
   static const String profile = "My Profile";
   static const String profileUser = "User Profile";
   static const String profileEngineer = "Engineer Profile";

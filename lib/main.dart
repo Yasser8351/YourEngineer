@@ -10,6 +10,8 @@ import 'package:your_engineer/screen/profile/pay_with_paypal.dart';
 import 'package:your_engineer/screen/profile/pay_with_visa.dart';
 import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
 import 'package:your_engineer/screen/profile/profile_user_screen.dart';
+import 'package:your_engineer/screen/services/services_detail_screen.dart';
+import 'package:your_engineer/screen/services/sub_services_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
 
 import 'screen/all_settings/faq_screen.dart';
@@ -69,6 +71,9 @@ class MyApp extends StatelessWidget {
         AppConfig.faq: (ctx) => const FAQScreen(),
         AppConfig.support: (ctx) => const SupportChatScreen(),
         AppConfig.language: (ctx) => const LanguageScreen(),
+        AppConfig.subServices: (ctx) =>
+            const SubServicesScreen(titleServices: ''),
+        AppConfig.servicesDetail: (ctx) => const ServicesDetailScreen(),
       },
     );
   }
