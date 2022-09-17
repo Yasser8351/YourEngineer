@@ -13,6 +13,7 @@ class AddProjectScreen extends StatefulWidget {
 class _AddProjectScreenState extends State<AddProjectScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController daysController = TextEditingController();
   RangeValues selectedRange = const RangeValues(25, 50);
   @override
   Widget build(BuildContext context) {
@@ -54,16 +55,38 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             ),
             buildRowList(
                 context, AppConfig.chooseCategory, colorScheme, Icons.category),
-            const SizedBox(height: 15),
+            const SizedBox(height: 11),
             TextWidget(
               title: AppConfig.projectDelivered,
               fontSize: 16,
               color: colorScheme.secondary,
               isTextStart: true,
             ),
-            buildRowList(
-                context, AppConfig.delivaryTime, colorScheme, Icons.timelapse),
-            const SizedBox(height: 15),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                buildRowList(context, AppConfig.delivaryTime, colorScheme,
+                    Icons.timelapse),
+                SizedBox(
+                  width: 150,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                    child: buildTextFormFaild(
+                      daysController,
+                      "days",
+                      false,
+                      TextInputType.number,
+                      const Icon(Icons.data_array_sharp),
+                      colorScheme,
+                      20,
+                      1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 25),
             TextWidget(
               title: AppConfig.yourBudget,
               fontSize: 16,
@@ -197,6 +220,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
         ),
       ),
       child: TextField(
+        keyboardType: inputType,
         maxLength: maxLength,
         maxLines: maxLines,
         scribbleEnabled: true,

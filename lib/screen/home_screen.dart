@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/model/project_model.dart';
+import 'package:your_engineer/model/sub_services_model.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/search_widget.dart';
@@ -42,11 +43,60 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   List<PopulerServicesModel> listPopulerServices = [
     PopulerServicesModel(
-        titleServices: "Architectural Design", imageUrlServices: AppImage.img9),
+      titleServices: "Sketches",
+      imageUrlServices: AppImage.img8,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "Electricity Distribution Scheme"),
+        SubServicesModel(id: 2, title: "Pumbing Distribution Chart"),
+        SubServicesModel(id: 3, title: "Furniture Distribution Chart"),
+        SubServicesModel(id: 4, title: "Full Scheme"),
+      ],
+    ),
     PopulerServicesModel(
-        titleServices: "Autocad Diagram", imageUrlServices: AppImage.img8),
+      titleServices: "Interface Design",
+      imageUrlServices: AppImage.img9,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "All Styles"),
+      ],
+    ),
     PopulerServicesModel(
-        titleServices: "3D Design", imageUrlServices: AppImage.img7),
+      titleServices: "Interior Design",
+      imageUrlServices: AppImage.img7,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "2D or 3D"),
+        SubServicesModel(id: 2, title: "Classic"),
+        SubServicesModel(id: 3, title: "Necolassic"),
+        SubServicesModel(id: 4, title: "Modern"),
+        SubServicesModel(id: 5, title: "Bohemain"),
+        SubServicesModel(id: 6, title: "Rural"),
+      ],
+    ),
+    PopulerServicesModel(
+      titleServices: "Type of Place",
+      imageUrlServices: AppImage.img7,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "Commercial"),
+        SubServicesModel(id: 2, title: "Residential"),
+      ],
+    ),
+    PopulerServicesModel(
+      titleServices: "Customer Type",
+      imageUrlServices: AppImage.img7,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "Company"),
+        SubServicesModel(id: 2, title: "Individuais"),
+      ],
+    ),
   ];
   List<ProjectModel> listProject = [
     ProjectModel(

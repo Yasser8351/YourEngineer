@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
         AppConfig.support: (ctx) => const SupportChatScreen(),
         AppConfig.language: (ctx) => const LanguageScreen(),
         AppConfig.subServices: (ctx) =>
-            const SubServicesScreen(titleServices: ''),
+            const SubServicesScreen(titleServices: '', listSubServices: []),
         AppConfig.servicesDetail: (ctx) => const ServicesDetailScreen(),
       },
     );

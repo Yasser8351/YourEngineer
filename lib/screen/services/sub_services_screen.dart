@@ -5,23 +5,25 @@ import '../../widget/list_sub_services_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class SubServicesScreen extends StatefulWidget {
-  const SubServicesScreen({Key? key, required this.titleServices})
+  const SubServicesScreen(
+      {Key? key, required this.titleServices, required this.listSubServices})
       : super(key: key);
   final String titleServices;
+  final List<SubServicesModel> listSubServices;
 
   @override
   State<SubServicesScreen> createState() => _SubServicesScreenState();
 }
 
 class _SubServicesScreenState extends State<SubServicesScreen> {
-  List<SubServicesModel> listSubServices = [
-    //Sketches
-    SubServicesModel(id: 0, title: "All"),
-    SubServicesModel(id: 1, title: "Electricity Distribution Scheme"),
-    SubServicesModel(id: 2, title: "Pumbing Distribution Chart"),
-    SubServicesModel(id: 3, title: "Furniture Distribution Chart"),
-    SubServicesModel(id: 4, title: "Full Scheme"),
-  ];
+  // List<SubServicesModel> listSubServices = [
+  //   //Sketches
+  //   SubServicesModel(id: 0, title: "All"),
+  //   SubServicesModel(id: 1, title: "Electricity Distribution Scheme"),
+  //   SubServicesModel(id: 2, title: "Pumbing Distribution Chart"),
+  //   SubServicesModel(id: 3, title: "Furniture Distribution Chart"),
+  //   SubServicesModel(id: 4, title: "Full Scheme"),
+  // ];
 
   int expandeIndex = 0;
   @override
@@ -42,7 +44,7 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
               child: ListView.separated(
                 separatorBuilder: (context, index) => const SizedBox(width: 20),
                 scrollDirection: Axis.horizontal,
-                itemCount: listSubServices.length,
+                itemCount: widget.listSubServices.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
@@ -51,7 +53,7 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
                       });
                     },
                     child: ListSubServicesWidget(
-                      subServicesModel: listSubServices[index],
+                      subServicesModel: widget.listSubServices[index],
                       colorScheme: colorScheme,
                       size: size,
                       index: index,
