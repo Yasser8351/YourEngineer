@@ -3,7 +3,7 @@ import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../model/sub_services_model.dart';
 
-class ListSubServicesWidget extends StatelessWidget {
+class ListSubServicesWidget extends StatefulWidget {
   const ListSubServicesWidget({
     Key? key,
     required this.subServicesModel,
@@ -19,27 +19,30 @@ class ListSubServicesWidget extends StatelessWidget {
   final int expandeIndex;
 
   @override
+  State<ListSubServicesWidget> createState() => _ListSubServicesWidgetState();
+}
+
+class _ListSubServicesWidgetState extends State<ListSubServicesWidget> {
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Card(
-            color:
-                expandeIndex == index ? colorScheme.background : Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextWidget(
-                title: subServicesModel.title,
-                fontSize: 17,
-                color: expandeIndex == index
-                    ? Colors.white
-                    : colorScheme.background,
-              ),
+    return Column(
+      children: [
+        Card(
+          color: widget.expandeIndex == widget.index
+              ? widget.colorScheme.background
+              : Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextWidget(
+              title: widget.subServicesModel.title,
+              fontSize: 17,
+              color: widget.expandeIndex == widget.index
+                  ? Colors.white
+                  : widget.colorScheme.background,
             ),
           ),
-          const Text("data")
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

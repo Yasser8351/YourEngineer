@@ -1,5 +1,6 @@
 class ProjectModel {
   String titleProject;
+  String categoryProject;
   String descriptionProject;
   String postBy;
   String numberOfoffers;
@@ -7,6 +8,7 @@ class ProjectModel {
 
   ProjectModel({
     required this.titleProject,
+    required this.categoryProject,
     required this.descriptionProject,
     required this.postBy,
     required this.createdDate,

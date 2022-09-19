@@ -65,6 +65,7 @@ class MyApp extends StatelessWidget {
         AppConfig.addProjectScreen: (ctx) => AddProjectScreen(
               projectModel: ProjectModel(
                   titleProject: '',
+                  categoryProject: '',
                   descriptionProject: '',
                   postBy: '',
                   createdDate: '',
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
         AppConfig.offerScreen: (ctx) => OffersScreen(
               projectModel: ProjectModel(
                   titleProject: '',
+                  categoryProject: '',
                   descriptionProject: '',
                   postBy: '',
                   createdDate: '',

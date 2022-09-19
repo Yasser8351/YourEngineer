@@ -15,6 +15,7 @@ class ProjectScreen extends StatelessWidget {
     List<ProjectModel> listProject = [
       ProjectModel(
         titleProject: '3D design for interior design',
+        categoryProject: '',
         descriptionProject:
             'Project details Project detailsProject details Project details Project details Project detailsProject details',
         postBy: "Open",
@@ -23,6 +24,7 @@ class ProjectScreen extends StatelessWidget {
       ),
       ProjectModel(
         titleProject: 'Making tables of quantities',
+        categoryProject: '',
         descriptionProject:
             'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
         postBy: "In progress",
@@ -31,6 +33,7 @@ class ProjectScreen extends StatelessWidget {
       ),
       ProjectModel(
         titleProject: 'health club design',
+        categoryProject: '',
         descriptionProject:
             'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
         postBy: "Completed",
@@ -39,6 +42,7 @@ class ProjectScreen extends StatelessWidget {
       ),
       ProjectModel(
         titleProject: '3D design for interior design',
+        categoryProject: '',
         descriptionProject:
             'Project details Project detailsProject details Project details Project details Project detailsProject details',
         postBy: "Open",
