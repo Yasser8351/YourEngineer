@@ -7,7 +7,8 @@ import '../widget/list_my_project_widget.dart';
 import '../widget/shared_widgets/no_data.dart';
 
 class ProjectScreen extends StatelessWidget {
-  const ProjectScreen({Key? key}) : super(key: key);
+  const ProjectScreen({Key? key, this.isMyProject = false}) : super(key: key);
+  final bool isMyProject;
 
   @override
   Widget build(BuildContext context) {
@@ -64,15 +65,16 @@ class ProjectScreen extends StatelessWidget {
         } else {
           // ListProjectWidget
           return ListView.builder(
-            shrinkWrap: true,
+            // shrinkWrap: true,
             itemCount: listProject.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: ListMyProjectWidget(
+                child: ListProjectWidget(
                   projectModel: listProject[index],
                   colorScheme: colorScheme,
+                  isMyProject: isMyProject,
                   size: size,
                 ),
               );
@@ -80,6 +82,12 @@ class ProjectScreen extends StatelessWidget {
           );
         }
       }),
+    );
+  }
+
+  void navigatorToNewScreen(BuildContext context, screen) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => screen),
     );
   }
 }

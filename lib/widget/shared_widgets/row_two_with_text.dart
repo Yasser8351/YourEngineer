@@ -9,30 +9,35 @@ class RowWithTwoText extends StatelessWidget {
     required this.description,
     required this.colorScheme,
     required this.colorScheme2,
+    required this.onTap,
   }) : super(key: key);
   final String title;
   final String description;
   final Color colorScheme;
   final Color colorScheme2;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextWidget(
-            title: title,
-            fontSize: 18,
-            color: colorScheme,
-          ),
-          TextWidget(
-            title: description,
-            fontSize: 18,
-            color: colorScheme2,
-          ),
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextWidget(
+              title: title,
+              fontSize: 18,
+              color: colorScheme,
+            ),
+            TextWidget(
+              title: description,
+              fontSize: 18,
+              color: colorScheme2,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/screen/add_project_screen.dart';
+import 'package:your_engineer/model/project_model.dart';
+import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/all_settings/support_chat_screen.dart';
 import 'package:your_engineer/screen/forgot_password_screen.dart';
 import 'package:your_engineer/screen/language_screen.dart';
@@ -10,6 +11,8 @@ import 'package:your_engineer/screen/profile/pay_with_paypal.dart';
 import 'package:your_engineer/screen/profile/pay_with_visa.dart';
 import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
 import 'package:your_engineer/screen/profile/profile_user_screen.dart';
+import 'package:your_engineer/screen/project/edit_my_project_screen.dart';
+import 'package:your_engineer/screen/project/offer_screen.dart';
 import 'package:your_engineer/screen/services/services_detail_screen.dart';
 import 'package:your_engineer/screen/services/sub_services_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
@@ -59,7 +62,14 @@ class MyApp extends StatelessWidget {
         AppConfig.signUp: (ctx) => const SignUpScreen(),
         AppConfig.forgetPassword: (ctx) => const ForgotPasswordScreen(),
         AppConfig.tabScreen: (ctx) => const TabScreen(),
-        AppConfig.addProjectScreen: (ctx) => const AddProjectScreen(),
+        AppConfig.addProjectScreen: (ctx) => AddProjectScreen(
+              projectModel: ProjectModel(
+                  titleProject: '',
+                  descriptionProject: '',
+                  postBy: '',
+                  createdDate: '',
+                  numberOfoffers: ''),
+            ),
         AppConfig.profileUser: (ctx) => const ProfileUserScreen(),
         AppConfig.profileEngineer: (ctx) => const ProfileEngineerScreen(),
         AppConfig.paypal: (ctx) => const PayWithPaypal(),
@@ -74,6 +84,15 @@ class MyApp extends StatelessWidget {
         AppConfig.subServices: (ctx) =>
             const SubServicesScreen(titleServices: '', listSubServices: []),
         AppConfig.servicesDetail: (ctx) => const ServicesDetailScreen(),
+        AppConfig.editMyProject: (ctx) => const EditMyProjectScreen(),
+        AppConfig.offerScreen: (ctx) => OffersScreen(
+              projectModel: ProjectModel(
+                  titleProject: '',
+                  descriptionProject: '',
+                  postBy: '',
+                  createdDate: '',
+                  numberOfoffers: ''),
+            ),
       },
     );
   }

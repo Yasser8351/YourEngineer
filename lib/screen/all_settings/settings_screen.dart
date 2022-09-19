@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/screen/project_screen.dart';
 
 import '../../widget/shared_widgets/text_widget.dart';
 
@@ -27,6 +28,14 @@ class SettingsScreen extends StatelessWidget {
                   AppConfig.notifcation,
                   Icons.notifications_outlined,
                   () => Navigator.of(context).pushNamed(AppConfig.notifcation)),
+              buildDivider(),
+              buildCardItem(
+                  context,
+                  AppConfig.myProject,
+                  Icons.edit,
+                  () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          const ProjectScreen(isMyProject: true)))),
               buildDivider(),
               buildCardItem(
                   context,

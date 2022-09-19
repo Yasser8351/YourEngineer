@@ -1,20 +1,26 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../model/project_model.dart';
+import '../screen/project/add_project_screen.dart';
+import '../screen/project/offer_screen.dart';
 import 'shared_widgets/card_decoration.dart';
 import 'shared_widgets/text_widget.dart';
 
-class ListMyProjectWidget extends StatelessWidget {
-  const ListMyProjectWidget(
+class ListProjectWidget extends StatelessWidget {
+  const ListProjectWidget(
       {Key? key,
       required this.projectModel,
       required this.colorScheme,
-      required this.size})
+      required this.size,
+      required this.isMyProject})
       : super(key: key);
   final ProjectModel projectModel;
   final ColorScheme colorScheme;
   final Size size;
+  final bool isMyProject;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,28 @@ class ListMyProjectWidget extends StatelessWidget {
         topRight: Radius.circular(10),
       ),
       child: CardDecoration(
-        onTap: () {},
+        onTap: () {
+          log("navigatorToNewScreen");
+          if (isMyProject) {
+            //go to edit my proget Screen
+
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AddProjectScreen(
+                projectModel: projectModel,
+                isMyProject: true,
+              ),
+            ));
+          } else {
+            //go to  Add offer Screen
+
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => OffersScreen(
+                        projectModel: projectModel,
+                      )),
+            );
+          }
+        },
         height: size.height * .29,
         width: size.width * .7,
         child: Padding(
@@ -75,19 +102,37 @@ class ListMyProjectWidget extends StatelessWidget {
                       ),
                       buildRowList(projectModel.createdDate, colorScheme,
                           Icons.watch_later),
-                      buildRowList(projectModel.numberOfoffers, colorScheme,
+                      buildRowList(
+                          isMyProject
+                              ? projectModel.numberOfoffers
+                                      .contains('add first offers')
+                                  ? "0"
+                                  : projectModel.numberOfoffers
+                              : projectModel.numberOfoffers,
+                          colorScheme,
                           Icons.post_add),
                     ],
                   ),
-                  CardWithImage(
-                      height: size.height * .05,
-                      width: size.width * .1,
-                      colors: const Color.fromARGB(255, 184, 184, 184),
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ))
+                  isMyProject
+                      ? CardWithImage(
+                          height: size.height * .05,
+                          width: size.width * .1,
+                          colors: const Color.fromARGB(255, 184, 184, 184),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => AddProjectScreen(
+                                  projectModel: projectModel,
+                                  isMyProject: true,
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ))
+                      : const SizedBox()
                 ],
               )
             ],

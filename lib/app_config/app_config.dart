@@ -16,12 +16,19 @@ class AppConfig {
   static const String tabScreen = "tab Screen";
   static const String settings = "Settings";
   static const String home = "Home";
+  static const String days = "Days";
+  static const String descreiption = "descreiptions";
+  static const String price = "price";
   static const String project = "Project";
+  static const String myProject = "My Project";
   static const String chat = "Chat";
   static const String exitApp = "Exit App";
   static const String send = "Send";
   static const String noData = "No data found";
+  static const String editMyProject = "Edit My Project";
   static const String addProjectScreen = "Add Project";
+  static const String offerScreen = "Add Offer";
+  static const String projectDetails = "Project details";
   static const String noMessageSuppoerYet =
       "If you have any problem, contact with support directly";
   static const String noMessageYet =
@@ -50,6 +57,8 @@ class AppConfig {
   static const String search = "Search";
   static const String submitYourProject = "Submit Your Project";
   static const String sendMessage = "send message";
+  static const String addOffer = "Add your offer now";
+  static const String allOffer = "All offers";
 
   static const String seeAll = "See All";
   static const String topEngineerRating = "Top Engineer Rating";

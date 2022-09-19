@@ -39,7 +39,7 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
             // List Sub Services horizantial this list using to
             // filter main List by title Sub Services
             SizedBox(
-              height: size.height * .07,
+              height: size.height,
               width: double.infinity,
               child: ListView.separated(
                 separatorBuilder: (context, index) => const SizedBox(width: 20),

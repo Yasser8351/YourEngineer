@@ -1,19 +1,51 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-import '../app_config/app_config.dart';
-import '../widget/shared_widgets/text_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:your_engineer/model/project_model.dart';
+
+import '../../app_config/app_config.dart';
+import '../../widget/shared_widgets/text_widget.dart';
 
 class AddProjectScreen extends StatefulWidget {
-  const AddProjectScreen({Key? key}) : super(key: key);
+  const AddProjectScreen(
+      {Key? key, required this.projectModel, this.isMyProject = false})
+      : super(key: key);
+  final ProjectModel projectModel;
+  final bool isMyProject;
 
   @override
   State<AddProjectScreen> createState() => _AddProjectScreenState();
 }
 
 class _AddProjectScreenState extends State<AddProjectScreen> {
+  TextEditingController daysController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController daysController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    initalControllers();
+  }
+
+  initalControllers() {
+    log(widget.projectModel.titleProject);
+    titleController.text = widget.projectModel.titleProject;
+    descriptionController.text = widget.projectModel.descriptionProject;
+    daysController.text = widget.projectModel.titleProject;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  disposeControllers() {
+    titleController.dispose();
+    descriptionController.dispose();
+    daysController.dispose();
+  }
+
   RangeValues selectedRange = const RangeValues(25, 50);
   @override
   Widget build(BuildContext context) {
@@ -21,7 +53,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: _getAppBar(context),
+      appBar: _getAppBar(context, widget.isMyProject),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +174,9 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             child: TextWidget(
-                title: AppConfig.submitYourProject,
+                title: widget.isMyProject
+                    ? AppConfig.editMyProject
+                    : AppConfig.submitYourProject,
                 fontSize: 20,
                 color: colorScheme.surface),
           ),
@@ -174,12 +208,14 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     );
   }
 
-  _getAppBar(BuildContext context) {
+  _getAppBar(BuildContext context, bool isMyProject) {
     return AppBar(
-      title: const Padding(
-        padding: EdgeInsets.only(top: 10),
+      title: Padding(
+        padding: const EdgeInsets.only(top: 10),
         child: TextWidget(
-            title: AppConfig.addProjectScreen,
+            title: isMyProject
+                ? AppConfig.editMyProject
+                : AppConfig.addProjectScreen,
             fontSize: 18,
             color: Colors.white),
       ),

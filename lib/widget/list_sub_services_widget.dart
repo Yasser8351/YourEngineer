@@ -20,18 +20,25 @@ class ListSubServicesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        color: expandeIndex == index ? colorScheme.background : Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextWidget(
-            title: subServicesModel.title,
-            fontSize: 17,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Card(
             color:
-                expandeIndex == index ? Colors.white : colorScheme.background,
+                expandeIndex == index ? colorScheme.background : Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextWidget(
+                title: subServicesModel.title,
+                fontSize: 17,
+                color: expandeIndex == index
+                    ? Colors.white
+                    : colorScheme.background,
+              ),
+            ),
           ),
-        ),
+          const Text("data")
+        ],
       ),
     );
   }
