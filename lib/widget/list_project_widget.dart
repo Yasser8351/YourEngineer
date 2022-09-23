@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../model/project_model.dart';
+import '../screen/project/offer_screen.dart';
 import 'shared_widgets/card_decoration.dart';
 import 'shared_widgets/text_widget.dart';
 
@@ -24,7 +25,12 @@ class ListProjectWidget extends StatelessWidget {
         topRight: Radius.circular(10),
       ),
       child: CardDecoration(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => OffersScreen(
+                    projectModel: projectModel,
+                  )));
+        },
         height: size.height * .3,
         width: size.width * .7,
         child: SingleChildScrollView(

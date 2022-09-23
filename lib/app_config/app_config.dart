@@ -27,6 +27,7 @@ class AppConfig {
   static const String noData = "No data found";
   static const String editMyProject = "Edit My Project";
   static const String addProjectScreen = "Add Project";
+  static const String addProtofilo = "Add Protofilo";
   static const String offerScreen = "Add Offer";
   static const String projectDetails = "Project details";
   static const String noMessageSuppoerYet =
@@ -72,6 +73,7 @@ class AppConfig {
   static const String delivaryTime = "Delivary Time";
   static const String budget = "Budget";
   static const String yourBudget = "what's your budgets?";
+  static const String dateProject = "Date of Project";
   static const String projectDelivered =
       "when would you like your project delivered?";
   static const String text1 =
@@ -86,6 +88,7 @@ class AppConfig {
   static const String fullNameInCard = "Full name on the card";
 
   static const String cardNumber = "Card Number";
+  static const String selectImageProject = "Selectd image of project";
   ////////////////////////////////
   /*
   static const String  ="";

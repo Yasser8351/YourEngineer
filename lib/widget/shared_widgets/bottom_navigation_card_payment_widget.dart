@@ -25,7 +25,7 @@ class BottomNavigationCardPaymentWidget extends StatelessWidget {
         child: CardWithImage(
           height: size.height * .7,
           width: size.width,
-          colors: colorScheme.onSurface,
+          colors: colorScheme.surface,
           isBorderRadiusTopLefZero: true,
           onTap: () {},
           child: Padding(

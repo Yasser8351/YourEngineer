@@ -20,4 +20,5 @@ class AppImage {
   static const noInternet = "$root/noInternet.png";
   static const paypal = "$root/paypal.png";
   static const visa = "$root/visa.png";
+  static const placeholder = "$root/placeholder.png";
 }

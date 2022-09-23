@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../app_config/app_config.dart';
 import '../app_config/app_image.dart';
@@ -55,6 +56,25 @@ class ProjectScreen extends StatelessWidget {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: InkWell(
+          onTap: (() =>
+              Navigator.of(context).pushNamed(AppConfig.addProjectScreen)),
+          child: Row(
+            children: [
+              Icon(Icons.content_paste_go, color: Colors.white),
+              SizedBox(width: size.width * .03),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: TextWidget(
+                    title: AppConfig.addProjectScreen,
+                    fontSize: size.height * .025,
+                    color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Builder(builder: (context) {
         if (data == 0) {
           return NoData(

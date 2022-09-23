@@ -57,7 +57,7 @@ class _ListProfileHorizontalWidgetState
                           : Icon(
                               widget.listHorizontalProfile[index].icon,
                               size: 22,
-                              color: widget.colorScheme.onSurface,
+                              color: widget.colorScheme.surface,
                             ),
                       const SizedBox(
                         width: 3,
@@ -67,7 +67,7 @@ class _ListProfileHorizontalWidgetState
                         child: TextWidget(
                           title: widget.listHorizontalProfile[index].title,
                           fontSize: 17,
-                          color: widget.colorScheme.onSurface,
+                          color: widget.colorScheme.surface,
                         ),
                       ),
                     ],
@@ -77,7 +77,7 @@ class _ListProfileHorizontalWidgetState
                       ? Image.asset(AppImage.divider)
                       : const SizedBox(),
                   Divider(
-                    color: widget.colorScheme.onSurface,
+                    color: widget.colorScheme.surface,
                   ),
                 ],
               ),

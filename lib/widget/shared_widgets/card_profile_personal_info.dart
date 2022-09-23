@@ -20,7 +20,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
     return CardWithImage(
       height: size.height * .17,
       width: size.width,
-      colors: colorScheme.onSurface,
+      colors: colorScheme.surface,
       onTap: () {},
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -66,7 +66,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                         backgroundColor: colorScheme.primary,
                         child: Icon(
                           Icons.add,
-                          color: colorScheme.onSurface,
+                          color: colorScheme.surface,
                         ),
                       ),
                     ),

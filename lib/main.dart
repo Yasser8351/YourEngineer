@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/project_model.dart';
+import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/all_settings/support_chat_screen.dart';
 import 'package:your_engineer/screen/forgot_password_screen.dart';
@@ -44,14 +45,14 @@ class MyApp extends StatelessWidget {
           secondary: Color(0xff999999),
           onSecondary: Color(0xff555555),
           background: Color(0xff0E0E0E),
-          surface: Color(0xffEBEBEB),
+          surface: Colors.white,
           error: Color(0xff636363),
           //////////////////////////////
           onError: Colors.black54,
           onBackground: Colors.black,
           //#636363
 
-          onSurface: Colors.white,
+          onSurface: Colors.black,
           brightness: Brightness.light,
         ),
         primarySwatch: Colors.blue,
@@ -95,6 +96,7 @@ class MyApp extends StatelessWidget {
                   createdDate: '',
                   numberOfoffers: ''),
             ),
+        AppConfig.addProtofilo: (ctx) => const AddProtofiloScreen(),
       },
     );
   }
