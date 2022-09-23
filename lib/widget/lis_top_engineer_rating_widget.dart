@@ -1,5 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
+import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
+import 'package:your_engineer/screen/profile/profile_user_screen.dart';
+import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
+import 'package:your_engineer/widget/shared_widgets/my_favorite_button.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import 'shared_widgets/card_decoration.dart';
@@ -18,15 +24,22 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(10),
-        topRight: Radius.circular(10),
-      ),
-      child: CardDecoration(
-        onTap: () {},
-        height: 300,
-        width: 210,
+    return CardDecoration(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ProfileEngineerScreen(
+                  engineerModel: topEngineerRatingModel,
+                  // colorScheme: colorScheme,
+                  // size: size,
+                )));
+      },
+      height: 0,
+      width: size.width * .6,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -34,25 +47,41 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
             children: [
               Image.asset(
                 topEngineerRatingModel.imageUrl,
-                height: 150,
+                height: size.height * .2,
                 width: double.infinity,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: TextWidget(
-                  title: topEngineerRatingModel.engineerName,
-                  fontSize: 18,
-                  color: colorScheme.onSecondary,
-                  isTextStart: false,
+                padding: const EdgeInsets.only(left: 5, right: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextWidget(
+                      title: topEngineerRatingModel.engineerName,
+                      fontSize: 18,
+                      color: colorScheme.onSecondary,
+                      isTextStart: false,
+                    ),
+                    CardWithImage(
+                        colors: Colors.green.shade50,
+                        onTap: () {},
+                        height: 35,
+                        width: 35,
+                        child: MyFavoriteButton(
+                          iconSize: 35,
+                          iconColor: Colors.red,
+                          isFavorite: false,
+                          valueChanged: (_isFavorite) async {},
+                        ))
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
                 child: TextWidget(
                   title: topEngineerRatingModel.engineerspecialist,
-                  fontSize: 18,
+                  fontSize: 16,
                   color: colorScheme.secondary,
                   isTextStart: true,
                 ),
@@ -63,6 +92,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     RatingBar(
+                      sizeIcon: 15,
                       color: Colors.amber,
                       rating: topEngineerRatingModel.engineerRating,
                       onRatingChanged: (rating) {

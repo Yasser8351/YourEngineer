@@ -57,6 +57,13 @@ class ProjectScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.navigate_before, size: 40),
+          color: Colors.white,
+        ),
         title: InkWell(
           onTap: (() =>
               Navigator.of(context).pushNamed(AppConfig.addProjectScreen)),
@@ -112,6 +119,25 @@ class ProjectScreen extends StatelessWidget {
   void navigatorToNewScreen(BuildContext context, screen) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => screen),
+    );
+  }
+
+  _getAppBar(BuildContext context) {
+    return AppBar(
+      title: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: TextWidget(
+            title: AppConfig.addProjectScreen,
+            fontSize: 18,
+            color: Colors.white),
+      ),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        icon: const Icon(Icons.navigate_before, size: 40),
+        color: Colors.white,
+      ),
     );
   }
 }

@@ -7,34 +7,36 @@ class RatingBar extends StatelessWidget {
   final double rating;
   final RatingChangeCallback onRatingChanged;
   final Color color;
+  final double sizeIcon;
 
   const RatingBar(
       {Key? key,
       this.starCount = 5,
       this.rating = .0,
       required this.onRatingChanged,
+      required this.sizeIcon,
       required this.color})
       : super(key: key);
 
   Widget buildStar(BuildContext context, int index) {
     Icon icon;
     if (index >= rating) {
-      icon = const Icon(
+      icon = Icon(
         Icons.star_border,
-        size: 15,
+        size: sizeIcon,
         color: Colors.grey,
       );
     } else if (index > rating - 1 && index < rating) {
       icon = Icon(
         Icons.star_half,
         color: color,
-        size: 15,
+        size: sizeIcon,
       );
     } else {
       icon = Icon(
         Icons.star,
         color: color,
-        size: 15,
+        size: sizeIcon,
       );
     }
     return InkResponse(

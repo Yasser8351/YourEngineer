@@ -21,7 +21,6 @@ class CardDecoration extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          //border: Border.all(color: colors),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Card(borderOnForeground: true, elevation: 5, child: child),

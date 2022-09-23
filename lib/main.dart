@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/project_model.dart';
+import 'package:your_engineer/model/top_engineer_rating_model.dart';
 import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/all_settings/support_chat_screen.dart';
@@ -72,8 +73,13 @@ class MyApp extends StatelessWidget {
                   createdDate: '',
                   numberOfoffers: ''),
             ),
-        AppConfig.profileUser: (ctx) => const ProfileUserScreen(),
-        AppConfig.profileEngineer: (ctx) => const ProfileEngineerScreen(),
+        AppConfig.profileUser: (ctx) => ProfileUserScreen(),
+        AppConfig.profileEngineer: (ctx) => ProfileEngineerScreen(
+            engineerModel: TopEngineerRatingModel(
+                engineerName: '',
+                engineerspecialist: '',
+                imageUrl: '',
+                engineerRating: 0.0)),
         AppConfig.paypal: (ctx) => const PayWithPaypal(),
         AppConfig.visa: (ctx) => const PayWithVisa(),
         AppConfig.chatRoom: (ctx) => const ChatRoomScreen(),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:your_engineer/screen/profile/add_protofilo.dart';
 
 import '../../app_config/app_image.dart';
 import 'card_with_image.dart';
+import 'rating_bar.dart';
 import 'text_widget.dart';
 
 class CardProfilePersonalInfo extends StatelessWidget {
@@ -9,11 +11,13 @@ class CardProfilePersonalInfo extends StatelessWidget {
       {Key? key,
       required this.size,
       required this.colorScheme,
-      required this.onTap})
+      required this.onTap,
+      this.isMyProfile = false})
       : super(key: key);
   final Size size;
   final ColorScheme colorScheme;
   final Function() onTap;
+  final isMyProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +48,34 @@ class CardProfilePersonalInfo extends StatelessWidget {
                         fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),
-                    TextWidget(
-                        title: "Your balance \$200.0 ",
-                        fontSize: 18,
-                        color: colorScheme.onSecondary),
+                    isMyProfile
+                        ? // RatingBar
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              RatingBar(
+                                color: Colors.amber,
+                                rating: 4.5,
+                                sizeIcon: 22,
+                                onRatingChanged: (rating) {
+                                  // setState(() => this.rating = rating)
+                                },
+                              ),
+                              const SizedBox(width: 7),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: TextWidget(
+                                  title: 4.5.toString(),
+                                  fontSize: 17,
+                                  color: colorScheme.onSecondary,
+                                ),
+                              ),
+                            ],
+                          )
+                        : TextWidget(
+                            title: "Your balance \$200.0 ",
+                            fontSize: 18,
+                            color: colorScheme.onSecondary),
                   ],
                 ),
                 Column(

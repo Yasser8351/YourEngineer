@@ -3,7 +3,9 @@ import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/model/sub_services_model.dart';
+import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
+import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/search_widget.dart';
@@ -196,8 +198,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 description: AppConfig.seeAll,
                 colorScheme: colorScheme.onSecondary,
                 colorScheme2: colorScheme.primary,
-                onTap: (() =>
-                    navigatorToNewScreen(context, const ProjectScreen())),
+                onTap: (() => navigatorToNewScreen(
+                      context,
+                      AllPopulerServicesScreen(
+                          listPopulerServices: listPopulerServices,
+                          colorScheme: colorScheme,
+                          size: size),
+                    )),
               ),
 
               // ListPopulerServicesWidget
@@ -228,8 +235,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 description: AppConfig.seeAll,
                 colorScheme: colorScheme.onSecondary,
                 colorScheme2: colorScheme.primary,
-                onTap: (() =>
-                    navigatorToNewScreen(context, const ProjectScreen())),
+                onTap: (() => navigatorToNewScreen(
+                      context,
+                      AllEngineersScreen(
+                          listEngineers: listTopEngineerRating,
+                          colorScheme: colorScheme,
+                          size: size),
+                    )),
               ),
 
               // ListTopEngineerRatingWidget

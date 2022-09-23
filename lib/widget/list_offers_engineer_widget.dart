@@ -79,6 +79,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 RatingBar(
+                                  sizeIcon: 15,
                                   color: Colors.amber,
                                   rating: offersEngineerModel.engineerRating,
                                   onRatingChanged: (rating) {

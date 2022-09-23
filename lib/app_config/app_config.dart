@@ -1,6 +1,6 @@
 class AppConfig {
   static const String appName = "App Name";
-  static const String engineer = "Engineer";
+  static const String engineer = "Engineers";
   static const String projectOwner = "Project Owner";
   static const String emal = "email";
   static const String password = "password";
