@@ -125,9 +125,8 @@ class SettingsScreen extends StatelessWidget {
       onTap: () => onTap(),
       child: ListTile(
         leading: Icon(icons,
-            color: isLogout
-                ? Colors.red
-                : Theme.of(context).colorScheme.secondary),
+            color:
+                isLogout ? Colors.red : Theme.of(context).colorScheme.primary),
         title: Align(
           alignment: Alignment.bottomLeft,
           child: Padding(
