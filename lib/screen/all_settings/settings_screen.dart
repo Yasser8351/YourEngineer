@@ -53,14 +53,6 @@ class SettingsScreen extends StatelessWidget {
               buildDivider(),
               buildCardItem(
                 context,
-                AppConfig.privacyPolicy,
-                Icons.security,
-                () =>
-                    {Navigator.of(context).pushNamed(AppConfig.privacyPolicy)},
-              ),
-              buildDivider(),
-              buildCardItem(
-                context,
                 AppConfig.language,
                 Icons.change_circle_outlined,
                 () => {Navigator.of(context).pushNamed(AppConfig.language)},
@@ -79,6 +71,22 @@ class SettingsScreen extends StatelessWidget {
                 Icons.support_agent_rounded,
                 () => {Navigator.of(context).pushNamed(AppConfig.support)},
               ),
+              buildDivider(),
+              // buildCardItem(
+              //   context,
+              //   AppConfig.privacyPolicy,
+              //   Icons.security,
+              //   () =>
+              //       {Navigator.of(context).pushNamed(AppConfig.privacyPolicy)},
+              // ),
+              // buildDivider(),
+              buildCardItem(
+                  context,
+                  AppConfig.privacyPolicy,
+                  Icons.security,
+                  () =>
+                      Navigator.of(context).pushNamed(AppConfig.privacyPolicy),
+                  true),
               buildDivider(),
               buildCardItem(context, AppConfig.logout, Icons.logout,
                   () => Navigator.of(context).pushNamed(AppConfig.login), true),
@@ -102,13 +110,6 @@ class SettingsScreen extends StatelessWidget {
         child: TextWidget(
             title: AppConfig.settings, fontSize: 18, color: Colors.white),
       ),
-      // leading: IconButton(
-      //   onPressed: () {
-      //     Navigator.of(context).pop();
-      //   },
-      //   icon: const Icon(Icons.navigate_before, size: 40),
-      //   color: Colors.white,
-      // ),
     );
   }
 
@@ -120,13 +121,14 @@ class SettingsScreen extends StatelessWidget {
 
   buildCardItem(
       BuildContext context, String title, IconData icons, Function() onTap,
-      [bool isLogout = false]) {
+      [bool isColorRed = false]) {
     return GestureDetector(
       onTap: () => onTap(),
       child: ListTile(
         leading: Icon(icons,
-            color:
-                isLogout ? Colors.red : Theme.of(context).colorScheme.primary),
+            color: isColorRed
+                ? Colors.red
+                : Theme.of(context).colorScheme.primary),
         title: Align(
           alignment: Alignment.bottomLeft,
           child: Padding(
@@ -134,16 +136,13 @@ class SettingsScreen extends StatelessWidget {
             child: TextWidget(
                 title: title,
                 fontSize: 18,
-                color: isLogout
+                color: isColorRed
                     ? Colors.red
                     : Theme.of(context).colorScheme.onSecondary),
           ),
         ),
         trailing: Icon(Icons.navigate_next,
-            size: 30,
-            color: isLogout
-                ? Colors.red
-                : Theme.of(context).colorScheme.secondary),
+            size: 30, color: Theme.of(context).colorScheme.secondary),
       ),
     );
   }
