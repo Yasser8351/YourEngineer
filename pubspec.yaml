@@ -33,6 +33,16 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  # Http connaction
+  dio: ^4.0.6
+
+  # toast message
+  another_flushbar: ^1.12.29
+  simple_fontellico_progress_dialog: ^0.2.1
+
+  # state management
+  provider: ^6.0.2
+
 
 dev_dependencies:
   flutter_test:

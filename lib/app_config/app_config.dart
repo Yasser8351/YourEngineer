@@ -3,6 +3,7 @@ class AppConfig {
   static const String engineer = "Engineers";
   static const String projectOwner = "Project Owner";
   static const String emal = "email";
+  static const String phone = "phone";
   static const String password = "password";
   static const String comfirmPassword = "comfirm password";
 
@@ -93,4 +94,9 @@ class AppConfig {
   /*
   static const String  ="";
   */
+  static const String loading = "loading...";
+  static const String unAutaristion = "unAuthorized";
+  static const String serverError = "server Error";
+  static const String errorOoccurred = "errorOoccurred";
+  static const String failedInternet = "failed internet connection";
 }

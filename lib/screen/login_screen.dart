@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
+import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 
 import 'package:your_engineer/widget/shared_widgets/text_faild_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
+
+import '../api/user_auth.dart';
+import '../debugger/my_debuger.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,6 +19,18 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  late SimpleFontelicoProgressDialog _dialog;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _dialog = SimpleFontelicoProgressDialog(
+      context: context,
+      barrierDimisable: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -71,9 +87,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         inputType: TextInputType.text),
                     SizedBox(height: size.height * .1),
                     ButtonWidget(
-                        title: AppConfig.login,
-                        color: colorScheme.primary,
-                        onTap: () => null),
+                      title: AppConfig.login,
+                      color: colorScheme.primary,
+                      onTap: () async {
+                        _showDialog('');
+                        UserAuth userAuth = UserAuth();
+                        bool isSignup = await userAuth.userSignIn(
+                          context,
+                          _emailController.text,
+                          _passwordController.text,
+                        );
+                        myLog('isSignup', isSignup);
+
+                        // _dialog.hide();
+
+                        if (isSignup) {
+                          //userSignup sucssufuly
+                          // ignore: use_build_context_synchronously
+                          Navigator.of(context).pushNamed(AppConfig.tabScreen);
+                        } else {
+                          //userSignup faild try again later
+
+                        }
+                      },
+                    ),
                     const SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerRight,
@@ -105,6 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showDialog(String message) async {
+    _dialog.show(
+      message: AppConfig.loading,
+      indicatorColor: Theme.of(context).colorScheme.primary,
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/model/project_model.dart';
-import 'package:your_engineer/model/sub_services_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
@@ -13,6 +12,7 @@ import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
 import '../model/top_engineer_rating_model.dart';
+import '../provider/populer_services_provider.dart';
 import '../widget/list_populer_services_widget.dart';
 import '../widget/shared_widgets/row_two_with_text.dart';
 
@@ -24,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //////
+  late PopulerServicesProvider servicesProvider;
   List<TopEngineerRatingModel> listTopEngineerRating = [
     TopEngineerRatingModel(
       engineerName: "Yasser Abubaker",
@@ -44,63 +46,66 @@ class _HomeScreenState extends State<HomeScreen> {
       engineerRating: 1.5,
     ),
   ];
-  List<PopulerServicesModel> listPopulerServices = [
-    PopulerServicesModel(
-      titleServices: "Sketches",
-      imageUrlServices: AppImage.img8,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "Electricity Distribution Scheme"),
-        SubServicesModel(id: 2, title: "Pumbing Distribution Chart"),
-        SubServicesModel(id: 3, title: "Furniture Distribution Chart"),
-        SubServicesModel(id: 4, title: "Full Scheme"),
-      ],
-    ),
-    PopulerServicesModel(
-      titleServices: "Interface Design",
-      imageUrlServices: AppImage.img9,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "All Styles"),
-      ],
-    ),
-    PopulerServicesModel(
-      titleServices: "Interior Design",
-      imageUrlServices: AppImage.img7,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "2D or 3D"),
-        SubServicesModel(id: 2, title: "Classic"),
-        SubServicesModel(id: 3, title: "Necolassic"),
-        SubServicesModel(id: 4, title: "Modern"),
-        SubServicesModel(id: 5, title: "Bohemain"),
-        SubServicesModel(id: 6, title: "Rural"),
-      ],
-    ),
-    PopulerServicesModel(
-      titleServices: "Type of Place",
-      imageUrlServices: AppImage.img7,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "Commercial"),
-        SubServicesModel(id: 2, title: "Residential"),
-      ],
-    ),
-    PopulerServicesModel(
-      titleServices: "Customer Type",
-      imageUrlServices: AppImage.img7,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "Company"),
-        SubServicesModel(id: 2, title: "Individuais"),
-      ],
-    ),
-  ];
+  List<PopulerServicesModel> listPopulerServices = [];
+
+  // List<PopulerServicesModel> listPopulerServices = [
+  //   PopulerServicesModel(
+  //     titleServices: "Sketches",
+  //     imageUrlServices: AppImage.img8,
+  //     listSubServices: [
+  //       //Sketches
+  //       SubServicesModel(id: 0, title: "All"),
+  //       SubServicesModel(id: 1, title: "Electricity Distribution Scheme"),
+  //       SubServicesModel(id: 2, title: "Pumbing Distribution Chart"),
+  //       SubServicesModel(id: 3, title: "Furniture Distribution Chart"),
+  //       SubServicesModel(id: 4, title: "Full Scheme"),
+  //     ],
+  //   ),
+  //   PopulerServicesModel(
+  //     titleServices: "Interface Design",
+  //     imageUrlServices: AppImage.img9,
+  //     listSubServices: [
+  //       //Sketches
+  //       SubServicesModel(id: 0, title: "All"),
+  //       SubServicesModel(id: 1, title: "All Styles"),
+  //     ],
+  //   ),
+  //   PopulerServicesModel(
+  //     titleServices: "Interior Design",
+  //     imageUrlServices: AppImage.img7,
+  //     listSubServices: [
+  //       //Sketches
+  //       SubServicesModel(id: 0, title: "All"),
+  //       SubServicesModel(id: 1, title: "2D or 3D"),
+  //       SubServicesModel(id: 2, title: "Classic"),
+  //       SubServicesModel(id: 3, title: "Necolassic"),
+  //       SubServicesModel(id: 4, title: "Modern"),
+  //       SubServicesModel(id: 5, title: "Bohemain"),
+  //       SubServicesModel(id: 6, title: "Rural"),
+  //     ],
+  //   ),
+  //   PopulerServicesModel(
+  //     titleServices: "Type of Place",
+  //     imageUrlServices: AppImage.img7,
+  //     listSubServices: [
+  //       //Sketches
+  //       SubServicesModel(id: 0, title: "All"),
+  //       SubServicesModel(id: 1, title: "Commercial"),
+  //       SubServicesModel(id: 2, title: "Residential"),
+  //     ],
+  //   ),
+  //   PopulerServicesModel(
+  //     titleServices: "Customer Type",
+  //     imageUrlServices: AppImage.img7,
+  //     listSubServices: [
+  //       //Sketches
+  //       SubServicesModel(id: 0, title: "All"),
+  //       SubServicesModel(id: 1, title: "Company"),
+  //       SubServicesModel(id: 2, title: "Individuais"),
+  //     ],
+  //   ),
+  // ];
+
   List<ProjectModel> listProject = [
     ProjectModel(
       titleProject: 'Making tables of quantities',
@@ -278,9 +283,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-
 
 /* 
   _getAppBar(BuildContext context) {

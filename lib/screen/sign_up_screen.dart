@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
+import 'package:your_engineer/api/user_auth.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/radio_button_widget.dart';
 
@@ -17,8 +20,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _comfirmPasswordController = TextEditingController();
+
+  late SimpleFontelicoProgressDialog _dialog;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _dialog = SimpleFontelicoProgressDialog(
+      context: context,
+      barrierDimisable: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -56,6 +73,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   inputType: TextInputType.emailAddress),
               SizedBox(height: size.height * .045),
               TextFaildWidget(
+                  controller: _phoneController,
+                  label: AppConfig.phone,
+                  obscure: false,
+                  icon: const Icon(Icons.close),
+                  inputType: TextInputType.number),
+              SizedBox(height: size.height * .045),
+              TextFaildWidget(
                   controller: _passwordController,
                   label: AppConfig.password,
                   icon: const Icon(Icons.remove_red_eye),
@@ -74,8 +98,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ButtonWidget(
                 title: AppConfig.signUp,
                 color: colorScheme.primary,
-                onTap: () =>
-                    Navigator.of(context).pushNamed(AppConfig.tabScreen),
+                onTap: () async {
+                  _showDialog('');
+                  UserAuth userAuth = UserAuth();
+                  bool isSignup = await userAuth.userSignup(
+                    context,
+                    _emailController.text,
+                    _firstNameController.text + _lastNameController.text,
+                    _passwordController.text,
+                    _phoneController.text,
+                  );
+                  myLog('isSignup', isSignup);
+                  _dialog.hide();
+
+                  if (isSignup) {
+                    //userSignup sucssufuly
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).pushNamed(AppConfig.login);
+                  } else {
+                    //userSignup faild try again later
+
+                  }
+                },
               ),
               const SizedBox(height: 10),
               Align(
@@ -119,6 +163,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         icon: const Icon(Icons.navigate_before, size: 40),
         color: Colors.white,
       ),
+    );
+  }
+
+  void _showDialog(String message) async {
+    _dialog.show(
+      message: AppConfig.loading,
+      indicatorColor: Theme.of(context).colorScheme.primary,
     );
   }
 }

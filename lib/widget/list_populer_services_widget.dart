@@ -28,7 +28,7 @@ class ListPopulerServicesWidget extends StatelessWidget {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => SubServicesScreen(
               titleServices: populerServicesModel.titleServices,
-              listSubServices: populerServicesModel.listSubServices,
+              listSubServices: [],
             ),
           ));
         },
