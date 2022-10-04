@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_image.dart';
+import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
@@ -11,6 +13,7 @@ import 'package:your_engineer/widget/shared_widgets/search_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
+import '../controller/populer_services_controller.dart';
 import '../model/top_engineer_rating_model.dart';
 import '../provider/populer_services_provider.dart';
 import '../widget/list_populer_services_widget.dart';
@@ -24,8 +27,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final PopulerServicesController populerServicesController =
+      Get.put(PopulerServicesController());
+
   //////
-  late PopulerServicesProvider servicesProvider;
+  // late PopulerServicesProvider servicesProvider;
   List<TopEngineerRatingModel> listTopEngineerRating = [
     TopEngineerRatingModel(
       engineerName: "Yasser Abubaker",
@@ -46,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       engineerRating: 1.5,
     ),
   ];
-  List<PopulerServicesModel> listPopulerServices = [];
+  // List<PopulerServicesModel> listPopulerServices = [];
 
   // List<PopulerServicesModel> listPopulerServices = [
   //   PopulerServicesModel(
@@ -176,23 +182,29 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               // ListProjectWidget
-              SizedBox(
-                height: size.height * .25,
-                width: double.infinity,
-                child: ListView.separated(
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 18),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: listProject.length,
-                  itemBuilder: (context, index) {
-                    return ListProjectWidget(
-                      projectModel: listProject[index],
-                      colorScheme: colorScheme,
-                      size: size,
-                    );
-                  },
+              if (populerServicesController.loadingState ==
+                      LoadingState.initial ||
+                  populerServicesController.loadingState ==
+                      LoadingState.loading)
+                const Center(child: CircularProgressIndicator())
+              else
+                SizedBox(
+                  height: size.height * .25,
+                  width: double.infinity,
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 18),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: listProject.length,
+                    itemBuilder: (context, index) {
+                      return ListProjectWidget(
+                        projectModel: listProject[index],
+                        colorScheme: colorScheme,
+                        size: size,
+                      );
+                    },
+                  ),
                 ),
-              ),
 
               // Space between list in Home Screen
               const SizedBox(height: 40),
@@ -206,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: (() => navigatorToNewScreen(
                       context,
                       AllPopulerServicesScreen(
-                          listPopulerServices: listPopulerServices,
+                          listPopulerServices: populerServicesController.list,
                           colorScheme: colorScheme,
                           size: size),
                     )),
@@ -220,10 +232,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 18),
                   scrollDirection: Axis.horizontal,
-                  itemCount: listPopulerServices.length,
+                  itemCount: populerServicesController.list.length,
                   itemBuilder: (context, index) {
                     return ListPopulerServicesWidget(
-                      populerServicesModel: listPopulerServices[index],
+                      populerServicesModel:
+                          populerServicesController.list[index],
                       colorScheme: colorScheme,
                       size: size,
                     );

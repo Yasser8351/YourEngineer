@@ -109,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     _phoneController.text,
                   );
                   myLog('isSignup', isSignup);
-                  _dialog.hide();
+                  // _dialog.hide();
 
                   if (isSignup) {
                     //userSignup sucssufuly
