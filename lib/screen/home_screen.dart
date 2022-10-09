@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
@@ -6,14 +7,16 @@ import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/search_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
-import '../model/populer_services_model.dart';
-import '../model/sub_services_model.dart';
+import '../controller/populer_services_controller.dart';
+import '../enum/all_enum.dart';
 import '../model/top_engineer_rating_model.dart';
 import '../widget/list_populer_services_widget.dart';
+import '../widget/shared_widgets/loading_widget.dart';
 import '../widget/shared_widgets/row_two_with_text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,8 +27,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // final PopulerServicesController populerServicesController =
-  //     Get.put(PopulerServicesController());
+  final PopulerServicesController populerServicesController = Get.find();
 
   //////
   // late PopulerServicesProvider servicesProvider;
@@ -49,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       engineerRating: 1.5,
     ),
   ];
-
+/*
   List<PopulerServicesModel> listPopulerServices = [
     PopulerServicesModel(
       titleServices: "Sketches",
@@ -107,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     ),
   ];
-
+   */
   List<ProjectModel> listProject = [
     ProjectModel(
       titleProject: 'Making tables of quantities',
@@ -178,12 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               // ListProjectWidget
-              // if (populerServicesController.loadingState ==
-              //         LoadingState.initial ||
-              //     populerServicesController.loadingState ==
-              //         LoadingState.loading)
-              //   const Center(child: CircularProgressIndicator())
-              // else
+
               SizedBox(
                 height: size.height * .25,
                 width: double.infinity,
@@ -214,29 +211,55 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: (() => navigatorToNewScreen(
                       context,
                       AllPopulerServicesScreen(
-                          listPopulerServices: listPopulerServices,
+                          listPopulerServices:
+                              populerServicesController.listPopulerServices,
                           colorScheme: colorScheme,
                           size: size),
                     )),
               ),
 
               // ListPopulerServicesWidget
-              SizedBox(
-                height: size.height * .3,
-                width: double.infinity,
-                child: ListView.separated(
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 18),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: listPopulerServices.length,
-                  itemBuilder: (context, index) {
-                    return ListPopulerServicesWidget(
-                      populerServicesModel: listPopulerServices[index],
-                      colorScheme: colorScheme,
-                      size: size,
+              Obx(
+                () {
+                  // if (populerServicesController.loadingState.value ==
+                  //         LoadingState.initial ||
+                  //     populerServicesController.loadingState.value ==
+                  //         LoadingState.loading)
+
+                  if (populerServicesController.loadingState.value ==
+                          LoadingState.initial ||
+                      populerServicesController.loadingState.value ==
+                          LoadingState.loading) {
+                    return const LoadingWidget();
+                  } else if (populerServicesController.loadingState.value ==
+                      LoadingState.error) {
+                    return ReyTryErrorWidget(
+                        title: populerServicesController.apiResponse.message,
+                        onTap: () {
+                          populerServicesController.getCategorys();
+                        });
+                  } else {
+                    return SizedBox(
+                      height: size.height * .3,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 18),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: populerServicesController
+                            .listPopulerServices.length,
+                        itemBuilder: (context, index) {
+                          return ListPopulerServicesWidget(
+                            populerServicesModel: populerServicesController
+                                .listPopulerServices[index],
+                            colorScheme: colorScheme,
+                            size: size,
+                          );
+                        },
+                      ),
                     );
-                  },
-                ),
+                  }
+                },
               ),
 
               // Space between list in Home Screen

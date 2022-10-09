@@ -239,12 +239,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  void clearText(TextEditingController controller) {
-    controller.clear();
-  }
-
-  // void showHidePassword() {}
-
   void showHidePassword() {
     setState(() {
       _obscureText = !_obscureText;

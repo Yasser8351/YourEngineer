@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   late SimpleFontelicoProgressDialog _dialog;
   bool isLoading = false;
-  bool _obscureText = false;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -81,7 +81,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         label: AppConfig.emal,
                         obscure: false,
                         icon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            clearText(_emailController);
+                          },
                           icon: const Icon(Icons.close),
                         ),
                         inputType: TextInputType.emailAddress),

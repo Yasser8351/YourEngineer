@@ -1,5 +1,20 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+void clearText(TextEditingController controller) {
+  controller.clear();
+}
+
+showErrorToast(title, message) {
+  Get.snackbar(title, message,
+      snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+}
+
+showseuessToast(title, message) {
+  Get.snackbar(title, message,
+      snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green);
+}
 
 class Helper {
   static void showError({

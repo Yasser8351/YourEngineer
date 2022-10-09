@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/sharedpref/user_share_pref.dart';
+import 'package:your_engineer/utilits/helper.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
@@ -9,11 +13,15 @@ import '../enum/all_enum.dart';
 
 class PopulerServicesController extends GetxController {
   ApiResponse apiResponse = ApiResponse();
-  LoadingState loadingState = LoadingState.initial;
+  var loadingState = LoadingState.initial.obs;
 
-  final List<PopulerServicesModel> _list = [];
+  var isLoading = false.obs;
 
-  List<PopulerServicesModel> get list => _list;
+  final SharedPrefUser _pref = SharedPrefUser();
+
+  List<PopulerServicesModel> _listPopulerServices = [];
+
+  List<PopulerServicesModel> get listPopulerServices => _listPopulerServices;
 
   @override
   onInit() {
@@ -22,62 +30,81 @@ class PopulerServicesController extends GetxController {
   }
 
   Future<ApiResponse> getCategorys() async {
-    // This function call the data from the API
-    // The Post type function takes the search value from the body
-    // get List of Cars in Home Screen
-    try {
-      // Helper.showError(
-      //     context: context, subtitle: 'start methode getCategorys');
+    /// This function call the data from the API
+    /// The Post type function takes the search value from the body
+    /// get List of Cars in Home Screen
 
-      loadingState = LoadingState.loading;
-      var response = await Dio().get(
-        ApiUrl.geCategory,
-        options: Options(
-          headers: ApiUrl.getHeader(),
-        ),
-      );
-      // .timeout(const Duration(seconds: 15));
+    isLoading(true);
+
+    loadingState(LoadingState.loading);
+    try {
+      var token = await _pref.getToken();
+
+      myLog("start methode", "getCategorys");
+
+      // loadingState = LoadingState.loading.obs;
+      var response = await Dio()
+          .get(
+            ApiUrl.geCategory,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog("start methode", "${loadingState.value}");
 
       if (response.statusCode == 200) {
-        // final populerServicesModel =
-        //     populerServicesModelFromJson(jsonEncode(response.data));
-        // final populerServicesModel =
-        // myLog("populerServicesModel", populerServicesModel);
-        if (_list.isEmpty) {
-          loadingState = LoadingState.noDataFound;
+        _listPopulerServices =
+            populerServicesModelFromJson(jsonEncode(response.data));
+
+        if (_listPopulerServices.isEmpty) {
+          loadingState(LoadingState.noDataFound);
         } else {
-          setApiResponseValue(
-              'get Data Cars Sucsessfuly', true, _list, LoadingState.loaded);
+          loadingState(LoadingState.loaded);
+
+          // setApiResponseValue('get Data Cars Sucsessfuly', true,
+          //     _listPopulerServices, LoadingState.loaded.obs);
         }
       } else if (response.statusCode == 401) {
-        setApiResponseValue(
-            AppConfig.unAutaristion, false, _list, LoadingState.error);
-      } else if (response.statusCode == 500) {
-        setApiResponseValue(
-            AppConfig.serverError, false, _list, LoadingState.error);
+        loadingState(LoadingState.error);
+
+        // setApiResponseValue(AppConfig.unAutaristion, false,
+        //     _listPopulerServices, LoadingState.error.obs);
       } else {
-        setApiResponseValue(
-            AppConfig.errorOoccurred, false, _list, LoadingState.error);
+        loadingState(LoadingState.error);
+
+        // setApiResponseValue(AppConfig.errorOoccurred, false,
+        //     _listPopulerServices, LoadingState.error.obs);
       }
     } catch (error) {
-      setApiResponseValue(error.toString(), false, _list, LoadingState.error);
+      loadingState(LoadingState.error);
+      // setApiResponseValue(error.toString(), false, _listPopulerServices,
+      //     LoadingState.error.obs);
       if (error.toString().toUpperCase().contains('TimeoutException')) {
-        Get.snackbar("title", "time out", snackPosition: SnackPosition.BOTTOM);
-        // Helper.showError(context: context, subtitle: AppConfig.failedInternet);
+        showseuessToast(error.toString(), AppConfig.timeOut);
+      } else if (error.toString().contains(
+          'DioError [DioErrorType.response]: Http status error [401]')) {
+        showseuessToast(AppConfig.unAutaristion, AppConfig.unAutaristion);
       } else {
-        // Helper.showError(context: context, subtitle: AppConfig.errorOoccurred);
+        showseuessToast(error.toString(), AppConfig.timeOut);
       }
+
       myLog("catch error", error.toString());
     }
+    // finally {
+    //   // isLoading(false);
+    //   loadingState(LoadingState.loaded);
+    // }
 
     return apiResponse;
   }
 
-  setApiResponseValue(
-      String message, bool status, List<dynamic> data, LoadingState state) {
-    apiResponse.message = message;
-    apiResponse.status = status;
-    // apiResponse.data = data;
-    loadingState = state;
-  }
+  // setApiResponseValue(
+  //     String message, bool status, List<dynamic> data, Rx<LoadingState> state) {
+  //   apiResponse.message = message;
+  //   apiResponse.status = status;
+  //   // apiResponse.data = data;
+  //   loadingState = state;
+  // }
 }

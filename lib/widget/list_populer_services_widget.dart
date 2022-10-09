@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/screen/services/sub_services_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
@@ -28,7 +29,7 @@ class ListPopulerServicesWidget extends StatelessWidget {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => SubServicesScreen(
               titleServices: populerServicesModel.titleServices,
-              listSubServices: [],
+              listSubServices: const [],
             ),
           ));
         },
@@ -39,8 +40,14 @@ class ListPopulerServicesWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Image.network(
+              //   populerServicesModel.imageUrlServices,
+              //   height: 150,
+              //   width: double.infinity,
+              //   fit: BoxFit.cover,
+              // ),
               Image.asset(
-                populerServicesModel.imageUrlServices,
+                AppImage.img8,
                 height: 150,
                 width: double.infinity,
                 fit: BoxFit.cover,
