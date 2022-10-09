@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:your_engineer/app_config/app_image.dart';
+import 'package:your_engineer/controller/top_engineer_controller.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
@@ -14,7 +14,6 @@ import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 import '../app_config/app_config.dart';
 import '../controller/populer_services_controller.dart';
 import '../enum/all_enum.dart';
-import '../model/top_engineer_rating_model.dart';
 import '../widget/list_populer_services_widget.dart';
 import '../widget/shared_widgets/loading_widget.dart';
 import '../widget/shared_widgets/row_two_with_text.dart';
@@ -28,9 +27,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final PopulerServicesController populerServicesController = Get.find();
+  final TopEngineerController topEngineerController = Get.find();
 
   //////
-  // late PopulerServicesProvider servicesProvider;
+  /*
   List<TopEngineerRatingModel> listTopEngineerRating = [
     TopEngineerRatingModel(
       engineerName: "Yasser Abubaker",
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       engineerRating: 1.5,
     ),
   ];
-/*
+
   List<PopulerServicesModel> listPopulerServices = [
     PopulerServicesModel(
       titleServices: "Sketches",
@@ -221,11 +221,6 @@ class _HomeScreenState extends State<HomeScreen> {
               // ListPopulerServicesWidget
               Obx(
                 () {
-                  // if (populerServicesController.loadingState.value ==
-                  //         LoadingState.initial ||
-                  //     populerServicesController.loadingState.value ==
-                  //         LoadingState.loading)
-
                   if (populerServicesController.loadingState.value ==
                           LoadingState.initial ||
                       populerServicesController.loadingState.value ==
@@ -274,29 +269,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: (() => navigatorToNewScreen(
                       context,
                       AllEngineersScreen(
-                          listEngineers: listTopEngineerRating,
+                          listEngineers: const [],
                           colorScheme: colorScheme,
                           size: size),
                     )),
               ),
 
               // ListTopEngineerRatingWidget
-              SizedBox(
-                height: size.height * .36,
-                width: double.infinity,
-                child: ListView.separated(
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 18),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: listTopEngineerRating.length,
-                  itemBuilder: (context, index) {
-                    return ListTopEngineerRatingWidget(
-                      topEngineerRatingModel: listTopEngineerRating[index],
-                      colorScheme: colorScheme,
-                      size: size,
+              Obx(
+                () {
+                  if (topEngineerController.loadingState.value ==
+                          LoadingState.initial ||
+                      topEngineerController.loadingState.value ==
+                          LoadingState.loading) {
+                    return const LoadingWidget();
+                  } else if (topEngineerController.loadingState.value ==
+                      LoadingState.error) {
+                    return ReyTryErrorWidget(
+                        title: topEngineerController.apiResponse.message,
+                        onTap: () {
+                          topEngineerController.getTopEngineer();
+                        });
+                  } else {
+                    return SizedBox(
+                      height: size.height * .36,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 18),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: topEngineerController.listTopEngineer.length,
+                        itemBuilder: (context, index) {
+                          return ListTopEngineerRatingWidget(
+                            topEngineerRatingModel:
+                                topEngineerController.listTopEngineer[index],
+                            colorScheme: colorScheme,
+                            size: size,
+                          );
+                        },
+                      ),
                     );
-                  },
-                ),
+                  }
+                },
               ),
 
               // Space between list and Bottom Page

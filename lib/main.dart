@@ -102,10 +102,10 @@ class MyApp extends StatelessWidget {
           name: AppConfig.profileEngineer,
           page: () => ProfileEngineerScreen(
               engineerModel: TopEngineerRatingModel(
-                  engineerName: '',
-                  engineerspecialist: '',
-                  imageUrl: '',
-                  engineerRating: 0.0)),
+            aboutUser: '',
+            specialization: '',
+            user: User(id: '', email: "", fullname: '', phone: '', imgPath: ''),
+          )),
         ),
         GetPage(
           name: AppConfig.paypal,
