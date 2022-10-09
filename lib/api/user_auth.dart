@@ -2,22 +2,25 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:your_engineer/app_config/api_url.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
+import 'package:your_engineer/model/user_model.dart';
 
+import '../sharedpref/user_share_pref.dart';
 import '../utilits/helper.dart';
 import 'api_parameters.dart';
 
 class UserAuth {
   bool status = false;
+  final _shared = SharedPrefUser();
 
-  Future<bool> userSignup(BuildContext context, String email, String fullname,
-      String password, String phone) async {
+  Future<bool> userSignup(
+      BuildContext context, UserModel userModel, String password) async {
     myLog('start methode', 'userSignup');
 
     final data = {
-      ApiParameters.email: email,
-      ApiParameters.fullname: fullname,
+      ApiParameters.email: userModel.email,
+      ApiParameters.fullname: userModel.fistName + userModel.lastName,
       ApiParameters.password: password,
-      ApiParameters.phone: phone,
+      ApiParameters.phone: userModel.phone,
       ApiParameters.roleId: 'f1f56154-3b95-11ed-8686-ecf4bb83b19b',
     };
 
@@ -44,6 +47,7 @@ class UserAuth {
       if (response.statusCode == 201) {
         status = true;
         setValueResponse(true);
+        await _shared.login(userModel);
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
@@ -58,7 +62,7 @@ class UserAuth {
 
       myLog('error', error);
 
-      if (error.toString().toUpperCase().contains('TIMEOUT EEXEPTION')) {
+      if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
       } else {
         Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
@@ -71,6 +75,8 @@ class UserAuth {
       BuildContext context, String email, String password) async {
     myLog('start methode', 'userSignIn');
 
+    var token = _shared.getToken();
+
     final data = {
       ApiParameters.email: email,
       ApiParameters.password: password,
@@ -78,6 +84,7 @@ class UserAuth {
 
     final headers = {
       "Content-Type": "application/json",
+      // "Authorization": token,
     };
 
     try {
@@ -89,7 +96,7 @@ class UserAuth {
               headers: headers,
             ),
           )
-          .timeout(const Duration(seconds: 15));
+          .timeout(const Duration(seconds: 20));
 
       myLog(
         'statusCode : ${response.statusCode} \n',
@@ -98,6 +105,8 @@ class UserAuth {
 
       if (response.statusCode == 200) {
         status = true;
+        await _shared.saveToken(response.data['token']);
+
         setValueResponse(true);
       } else {
         Helper.showError(
@@ -113,8 +122,11 @@ class UserAuth {
 
       myLog('error', error);
 
-      if (error.toString().toUpperCase().contains('TIMEOUT EEXEPTION')) {
+      if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else if (error.toString().contains('Http status error [401]')) {
+        Helper.showError(
+            context: context, subtitle: "خطأ في اسم المستخدم او كلمة المرور");
       } else {
         Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
       }

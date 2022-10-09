@@ -14,7 +14,7 @@ class TextFaildWidget extends StatelessWidget {
   final String label;
   final bool obscure;
   final TextInputType inputType;
-  final Icon icon;
+  final IconButton icon;
 
   @override
   Widget build(BuildContext context) {

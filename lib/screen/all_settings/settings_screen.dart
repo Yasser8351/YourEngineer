@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/screen/project_screen.dart';
+import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
 import '../../widget/shared_widgets/text_widget.dart';
 
@@ -89,7 +90,7 @@ class SettingsScreen extends StatelessWidget {
                   true),
               buildDivider(),
               buildCardItem(context, AppConfig.logout, Icons.logout,
-                  () => Navigator.of(context).pushNamed(AppConfig.login), true),
+                  () => logout(context), true),
               buildDivider(),
               const SizedBox(height: 20),
               TextWidget(
@@ -145,5 +146,11 @@ class SettingsScreen extends StatelessWidget {
             size: 30, color: Theme.of(context).colorScheme.secondary),
       ),
     );
+  }
+
+  logout(context) async {
+    SharedPrefUser sharedPrefUser = SharedPrefUser();
+    await sharedPrefUser.logout();
+    Navigator.of(context).pushNamed(AppConfig.login);
   }
 }

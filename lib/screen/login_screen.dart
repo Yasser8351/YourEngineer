@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/screen/tab_screen.dart';
+import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 
@@ -20,6 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   late SimpleFontelicoProgressDialog _dialog;
+  bool isLoading = false;
+  bool _obscureText = false;
 
   @override
   void initState() {
@@ -27,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     _dialog = SimpleFontelicoProgressDialog(
       context: context,
-      barrierDimisable: false,
+      barrierDimisable: true,
     );
   }
 
@@ -76,41 +80,68 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: _emailController,
                         label: AppConfig.emal,
                         obscure: false,
-                        icon: const Icon(Icons.close),
+                        icon: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.close),
+                        ),
                         inputType: TextInputType.emailAddress),
                     SizedBox(height: size.height * .05),
                     TextFaildWidget(
                         controller: _passwordController,
                         label: AppConfig.password,
-                        icon: const Icon(Icons.remove_red_eye),
-                        obscure: true,
+                        icon: IconButton(
+                            onPressed: () {
+                              showHidePassword();
+                            },
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.remove_red_eye
+                                  : Icons.remove_done_rounded,
+                            )),
+                        obscure: _obscureText,
                         inputType: TextInputType.text),
                     SizedBox(height: size.height * .1),
-                    ButtonWidget(
-                      title: AppConfig.login,
-                      color: colorScheme.primary,
-                      onTap: () async {
-                        _showDialog('');
-                        UserAuth userAuth = UserAuth();
-                        bool isSignup = await userAuth.userSignIn(
-                          context,
-                          _emailController.text,
-                          _passwordController.text,
-                        );
-                        myLog('isSignup', isSignup);
+                    isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : ButtonWidget(
+                            title: AppConfig.login,
+                            color: colorScheme.primary,
+                            onTap: () async {
+                              // validateData();
 
-                        // _dialog.hide();
+                              if (_emailController.text.isEmpty ||
+                                  _passwordController.text.isEmpty) {
+                                Helper.showError(
+                                    context: context,
+                                    subtitle: "جميع الحقول مطلوبة");
+                                return;
+                              }
 
-                        if (isSignup) {
-                          //userSignup sucssufuly
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushNamed(AppConfig.tabScreen);
-                        } else {
-                          //userSignup faild try again later
+                              setState(() => isLoading = true);
+                              UserAuth userAuth = UserAuth();
+                              bool isSignup = await userAuth.userSignIn(
+                                context,
+                                _emailController.text,
+                                _passwordController.text,
+                              );
+                              setState(() => isLoading = false);
 
-                        }
-                      },
-                    ),
+                              // _dialog.hide();
+                              myLog('isSignup', isSignup);
+                              if (isSignup) {
+                                /// userSignup sucssufuly
+
+                                // ignore: use_build_context_synchronously
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            const TabScreen())));
+                              } else {
+                                /// userSignup faild try again later
+
+                              }
+                            },
+                          ),
                     const SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerRight,
@@ -150,5 +181,18 @@ class _LoginScreenState extends State<LoginScreen> {
       message: AppConfig.loading,
       indicatorColor: Theme.of(context).colorScheme.primary,
     );
+  }
+
+  void validateData() {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+      Helper.showError(context: context, subtitle: "جميع الحقول مطلوبة");
+      return;
+    }
+  }
+
+  void showHidePassword() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 }

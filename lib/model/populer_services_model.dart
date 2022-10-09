@@ -1,17 +1,15 @@
-// import 'sub_services_model.dart';
+import 'sub_services_model.dart';
 
-// import 'dart:convert';
+class PopulerServicesModel {
+  String titleServices;
+  String imageUrlServices;
+  List<SubServicesModel> listSubServices;
 
-// // class PopulerServicesModel {
-// //   String titleServices;
-// //   String imageUrlServices;
-// //   List<SubServicesModel> listSubServices;
-
-// //   PopulerServicesModel(
-// //       {required this.titleServices,
-// //       required this.imageUrlServices,
-// //       required this.listSubServices});
-// // }
+  PopulerServicesModel(
+      {required this.titleServices,
+      required this.imageUrlServices,
+      required this.listSubServices});
+}
 
 // // To parse this JSON data, do
 // //
@@ -60,6 +58,7 @@
 //         "updatedAt": updatedAt,
 //       };
 // }
+/*  
 // To parse this JSON data, do
 //
 //     final populerServicesModel = populerServicesModelFromJson(jsonString);
@@ -80,7 +79,7 @@ class PopulerServicesModel {
     required this.imageUrlServices,
     required this.catDescription,
     required this.createdAt,
-    required this.updatedAt,
+    required this.updatedAt, required List listSubServices,
   });
 
   String id;
@@ -109,3 +108,4 @@ class PopulerServicesModel {
         "updatedAt": updatedAt,
       };
 }
+*/

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
-import 'package:your_engineer/provider/populer_services_provider.dart';
 import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/all_settings/support_chat_screen.dart';
@@ -20,6 +18,7 @@ import 'package:your_engineer/screen/project/offer_screen.dart';
 import 'package:your_engineer/screen/services/services_detail_screen.dart';
 import 'package:your_engineer/screen/services/sub_services_screen.dart';
 import 'package:your_engineer/screen/sign_up_screen.dart';
+import 'package:your_engineer/screen/splash_screen.dart';
 
 import 'screen/all_settings/faq_screen.dart';
 import 'screen/all_settings/privacy_policy_screen.dart';
@@ -60,8 +59,8 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      // home: const LoginScreen(),
-      home: const TabScreen(),
+      home: const SplashScreen(),
+      // home: const TabScreen(),
       routes: {
         AppConfig.login: (ctx) => const LoginScreen(),
         AppConfig.signUp: (ctx) => const SignUpScreen(),
@@ -76,7 +75,7 @@ class MyApp extends StatelessWidget {
                   createdDate: '',
                   numberOfoffers: ''),
             ),
-        AppConfig.profileUser: (ctx) => ProfileUserScreen(),
+        AppConfig.profileUser: (ctx) => const ProfileUserScreen(),
         AppConfig.profileEngineer: (ctx) => ProfileEngineerScreen(
             engineerModel: TopEngineerRatingModel(
                 engineerName: '',

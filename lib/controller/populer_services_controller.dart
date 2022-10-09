@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:get/get.dart';
@@ -9,13 +6,12 @@ import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
 import '../enum/all_enum.dart';
-import '../utilits/helper.dart';
 
 class PopulerServicesController extends GetxController {
   ApiResponse apiResponse = ApiResponse();
   LoadingState loadingState = LoadingState.initial;
 
-  List<PopulerServicesModel> _list = [];
+  final List<PopulerServicesModel> _list = [];
 
   List<PopulerServicesModel> get list => _list;
 
@@ -43,12 +39,10 @@ class PopulerServicesController extends GetxController {
       // .timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200) {
-        // _list = categoryModelFromJson(response.data);
-        // var list = categoryModelFromJson(response.data).obs;
-        final populerServicesModel =
-            populerServicesModelFromJson(jsonEncode(response.data));
         // final populerServicesModel =
-        myLog("populerServicesModel", populerServicesModel);
+        //     populerServicesModelFromJson(jsonEncode(response.data));
+        // final populerServicesModel =
+        // myLog("populerServicesModel", populerServicesModel);
         if (_list.isEmpty) {
           loadingState = LoadingState.noDataFound;
         } else {

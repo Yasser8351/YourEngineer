@@ -34,7 +34,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   controller: _emailController,
                   label: AppConfig.emal,
                   obscure: false,
-                  icon: const Icon(Icons.close),
+                  icon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.close),
+                  ),
                   inputType: TextInputType.emailAddress),
               SizedBox(height: size.height * .09),
 

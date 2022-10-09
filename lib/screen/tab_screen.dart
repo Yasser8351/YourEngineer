@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/screen/project_screen.dart';
+import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
 import '../app_config/app_config.dart';
 import 'all_settings/settings_screen.dart';
@@ -33,6 +35,20 @@ class _TabScreenState extends State<TabScreen> {
   @override
   void initState() {
     super.initState();
+    getUserData();
+  }
+
+  getUserData() async {
+    SharedPrefUser sharedPrefUser = SharedPrefUser();
+    var data = await sharedPrefUser.getUserData();
+    myLog('user Data', {
+      data.fistName,
+      data.fullName,
+      data.lastName,
+      data.email,
+      data.phone,
+      data.token,
+    });
   }
 
   @override

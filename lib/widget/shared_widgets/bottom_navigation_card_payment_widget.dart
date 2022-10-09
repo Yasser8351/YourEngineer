@@ -75,12 +75,14 @@ buildPayWithPayPal(ColorScheme colorScheme, Size size) {
             color: colorScheme.primary),
       ),
       TextFaildWidget(
-        controller: payPalController,
-        label: '',
-        obscure: false,
-        inputType: TextInputType.text,
-        icon: const Icon(Icons.abc, color: Colors.amber),
-      ),
+          controller: payPalController,
+          label: '',
+          obscure: false,
+          inputType: TextInputType.text,
+          icon: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.abc, color: Colors.amber),
+          )),
       SizedBox(
         height: size.height * .05,
       ),
@@ -122,12 +124,14 @@ buildPayWithVisa(ColorScheme colorScheme, Size size) {
             color: colorScheme.primary),
       ),
       TextFaildWidget(
-        controller: amountController,
-        label: '',
-        obscure: false,
-        inputType: TextInputType.text,
-        icon: const Icon(Icons.abc, color: Colors.amber),
-      ),
+          controller: amountController,
+          label: '',
+          obscure: false,
+          inputType: TextInputType.text,
+          icon: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.abc, color: Colors.amber),
+          )),
       SizedBox(
         height: size.height * .03,
       ),
@@ -139,12 +143,14 @@ buildPayWithVisa(ColorScheme colorScheme, Size size) {
             color: colorScheme.primary),
       ),
       TextFaildWidget(
-        controller: fullNAmeController,
-        label: '',
-        obscure: false,
-        inputType: TextInputType.text,
-        icon: const Icon(Icons.abc, color: Colors.amber),
-      ),
+          controller: fullNAmeController,
+          label: '',
+          obscure: false,
+          inputType: TextInputType.text,
+          icon: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.abc, color: Colors.amber),
+          )),
       SizedBox(
         height: size.height * .03,
       ),
@@ -156,12 +162,14 @@ buildPayWithVisa(ColorScheme colorScheme, Size size) {
             color: colorScheme.primary),
       ),
       TextFaildWidget(
-        controller: cardNumberController,
-        label: '',
-        obscure: false,
-        inputType: TextInputType.text,
-        icon: const Icon(Icons.abc, color: Colors.amber),
-      ),
+          controller: cardNumberController,
+          label: '',
+          obscure: false,
+          inputType: TextInputType.text,
+          icon: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.abc, color: Colors.amber),
+          )),
       SizedBox(
         height: size.height * .05,
       ),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_image.dart';
-import 'package:your_engineer/enum/all_enum.dart';
-import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
@@ -13,9 +10,9 @@ import 'package:your_engineer/widget/shared_widgets/search_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
-import '../controller/populer_services_controller.dart';
+import '../model/populer_services_model.dart';
+import '../model/sub_services_model.dart';
 import '../model/top_engineer_rating_model.dart';
-import '../provider/populer_services_provider.dart';
 import '../widget/list_populer_services_widget.dart';
 import '../widget/shared_widgets/row_two_with_text.dart';
 
@@ -27,8 +24,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final PopulerServicesController populerServicesController =
-      Get.put(PopulerServicesController());
+  // final PopulerServicesController populerServicesController =
+  //     Get.put(PopulerServicesController());
 
   //////
   // late PopulerServicesProvider servicesProvider;
@@ -52,65 +49,64 @@ class _HomeScreenState extends State<HomeScreen> {
       engineerRating: 1.5,
     ),
   ];
-  // List<PopulerServicesModel> listPopulerServices = [];
 
-  // List<PopulerServicesModel> listPopulerServices = [
-  //   PopulerServicesModel(
-  //     titleServices: "Sketches",
-  //     imageUrlServices: AppImage.img8,
-  //     listSubServices: [
-  //       //Sketches
-  //       SubServicesModel(id: 0, title: "All"),
-  //       SubServicesModel(id: 1, title: "Electricity Distribution Scheme"),
-  //       SubServicesModel(id: 2, title: "Pumbing Distribution Chart"),
-  //       SubServicesModel(id: 3, title: "Furniture Distribution Chart"),
-  //       SubServicesModel(id: 4, title: "Full Scheme"),
-  //     ],
-  //   ),
-  //   PopulerServicesModel(
-  //     titleServices: "Interface Design",
-  //     imageUrlServices: AppImage.img9,
-  //     listSubServices: [
-  //       //Sketches
-  //       SubServicesModel(id: 0, title: "All"),
-  //       SubServicesModel(id: 1, title: "All Styles"),
-  //     ],
-  //   ),
-  //   PopulerServicesModel(
-  //     titleServices: "Interior Design",
-  //     imageUrlServices: AppImage.img7,
-  //     listSubServices: [
-  //       //Sketches
-  //       SubServicesModel(id: 0, title: "All"),
-  //       SubServicesModel(id: 1, title: "2D or 3D"),
-  //       SubServicesModel(id: 2, title: "Classic"),
-  //       SubServicesModel(id: 3, title: "Necolassic"),
-  //       SubServicesModel(id: 4, title: "Modern"),
-  //       SubServicesModel(id: 5, title: "Bohemain"),
-  //       SubServicesModel(id: 6, title: "Rural"),
-  //     ],
-  //   ),
-  //   PopulerServicesModel(
-  //     titleServices: "Type of Place",
-  //     imageUrlServices: AppImage.img7,
-  //     listSubServices: [
-  //       //Sketches
-  //       SubServicesModel(id: 0, title: "All"),
-  //       SubServicesModel(id: 1, title: "Commercial"),
-  //       SubServicesModel(id: 2, title: "Residential"),
-  //     ],
-  //   ),
-  //   PopulerServicesModel(
-  //     titleServices: "Customer Type",
-  //     imageUrlServices: AppImage.img7,
-  //     listSubServices: [
-  //       //Sketches
-  //       SubServicesModel(id: 0, title: "All"),
-  //       SubServicesModel(id: 1, title: "Company"),
-  //       SubServicesModel(id: 2, title: "Individuais"),
-  //     ],
-  //   ),
-  // ];
+  List<PopulerServicesModel> listPopulerServices = [
+    PopulerServicesModel(
+      titleServices: "Sketches",
+      imageUrlServices: AppImage.img8,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "Electricity Distribution Scheme"),
+        SubServicesModel(id: 2, title: "Pumbing Distribution Chart"),
+        SubServicesModel(id: 3, title: "Furniture Distribution Chart"),
+        SubServicesModel(id: 4, title: "Full Scheme"),
+      ],
+    ),
+    PopulerServicesModel(
+      titleServices: "Interface Design",
+      imageUrlServices: AppImage.img9,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "All Styles"),
+      ],
+    ),
+    PopulerServicesModel(
+      titleServices: "Interior Design",
+      imageUrlServices: AppImage.img7,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "2D or 3D"),
+        SubServicesModel(id: 2, title: "Classic"),
+        SubServicesModel(id: 3, title: "Necolassic"),
+        SubServicesModel(id: 4, title: "Modern"),
+        SubServicesModel(id: 5, title: "Bohemain"),
+        SubServicesModel(id: 6, title: "Rural"),
+      ],
+    ),
+    PopulerServicesModel(
+      titleServices: "Type of Place",
+      imageUrlServices: AppImage.img7,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "Commercial"),
+        SubServicesModel(id: 2, title: "Residential"),
+      ],
+    ),
+    PopulerServicesModel(
+      titleServices: "Customer Type",
+      imageUrlServices: AppImage.img7,
+      listSubServices: [
+        //Sketches
+        SubServicesModel(id: 0, title: "All"),
+        SubServicesModel(id: 1, title: "Company"),
+        SubServicesModel(id: 2, title: "Individuais"),
+      ],
+    ),
+  ];
 
   List<ProjectModel> listProject = [
     ProjectModel(
@@ -182,29 +178,29 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               // ListProjectWidget
-              if (populerServicesController.loadingState ==
-                      LoadingState.initial ||
-                  populerServicesController.loadingState ==
-                      LoadingState.loading)
-                const Center(child: CircularProgressIndicator())
-              else
-                SizedBox(
-                  height: size.height * .25,
-                  width: double.infinity,
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 18),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: listProject.length,
-                    itemBuilder: (context, index) {
-                      return ListProjectWidget(
-                        projectModel: listProject[index],
-                        colorScheme: colorScheme,
-                        size: size,
-                      );
-                    },
-                  ),
+              // if (populerServicesController.loadingState ==
+              //         LoadingState.initial ||
+              //     populerServicesController.loadingState ==
+              //         LoadingState.loading)
+              //   const Center(child: CircularProgressIndicator())
+              // else
+              SizedBox(
+                height: size.height * .25,
+                width: double.infinity,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 18),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listProject.length,
+                  itemBuilder: (context, index) {
+                    return ListProjectWidget(
+                      projectModel: listProject[index],
+                      colorScheme: colorScheme,
+                      size: size,
+                    );
+                  },
                 ),
+              ),
 
               // Space between list in Home Screen
               const SizedBox(height: 40),
@@ -218,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: (() => navigatorToNewScreen(
                       context,
                       AllPopulerServicesScreen(
-                          listPopulerServices: populerServicesController.list,
+                          listPopulerServices: listPopulerServices,
                           colorScheme: colorScheme,
                           size: size),
                     )),
@@ -232,11 +228,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 18),
                   scrollDirection: Axis.horizontal,
-                  itemCount: populerServicesController.list.length,
+                  itemCount: listPopulerServices.length,
                   itemBuilder: (context, index) {
                     return ListPopulerServicesWidget(
-                      populerServicesModel:
-                          populerServicesController.list[index],
+                      populerServicesModel: listPopulerServices[index],
                       colorScheme: colorScheme,
                       size: size,
                     );
