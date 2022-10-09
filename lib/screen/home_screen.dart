@@ -5,17 +5,17 @@ import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
-import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/search_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/shimmer_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
 import '../controller/populer_services_controller.dart';
 import '../enum/all_enum.dart';
+import '../widget/lis_top_engineer_rating_widget.dart';
 import '../widget/list_populer_services_widget.dart';
-import '../widget/shared_widgets/loading_widget.dart';
 import '../widget/shared_widgets/row_two_with_text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: size.height * .07),
 
               // Headar of Screen
-              // that contains text App name and icons of notifcation
+              // that contains Text App name and icons of notifcation
               TextWithIconWidget(
                   onTapNotifications: () =>
                       Navigator.of(context).pushNamed(AppConfig.notifcation)),
@@ -225,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           LoadingState.initial ||
                       populerServicesController.loadingState.value ==
                           LoadingState.loading) {
-                    return const LoadingWidget();
+                    return ShimmerWidget(size: size);
                   } else if (populerServicesController.loadingState.value ==
                       LoadingState.error) {
                     return ReyTryErrorWidget(
@@ -282,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           LoadingState.initial ||
                       topEngineerController.loadingState.value ==
                           LoadingState.loading) {
-                    return const LoadingWidget();
+                    return ShimmerWidget(size: size);
                   } else if (topEngineerController.loadingState.value ==
                       LoadingState.error) {
                     return ReyTryErrorWidget(

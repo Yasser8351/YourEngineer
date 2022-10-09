@@ -40,6 +40,9 @@ dependencies:
   another_flushbar: ^1.12.29
   simple_fontellico_progress_dialog: ^0.2.1
 
+  # provides an easy way to add shimmer effect in Flutter project
+  shimmer: ^2.0.0
+
   # state management
   provider: ^6.0.2
   get: ^4.6.5

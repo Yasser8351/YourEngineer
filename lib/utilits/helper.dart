@@ -6,14 +6,16 @@ void clearText(TextEditingController controller) {
   controller.clear();
 }
 
-showErrorToast(title, message) {
-  Get.snackbar(title, message,
+showErrorToast(message) {
+  Get.snackbar(message, '',
       snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
 }
 
-showseuessToast(title, message) {
-  Get.snackbar(title, message,
-      snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green);
+showseuessToast(message) {
+  Get.snackbar(message, '',
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green);
 }
 
 class Helper {

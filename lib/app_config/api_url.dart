@@ -3,10 +3,9 @@ class ApiUrl {
       'https://talented-trench-coat-eel.cyclic.app/api/v1';
   static String get signup => '$_root/auth/signup';
   static String get signin => '$_root/auth/signin';
-  static String get geCategory =>
-      'https://talented-trench-coat-eel.cyclic.app/api/v1/category';
-  static String get getTopEngineer =>
-      'https://talented-trench-coat-eel.cyclic.app/api/v1/profile';
+  static String get geCategory => '$_root/category';
+  static String get getTopEngineer => '$_root/profile';
+  static String get getProject => '$_root/project';
 
   static int get timeoutDuration => 20;
 

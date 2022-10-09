@@ -77,12 +77,12 @@ class TopEngineerController extends GetxController {
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
       if (error.toString().toUpperCase().contains('TimeoutException')) {
-        showseuessToast(error.toString(), AppConfig.timeOut);
+        showseuessToast(error.toString());
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
-        showseuessToast(AppConfig.unAutaristion, AppConfig.unAutaristion);
+        showseuessToast(AppConfig.unAutaristion);
       } else {
-        showseuessToast(error.toString(), AppConfig.timeOut);
+        showseuessToast(error.toString());
       }
 
       myLog("catch error", error.toString());
