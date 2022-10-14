@@ -17,7 +17,10 @@ import 'package:your_engineer/screen/profile/profile_user_screen.dart';
 import 'package:your_engineer/screen/splash_screen.dart';
 
 import 'screen/chat/chat_room_screen.dart';
+import 'screen/project/edit_my_project_screen.dart';
 import 'screen/project/offer_screen.dart';
+import 'screen/services/services_detail_screen.dart';
+import 'screen/services/sub_services_screen.dart';
 import 'screen/sign_up_screen.dart';
 import 'screen/tab_screen.dart';
 
@@ -63,23 +66,23 @@ class MyApp extends StatelessWidget {
           page: () => const SplashScreen(),
         ),
         GetPage(
-          name: AppConfig.login,
+          name: AppRouting.loginScreen,
           page: () => const LoginScreen(),
         ),
         GetPage(
-          name: AppConfig.signUp,
+          name: AppRouting.signUp,
           page: () => const SignUpScreen(),
         ),
         GetPage(
-          name: AppConfig.forgetPassword,
+          name: AppRouting.forgetPassword,
           page: () => const ForgotPasswordScreen(),
         ),
         GetPage(
-          name: AppConfig.tabScreen,
+          name: AppRouting.tabScreen,
           page: () => const TabScreen(),
         ),
         GetPage(
-          name: AppConfig.addProjectScreen,
+          name: AppRouting.addProjectScreen,
           page: () => AddProjectScreen(
             projectModel: ProjectModel(
                 titleProject: '',
@@ -91,15 +94,15 @@ class MyApp extends StatelessWidget {
           ),
         ),
         GetPage(
-          name: AppConfig.profileUser,
+          name: AppRouting.profileUser,
           page: () => const ProfileUserScreen(),
         ),
         GetPage(
-          name: AppConfig.addProtofilo,
+          name: AppRouting.addProtofilo,
           page: () => const AddProtofiloScreen(),
         ),
         GetPage(
-          name: AppConfig.profileEngineer,
+          name: AppRouting.profileEngineer,
           page: () => ProfileEngineerScreen(
               engineerModel: TopEngineerRatingModel(
             aboutUser: '',
@@ -108,27 +111,27 @@ class MyApp extends StatelessWidget {
           )),
         ),
         GetPage(
-          name: AppConfig.paypal,
+          name: AppRouting.paypal,
           page: () => const PayWithPaypal(),
         ),
         GetPage(
-          name: AppConfig.support,
+          name: AppRouting.support,
           page: () => const SupportChatScreen(),
         ),
         GetPage(
-          name: AppConfig.notifcation,
+          name: AppRouting.notifcation,
           page: () => const NotifcationScreen(),
         ),
         GetPage(
-          name: AppConfig.chatRoom,
+          name: AppRouting.chatRoom,
           page: () => const ChatRoomScreen(),
         ),
         GetPage(
-          name: AppConfig.language,
+          name: AppRouting.language,
           page: () => const LanguageScreen(),
         ),
         GetPage(
-          name: AppConfig.offerScreen,
+          name: AppRouting.offerScreen,
           page: () => OffersScreen(
             projectModel: ProjectModel(
                 titleProject: '',
@@ -139,19 +142,19 @@ class MyApp extends StatelessWidget {
                 numberOfoffers: ''),
           ),
         ),
-        // GetPage(
-        //   name: AppConfig.subServices,
-        //   page: () =>
-        //       const SubServicesScreen(titleServices: '', listSubServices: []),
-        // ),
-        // GetPage(
-        //   name: AppConfig.servicesDetail,
-        //   page: () => const ServicesDetailScreen(),
-        // ),
-        // GetPage(
-        //   name: AppConfig.editMyProject,
-        //   page: () => const EditMyProjectScreen(),
-        // ),
+        GetPage(
+          name: AppRouting.subServices,
+          page: () =>
+              const SubServicesScreen(titleServices: '', listSubServices: []),
+        ),
+        GetPage(
+          name: AppRouting.servicesDetail,
+          page: () => const ServicesDetailScreen(),
+        ),
+        GetPage(
+          name: AppRouting.editMyProject,
+          page: () => const EditMyProjectScreen(),
+        ),
       ],
       /*
       routes: const {
