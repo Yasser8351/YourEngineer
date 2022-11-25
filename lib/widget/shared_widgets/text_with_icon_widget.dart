@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
@@ -15,7 +16,7 @@ class TextWithIconWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         TextWidget(
-          title: AppConfig.appName,
+          title: AppConfig.appName.tr,
           fontSize: 20,
           color: Theme.of(context).colorScheme.onSecondary,
         ),

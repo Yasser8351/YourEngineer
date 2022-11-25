@@ -171,8 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
               // Text Populer Services and See All
               RowWithTwoText(
-                title: AppConfig.lastProject,
-                description: AppConfig.seeAll,
+                title: AppConfig.lastProject.tr,
+                description: AppConfig.seeAll.tr,
                 colorScheme: colorScheme.onSecondary,
                 colorScheme2: colorScheme.primary,
                 onTap: (() =>
@@ -204,8 +204,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
               // Text Populer Services and See All
               RowWithTwoText(
-                title: AppConfig.populerServices,
-                description: AppConfig.seeAll,
+                title: AppConfig.populerServices.tr,
+                description: AppConfig.seeAll.tr,
                 colorScheme: colorScheme.onSecondary,
                 colorScheme2: colorScheme.primary,
                 onTap: (() => navigatorToNewScreen(
@@ -262,8 +262,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
               // Text Top Engineer Rating and See All
               RowWithTwoText(
-                title: AppConfig.topEngineerRating,
-                description: AppConfig.seeAll,
+                title: AppConfig.topEngineerRating.tr,
+                description: AppConfig.seeAll.tr,
                 colorScheme: colorScheme.onSecondary,
                 colorScheme2: colorScheme.primary,
                 onTap: (() => navigatorToNewScreen(

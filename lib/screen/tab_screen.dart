@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
@@ -78,22 +79,22 @@ class _TabScreenState extends State<TabScreen> {
                   type: BottomNavigationBarType.fixed,
                   currentIndex: _selectIndex,
                   onTap: _navigateBottomBar,
-                  items: const [
+                  items: [
                     BottomNavigationBarItem(
                       icon: Icon(Icons.settings),
-                      label: AppConfig.settings,
+                      label: AppConfig.settings.tr,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.content_paste_go),
-                      label: AppConfig.project,
+                      label: AppConfig.project.tr,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.chat_bubble_outline_rounded),
-                      label: AppConfig.chat,
+                      label: AppConfig.chat.tr,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
-                      label: AppConfig.home,
+                      label: AppConfig.home.tr,
                     ),
                   ],
                 ),

@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
@@ -77,7 +80,7 @@ class PopulerServicesController extends GetxController {
       loadingState(LoadingState.error);
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
-      if (error.toString().toUpperCase().contains('TimeoutException')) {
+      if (error is TimeoutException) {
         showseuessToast(error.toString());
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
@@ -88,7 +91,6 @@ class PopulerServicesController extends GetxController {
 
       myLog("catch error", error.toString());
     }
-
     return apiResponse;
   }
 

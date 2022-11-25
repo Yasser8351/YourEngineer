@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 import '../../app_config/app_config.dart';
 
@@ -42,11 +43,11 @@ class ReyTryErrorWidget extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(Icons.refresh, color: Colors.white),
                       SizedBox(width: 10),
                       Text(
-                        AppConfig.tryAgain,
+                        AppConfig.tryAgain.tr,
                         style: TextStyle(color: Colors.white),
                       ),
                     ],

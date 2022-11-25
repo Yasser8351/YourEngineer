@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/binding/binding_app.dart';
+import 'package:your_engineer/controller/app_language_controller.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
 import 'package:your_engineer/screen/login_screen.dart';
@@ -15,6 +16,7 @@ import 'package:your_engineer/screen/profile/pay_with_visa.dart';
 import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
 import 'package:your_engineer/screen/profile/profile_user_screen.dart';
 import 'package:your_engineer/screen/splash_screen.dart';
+import 'package:your_engineer/utilits/localization/app_localization.dart';
 
 import 'screen/chat/chat_room_screen.dart';
 import 'screen/project/edit_my_project_screen.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    AppLanguageContoller contoller = Get.put(AppLanguageContoller());
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -57,13 +60,21 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      locale: contoller.local ?? Get.deviceLocale,
+      translations: AppLocalization(),
+      home: const TabScreen(),
       initialBinding: BinindingApp(),
       initialRoute: '/',
       getPages: [
         GetPage(
-          name: '/',
+          name: AppRouting.splashScreen,
           page: () => const SplashScreen(),
+        ),
+        GetPage(
+          // name: AppRouting.tabScreen,
+          name: '/',
+
+          page: () => const TabScreen(),
         ),
         GetPage(
           name: AppRouting.loginScreen,
@@ -76,10 +87,6 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: AppRouting.forgetPassword,
           page: () => const ForgotPasswordScreen(),
-        ),
-        GetPage(
-          name: AppRouting.tabScreen,
-          page: () => const TabScreen(),
         ),
         GetPage(
           name: AppRouting.addProjectScreen,
