@@ -2,7 +2,7 @@
     package="com.app.your_engineer">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="Your engineer"
+        android:label="ملتقي المهندسين"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
