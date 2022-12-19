@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 import '../../app_config/app_config.dart';
 
@@ -57,7 +58,7 @@ class SearchWidget extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
-          hintText: AppConfig.search,
+          hintText: AppConfig.search.tr,
           hintStyle: const TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderSide: BorderSide.none,

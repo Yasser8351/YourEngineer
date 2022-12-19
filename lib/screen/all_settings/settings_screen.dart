@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
@@ -20,19 +21,19 @@ class SettingsScreen extends StatelessWidget {
             children: [
               buildCardItem(
                   context,
-                  AppConfig.profile,
+                  AppConfig.profile.tr,
                   Icons.person_pin_outlined,
                   () => Navigator.of(context).pushNamed(AppConfig.profileUser)),
               buildDivider(),
               buildCardItem(
                   context,
-                  AppConfig.notifcation,
+                  AppConfig.notifcation.tr,
                   Icons.notifications_outlined,
                   () => Navigator.of(context).pushNamed(AppConfig.notifcation)),
               buildDivider(),
               buildCardItem(
                   context,
-                  AppConfig.myProject,
+                  AppConfig.myProject.tr,
                   Icons.edit,
                   () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
@@ -40,35 +41,35 @@ class SettingsScreen extends StatelessWidget {
               buildDivider(),
               buildCardItem(
                   context,
-                  AppConfig.addProjectScreen,
+                  AppConfig.addProjectScreen.tr,
                   Icons.content_paste_go,
                   () => Navigator.of(context)
                       .pushNamed(AppConfig.addProjectScreen)),
               buildDivider(),
               buildCardItem(
                   context,
-                  AppConfig.termsOfServices,
+                  AppConfig.termsOfServices.tr,
                   Icons.front_hand_outlined,
                   () => Navigator.of(context)
                       .pushNamed(AppConfig.termsOfServices)),
               buildDivider(),
               buildCardItem(
                 context,
-                AppConfig.language,
+                AppConfig.language.tr,
                 Icons.change_circle_outlined,
                 () => {Navigator.of(context).pushNamed(AppConfig.language)},
               ),
               buildDivider(),
               buildCardItem(
                 context,
-                AppConfig.faq,
+                AppConfig.faq.tr,
                 Icons.note_alt_outlined,
                 () => {Navigator.of(context).pushNamed(AppConfig.faq)},
               ),
               buildDivider(),
               buildCardItem(
                 context,
-                AppConfig.support,
+                AppConfig.support.tr,
                 Icons.support_agent_rounded,
                 () => {Navigator.of(context).pushNamed(AppConfig.support)},
               ),
@@ -83,18 +84,18 @@ class SettingsScreen extends StatelessWidget {
               // buildDivider(),
               buildCardItem(
                   context,
-                  AppConfig.privacyPolicy,
+                  AppConfig.privacyPolicy.tr,
                   Icons.security,
                   () =>
                       Navigator.of(context).pushNamed(AppConfig.privacyPolicy),
                   true),
               buildDivider(),
-              buildCardItem(context, AppConfig.logout, Icons.logout,
+              buildCardItem(context, AppConfig.logout.tr, Icons.logout,
                   () => logout(context), true),
               buildDivider(),
               const SizedBox(height: 20),
               TextWidget(
-                  title: AppConfig.version,
+                  title: AppConfig.version.tr,
                   fontSize: 18,
                   color: Theme.of(context).colorScheme.secondary),
             ],
@@ -106,10 +107,10 @@ class SettingsScreen extends StatelessWidget {
 
   _getAppBar(BuildContext context) {
     return AppBar(
-      title: const Padding(
+      title: Padding(
         padding: EdgeInsets.only(top: 10),
         child: TextWidget(
-            title: AppConfig.settings, fontSize: 18, color: Colors.white),
+            title: AppConfig.settings.tr, fontSize: 18, color: Colors.white),
       ),
     );
   }
@@ -131,7 +132,7 @@ class SettingsScreen extends StatelessWidget {
                 ? Colors.red
                 : Theme.of(context).colorScheme.primary),
         title: Align(
-          alignment: Alignment.bottomLeft,
+          alignment: Alignment.bottomRight,
           child: Padding(
             padding: const EdgeInsets.only(top: 8),
             child: TextWidget(

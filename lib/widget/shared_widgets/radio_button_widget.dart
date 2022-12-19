@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 import '../../app_config/app_config.dart';
 
@@ -32,7 +33,7 @@ class _RadioButtonWidgetState extends State<RadioButtonWidget> {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Text(
-                  AppConfig.engineer,
+                  AppConfig.engineer.tr,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: 18,
@@ -55,7 +56,7 @@ class _RadioButtonWidgetState extends State<RadioButtonWidget> {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Text(
-                  AppConfig.projectOwner,
+                  AppConfig.projectOwner.tr,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: 18,

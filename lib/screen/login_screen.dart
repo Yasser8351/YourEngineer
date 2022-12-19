@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/screen/tab_screen.dart';
 import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
@@ -65,20 +67,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
-                      maxRadius: 35,
+                      maxRadius: 40,
                       backgroundColor: Theme.of(context).colorScheme.primary,
-                      // backgroundImage: const AssetImage(
-                      //  AppImage.logo,
-                      // ),
-                      child: const Text(
-                        "Logo",
-                        style: TextStyle(color: Colors.white),
+                      backgroundImage: const AssetImage(
+                        AppImage.logo,
                       ),
+                      // child: const Text(
+                      //   "Logo",
+                      //   style: TextStyle(color: Colors.white),
+                      // ),
                     ),
                     const SizedBox(height: 30),
                     TextFaildWidget(
                         controller: _emailController,
-                        label: AppConfig.emal,
+                        label: AppConfig.emal.tr,
                         obscure: false,
                         icon: IconButton(
                           onPressed: () {
@@ -90,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: size.height * .05),
                     TextFaildWidget(
                         controller: _passwordController,
-                        label: AppConfig.password,
+                        label: AppConfig.password.tr,
                         icon: IconButton(
                             onPressed: () {
                               showHidePassword();
@@ -106,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     isLoading
                         ? const Center(child: CircularProgressIndicator())
                         : ButtonWidget(
-                            title: AppConfig.login,
+                            title: AppConfig.login.tr,
                             color: colorScheme.primary,
                             onTap: () async {
                               // validateData();
@@ -115,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _passwordController.text.isEmpty) {
                                 Helper.showError(
                                     context: context,
-                                    subtitle: "جميع الحقول مطلوبة");
+                                    subtitle: AppConfig.allFaildRequired.tr);
                                 return;
                               }
 
@@ -151,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () => Navigator.of(context)
                             .pushNamed(AppConfig.forgetPassword),
                         child: TextWidget(
-                            title: AppConfig.forgetPassword,
+                            title: AppConfig.forgetPassword.tr,
                             fontSize: 15,
                             color: colorScheme.primary),
                       ),
@@ -163,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () =>
                             Navigator.of(context).pushNamed(AppConfig.signUp),
                         child: TextWidget(
-                            title: AppConfig.signUp,
+                            title: AppConfig.signUp.tr,
                             fontSize: 15,
                             color: colorScheme.primary),
                       ),

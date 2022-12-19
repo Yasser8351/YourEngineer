@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../app_config/app_config.dart';
@@ -74,7 +75,7 @@ class ProjectScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: TextWidget(
-                    title: AppConfig.addProjectScreen,
+                    title: AppConfig.addProjectScreen.tr,
                     fontSize: size.height * .025,
                     color: Colors.white),
               ),
@@ -127,7 +128,7 @@ class ProjectScreen extends StatelessWidget {
       title: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: TextWidget(
-            title: AppConfig.addProjectScreen,
+            title: AppConfig.addProjectScreen.tr,
             fontSize: 18,
             color: Colors.white),
       ),

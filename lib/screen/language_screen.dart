@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 import '../app_config/app_config.dart';
+import '../controller/app_language_controller.dart';
 import '../widget/shared_widgets/text_widget.dart';
 
 class LanguageScreen extends StatelessWidget {
@@ -8,8 +10,8 @@ class LanguageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLanguageContoller appLanguageContoller = AppLanguageContoller();
     var size = MediaQuery.of(context).size;
-    // ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: _getAppBar(context),
       body: Column(
@@ -20,6 +22,7 @@ class LanguageScreen extends StatelessWidget {
           _buildLanguageButtonItem(
             title: 'العربية',
             onTap: () {
+              appLanguageContoller.changeLanguage('ar');
               // localeProvider.setLocale(L10n.all[1]);
               // print(localeProvider.locale.toString());
             },
@@ -27,6 +30,7 @@ class LanguageScreen extends StatelessWidget {
           _buildLanguageButtonItem(
             title: 'English',
             onTap: () {
+              appLanguageContoller.changeLanguage('en');
               // localeProvider.setLocale(L10n.all[0]);
               // print(localeProvider.locale.toString());
             },
@@ -38,10 +42,10 @@ class LanguageScreen extends StatelessWidget {
 
   _getAppBar(BuildContext context) {
     return AppBar(
-      title: const Padding(
+      title: Padding(
         padding: EdgeInsets.only(top: 10),
         child: TextWidget(
-            title: AppConfig.language, fontSize: 18, color: Colors.white),
+            title: AppConfig.language.tr, fontSize: 18, color: Colors.white),
       ),
       leading: IconButton(
         onPressed: () {

@@ -4,6 +4,7 @@ class AppImage {
   static const noProject = "$root/noProject.png";
   static const serverError = "$root/serverError.png";
   static const img = "$root/img.jpg";
+  static const logo = "$root/logo2.jpeg";
   static const img2 = "$root/img2.jpg";
   static const img3 = "$root/img3.png";
   static const img4 = "$root/img4.png";

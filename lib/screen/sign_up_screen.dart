@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 import 'package:your_engineer/api/user_auth.dart';
 import 'package:your_engineer/app_config/app_config.dart';
@@ -58,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: [
               TextFaildWidget(
                   controller: _firstNameController,
-                  label: AppConfig.firstName,
+                  label: AppConfig.firstName.tr,
                   obscure: false,
                   icon: IconButton(
                       onPressed: () {
@@ -69,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: size.height * .045),
               TextFaildWidget(
                   controller: _lastNameController,
-                  label: AppConfig.lastName,
+                  label: AppConfig.lastName.tr,
                   obscure: false,
                   icon: IconButton(
                       onPressed: () {
@@ -80,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: size.height * .045),
               TextFaildWidget(
                   controller: _emailController,
-                  label: AppConfig.emal,
+                  label: AppConfig.emal.tr,
                   obscure: false,
                   icon: IconButton(
                       onPressed: () {
@@ -91,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: size.height * .045),
               TextFaildWidget(
                   controller: _phoneController,
-                  label: AppConfig.phone,
+                  label: AppConfig.phone.tr,
                   obscure: false,
                   icon: IconButton(
                       onPressed: () {
@@ -102,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: size.height * .045),
               TextFaildWidget(
                   controller: _passwordController,
-                  label: AppConfig.password,
+                  label: AppConfig.password.tr,
                   icon: IconButton(
                       onPressed: () {
                         showHidePassword();
@@ -117,7 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: size.height * .045),
               TextFaildWidget(
                   controller: _comfirmPasswordController,
-                  label: AppConfig.comfirmPassword,
+                  label: AppConfig.comfirmPassword.tr,
                   icon: IconButton(
                       onPressed: () {
                         showHidePassword();
@@ -131,7 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ButtonWidget(
-                      title: AppConfig.signUp,
+                      title: AppConfig.signUp.tr,
                       color: colorScheme.primary,
                       onTap: () async {
                         // _showDialog('');
@@ -143,7 +144,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             _passwordController.text.isEmpty ||
                             _phoneController.text.isEmpty) {
                           Helper.showError(
-                              context: context, subtitle: "جميع الحقول مطلوبة");
+                              context: context,
+                              subtitle: AppConfig.allFaildRequired.tr);
                           return;
                         }
                         setState(() => isLoading = true);
@@ -180,18 +182,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Align(
                 alignment: Alignment.center,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     TextWidget(
-                      title: "  ${AppConfig.agreeTotermsOfServices}",
+                      title: "  ${AppConfig.agreeTotermsOfServices.tr} "
+                          "\n  ${AppConfig.termsOfServices.tr} ",
                       fontSize: 15,
                       color: colorScheme.onSecondary,
                     ),
-                    TextWidget(
-                      title: AppConfig.termsOfServices,
-                      fontSize: 15,
-                      color: colorScheme.primary,
-                    ),
+                    // TextWidget(
+                    //   title: AppConfig.termsOfServices.tr,
+                    //   fontSize: 15,
+                    //   color: colorScheme.primary,
+                    // ),
                   ],
                 ),
               ),
@@ -204,10 +207,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   _getAppBar(BuildContext context) {
     return AppBar(
-      title: const Padding(
+      title: Padding(
         padding: EdgeInsets.only(top: 10),
         child: TextWidget(
-            title: AppConfig.signUpWithEmail,
+            title: AppConfig.signUpWithEmail.tr,
             fontSize: 18,
             color: Colors.white),
       ),
