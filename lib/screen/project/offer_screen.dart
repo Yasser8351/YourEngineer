@@ -12,7 +12,7 @@ class OffersScreen extends StatefulWidget {
   const OffersScreen(
       {Key? key, required this.projectModel, this.isMyProject = false})
       : super(key: key);
-  final ProjectModel projectModel;
+  final Project projectModel;
   final bool isMyProject;
 
   @override

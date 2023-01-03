@@ -1,9 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/model/project_model.dart';
 
 import '../../app_config/app_config.dart';
+import '../../controller/project_controller.dart';
+import '../../debugger/my_debuger.dart';
+import '../../utilits/helper.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class AddProjectScreen extends StatefulWidget {
@@ -21,6 +25,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   TextEditingController daysController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  final ProjectController projectController = Get.find();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -29,10 +35,10 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   }
 
   initalControllers() {
-    log(widget.projectModel.titleProject);
-    titleController.text = widget.projectModel.titleProject;
-    descriptionController.text = widget.projectModel.descriptionProject;
-    daysController.text = widget.projectModel.titleProject;
+    // log(widget.projectModel.titleProject);
+    // titleController.text = widget.projectModel.titleProject;
+    // descriptionController.text = widget.projectModel.descriptionProject;
+    // daysController.text = widget.projectModel.titleProject;
   }
 
   @override
@@ -167,18 +173,46 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           horizontal: 25,
         ),
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             //in this method will
             //send Project to Server
+            // if (daysController.text.isEmpty ||
+            //     descriptionController.text.isEmpty ||
+            //     titleController.text.isEmpty) {
+            //   Helper.showError(
+            //       context: context, subtitle: AppConfig.allFaildRequired.tr);
+            //   return;
+            // }
+            setState(() => isLoading = true);
+
+            bool isAddProject = await projectController.addProject(
+              context,
+              "",
+              "",
+            );
+            myLog('isAddProject', isAddProject);
+            setState(() => isLoading = false);
+
+            if (isAddProject) {
+              clearController();
+              //userSignup sucssufuly
+              // ignore: use_build_context_synchronously
+              // Navigator.of(context).pushNamed(AppConfig.login);
+            } else {
+              Helper.showError(
+                  context: context, subtitle: "can not add projet");
+            }
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            child: TextWidget(
-                title: widget.isMyProject
-                    ? AppConfig.editMyProject
-                    : AppConfig.submitYourProject,
-                fontSize: 20,
-                color: colorScheme.surface),
+            child: isLoading
+                ? CircularProgressIndicator(color: Colors.white)
+                : TextWidget(
+                    title: widget.isMyProject
+                        ? AppConfig.editMyProject
+                        : AppConfig.submitYourProject,
+                    fontSize: 20,
+                    color: colorScheme.surface),
           ),
         ),
       ),
@@ -263,5 +297,11 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
         decoration: InputDecoration(hintText: label),
       ),
     );
+  }
+
+  void clearController() {
+    daysController.clear();
+    descriptionController.clear();
+    titleController.clear();
   }
 }

@@ -146,7 +146,7 @@ class AppLocalization implements Translations {
           AppConfig.seeAll: AppConfig.seeAll,
           AppConfig.topEngineerRating: AppConfig.topEngineerRating,
           AppConfig.populerServices: AppConfig.populerServices,
-          AppConfig.allFaildRequired: "All fields are required",
+          AppConfig.allFaildRequired: AppConfig.allFaildRequired,
         },
       };
 }

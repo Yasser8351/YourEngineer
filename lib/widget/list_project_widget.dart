@@ -13,7 +13,7 @@ class ListProjectWidget extends StatelessWidget {
       required this.colorScheme,
       required this.size})
       : super(key: key);
-  final ProjectModel projectModel;
+  final Project projectModel;
   final ColorScheme colorScheme;
   final Size size;
 

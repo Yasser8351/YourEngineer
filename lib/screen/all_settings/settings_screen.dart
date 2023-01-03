@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/screen/profile/profile_user_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
@@ -20,10 +21,13 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               buildCardItem(
-                  context,
-                  AppConfig.profile.tr,
-                  Icons.person_pin_outlined,
-                  () => Navigator.of(context).pushNamed(AppConfig.profileUser)),
+                context,
+                AppConfig.profile.tr,
+                Icons.person_pin_outlined,
+                () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProfileUserScreen())),
+              ),
+              // () => Navigator.of(context).pushNamed(AppConfig.profileUser)),
               buildDivider(),
               buildCardItem(
                   context,

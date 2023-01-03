@@ -1,4 +1,4 @@
-package com.app.your_engineer
+package com.app.architect
 
 import io.flutter.embedding.android.FlutterActivity
 

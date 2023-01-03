@@ -21,80 +21,81 @@ class SubServicesScreen extends StatefulWidget {
 
 class _SubServicesScreenState extends State<SubServicesScreen> {
   String search = '';
-  List<ProjectModel> listProject = [
-    ProjectModel(
-      titleProject: '3D design for interior design',
-      categoryProject: "Electricity Distribution Scheme",
-      descriptionProject:
-          'Project details Project detailsProject details Project details Project details Project detailsProject details',
-      postBy: "Open",
-      createdDate: "2 days ago",
-      numberOfoffers: "add first offers",
-    ),
-    ProjectModel(
-      titleProject: 'Making tables of quantities',
-      categoryProject: "Electricity Distribution Scheme",
-      descriptionProject:
-          'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
-      postBy: "In progress",
-      createdDate: "1 hours ago",
-      numberOfoffers: "13 offers",
-    ),
-    ProjectModel(
-      titleProject: 'health club design',
-      categoryProject: "Electricity Distribution Scheme",
-      descriptionProject:
-          'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
-      postBy: "Completed",
-      createdDate: "15 hours ago",
-      numberOfoffers: "5 offers",
-    ),
-    ProjectModel(
-      titleProject: '3D design for interior design',
-      categoryProject: "Electricity Distribution Scheme",
-      descriptionProject:
-          'Project details Project detailsProject details Project details Project details Project detailsProject details',
-      postBy: "Open",
-      createdDate: "2 days ago",
-      numberOfoffers: "8 offers",
-    ),
-    ProjectModel(
-      titleProject: '3D design for interior design',
-      categoryProject: "Electricity Distribution Scheme",
-      descriptionProject:
-          'Project details Project detailsProject details Project details Project details Project detailsProject details',
-      postBy: "Open",
-      createdDate: "2 days ago",
-      numberOfoffers: "add first offers",
-    ),
-    ProjectModel(
-      titleProject: 'Making tables of quantities',
-      categoryProject: "Electricity Distribution Scheme",
-      descriptionProject:
-          'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
-      postBy: "In progress",
-      createdDate: "1 hours ago",
-      numberOfoffers: "13 offers",
-    ),
-    ProjectModel(
-      titleProject: 'health club design',
-      categoryProject: "Electricity Distribution Scheme",
-      descriptionProject:
-          'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
-      postBy: "Completed",
-      createdDate: "15 hours ago",
-      numberOfoffers: "5 offers",
-    ),
-    ProjectModel(
-      titleProject: '3D design for interior design',
-      categoryProject: "Electricity Distribution Scheme",
-      descriptionProject:
-          'Project details Project detailsProject details Project details Project details Project detailsProject details',
-      postBy: "Open",
-      createdDate: "2 days ago",
-      numberOfoffers: "8 offers",
-    ),
-  ];
+  List<ProjectModel> listProject = [];
+  // List<ProjectModel> listProject = [
+  //   ProjectModel(
+  //     titleProject: '3D design for interior design',
+  //     categoryProject: "Electricity Distribution Scheme",
+  //     descriptionProject:
+  //         'Project details Project detailsProject details Project details Project details Project detailsProject details',
+  //     postBy: "Open",
+  //     createdDate: "2 days ago",
+  //     numberOfoffers: "add first offers",
+  //   ),
+  //   ProjectModel(
+  //     titleProject: 'Making tables of quantities',
+  //     categoryProject: "Electricity Distribution Scheme",
+  //     descriptionProject:
+  //         'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
+  //     postBy: "In progress",
+  //     createdDate: "1 hours ago",
+  //     numberOfoffers: "13 offers",
+  //   ),
+  //   ProjectModel(
+  //     titleProject: 'health club design',
+  //     categoryProject: "Electricity Distribution Scheme",
+  //     descriptionProject:
+  //         'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
+  //     postBy: "Completed",
+  //     createdDate: "15 hours ago",
+  //     numberOfoffers: "5 offers",
+  //   ),
+  //   ProjectModel(
+  //     titleProject: '3D design for interior design',
+  //     categoryProject: "Electricity Distribution Scheme",
+  //     descriptionProject:
+  //         'Project details Project detailsProject details Project details Project details Project detailsProject details',
+  //     postBy: "Open",
+  //     createdDate: "2 days ago",
+  //     numberOfoffers: "8 offers",
+  //   ),
+  //   ProjectModel(
+  //     titleProject: '3D design for interior design',
+  //     categoryProject: "Electricity Distribution Scheme",
+  //     descriptionProject:
+  //         'Project details Project detailsProject details Project details Project details Project detailsProject details',
+  //     postBy: "Open",
+  //     createdDate: "2 days ago",
+  //     numberOfoffers: "add first offers",
+  //   ),
+  //   ProjectModel(
+  //     titleProject: 'Making tables of quantities',
+  //     categoryProject: "Electricity Distribution Scheme",
+  //     descriptionProject:
+  //         'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
+  //     postBy: "In progress",
+  //     createdDate: "1 hours ago",
+  //     numberOfoffers: "13 offers",
+  //   ),
+  //   ProjectModel(
+  //     titleProject: 'health club design',
+  //     categoryProject: "Electricity Distribution Scheme",
+  //     descriptionProject:
+  //         'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
+  //     postBy: "Completed",
+  //     createdDate: "15 hours ago",
+  //     numberOfoffers: "5 offers",
+  //   ),
+  //   ProjectModel(
+  //     titleProject: '3D design for interior design',
+  //     categoryProject: "Electricity Distribution Scheme",
+  //     descriptionProject:
+  //         'Project details Project detailsProject details Project details Project details Project detailsProject details',
+  //     postBy: "Open",
+  //     createdDate: "2 days ago",
+  //     numberOfoffers: "8 offers",
+  //   ),
+  // ];
 
   int expandeIndex = 0;
   @override
@@ -124,9 +125,10 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
                         search = widget.listSubServices[index].title;
                         listProject = listProject.where(
                           (element) {
-                            log("element :  ${element.categoryProject}");
+                            log("element :  ${element.totalItems}");
 
-                            return element.categoryProject == search;
+                            return element.totalItems == search;
+                            // return element.categoryProject == search;
                           },
                         ).toList();
                         expandeIndex = index;

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:your_engineer/screen/tab_screen.dart';
 
+import '../app_config/app_image.dart';
 import '../sharedpref/user_share_pref.dart';
 import 'login_screen.dart';
 
@@ -51,9 +52,18 @@ class _SplashScreenState extends State<SplashScreen> {
         child: CircleAvatar(
           maxRadius: 55,
           backgroundColor: Theme.of(context).colorScheme.primary,
-          child: const Text(
-            "Logo",
-            style: TextStyle(color: Colors.white),
+          child: Image.asset(
+            AppImage.logo,
+
+            // maxRadius: 40,
+            // backgroundColor: Theme.of(context).colorScheme.primary,
+            // backgroundImage: const AssetImage(
+            //   AppImage.logo,
+            // ),
+            // child: const Text(
+            //   "Logo",
+            //   style: TextStyle(color: Colors.white),
+            // ),
           ),
         ),
       ),

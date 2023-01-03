@@ -47,7 +47,13 @@ class ListProjectWidget extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (context) => OffersScreen(
-                        projectModel: projectModel,
+                        projectModel: Project(
+                            titleProject: '',
+                            categoryProject: '',
+                            descriptionProject: '',
+                            postBy: '',
+                            createdDate: '',
+                            numberOfoffers: ''),
                       )),
             );
           }
@@ -61,7 +67,8 @@ class ListProjectWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                projectModel.titleProject,
+                "titleProject",
+                // projectModel.titleProject,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -72,7 +79,8 @@ class ListProjectWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                projectModel.descriptionProject,
+                "descriptionProject",
+                // projectModel.descriptionProject,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -89,28 +97,28 @@ class ListProjectWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildRowList(
-                        projectModel.postBy,
-                        colorScheme,
-                        projectModel.postBy.contains("Open")
-                            ? Icons.open_in_browser
-                            : projectModel.postBy.contains("In progress")
-                                ? Icons.blinds
-                                : projectModel.postBy.contains("Close")
-                                    ? Icons.close
-                                    : Icons.local_dining,
-                      ),
-                      buildRowList(projectModel.createdDate, colorScheme,
-                          Icons.watch_later),
-                      buildRowList(
-                          isMyProject
-                              ? projectModel.numberOfoffers
-                                      .contains('add first offers')
-                                  ? "0"
-                                  : projectModel.numberOfoffers
-                              : projectModel.numberOfoffers,
-                          colorScheme,
-                          Icons.post_add),
+                      // buildRowList(
+                      //   projectModel.postBy,
+                      //   colorScheme,
+                      //   projectModel.postBy.contains("Open")
+                      //       ? Icons.open_in_browser
+                      //       : projectModel.postBy.contains("In progress")
+                      //           ? Icons.blinds
+                      //           : projectModel.postBy.contains("Close")
+                      //               ? Icons.close
+                      //               : Icons.local_dining,
+                      // ),
+                      // buildRowList(projectModel.createdDate, colorScheme,
+                      //     Icons.watch_later),
+                      // buildRowList(
+                      //     isMyProject
+                      //         ? projectModel.numberOfoffers
+                      //                 .contains('add first offers')
+                      //             ? "0"
+                      //             : projectModel.numberOfoffers
+                      //         : projectModel.numberOfoffers,
+                      //     colorScheme,
+                      //     Icons.post_add),
                     ],
                   ),
                   isMyProject

@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
       ),
       locale: contoller.local ?? Get.deviceLocale,
       translations: AppLocalization(),
-      home: const TabScreen(),
+      home: const SplashScreen(),
       initialBinding: BinindingApp(),
       initialRoute: '/',
       getPages: [
@@ -92,17 +92,20 @@ class MyApp extends StatelessWidget {
           name: AppRouting.addProjectScreen,
           page: () => AddProjectScreen(
             projectModel: ProjectModel(
-                titleProject: '',
-                categoryProject: '',
-                descriptionProject: '',
-                postBy: '',
-                createdDate: '',
-                numberOfoffers: ''),
+                totalItems: 0, results: [], totalPages: 0, currentPage: 0),
+            // projectModel: ProjectModel(
+            //     titleProject: '',
+            //     categoryProject: '',
+            //     descriptionProject: '',
+            //     postBy: '',
+            //     createdDate: '',
+            //     numberOfoffers: ''
+            //     ),
           ),
         ),
         GetPage(
           name: AppRouting.profileUser,
-          page: () => const ProfileUserScreen(),
+          page: () => const AddProtofiloScreen(),
         ),
         GetPage(
           name: AppRouting.addProtofilo,
@@ -140,7 +143,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: AppRouting.offerScreen,
           page: () => OffersScreen(
-            projectModel: ProjectModel(
+            projectModel: Project(
                 titleProject: '',
                 categoryProject: '',
                 descriptionProject: '',
@@ -163,53 +166,6 @@ class MyApp extends StatelessWidget {
           page: () => const EditMyProjectScreen(),
         ),
       ],
-      /*
-      routes: const {
-        AppConfig.login: (ctx) => const LoginScreen(),
-        AppConfig.signUp: (ctx) => const SignUpScreen(),
-        AppConfig.forgetPassword: (ctx) => const ForgotPasswordScreen(),
-        AppConfig.tabScreen: (ctx) => const TabScreen(),
-        AppConfig.addProjectScreen: (ctx) => AddProjectScreen(
-              projectModel: ProjectModel(
-                  titleProject: '',
-                  categoryProject: '',
-                  descriptionProject: '',
-                  postBy: '',
-                  createdDate: '',
-                  numberOfoffers: ''),
-            ),
-        AppConfig.profileUser: (ctx) => const ProfileUserScreen(),
-        AppConfig.profileEngineer: (ctx) => ProfileEngineerScreen(
-            engineerModel: TopEngineerRatingModel(
-                engineerName: '',
-                engineerspecialist: '',
-                imageUrl: '',
-                engineerRating: 0.0)),
-        AppConfig.paypal: (ctx) => const PayWithPaypal(),
-        AppConfig.visa: (ctx) => const PayWithVisa(),
-        AppConfig.chatRoom: (ctx) => const ChatRoomScreen(),
-        AppConfig.notifcation: (ctx) => const NotifcationScreen(),
-        AppConfig.termsOfServices: (ctx) => const TermsOfServicesScreen(),
-        AppConfig.privacyPolicy: (ctx) => const PrivacyPolicyScreen(),
-        AppConfig.faq: (ctx) => const FAQScreen(),
-        AppConfig.support: (ctx) => const SupportChatScreen(),
-        AppConfig.language: (ctx) => const LanguageScreen(),
-        AppConfig.subServices: (ctx) =>
-            const SubServicesScreen(titleServices: '', listSubServices: []),
-        AppConfig.servicesDetail: (ctx) => const ServicesDetailScreen(),
-        AppConfig.editMyProject: (ctx) => const EditMyProjectScreen(),
-        AppConfig.offerScreen: (ctx) => OffersScreen(
-              projectModel: ProjectModel(
-                  titleProject: '',
-                  categoryProject: '',
-                  descriptionProject: '',
-                  postBy: '',
-                  createdDate: '',
-                  numberOfoffers: ''),
-            ),
-        AppConfig.addProtofilo: (ctx) => const AddProtofiloScreen(),
-      },
-          */
     );
   }
 }

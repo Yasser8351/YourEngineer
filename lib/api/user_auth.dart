@@ -18,14 +18,16 @@ class UserAuth {
 
     final data = {
       ApiParameters.email: userModel.email,
-      ApiParameters.fullname: userModel.fistName + userModel.lastName,
+      ApiParameters.fullname: userModel.fistName + " " + userModel.lastName,
       ApiParameters.password: password,
       ApiParameters.phone: userModel.phone,
       ApiParameters.roleId: 'f1f56154-3b95-11ed-8686-ecf4bb83b19b',
+      ApiParameters.profileImage: '',
     };
 
     final headers = {
       "Content-Type": "application/json",
+      'Accept': '*/*',
     };
 
     try {
@@ -84,7 +86,7 @@ class UserAuth {
 
     final headers = {
       "Content-Type": "application/json",
-      // "Authorization": token,
+      "Accept": "*/*", // "Authorization": token,
     };
 
     try {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/controller/project_controller.dart';
 import 'package:your_engineer/controller/top_engineer_controller.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
@@ -28,6 +29,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final PopulerServicesController populerServicesController = Get.find();
   final TopEngineerController topEngineerController = Get.find();
+  final ProjectController projectController = Get.find();
 
   //////
   /*
@@ -110,35 +112,35 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
    */
-  List<ProjectModel> listProject = [
-    ProjectModel(
-      titleProject: 'Making tables of quantities',
-      categoryProject: '',
-      descriptionProject:
-          'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
-      postBy: "Yasser Abubaker",
-      createdDate: "1 hours ago",
-      numberOfoffers: "13 offers",
-    ),
-    ProjectModel(
-      titleProject: 'health club design',
-      categoryProject: '',
-      descriptionProject:
-          'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
-      postBy: "Omer Ali",
-      createdDate: "15 hours ago",
-      numberOfoffers: "5 offers",
-    ),
-    ProjectModel(
-      titleProject: '3D design for interior design',
-      categoryProject: '',
-      descriptionProject:
-          'Project details Project detailsProject details Project details Project details Project detailsProject details',
-      postBy: "Ahmed osman",
-      createdDate: "2 days ago",
-      numberOfoffers: "add first offers",
-    )
-  ];
+  // List<ProjectModel> listProject = [
+  // ProjectModel(
+  //   titleProject: 'Making tables of quantities',
+  //   categoryProject: '',
+  //   descriptionProject:
+  //       'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
+  //   postBy: "Yasser Abubaker",
+  //   createdDate: "1 hours ago",
+  //   numberOfoffers: "13 offers",
+  // ),
+  // ProjectModel(
+  //   titleProject: 'health club design',
+  //   categoryProject: '',
+  //   descriptionProject:
+  //       'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
+  //   postBy: "Omer Ali",
+  //   createdDate: "15 hours ago",
+  //   numberOfoffers: "5 offers",
+  // ),
+  // ProjectModel(
+  //   titleProject: '3D design for interior design',
+  //   categoryProject: '',
+  //   descriptionProject:
+  //       'Project details Project detailsProject details Project details Project details Project detailsProject details',
+  //   postBy: "Ahmed osman",
+  //   createdDate: "2 days ago",
+  //   numberOfoffers: "add first offers",
+  // )
+  // ];
 
   double rating = 3.5;
 
@@ -180,25 +182,44 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               // ListProjectWidget
-
-              SizedBox(
-                height: size.height * .25,
-                width: double.infinity,
-                child: ListView.separated(
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 18),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: listProject.length,
-                  itemBuilder: (context, index) {
-                    return ListProjectWidget(
-                      projectModel: listProject[index],
-                      colorScheme: colorScheme,
-                      size: size,
-                    );
-                  },
-                ),
-              ),
-
+              Obx(() {
+                if (projectController.loadingState.value ==
+                        LoadingState.initial ||
+                    projectController.loadingState.value ==
+                        LoadingState.loading) {
+                  return ShimmerWidget(size: size);
+                } else if (projectController.loadingState.value ==
+                        LoadingState.error ||
+                    projectController.loadingState.value ==
+                        LoadingState.noDataFound) {
+                  return ReyTryErrorWidget(
+                      title: projectController.loadingState.value ==
+                              LoadingState.noDataFound
+                          ? AppConfig.noData.tr
+                          : projectController.apiResponse.message,
+                      onTap: () {
+                        projectController.getProjects();
+                      });
+                } else {
+                  return SizedBox(
+                    height: size.height * .25,
+                    width: double.infinity,
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 18),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: projectController.listprojects.length,
+                      itemBuilder: (context, index) {
+                        return ListProjectWidget(
+                          projectModel: projectController.listprojects[index],
+                          colorScheme: colorScheme,
+                          size: size,
+                        );
+                      },
+                    ),
+                  );
+                }
+              }),
               // Space between list in Home Screen
               const SizedBox(height: 40),
 

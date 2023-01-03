@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.center,
                       child: InkWell(
                         onTap: () =>
-                            Navigator.of(context).pushNamed(AppConfig.signUp),
+                            Navigator.of(context).pushNamed(AppRouting.signUp),
                         child: TextWidget(
                             title: AppConfig.signUp.tr,
                             fontSize: 15,
