@@ -128,4 +128,5 @@ class AppRouting {
   static const String subServices = "/subServices";
   static const String servicesDetail = "/servicesDetail";
   static const String editMyProject = "/editMyProject";
+  static const String fag = "/FAQ";
 }

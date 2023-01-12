@@ -13,6 +13,7 @@ import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
 import '../enum/all_enum.dart';
+import 'package:http/http.dart' as http;
 
 class PopulerServicesController extends GetxController {
   ApiResponse apiResponse = ApiResponse();
@@ -40,22 +41,25 @@ class PopulerServicesController extends GetxController {
       var token = await _pref.getToken();
 
       myLog("start methode", "getCategorys");
-
+      print("toook=================$token");
       // loadingState = LoadingState.loading.obs;
-      var response = await Dio()
-          .get(
-            ApiUrl.geCategory,
-            options: Options(
-              headers: ApiUrl.getHeader(token: token),
-            ),
-          )
-          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+      // var response = await Dio()
+      //     .get(
+      //       ApiUrl.geCategory,
+      //       options: Options(
+      //         headers: ApiUrl.getHeader(token: token),
+      //       ),
+      //     )
+      //     .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+      var response = await http.get(Uri.parse(ApiUrl.geCategory),
+          headers: ApiUrl.getHeader(token: token));
 
       myLog("start methode", "${loadingState.value}");
+      print("statusCode=================${response.body}");
 
       if (response.statusCode == 200) {
         _listPopulerServices =
-            populerServicesModelFromJson(jsonEncode(response.data));
+            populerServicesModelFromJson(jsonEncode(response.body));
 
         if (_listPopulerServices.isEmpty) {
           loadingState(LoadingState.noDataFound);

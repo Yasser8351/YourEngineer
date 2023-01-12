@@ -9,7 +9,7 @@ class FAQWidget extends StatelessWidget {
     required this.expand,
   }) : super(key: key);
 
-  final FAQModel faqModel;
+  final FaqtModel faqModel;
   final Function() onTap;
   final bool expand;
 
@@ -26,13 +26,13 @@ class FAQWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
         title: Text(
-          faqModel.title,
+          faqModel.question!,
           textAlign: TextAlign.end,
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 15),
           child: Text(
-            faqModel.discreption,
+            faqModel.answer!,
             textAlign: TextAlign.end,
           ),
         ),

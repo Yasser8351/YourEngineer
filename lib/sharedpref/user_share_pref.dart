@@ -14,6 +14,7 @@ class SharedPrefUser {
     await _prefs.setString('token', userModel.token);
     await _prefs.setString('phone', userModel.phone);
     await _prefs.setString('email', userModel.email);
+    await _prefs.setString('image', userModel.userImage);
 
     return await _prefs.setBool('login', true);
   }
@@ -59,6 +60,7 @@ class SharedPrefUser {
       lastName: _prefs.getString('last_name') ?? '',
       phone: _prefs.getString('phone') ?? '',
       token: _prefs.getString('token') ?? '',
+      userImage: _prefs.getString('image') ?? '',
     );
     return model;
   }

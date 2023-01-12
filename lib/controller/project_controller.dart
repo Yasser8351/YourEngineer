@@ -34,17 +34,17 @@ class ProjectController extends GetxController {
   }
 
   //addProject
-  Future<bool> addProject(
-      BuildContext context, String email, String password) async {
+  Future<bool> addProject(BuildContext context) async {
     myLog('start methode', 'addProject');
 
     var token = await _shared.getToken();
+    print("token========================$token");
 
     final data = {
-      'user_added_id': '57493cf4-adea-4299-9953-a9bb64b1ec4f',
+      'user_added_id': '9a49a238-218f-4eb3-8407-1db07ac7dc37',
       'proj_title': 'Title',
       'proj_description': 'description description description',
-      'category_id': 'ef14bad9-583a-4278-bd43-7daed9d24956',
+      'category_id': 'd85d4df8-368d-43a9-b0a6-3d64c4cc6477',
       'price_range_id': '0bbb2d2e-3c57-11ed-8686-ecf4bb83b19b',
       'proj_period': '30',
       'ProjectAttach': '',
@@ -75,6 +75,7 @@ class ProjectController extends GetxController {
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
+        print("nnnnnnnnnnonnnnoooooooooooo");
 
         setValueResponse(false);
         _status = false;

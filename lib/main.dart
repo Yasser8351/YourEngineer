@@ -5,6 +5,7 @@ import 'package:your_engineer/binding/binding_app.dart';
 import 'package:your_engineer/controller/app_language_controller.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
+import 'package:your_engineer/screen/all_settings/faq_screen.dart';
 import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
@@ -164,6 +165,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: AppRouting.editMyProject,
           page: () => const EditMyProjectScreen(),
+        ),
+        GetPage(
+          name: AppRouting.fag,
+          page: () => const FAQScreen(),
         ),
       ],
     );

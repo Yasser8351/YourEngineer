@@ -7,6 +7,7 @@ class UserModel {
     required this.email,
     required this.phone,
     required this.userId,
+    required this.userImage,
   });
 
   String token;
@@ -16,4 +17,5 @@ class UserModel {
   String email;
   String phone;
   int userId;
+  String userImage;
 }

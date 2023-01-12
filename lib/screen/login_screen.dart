@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/app_config/app_image.dart';
@@ -142,7 +143,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             const TabScreen())));
                               } else {
                                 /// userSignup faild try again later
-
+                                // Get.defaultDialog(
+                                //     title: "Warning",
+                                //     content: const Text('Yor Not Exist'));
                               }
                             },
                           ),

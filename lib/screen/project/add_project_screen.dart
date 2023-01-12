@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/model/pro_model.dart';
 import 'package:your_engineer/model/project_model.dart';
 
 import '../../app_config/app_config.dart';
@@ -27,6 +29,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   TextEditingController descriptionController = TextEditingController();
   final ProjectController projectController = Get.find();
   bool isLoading = false;
+  String selectedCat = "afsdfvededvgsv";
 
   @override
   void initState() {
@@ -85,14 +88,30 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               300,
               5,
             ),
+
             TextWidget(
               title: AppConfig.chooseCategory,
               fontSize: 16,
               color: colorScheme.secondary,
               isTextStart: true,
             ),
-            buildRowList(
-                context, AppConfig.chooseCategory, colorScheme, Icons.category),
+            // buildRowList(
+            //     context, AppConfig.chooseCategory, colorScheme, Icons.category),
+            Row(
+              children: [
+                Icon(Icons.category),
+                DropdownButton(
+                  items: ["afsdfvededvgsv", "basdfg", "c"]
+                      .map((e) => DropdownMenuItem(
+                            child: Text("$e"),
+                            value: e,
+                          ))
+                      .toList(),
+                  onChanged: (val) {},
+                  value: selectedCat,
+                ),
+              ],
+            ),
             const SizedBox(height: 11),
             TextWidget(
               title: AppConfig.projectDelivered,
@@ -187,8 +206,6 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
             bool isAddProject = await projectController.addProject(
               context,
-              "",
-              "",
             );
             myLog('isAddProject', isAddProject);
             setState(() => isLoading = false);
