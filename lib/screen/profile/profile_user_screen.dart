@@ -67,10 +67,12 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
 
+import '../../controller/setting_controller.dart';
 import '../../model/top_engineer_rating_model.dart';
 import '../../widget/shared_widgets/bottom_navigation_card_widget.dart';
 import '../../widget/shared_widgets/card_profile_personal_info.dart';
@@ -85,6 +87,8 @@ class ProfileUserScreen extends StatefulWidget {
 }
 
 class _ProfileUserScreenState extends State<ProfileUserScreen> {
+  // SettingControoler controller = Get.find();
+
   var profileList = [
     ListHorizontalProfile(AppConfig.paypal, Icons.payment,
         image: AppImage.paypal),
@@ -104,6 +108,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
           child: Column(
             children: [
               CardProfilePersonalInfo(
+                // userModel: controller.userModel,
                 size: size,
                 colorScheme: colorScheme,
                 onTap: () {

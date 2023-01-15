@@ -1,28 +1,169 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 
+import '../../app_config/app_config.dart';
+import '../../controller/sub_service_screen_controller.dart';
+import '../../enum/all_enum.dart';
 import '../../model/project_model.dart';
 import '../../model/sub_services_model.dart';
 import '../../widget/list_my_project_widget.dart';
+import '../../widget/list_project_widget.dart';
 import '../../widget/list_sub_services_widget.dart';
+import '../../widget/shared_widgets/reytry_error_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class SubServicesScreen extends StatefulWidget {
-  const SubServicesScreen(
-      {Key? key, required this.titleServices, required this.listSubServices})
-      : super(key: key);
-  final String titleServices;
-  final List<SubServicesModel> listSubServices;
+  const SubServicesScreen({
+    Key? key,
+  }) : super(key: key);
+  // final String titleServices;
+  // final List<SubServicesModel> listSubServices;
 
   @override
   State<SubServicesScreen> createState() => _SubServicesScreenState();
 }
 
 class _SubServicesScreenState extends State<SubServicesScreen> {
+  SubServiceScreenController controller = Get.put(SubServiceScreenController());
   String search = '';
   List<ProjectModel> listProject = [];
-  // List<ProjectModel> listProject = [
+  List x = [1, 2, 3, 4];
+
+  int expandeIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: _getAppBar(context, controller.title),
+      body: Obx(() {
+        if (controller.loadingState.value == LoadingState.initial ||
+            controller.loadingState.value == LoadingState.loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (controller.loadingState.value == LoadingState.error ||
+            controller.loadingState.value == LoadingState.noDataFound) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("${controller.message}"),
+              ReyTryErrorWidget(
+                  title:
+                      controller.loadingState.value == LoadingState.noDataFound
+                          ? AppConfig.noData.tr
+                          : controller.apiResponse.message,
+                  onTap: () {
+                    controller.getSubCatigory(controller.id);
+                  })
+            ],
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: size.height * .015),
+
+                // List Sub Services horizantial this list using to
+                // filter main List by title Sub Services
+                SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 20),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: controller.listSubServices.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () async {
+                          setState(() {
+                            expandeIndex = index;
+
+                            myLog("ontap", "ontap");
+                            controller
+                                .getProjectBySubCatigory(controller
+                                    .listSubServices[index].id
+                                    .toString())
+                                .then((value) => setState(() {}));
+                          });
+                          // setState(() {
+                          //   search = controller.listSubServices[index].name!;
+                          //   listProject = listProject.where(
+                          //     (element) {
+                          //       log("element :  ${element.totalItems}");
+
+                          //       return element.totalItems == search;
+                          //       // return element.categoryProject == search;
+                          //     },
+                          //   ).toList();
+                          //   expandeIndex = index;
+
+                          //   log("searh :  $search");
+                          //   log("listProject :  ${listProject.length}");
+                          // });
+                        },
+                        child: ListSubServicesWidget(
+                          subServicesModel: controller.listSubServices[index],
+                          colorScheme: colorScheme,
+                          size: size,
+                          index: index,
+                          expandeIndex: expandeIndex,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: size.height * .01),
+
+                // List Project Services contains category
+                // using cateogry to filter this list
+                GetBuilder<SubServiceScreenController>(
+                  builder: (controller) => controller.isLoadingProject == true
+                      ? Center(
+                          child: Text("loding...."),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.results.length,
+                          itemBuilder: (context, index) => ListProjectWidget(
+                            results: controller.results,
+                            colorScheme: colorScheme,
+                            size: size,
+                            index: index,
+                          ),
+                        ),
+                )
+              ],
+            ),
+          );
+        }
+      }),
+    );
+  }
+
+  _getAppBar(BuildContext context, String titleServices) {
+    return AppBar(
+      title: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child:
+            TextWidget(title: titleServices, fontSize: 18, color: Colors.white),
+      ),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        icon: const Icon(Icons.navigate_before, size: 40),
+        color: Colors.white,
+      ),
+    );
+  }
+}
+// List<ProjectModel> listProject = [
   //   ProjectModel(
   //     titleProject: '3D design for interior design',
   //     categoryProject: "Electricity Distribution Scheme",
@@ -96,93 +237,3 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
   //     numberOfoffers: "8 offers",
   //   ),
   // ];
-
-  int expandeIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: _getAppBar(context, widget.titleServices),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: size.height * .015),
-
-            // List Sub Services horizantial this list using to
-            // filter main List by title Sub Services
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ListView.separated(
-                separatorBuilder: (context, index) => const SizedBox(width: 20),
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.listSubServices.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        search = widget.listSubServices[index].title;
-                        listProject = listProject.where(
-                          (element) {
-                            log("element :  ${element.totalItems}");
-
-                            return element.totalItems == search;
-                            // return element.categoryProject == search;
-                          },
-                        ).toList();
-                        expandeIndex = index;
-
-                        log("searh :  $search");
-                        log("listProject :  ${listProject.length}");
-                      });
-                    },
-                    child: ListSubServicesWidget(
-                      subServicesModel: widget.listSubServices[index],
-                      colorScheme: colorScheme,
-                      size: size,
-                      index: index,
-                      expandeIndex: expandeIndex,
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: size.height * .01),
-
-            // List Project Services contains category
-            // using cateogry to filter this list
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: listProject.length,
-              itemBuilder: (context, index) => ListProjectWidget(
-                projectModel: listProject[index],
-                colorScheme: colorScheme,
-                size: size,
-                isMyProject: false,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _getAppBar(BuildContext context, String titleServices) {
-    return AppBar(
-      title: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child:
-            TextWidget(title: titleServices, fontSize: 18, color: Colors.white),
-      ),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.navigate_before, size: 40),
-        color: Colors.white,
-      ),
-    );
-  }
-}

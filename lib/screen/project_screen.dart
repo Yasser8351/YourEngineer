@@ -7,6 +7,7 @@ import '../app_config/app_config.dart';
 import '../app_config/app_image.dart';
 import '../model/project_model.dart';
 import '../widget/list_my_project_widget.dart';
+import '../widget/list_project_widget.dart';
 import '../widget/shared_widgets/no_data.dart';
 
 class ProjectScreen extends StatelessWidget {
@@ -110,7 +111,7 @@ class ProjectScreen extends StatelessWidget {
               return Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: ListProjectWidget(
+                child: ListMyProjectWidget(
                   projectModel: listProject[index],
                   colorScheme: colorScheme,
                   isMyProject: isMyProject,
@@ -139,13 +140,13 @@ class ProjectScreen extends StatelessWidget {
             fontSize: 18,
             color: Colors.white),
       ),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.navigate_before, size: 40),
-        color: Colors.white,
-      ),
+      // leading: IconButton(
+      //   onPressed: () {
+      //     Navigator.of(context).pop();
+      //   },
+      //   icon: const Icon(Icons.navigate_before, size: 40),
+      //   color: Colors.white,
+      // ),
     );
   }
 }

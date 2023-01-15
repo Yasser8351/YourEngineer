@@ -16,7 +16,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
       required this.colorScheme,
       required this.size})
       : super(key: key);
-  final TopEngineerRatingModel topEngineerRatingModel;
+  final Result topEngineerRatingModel;
   final ColorScheme colorScheme;
   final Size size;
 
@@ -24,12 +24,12 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardDecoration(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ProfileEngineerScreen(
-                  engineerModel: topEngineerRatingModel,
-                  // colorScheme: colorScheme,
-                  // size: size,
-                )));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => ProfileEngineerScreen(
+        //           engineerModel: topEngineerRatingModel,
+        //           // colorScheme: colorScheme,
+        //           // size: size,
+        //         )));
       },
       height: 0,
       width: size.width * .6,
@@ -62,7 +62,8 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextWidget(
-                      title: topEngineerRatingModel.user.fullname,
+                      title: "",
+                      // title: topEngineerRatingModel.fullname,
                       fontSize: 18,
                       color: colorScheme.onSecondary,
                       isTextStart: false,
@@ -84,7 +85,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
                 child: TextWidget(
-                  title: topEngineerRatingModel.specialization,
+                  title: "specialization",
                   fontSize: 16,
                   color: colorScheme.secondary,
                   isTextStart: true,

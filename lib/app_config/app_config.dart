@@ -8,6 +8,7 @@ class AppConfig {
   static const String comfirmPassword = "comfirm password";
 
   static const String signUp = "Sign Up";
+  static const String noNet = "no enter connection";
   static const String forgetPassword = "forget password?";
   static const String tabScreen = "tab Screen";
   static const String addProjectScreen = "Add Project";

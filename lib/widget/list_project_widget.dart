@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
+import '../model/project_by_subcat_model.dart';
 import '../model/project_model.dart';
 import '../screen/project/offer_screen.dart';
 import 'shared_widgets/card_decoration.dart';
 import 'shared_widgets/text_widget.dart';
 
 class ListProjectWidget extends StatelessWidget {
-  const ListProjectWidget(
-      {Key? key,
-      required this.projectModel,
-      required this.colorScheme,
-      required this.size})
-      : super(key: key);
-  final Project projectModel;
+  const ListProjectWidget({
+    Key? key,
+    required this.results,
+    required this.colorScheme,
+    required this.size,
+    required this.index,
+  }) : super(key: key);
+  final List<dynamic> results;
   final ColorScheme colorScheme;
   final Size size;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +29,10 @@ class ListProjectWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => OffersScreen(
-                    projectModel: projectModel,
-                  )));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => OffersScreen(
+          //           projectModel: projectModel,
+          //         )));
         },
         height: size.height * .3,
         width: size.width * .7,
@@ -41,7 +44,7 @@ class ListProjectWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  projectModel.titleProject,
+                  results[index]['proj_title'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -52,7 +55,7 @@ class ListProjectWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  projectModel.descriptionProject,
+                  results[index]['proj_title'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -69,12 +72,15 @@ class ListProjectWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        buildRowList(
-                            projectModel.postBy, colorScheme, Icons.person),
-                        buildRowList(projectModel.createdDate, colorScheme,
+                        buildRowList(results[index]['owner']['fullname'],
+                            colorScheme, Icons.person),
+                        buildRowList(results[index]['CreatedAt'], colorScheme,
                             Icons.watch_later),
-                        buildRowList(projectModel.numberOfoffers, colorScheme,
-                            Icons.post_add),
+                        buildRowList(
+                          results[index]['OffersCount'].toString(),
+                          colorScheme,
+                          Icons.post_add,
+                        ),
                       ],
                     ),
                     CardWithImage(

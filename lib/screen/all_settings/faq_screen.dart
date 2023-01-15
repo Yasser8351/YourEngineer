@@ -6,6 +6,8 @@ import 'package:your_engineer/widget/shared_widgets/faq_widget.dart';
 
 import '../../app_config/app_config.dart';
 import '../../enum/all_enum.dart';
+import '../../widget/shared_widgets/reytry_error_widget.dart';
+import '../../widget/shared_widgets/shimmer_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 //FAQScreen
@@ -39,34 +41,67 @@ class _FAQScreenState extends State<FAQScreen> {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: _getAppBar(context),
-      body: controller.isloding
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.faq.length,
-                    itemBuilder: (context, index) {
-                      return FAQWidget(
-                        faqModel: controller.faq[index],
-                        expand: _expand,
+    return
+
+        // GetBuilder<FaqController>(
+        //     builder: (controller) =>
+        Scaffold(
+            appBar: _getAppBar(context),
+            body:
+                //           controller.isloding
+                // ? Center(
+                //     child: CircularProgressIndicator(),
+                //   )
+                // :
+                Obx(() {
+              if (controller.loadingState.value == LoadingState.initial ||
+                  controller.loadingState.value == LoadingState.loading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (controller.loadingState.value == LoadingState.error ||
+                  controller.loadingState.value == LoadingState.noDataFound) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${controller.message}"),
+                    ReyTryErrorWidget(
+                        title: controller.loadingState.value ==
+                                LoadingState.noDataFound
+                            ? AppConfig.noData.tr
+                            : controller.apiResponse.message,
                         onTap: () {
-                          // setState(() {
-                          //   _expand = !_expand;
-                          // });
+                          controller.getFaq();
+                        })
+                  ],
+                );
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.faq.length,
+                        itemBuilder: (context, index) {
+                          return FAQWidget(
+                            faqModel: controller.faq[index],
+                            expand: _expand,
+                            onTap: () {
+                              // setState(() {
+                              //   _expand = !_expand;
+                              // });
+                            },
+                          );
                         },
-                      );
-                    },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-    );
+                );
+              }
+            }
+
+                    // )
+                    ));
   }
 
   _getAppBar(BuildContext context) {

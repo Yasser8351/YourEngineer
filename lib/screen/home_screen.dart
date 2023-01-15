@@ -32,6 +32,259 @@ class _HomeScreenState extends State<HomeScreen> {
   final ProjectController projectController = Get.find();
 
   //////
+  double rating = 3.5;
+
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              SizedBox(height: size.height * .07),
+
+              // Headar of Screen
+              // that contains Text App name and icons of notifcation
+              TextWithIconWidget(
+                  onTapNotifications: () =>
+                      Navigator.of(context).pushNamed(AppConfig.notifcation)),
+
+              // Space
+              const SizedBox(height: 20),
+
+              // SearchWidget
+              SearchWidget(onTap: () {}),
+
+              // Space
+              const SizedBox(height: 35),
+
+//////////==========================================================
+
+              // Text Populer Services and See All
+              RowWithTwoText(
+                title: AppConfig.lastProject.tr,
+                description: AppConfig.seeAll.tr,
+                colorScheme: colorScheme.onSecondary,
+                colorScheme2: colorScheme.primary,
+                onTap: (() =>
+                    navigatorToNewScreen(context, const ProjectScreen())),
+              ),
+
+              // // ListProjectWidget
+
+              Obx(() {
+                if (projectController.loadingState.value ==
+                        LoadingState.initial ||
+                    projectController.loadingState.value ==
+                        LoadingState.loading) {
+                  return ShimmerWidget(size: size);
+                } else if (projectController.loadingState.value ==
+                        LoadingState.error ||
+                    projectController.loadingState.value ==
+                        LoadingState.noDataFound) {
+                  return ReyTryErrorWidget(
+                      title: projectController.loadingState.value ==
+                              LoadingState.noDataFound
+                          ? AppConfig.noData.tr
+                          : projectController.apiResponse.message,
+                      onTap: () {
+                        projectController.getProjects();
+                      });
+                } else {
+                  return SizedBox(
+                    height: size.height * .25,
+                    width: double.infinity,
+                    // child: ListView.separated(
+                    //   separatorBuilder: (context, index) =>
+                    //       const SizedBox(width: 18),
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemCount: projectController.listprojects!.length,
+                    //   itemBuilder: (context, index) {
+                    //     return ListProjectWidget(
+                    //       projectBySubCatModel: projectController.listprojects![index]!,
+                    //       colorScheme: colorScheme,
+                    //       size: size,
+                    //     );
+                    //   },
+                    // ),
+                  );
+                }
+              }),
+              // Space between list in Home Screen
+
+              const SizedBox(height: 40),
+
+              // Text Populer Services and See All
+              RowWithTwoText(
+                title: AppConfig.populerServices.tr,
+                description: AppConfig.seeAll.tr,
+                colorScheme: colorScheme.onSecondary,
+                colorScheme2: colorScheme.primary,
+                onTap: (() => navigatorToNewScreen(
+                      context,
+                      AllPopulerServicesScreen(
+                          listPopulerServices:
+                              populerServicesController.listPopulerServices,
+                          colorScheme: colorScheme,
+                          size: size),
+                    )),
+              ),
+
+              // ListPopulerServicesWidget
+              Obx(
+                () {
+                  if (populerServicesController.loadingState.value ==
+                          LoadingState.initial ||
+                      populerServicesController.loadingState.value ==
+                          LoadingState.loading) {
+                    return ShimmerWidget(size: size);
+                  } else if (populerServicesController.loadingState.value ==
+                          LoadingState.error ||
+                      populerServicesController.loadingState.value ==
+                          LoadingState.noDataFound) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("${populerServicesController.message}"),
+                        ReyTryErrorWidget(
+                            title: populerServicesController
+                                        .loadingState.value ==
+                                    LoadingState.noDataFound
+                                ? AppConfig.noData.tr
+                                : populerServicesController.apiResponse.message,
+                            onTap: () {
+                              populerServicesController.getCategorys();
+                            })
+                      ],
+                    );
+                  } else if (populerServicesController.loadingState ==
+                      LoadingState.token) {
+                    return Text("");
+
+                    // populerServicesController.logout(context);
+                  } else {
+                    return SizedBox(
+                      height: size.height * .3,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 18),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: populerServicesController
+                            .listPopulerServices.length,
+                        itemBuilder: (context, index) {
+                          return ListPopulerServicesWidget(
+                            populerServicesModel: populerServicesController
+                                .listPopulerServices[index],
+                            colorScheme: colorScheme,
+                            size: size,
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
+
+              // Space between list in Home Screen
+              const SizedBox(height: 40),
+
+              // Text Top Engineer Rating and See All
+              RowWithTwoText(
+                title: AppConfig.topEngineerRating.tr,
+                description: AppConfig.seeAll.tr,
+                colorScheme: colorScheme.onSecondary,
+                colorScheme2: colorScheme.primary,
+                onTap: (() => navigatorToNewScreen(
+                      context,
+                      AllEngineersScreen(
+                          listEngineers: const [],
+                          colorScheme: colorScheme,
+                          size: size),
+                    )),
+              ),
+
+              // ListTopEngineerRatingWidget
+              Obx(
+                () {
+                  if (topEngineerController.loadingState.value ==
+                          LoadingState.initial ||
+                      topEngineerController.loadingState.value ==
+                          LoadingState.loading) {
+                    return ShimmerWidget(size: size);
+                  } else if (topEngineerController.loadingState.value ==
+                      LoadingState.error) {
+                    return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("${topEngineerController.message}"),
+                          ReyTryErrorWidget(
+                              title: topEngineerController.apiResponse.message,
+                              onTap: () {
+                                topEngineerController.getTopEngineer();
+                              })
+                        ]);
+                  } else {
+                    return SizedBox(
+                      height: size.height * .36,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 18),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: topEngineerController.listTopEngineer.length,
+                        itemBuilder: (context, index) {
+                          return ListTopEngineerRatingWidget(
+                            topEngineerRatingModel:
+                                topEngineerController.listTopEngineer[index],
+                            colorScheme: colorScheme,
+                            size: size,
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
+
+              // Space between list and Bottom Page
+              const SizedBox(height: 30),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void navigatorToNewScreen(BuildContext context, screen) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => screen),
+    );
+  }
+}
+
+/* 
+  _getAppBar(BuildContext context) {
+    return AppBar(
+      title: const Padding(
+        padding: EdgeInsets.only(top: 10),
+        child: TextWidget(
+            title: AppConfig.home, fontSize: 18, color: Colors.white),
+      ),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        icon: const Icon(Icons.navigate_before, size: 40),
+        color: Colors.white,
+      ),
+    );
+  }
+  */
+
   /*
   List<TopEngineerRatingModel> listTopEngineerRating = [
     TopEngineerRatingModel(
@@ -141,230 +394,3 @@ class _HomeScreenState extends State<HomeScreen> {
   //   numberOfoffers: "add first offers",
   // )
   // ];
-
-  double rating = 3.5;
-
-  @override
-  Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(height: size.height * .07),
-
-              // Headar of Screen
-              // that contains Text App name and icons of notifcation
-              TextWithIconWidget(
-                  onTapNotifications: () =>
-                      Navigator.of(context).pushNamed(AppConfig.notifcation)),
-
-              // Space
-              const SizedBox(height: 20),
-
-              // SearchWidget
-              SearchWidget(onTap: () {}),
-
-              // Space
-              const SizedBox(height: 35),
-
-              // Text Populer Services and See All
-              RowWithTwoText(
-                title: AppConfig.lastProject.tr,
-                description: AppConfig.seeAll.tr,
-                colorScheme: colorScheme.onSecondary,
-                colorScheme2: colorScheme.primary,
-                onTap: (() =>
-                    navigatorToNewScreen(context, const ProjectScreen())),
-              ),
-
-              // ListProjectWidget
-              Obx(() {
-                if (projectController.loadingState.value ==
-                        LoadingState.initial ||
-                    projectController.loadingState.value ==
-                        LoadingState.loading) {
-                  return ShimmerWidget(size: size);
-                } else if (projectController.loadingState.value ==
-                        LoadingState.error ||
-                    projectController.loadingState.value ==
-                        LoadingState.noDataFound) {
-                  return ReyTryErrorWidget(
-                      title: projectController.loadingState.value ==
-                              LoadingState.noDataFound
-                          ? AppConfig.noData.tr
-                          : projectController.apiResponse.message,
-                      onTap: () {
-                        projectController.getProjects();
-                      });
-                } else {
-                  return SizedBox(
-                    height: size.height * .25,
-                    width: double.infinity,
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 18),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: projectController.listprojects.length,
-                      itemBuilder: (context, index) {
-                        return ListProjectWidget(
-                          projectModel: projectController.listprojects[index],
-                          colorScheme: colorScheme,
-                          size: size,
-                        );
-                      },
-                    ),
-                  );
-                }
-              }),
-              // Space between list in Home Screen
-              const SizedBox(height: 40),
-
-              // Text Populer Services and See All
-              RowWithTwoText(
-                title: AppConfig.populerServices.tr,
-                description: AppConfig.seeAll.tr,
-                colorScheme: colorScheme.onSecondary,
-                colorScheme2: colorScheme.primary,
-                onTap: (() => navigatorToNewScreen(
-                      context,
-                      AllPopulerServicesScreen(
-                          listPopulerServices:
-                              populerServicesController.listPopulerServices,
-                          colorScheme: colorScheme,
-                          size: size),
-                    )),
-              ),
-
-              // ListPopulerServicesWidget
-              Obx(
-                () {
-                  if (populerServicesController.loadingState.value ==
-                          LoadingState.initial ||
-                      populerServicesController.loadingState.value ==
-                          LoadingState.loading) {
-                    return ShimmerWidget(size: size);
-                  } else if (populerServicesController.loadingState.value ==
-                      LoadingState.error) {
-                    return ReyTryErrorWidget(
-                        title: populerServicesController.apiResponse.message,
-                        onTap: () {
-                          populerServicesController.getCategorys();
-                        });
-                  } else {
-                    return SizedBox(
-                      height: size.height * .3,
-                      width: double.infinity,
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 18),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: populerServicesController
-                            .listPopulerServices.length,
-                        itemBuilder: (context, index) {
-                          return ListPopulerServicesWidget(
-                            populerServicesModel: populerServicesController
-                                .listPopulerServices[index],
-                            colorScheme: colorScheme,
-                            size: size,
-                          );
-                        },
-                      ),
-                    );
-                  }
-                },
-              ),
-
-              // Space between list in Home Screen
-              const SizedBox(height: 40),
-
-              // Text Top Engineer Rating and See All
-              RowWithTwoText(
-                title: AppConfig.topEngineerRating.tr,
-                description: AppConfig.seeAll.tr,
-                colorScheme: colorScheme.onSecondary,
-                colorScheme2: colorScheme.primary,
-                onTap: (() => navigatorToNewScreen(
-                      context,
-                      AllEngineersScreen(
-                          listEngineers: const [],
-                          colorScheme: colorScheme,
-                          size: size),
-                    )),
-              ),
-
-              // ListTopEngineerRatingWidget
-              Obx(
-                () {
-                  if (topEngineerController.loadingState.value ==
-                          LoadingState.initial ||
-                      topEngineerController.loadingState.value ==
-                          LoadingState.loading) {
-                    return ShimmerWidget(size: size);
-                  } else if (topEngineerController.loadingState.value ==
-                      LoadingState.error) {
-                    return ReyTryErrorWidget(
-                        title: topEngineerController.apiResponse.message,
-                        onTap: () {
-                          topEngineerController.getTopEngineer();
-                        });
-                  } else {
-                    return SizedBox(
-                      height: size.height * .36,
-                      width: double.infinity,
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 18),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: topEngineerController.listTopEngineer.length,
-                        itemBuilder: (context, index) {
-                          return ListTopEngineerRatingWidget(
-                            topEngineerRatingModel:
-                                topEngineerController.listTopEngineer[index],
-                            colorScheme: colorScheme,
-                            size: size,
-                          );
-                        },
-                      ),
-                    );
-                  }
-                },
-              ),
-
-              // Space between list and Bottom Page
-              const SizedBox(height: 30),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void navigatorToNewScreen(BuildContext context, screen) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => screen),
-    );
-  }
-}
-
-/* 
-  _getAppBar(BuildContext context) {
-    return AppBar(
-      title: const Padding(
-        padding: EdgeInsets.only(top: 10),
-        child: TextWidget(
-            title: AppConfig.home, fontSize: 18, color: Colors.white),
-      ),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.navigate_before, size: 40),
-        color: Colors.white,
-      ),
-    );
-  }
-  */

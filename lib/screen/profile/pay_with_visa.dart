@@ -33,11 +33,12 @@ class _PayWithPaypalState extends State<PayWithPaypal> {
           padding: const EdgeInsets.only(top: 40, right: 10, left: 10),
           child: Column(
             children: [
-              CardProfilePersonalInfo(
-                size: size,
-                colorScheme: colorScheme,
-                onTap: () {},
-              ),
+              // CardProfilePersonalInfo(
+              //   userModel: ,
+              //   size: size,
+              //   colorScheme: colorScheme,
+              //   onTap: () {},
+              // ),
               const SizedBox(height: 35),
               ListProfileHorizontalWidget(
                 isPayScreen: true,

@@ -9,8 +9,8 @@ import '../screen/project/offer_screen.dart';
 import 'shared_widgets/card_decoration.dart';
 import 'shared_widgets/text_widget.dart';
 
-class ListProjectWidget extends StatelessWidget {
-  const ListProjectWidget(
+class ListMyProjectWidget extends StatelessWidget {
+  const ListMyProjectWidget(
       {Key? key,
       required this.projectModel,
       required this.colorScheme,
@@ -47,13 +47,26 @@ class ListProjectWidget extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (context) => OffersScreen(
-                        projectModel: Project(
-                            titleProject: '',
-                            categoryProject: '',
-                            descriptionProject: '',
-                            postBy: '',
-                            createdDate: '',
-                            numberOfoffers: ''),
+                        projectModel: Result(
+                          id: '',
+                          attatchmentFile: '',
+                          createdAt: '',
+                          offersCount: 1,
+                          owner: Owner(fullname: '', avatar: ''),
+                          priceRange: PriceRange(rangeName: ''),
+                          projPeriod: 1,
+                          projStatus: ProjStatus(statName: ''),
+                          projTitle: '',
+                          skills: '',
+                          subCategory: SubCategory(
+                              category: Category(catImg: '', catName: ''),
+                              name: ''),
+                          // categoryProject: '',
+                          projDescription: '',
+                          // postBy: '',
+                          // createdDate: '',
+                          // numberOfoffers: '',
+                        ),
                       )),
             );
           }

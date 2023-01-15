@@ -1,9 +1,8 @@
-import 'dart:developer';
-import 'dart:math';
-
+// import 'dart:io';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:your_engineer/model/pro_model.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:your_engineer/model/project_model.dart';
 
 import '../../app_config/app_config.dart';
@@ -24,43 +23,17 @@ class AddProjectScreen extends StatefulWidget {
 }
 
 class _AddProjectScreenState extends State<AddProjectScreen> {
-  TextEditingController daysController = TextEditingController();
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
   final ProjectController projectController = Get.find();
   bool isLoading = false;
-  String selectedCat = "afsdfvededvgsv";
 
-  @override
-  void initState() {
-    super.initState();
-    initalControllers();
-  }
-
-  initalControllers() {
-    // log(widget.projectModel.titleProject);
-    // titleController.text = widget.projectModel.titleProject;
-    // descriptionController.text = widget.projectModel.descriptionProject;
-    // daysController.text = widget.projectModel.titleProject;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  disposeControllers() {
-    titleController.dispose();
-    descriptionController.dispose();
-    daysController.dispose();
-  }
-
-  RangeValues selectedRange = const RangeValues(25, 50);
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+    // File? projectImage;
 
     Size size = MediaQuery.of(context).size;
+    XFile? xfile;
+
     return Scaffold(
       appBar: _getAppBar(context, widget.isMyProject),
       body: SingleChildScrollView(
@@ -69,7 +42,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           children: [
             SizedBox(height: size.height * .02),
             buildTextFormFaild(
-              titleController,
+              projectController.titleController,
               AppConfig.addTitle,
               false,
               TextInputType.text,
@@ -79,7 +52,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               1,
             ),
             buildTextFormFaild(
-              descriptionController,
+              projectController.descriptionController,
               AppConfig.addDiscription,
               false,
               TextInputType.text,
@@ -99,16 +72,28 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             //     context, AppConfig.chooseCategory, colorScheme, Icons.category),
             Row(
               children: [
-                Icon(Icons.category),
-                DropdownButton(
-                  items: ["afsdfvededvgsv", "basdfg", "c"]
-                      .map((e) => DropdownMenuItem(
-                            child: Text("$e"),
-                            value: e,
-                          ))
-                      .toList(),
-                  onChanged: (val) {},
-                  value: selectedCat,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(Icons.category),
+                ),
+                Container(
+                  width: 300,
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: DropdownButton(
+                    items: projectController.listSubCat
+                        .map((e) => DropdownMenuItem(
+                              child: Text(e.name!),
+                              value: e.id,
+                            ))
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        myLog('val', val);
+                        projectController.selectedCat = val.toString();
+                      });
+                    },
+                    value: projectController.selectedCat,
+                  ),
                 ),
               ],
             ),
@@ -130,7 +115,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                     child: buildTextFormFaild(
-                      daysController,
+                      projectController.daysController,
                       "days",
                       false,
                       TextInputType.number,
@@ -152,37 +137,154 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             ),
             buildRowList(context, AppConfig.budget, colorScheme,
                 Icons.attach_money_outlined),
-            RangeSlider(
-              values: selectedRange,
-              divisions: 1000,
-              max: 10000,
-              min: 25,
-              labels: RangeLabels(
-                  selectedRange.start.toString(), selectedRange.end.toString()),
-              onChanged: ((newValue) {
-                setState(() {
-                  if (selectedRange.start != selectedRange.start) {
-                    return;
-                  } else {
-                    selectedRange = newValue;
-                  }
-                });
-                //setState(() => {selectedRange = newValue});
-              }),
+            Container(
+              width: 300,
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: DropdownButton(
+                items: projectController.listPriceRange
+                    .map((e) => DropdownMenuItem(
+                          child: Text(e.rangeName!),
+                          value: e.id,
+                        ))
+                    .toList(),
+                onChanged: (val) {
+                  setState(() {
+                    myLog('val', val);
+                    projectController.selectedPriceRange = val.toString();
+                  });
+                },
+                value: projectController.selectedPriceRange,
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextWidget(
-                    title: selectedRange.start.toString(),
-                    fontSize: 16,
-                    color: colorScheme.primary),
-                TextWidget(
-                    title: selectedRange.end.toString(),
-                    fontSize: 16,
-                    color: colorScheme.primary),
-              ],
+
+            buildTextFormFaild(
+              projectController.skillsController,
+              'Add Skills',
+              false,
+              TextInputType.text,
+              const Icon(Icons.add),
+              colorScheme,
+              300,
+              5,
             ),
+
+            // InkWell(
+            //   onTap: () async {
+            //     showModalBottomSheet(
+            //         context: context,
+            //         builder: (context) => Container(
+            //               height: 200,
+            //               child: Column(
+            //                 children: [
+            //                   const SizedBox(height: 20),
+            //                   Container(
+            //                     width: double.infinity,
+            //                     alignment: Alignment.center,
+            //                     margin: const EdgeInsets.all(10),
+            //                     padding: const EdgeInsets.symmetric(
+            //                         vertical: 15, horizontal: 10),
+            //                     color: Colors.blueAccent,
+            //                     child: InkWell(
+            //                       onTap: () async {
+            //                         xfile = await ImagePicker()
+            //                             .pickImage(source: ImageSource.camera);
+            //                         Navigator.of(context).pop();
+            //                         projectImage = File(xfile!.path);
+            //                         setState(() {});
+            //                       },
+            //                       child: const Text(
+            //                         "Chose Image From Camera",
+            //                         style: TextStyle(
+            //                             fontSize: 15,
+            //                             fontWeight: FontWeight.bold,
+            //                             color: Colors.white),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                   const SizedBox(height: 10),
+            //                   Container(
+            //                     width: double.infinity,
+            //                     alignment: Alignment.center,
+            //                     margin: const EdgeInsets.all(10),
+            //                     padding: const EdgeInsets.symmetric(
+            //                         vertical: 15, horizontal: 10),
+            //                     color: Colors.blueAccent,
+            //                     child: InkWell(
+            //                       onTap: () async {
+            //                         XFile? xfile = await ImagePicker()
+            //                             .pickImage(source: ImageSource.gallery);
+            //                         Navigator.of(context).pop();
+            //                         projectImage = File(xfile!.path);
+            //                         setState(() {});
+            //                       },
+            //                       child: const Text(
+            //                         "Chose Image From Galary",
+            //                         style: TextStyle(
+            //                             fontSize: 15,
+            //                             fontWeight: FontWeight.bold,
+            //                             color: Colors.white),
+            //                       ),
+            //                     ),
+            //                   )
+            //                 ],
+            //               ),
+            //             ));
+            //   },
+            //   child: Container(
+            //     clipBehavior: Clip.antiAlias,
+            //     decoration: BoxDecoration(
+            //         border: Border.all(
+            //           width: 2,
+            //           color: Colors.grey.shade300,
+            //         ),
+            //         borderRadius: BorderRadius.circular(50)),
+            //     //
+            //     width: size.width * .40,
+            //     height: size.height * .20,
+            //     child: projectImage != null
+            //         ? Image.file(
+            //             projectImage!,
+            //             fit: BoxFit.fill,
+            //           )
+            //         : null,
+            //   ),
+            // ),
+            // RangeSlider(
+            //   values: projectController.selectedRange,
+            //   divisions: 1000,
+            //   max: 10000,
+            //   min: 25,
+            //   labels: RangeLabels(
+            //       projectController.selectedRange.start.toString(),
+            //       projectController.selectedRange.end.toString()),
+            //   onChanged: ((newValue) {
+            //     setState(() {
+            //       if (projectController.selectedRange.start !=
+            //           projectController.selectedRange.start) {
+            //         return;
+            //       } else {
+            //         projectController.isSelectedRange = true;
+            //         projectController.selectedRange = newValue;
+            //         myLog("projectController. selectedRange======",
+            //             "${projectController.selectedRange}");
+            //       }
+            //     });
+            //     //setState(() => {selectedRange = newValue});
+            //   }),
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     TextWidget(
+            //         title: projectController.selectedRange.start.toString(),
+            //         fontSize: 16,
+            //         color: colorScheme.primary),
+            //     TextWidget(
+            //         title: projectController.selectedRange.end.toString(),
+            //         fontSize: 16,
+            //         color: colorScheme.primary),
+            //   ],
+            // ),
           ],
         ),
       ),
@@ -195,13 +297,20 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           onPressed: () async {
             //in this method will
             //send Project to Server
-            // if (daysController.text.isEmpty ||
-            //     descriptionController.text.isEmpty ||
-            //     titleController.text.isEmpty) {
-            //   Helper.showError(
-            //       context: context, subtitle: AppConfig.allFaildRequired.tr);
-            //   return;
-            // }
+            if (projectController.daysController.text.isEmpty ||
+                projectController.descriptionController.text.isEmpty ||
+                projectController.titleController.text.isEmpty ||
+                projectController.selectedCat == null ||
+                projectController.selectedPriceRange == null) {
+              myLog("selectedCat.text", "${projectController.selectedCat}");
+              myLog("selectedPriceRange.text",
+                  "${projectController.selectedPriceRange}");
+              myLog("titleController.text",
+                  "${projectController.titleController.text}");
+              Helper.showError(
+                  context: context, subtitle: AppConfig.allFaildRequired.tr);
+              return;
+            }
             setState(() => isLoading = true);
 
             bool isAddProject = await projectController.addProject(
@@ -211,7 +320,10 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             setState(() => isLoading = false);
 
             if (isAddProject) {
-              clearController();
+              projectController.clearController();
+              Helper.showError(
+                  context: context, subtitle: "Succesfuly Added Projet");
+
               //userSignup sucssufuly
               // ignore: use_build_context_synchronously
               // Navigator.of(context).pushNamed(AppConfig.login);
@@ -307,6 +419,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
         ),
       ),
       child: TextField(
+        controller: controller,
         keyboardType: inputType,
         maxLength: maxLength,
         maxLines: maxLines,
@@ -314,11 +427,5 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
         decoration: InputDecoration(hintText: label),
       ),
     );
-  }
-
-  void clearController() {
-    daysController.clear();
-    descriptionController.clear();
-    titleController.clear();
   }
 }

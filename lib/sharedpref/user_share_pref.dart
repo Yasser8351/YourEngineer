@@ -3,7 +3,7 @@ import '/model/user_model.dart';
 
 class SharedPrefUser {
   late SharedPreferences _prefs;
-  Future<bool> login(UserModel userModel) async {
+  Future<bool> login(UserModel userModel, int selectedrole) async {
     _prefs = await SharedPreferences.getInstance();
 
     await _prefs.setInt('id', userModel.userId);
@@ -15,14 +15,16 @@ class SharedPrefUser {
     await _prefs.setString('phone', userModel.phone);
     await _prefs.setString('email', userModel.email);
     await _prefs.setString('image', userModel.userImage);
+    await _prefs.setInt('roleid', selectedrole);
 
     return await _prefs.setBool('login', true);
   }
 
-  Future<bool> saveToken(String token) async {
+  Future<bool> saveToken(String token, String status) async {
     _prefs = await SharedPreferences.getInstance();
 
     await _prefs.setString('token', token);
+    await _prefs.setString('status', status);
 
     return await _prefs.setBool('login', true);
   }
@@ -35,6 +37,13 @@ class SharedPrefUser {
   Future<int> getID() async {
     _prefs = await SharedPreferences.getInstance();
     return (_prefs.getInt('id') ?? -1);
+  }
+
+  // get role id
+
+  Future<int> getRoleID() async {
+    _prefs = await SharedPreferences.getInstance();
+    return (_prefs.getInt('roleid') ?? -1);
   }
 
   /// get the Representive token from share

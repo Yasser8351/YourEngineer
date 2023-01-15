@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_image.dart';
+import 'package:your_engineer/controller/populer_services_controller.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:your_engineer/screen/services/sub_services_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
@@ -19,6 +21,7 @@ class ListPopulerServicesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PopulerServicesController controller = Get.find();
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
@@ -26,12 +29,15 @@ class ListPopulerServicesWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => SubServicesScreen(
-              titleServices: populerServicesModel.titleServices,
-              listSubServices: const [],
-            ),
-          ));
+          controller.goToSubServicesScreen(
+              populerServicesModel.id, populerServicesModel.titleServices);
+          // Navigator.of(context).push(MaterialPageRoute(
+          //   builder: (context) => SubServicesScreen(
+          //     titleServices: populerServicesModel.id,
+          //     listSubServices: const [],
+          //   ),
+          // )
+          // );
         },
         height: 300,
         width: 200,

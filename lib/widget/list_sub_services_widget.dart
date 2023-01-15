@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_engineer/model/sub_catigory.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../model/sub_services_model.dart';
@@ -12,7 +13,7 @@ class ListSubServicesWidget extends StatefulWidget {
     required this.index,
     required this.expandeIndex,
   }) : super(key: key);
-  final SubServicesModel subServicesModel;
+  final SubCatigoryModel subServicesModel;
   final ColorScheme colorScheme;
   final Size size;
   final int index;
@@ -34,7 +35,7 @@ class _ListSubServicesWidgetState extends State<ListSubServicesWidget> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextWidget(
-              title: widget.subServicesModel.title,
+              title: widget.subServicesModel.name!,
               fontSize: 17,
               color: widget.expandeIndex == widget.index
                   ? Colors.white

@@ -127,7 +127,7 @@ class UserAuth {
       if (response.statusCode == 201) {
         status = true;
         setValueResponse(true);
-        await _shared.login(userModel);
+        await _shared.login(userModel, selectedrole);
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
@@ -185,8 +185,10 @@ class UserAuth {
 
       if (response.statusCode == 200) {
         status = true;
-        await _shared.saveToken(response.data['token']);
-        print("toooken===========${response.data['token']}");
+        await _shared.saveToken(
+            response.data['token'], response.data['status']);
+        // await _shared.login();
+        // print("toooken===========${response.data['token']}");
 
         setValueResponse(true);
       } else {

@@ -22,7 +22,7 @@ class AllEngineersScreen extends StatelessWidget {
     required this.colorScheme,
     required this.size,
   }) : super(key: key);
-  final List<TopEngineerRatingModel> listEngineers;
+  final List<Result> listEngineers;
   final ColorScheme colorScheme;
   final Size size;
 
@@ -40,6 +40,7 @@ class AllEngineersScreen extends StatelessWidget {
               crossAxisSpacing: 10),
           itemCount: listEngineers.length,
           itemBuilder: (ctx, index) {
+            // return Text("data");
             return ListTopEngineerRatingWidget(
               topEngineerRatingModel: listEngineers[index],
               colorScheme: colorScheme,

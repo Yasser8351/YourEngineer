@@ -17,14 +17,15 @@ class TopEngineerController extends GetxController {
 
   final SharedPrefUser _pref = SharedPrefUser();
 
-  List<TopEngineerRatingModel> _listTopEngineer = [];
+  List<dynamic> _listTopEngineer = [];
 
-  List<TopEngineerRatingModel> get listTopEngineer => _listTopEngineer;
+  List<dynamic> get listTopEngineer => _listTopEngineer;
+  String message = '';
 
   @override
-  onInit() {
+  onInit() async {
     super.onInit();
-    getTopEngineer();
+    await getTopEngineer();
   }
 
   Future<ApiResponse> getTopEngineer() async {
@@ -39,7 +40,7 @@ class TopEngineerController extends GetxController {
       myLog("start methode", "getTopEngineer");
 
       var response = await Dio()
-          .get(
+          .post(
             ApiUrl.getTopEngineer,
             options: Options(
               headers: ApiUrl.getHeader(token: token),
@@ -47,11 +48,18 @@ class TopEngineerController extends GetxController {
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      myLog("start methode", "${loadingState.value}");
+      myLog("start methode  statusCode", "${response.statusCode}");
+      // myLog("start methode  data", "${response.data}");
 
       if (response.statusCode == 200) {
-        _listTopEngineer =
+        // = topEngineerRatingModelFromJson((response.data));
+
+        var _modelEngineer =
             topEngineerRatingModelFromJson(jsonEncode(response.data));
+        myLog("_modelEngineer", "${_modelEngineer}");
+
+        _listTopEngineer = _modelEngineer.results;
+        // _listTopEngineer = _modelEngineer.results;
 
         if (_listTopEngineer.isEmpty) {
           loadingState(LoadingState.noDataFound);
@@ -63,26 +71,30 @@ class TopEngineerController extends GetxController {
         }
       } else if (response.statusCode == 401) {
         loadingState(LoadingState.error);
+        message = AppConfig.unAutaristion;
 
         // setApiResponseValue(AppConfig.unAutaristion, false,
         //     _listPopulerServices, LoadingState.error.obs);
       } else {
         loadingState(LoadingState.error);
+        message = AppConfig.unAutaristion;
 
         // setApiResponseValue(AppConfig.errorOoccurred, false,
         //     _listPopulerServices, LoadingState.error.obs);
       }
     } catch (error) {
       loadingState(LoadingState.error);
+      message = AppConfig.failedInternet;
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
       if (error.toString().toUpperCase().contains('TimeoutException')) {
         showseuessToast(error.toString());
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
-        showseuessToast(AppConfig.unAutaristion);
+        // showseuessToast(AppConfig.unAutaristion);
+        message = AppConfig.unAutaristion;
       } else {
-        showseuessToast(error.toString());
+        // showseuessToast(error.toString());
       }
 
       myLog("catch error", error.toString());

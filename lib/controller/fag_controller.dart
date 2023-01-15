@@ -27,10 +27,13 @@ class FaqController extends GetxController {
   List<FaqtModel> faq = [];
   ApiResponse apiResponse = ApiResponse();
   bool isloding = false;
+  String message = "";
+  bool get status => _status;
+  bool _status = false;
 
-  getFaq() async {
-    // loadingState(LoadingState.loading);
-    isloding = true;
+  Future<ApiResponse> getFaq() async {
+    loadingState(LoadingState.loading);
+    // isloding = true;
     // update();
     try {
       var token = await _shared.getToken();
@@ -52,20 +55,15 @@ class FaqController extends GetxController {
 
       if (response.statusCode == 200) {
         faq = faqtModelFromJson(response.body);
-        loadingState(LoadingState.loaded);
-        isloding = false;
-        update();
-
-        // faq =
-        //     populerServicesModelFromJson(jsonEncode(response.body));
 
         if (faq.isEmpty) {
+          message = "no data found";
           loadingState(LoadingState.noDataFound);
         } else {
-          // setApiResponseValue('get Data Cars Sucsessfuly', true,
-          //     _listPopulerServices, LoadingState.loaded.obs);
+          loadingState(LoadingState.loaded);
         }
       } else if (response.statusCode == 403) {
+        message = "دخول غير مصرح به";
         loadingState(LoadingState.error);
 
         // setApiResponseValue(AppConfig.unAutaristion, false,
@@ -77,17 +75,23 @@ class FaqController extends GetxController {
         //     _listPopulerServices, LoadingState.error.obs);
       }
     } on SocketException {
+      message = AppConfig.noNet;
+
       loadingState(LoadingState.error);
     } catch (error) {
       loadingState(LoadingState.error);
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
       if (error is TimeoutException) {
+        message = AppConfig.timeOut;
+
         showseuessToast(error.toString());
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
         showseuessToast(AppConfig.unAutaristion);
       } else {
+        message = AppConfig.noNet;
+
         showseuessToast(error.toString());
       }
 

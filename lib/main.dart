@@ -112,15 +112,15 @@ class MyApp extends StatelessWidget {
           name: AppRouting.addProtofilo,
           page: () => const AddProtofiloScreen(),
         ),
-        GetPage(
-          name: AppRouting.profileEngineer,
-          page: () => ProfileEngineerScreen(
-              engineerModel: TopEngineerRatingModel(
-            aboutUser: '',
-            specialization: '',
-            user: User(id: '', email: "", fullname: '', phone: '', imgPath: ''),
-          )),
-        ),
+        // GetPage(
+        //   name: AppRouting.profileEngineer,
+        //   page: () => ProfileEngineerScreen(
+        //       engineerModel: TopEngineerRatingModel(
+        //     aboutUser: '',
+        //     specialization: '',
+        //     user: User(id: '', email: "", fullname: '', phone: '', imgPath: ''),
+        //   )),
+        // ),
         GetPage(
           name: AppRouting.paypal,
           page: () => const PayWithPaypal(),
@@ -141,22 +141,35 @@ class MyApp extends StatelessWidget {
           name: AppRouting.language,
           page: () => const LanguageScreen(),
         ),
-        GetPage(
-          name: AppRouting.offerScreen,
-          page: () => OffersScreen(
-            projectModel: Project(
-                titleProject: '',
-                categoryProject: '',
-                descriptionProject: '',
-                postBy: '',
-                createdDate: '',
-                numberOfoffers: ''),
-          ),
-        ),
+        // GetPage(
+        //   name: AppRouting.offerScreen,
+        //   page: () => OffersScreen(
+        //     projectModel: Result(
+
+        //       id: '',
+        //       attatchmentFile: '',
+        //       createdAt: '',
+        //       offersCount: 1,
+        //       owner: Owner(fullname: '', avatar: ''),
+        //       priceRange: PriceRange(rangeName: ''),
+        //       projPeriod: 1,
+        //       projStatus: ProjStatus(statName: ''),
+        //       projTitle: '',
+        //       skills: '',
+        //       subCategory: SubCategory(
+        //           category: Category(catImg: '', catName: ''), name: ''),
+        //       // categoryProject: '',
+        //       projDescription: '',
+        //       // postBy: '',
+        //       // createdDate: '',
+        //       // numberOfoffers: '',
+        //     ),
+        //   ),
+        // ),
+
         GetPage(
           name: AppRouting.subServices,
-          page: () =>
-              const SubServicesScreen(titleServices: '', listSubServices: []),
+          page: () => const SubServicesScreen(),
         ),
         GetPage(
           name: AppRouting.servicesDetail,

@@ -12,7 +12,7 @@ class OffersScreen extends StatefulWidget {
   const OffersScreen(
       {Key? key, required this.projectModel, this.isMyProject = false})
       : super(key: key);
-  final Project projectModel;
+  final Result projectModel;
   final bool isMyProject;
 
   @override
@@ -57,9 +57,9 @@ class _OffersScreenState extends State<OffersScreen> {
   }
 
   initalControllers() {
-    titleController.text = widget.projectModel.titleProject;
-    descriptionController.text = widget.projectModel.descriptionProject;
-    daysController.text = widget.projectModel.titleProject;
+    titleController.text = widget.projectModel.projTitle;
+    descriptionController.text = widget.projectModel.projDescription;
+    daysController.text = widget.projectModel.projTitle;
   }
 
   @override
@@ -89,7 +89,7 @@ class _OffersScreenState extends State<OffersScreen> {
             children: [
               SizedBox(height: size.height * .02),
               TextWidget(
-                  title: widget.projectModel.titleProject,
+                  title: widget.projectModel.projTitle,
                   fontSize: size.height * .025,
                   color: colorScheme.primary),
               SizedBox(height: size.height * .02),
@@ -99,7 +99,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   color: colorScheme.background),
               SizedBox(height: size.height * .02),
               TextWidget(
-                title: widget.projectModel.descriptionProject,
+                title: widget.projectModel.projDescription,
                 fontSize: size.height * .025,
                 color: colorScheme.onSecondary,
                 isTextStart: true,

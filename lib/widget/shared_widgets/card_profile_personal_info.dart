@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:your_engineer/model/user_model.dart';
 import 'package:your_engineer/screen/profile/add_protofilo.dart';
+import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
 import '../../app_config/app_image.dart';
 import 'card_with_image.dart';
@@ -7,20 +9,24 @@ import 'rating_bar.dart';
 import 'text_widget.dart';
 
 class CardProfilePersonalInfo extends StatelessWidget {
-  const CardProfilePersonalInfo(
-      {Key? key,
-      required this.size,
-      required this.colorScheme,
-      required this.onTap,
-      this.isMyProfile = false})
-      : super(key: key);
+  const CardProfilePersonalInfo({
+    Key? key,
+    required this.size,
+    required this.colorScheme,
+    required this.onTap,
+    this.isMyProfile = false,
+    // required this.userModel
+  }) : super(key: key);
   final Size size;
   final ColorScheme colorScheme;
   final Function() onTap;
   final isMyProfile;
+  // final UserModel userModel;
 
   @override
   Widget build(BuildContext context) {
+    final _shared = SharedPrefUser();
+
     return CardWithImage(
       height: size.height * .17,
       width: size.width,
@@ -39,12 +45,14 @@ class CardProfilePersonalInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWidget(
-                        title: "Yasser Abubaker",
+                        title: "rrrrrrrrrrrrrr",
+                        // userModel.fullName,
                         fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),
                     TextWidget(
-                        title: "yasser8351@gmail.com",
+                        title: "ddddddddd",
+                        // userModel.email,
                         fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),

@@ -1,85 +1,101 @@
-/*
-class TopEngineerRatingModel {
-  String engineerName;
-  String engineerspecialist;
-  String imageUrl;
-  double engineerRating;
-
-  TopEngineerRatingModel({
-    required this.engineerName,
-    required this.engineerspecialist,
-    required this.imageUrl,
-    required this.engineerRating,
-  });
-}
-*/
-
 // To parse this JSON data, do
 //
 //     final topEngineerRatingModel = topEngineerRatingModelFromJson(jsonString);
 
 import 'dart:convert';
 
-List<TopEngineerRatingModel> topEngineerRatingModelFromJson(String str) =>
-    List<TopEngineerRatingModel>.from(
-        json.decode(str).map((x) => TopEngineerRatingModel.fromJson(x)));
+TopEngineerRatingModel topEngineerRatingModelFromJson(String str) =>
+    TopEngineerRatingModel.fromJson(json.decode(str));
 
-String topEngineerRatingModelToJson(List<TopEngineerRatingModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String topEngineerRatingModelToJson(TopEngineerRatingModel? data) =>
+    json.encode(data!.toJson());
+
+// List<TopEngineerRatingModel> topEngineerRatingModelFromJson(String str) =>
+//     List<TopEngineerRatingModel>.from(
+//         json.decode(str)!.map((x) => TopEngineerRatingModel.fromJson(x)));
+
+// String topEngineerRatingModelToJson(List<TopEngineerRatingModel> data) =>
+//     json.encode(
+//         data == null ? [] : List<dynamic>.from(data!.map((x) => x!.toJson())));
 
 class TopEngineerRatingModel {
   TopEngineerRatingModel({
-    required this.aboutUser,
-    required this.specialization,
-    required this.user,
+    this.totalItems,
+    required this.results,
+    this.totalPages,
+    this.currentPage,
   });
 
-  String aboutUser;
-  String specialization;
-  User user;
+  int? totalItems;
+  List<Result> results;
+  int? totalPages;
+  int? currentPage;
 
   factory TopEngineerRatingModel.fromJson(Map<String, dynamic> json) =>
       TopEngineerRatingModel(
-        aboutUser: json["about_user"] ?? '',
-        specialization: json["specialization"] ?? '',
-        user: User.fromJson(json["User"]),
+        totalItems: json["totalItems"] ?? 0,
+        results:
+            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        totalPages: json["totalPages"] ?? 0,
+        currentPage: json["currentPage"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
-        "about_user": aboutUser,
-        "specialization": specialization,
-        "User": user.toJson(),
+        "totalItems": totalItems,
+        "results": List<dynamic>.from(results.map((x) => x.toJson())),
+        "totalPages": totalPages,
+        "currentPage": currentPage,
       };
 }
 
-class User {
-  User({
+class Result {
+  Result({
     required this.id,
+    required this.roleId,
     required this.email,
+    required this.password,
     required this.fullname,
     required this.phone,
     required this.imgPath,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isActive,
   });
 
   String id;
+  String roleId;
   String email;
+  String password;
   String fullname;
   String phone;
   String imgPath;
+  String createdAt;
+  String updatedAt;
+  bool isActive;
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"] ?? '',
+        roleId: json["role_id"] ?? '',
         email: json["email"] ?? '',
+        password: json["password"] ?? '',
         fullname: json["fullname"] ?? '',
         phone: json["phone"] ?? '',
         imgPath: json["imgPath"] ?? '',
+        createdAt: json["createdAt"] ?? '',
+        updatedAt: json["updatedAt"] ?? '',
+        isActive: json["is_active"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "role_id": roleId,
         "email": email,
+        "password": password,
         "fullname": fullname,
         "phone": phone,
         "imgPath": imgPath,
+        "createdAt": createdAt,
+        "updatedAt": updatedAt,
+        "is_active": isActive,
       };
 }

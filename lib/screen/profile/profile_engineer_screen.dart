@@ -62,6 +62,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
@@ -80,6 +81,7 @@ class ProfileEngineerScreen extends StatefulWidget {
 }
 
 class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
+  // SettingControoler controller=Get.find()
   var profileList = [
     ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
     ListHorizontalProfile(AppConfig.reviews, Icons.star),

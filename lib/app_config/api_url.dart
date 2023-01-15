@@ -5,12 +5,17 @@ class ApiUrl {
   static String get signup => '$_root/auth/signup';
   static String get signin => '$_root/auth/signin';
   static String get geCategory => '$_root/category';
-  static String get getTopEngineer => '$_root/profile';
+  static String get getTopEngineer => '$_root/users/enginners?page=1&size=5';
   static String get getProject => '$_root/project?page=1&size=10';
   static String get addProject => '$_root/project';
   static String get getRoles => '$_root/auth/roles';
   static String get getFaq => '$_root/questions';
-
+  static String get getPricerange => '$_root/pricerange';
+  static String get getSubCatigory => '$_root/category/subcat/';
+  static String get getProjectBySubCatigory =>
+      '$_root/project/subcat?page=1&size=10&scatid=';
+// d5ca44c7-5ab5-4934-aaab-0d38ac61d8b1
+// pricerange
   static int get timeoutDuration => 20;
 
   static Map<String, String> getHeader({required String token}) {

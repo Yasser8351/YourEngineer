@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
@@ -34,11 +33,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _comfirmPasswordController = TextEditingController();
   bool _obscureText = true;
   File? myfile;
+  XFile? xfile;
+
   var selectedval;
 
   late SimpleFontelicoProgressDialog _dialog;
   bool isLoading = false;
-  XFile? xfile;
   UserAuth userAuth = UserAuth();
   late List<RolesModel> roleList;
   @override

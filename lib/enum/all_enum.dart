@@ -4,4 +4,5 @@ enum LoadingState {
   loaded,
   noDataFound,
   error,
+  token,
 }

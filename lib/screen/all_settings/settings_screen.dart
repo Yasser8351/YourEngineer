@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/model/top_engineer_rating_model.dart';
+import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
 import 'package:your_engineer/screen/profile/profile_user_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
+import '../../controller/setting_controller.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -12,6 +16,8 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingControoler controller = Get.find();
+
     return Scaffold(
       appBar: _getAppBar(context),
       body: SingleChildScrollView(
@@ -20,13 +26,9 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              buildCardItem(
-                context,
-                AppConfig.profile.tr,
-                Icons.person_pin_outlined,
-                () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ProfileUserScreen())),
-              ),
+              buildCardItem(context, AppConfig.profile.tr,
+                  Icons.person_pin_outlined, () => controller.onProfileTap()),
+
               // () => Navigator.of(context).pushNamed(AppConfig.profileUser)),
               buildDivider(),
               buildCardItem(
