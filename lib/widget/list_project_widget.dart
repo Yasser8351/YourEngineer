@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
+import '../controller/sub_service_screen_controller.dart';
 import '../model/project_by_subcat_model.dart';
 import '../model/project_model.dart';
 import '../screen/project/offer_screen.dart';
@@ -22,6 +25,8 @@ class ListProjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SubServiceScreenController controller = Get.find();
+
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
@@ -29,10 +34,12 @@ class ListProjectWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {
-          // Navigator.of(context).push(MaterialPageRoute(
-          //     builder: (context) => OffersScreen(
-          //           projectModel: projectModel,
-          //         )));
+          myLog("ontap", "card");
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => OffersScreen(
+                    index: index,
+                    result: results,
+                  )));
         },
         height: size.height * .3,
         width: size.width * .7,
@@ -55,7 +62,7 @@ class ListProjectWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  results[index]['proj_title'],
+                  results[index]['proj_description'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

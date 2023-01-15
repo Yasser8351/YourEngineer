@@ -6,8 +6,9 @@ class ApiUrl {
   static String get signin => '$_root/auth/signin';
   static String get geCategory => '$_root/category';
   static String get getTopEngineer => '$_root/users/enginners?page=1&size=5';
-  static String get getProject => '$_root/project?page=1&size=10';
+  static String get getProject => '$_root/project?page=1&size=10&search=';
   static String get addProject => '$_root/project';
+  static String get addoffer => '$_root/offer';
   static String get getRoles => '$_root/auth/roles';
   static String get getFaq => '$_root/questions';
   static String get getPricerange => '$_root/pricerange';
@@ -16,6 +17,7 @@ class ApiUrl {
       '$_root/project/subcat?page=1&size=10&scatid=';
 // d5ca44c7-5ab5-4934-aaab-0d38ac61d8b1
 // pricerange
+// offer
   static int get timeoutDuration => 20;
 
   static Map<String, String> getHeader({required String token}) {
@@ -25,7 +27,7 @@ class ApiUrl {
       'Authorization': "Bearer $token",
       // 'Authorization':
       //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI5YTQ5YTIzOC0yMThmLTRlYjMtODQwNy0xZGIwN2FjN2RjMzciLCJlbWFpbCI6InRlc3QxMjM0NSIsImZ1bGxuYW1lIjoidGVzdDEyMyIsImlhdCI6MTY3MzU0MjQ0MCwiZXhwIjoxNjczNTQ2MDQwfQ.eEoFPfwsjRgxcMzGRarzvIVrWriBUFZLBQGRJSwGNS4',
-      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/json'
     };
   }
 }

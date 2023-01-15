@@ -49,24 +49,27 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.white,
       // backgroundColor: const Color(0xFF25366C),
       body: Center(
-        child: CircleAvatar(
-          maxRadius: 55,
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          child: Image.asset(
-            AppImage.logo,
+        // child: CircleAvatar(
+        //   // maxRadius: 55,
+        //   // backgroundColor: Theme.of(context).colorScheme.primary,
+        //   // child:
+        child: Image.asset(
+          AppImage.logo,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
 
-            // maxRadius: 40,
-            // backgroundColor: Theme.of(context).colorScheme.primary,
-            // backgroundImage: const AssetImage(
-            //   AppImage.logo,
-            // ),
-            // child: const Text(
-            //   "Logo",
-            //   style: TextStyle(color: Colors.white),
-            // ),
-          ),
+          // maxRadius: 40,
+          // backgroundColor: Theme.of(context).colorScheme.primary,
+          // backgroundImage: const AssetImage(
+          //   AppImage.logo,
+          // ),
+          // child: const Text(
+          //   "Logo",
+          //   style: TextStyle(color: Colors.white),
+          // ),
         ),
       ),
+      // ),
     );
   }
 }

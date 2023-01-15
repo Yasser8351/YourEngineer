@@ -97,19 +97,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   return SizedBox(
                     height: size.height * .25,
                     width: double.infinity,
-                    // child: ListView.separated(
-                    //   separatorBuilder: (context, index) =>
-                    //       const SizedBox(width: 18),
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemCount: projectController.listprojects!.length,
-                    //   itemBuilder: (context, index) {
-                    //     return ListProjectWidget(
-                    //       projectBySubCatModel: projectController.listprojects![index]!,
-                    //       colorScheme: colorScheme,
-                    //       size: size,
-                    //     );
-                    //   },
-                    // ),
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 18),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: projectController.results.length,
+                      itemBuilder: (context, index) {
+                        return ListProjectWidget(
+                          index: index,
+                          results: projectController.results,
+                          colorScheme: colorScheme,
+                          size: size,
+                        );
+                        //[index]
+                      },
+                    ),
                   );
                 }
               }),

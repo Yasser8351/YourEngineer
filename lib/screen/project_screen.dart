@@ -109,15 +109,16 @@ class ProjectScreen extends StatelessWidget {
             itemCount: listProject.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: ListMyProjectWidget(
-                  projectModel: listProject[index],
-                  colorScheme: colorScheme,
-                  isMyProject: isMyProject,
-                  size: size,
-                ),
-              );
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  child: Text("notnow")
+                  //  ListMyProjectWidget(
+                  //   projectModel: listProject[index],
+                  //   colorScheme: colorScheme,
+                  //   isMyProject: isMyProject,
+                  //   size: size,
+                  // ),
+                  );
             },
           );
         }

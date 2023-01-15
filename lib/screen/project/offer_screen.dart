@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
 
 import '../../app_config/app_config.dart';
+import '../../controller/offers_controller.dart';
+import '../../controller/sub_service_screen_controller.dart';
+import '../../debugger/my_debuger.dart';
 import '../../model/offers_engineer_model.dart';
+import '../../utilits/helper.dart';
 import '../../widget/list_offers_engineer_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class OffersScreen extends StatefulWidget {
-  const OffersScreen(
-      {Key? key, required this.projectModel, this.isMyProject = false})
-      : super(key: key);
-  final Result projectModel;
-  final bool isMyProject;
+  const OffersScreen({
+    Key? key,
+    required this.index,
+    required this.result,
+    //  required this.projectModel, this.isMyProject = false
+  }) : super(key: key);
+  final List<dynamic> result;
+  final int index;
 
   @override
   State<OffersScreen> createState() => _OffersScreenState();
 }
 
 class _OffersScreenState extends State<OffersScreen> {
-  TextEditingController daysController = TextEditingController();
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
+  OfferController controller = Get.put(OfferController());
+  bool isLoading = false;
 
   List<OffersEngineerModel> listOffersEngineer = [
     OffersEngineerModel(
@@ -56,23 +63,13 @@ class _OffersScreenState extends State<OffersScreen> {
     super.initState();
   }
 
-  initalControllers() {
-    titleController.text = widget.projectModel.projTitle;
-    descriptionController.text = widget.projectModel.projDescription;
-    daysController.text = widget.projectModel.projTitle;
-  }
+  // initalControllers() {
+  //   titleController.text = widget.projectModel.projTitle;
+  //   descriptionController.text = widget.projectModel.projDescription;
+  //   daysController.text = widget.projectModel.projTitle;
+  // }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  disposeControllers() {
-    titleController.dispose();
-    descriptionController.dispose();
-    daysController.dispose();
-  }
-
   RangeValues selectedRange = const RangeValues(25, 50);
   @override
   Widget build(BuildContext context) {
@@ -80,7 +77,7 @@ class _OffersScreenState extends State<OffersScreen> {
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: _getAppBar(context, widget.isMyProject),
+      appBar: _getAppBar(context),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
@@ -89,7 +86,7 @@ class _OffersScreenState extends State<OffersScreen> {
             children: [
               SizedBox(height: size.height * .02),
               TextWidget(
-                  title: widget.projectModel.projTitle,
+                  title: widget.result[widget.index]['proj_title'],
                   fontSize: size.height * .025,
                   color: colorScheme.primary),
               SizedBox(height: size.height * .02),
@@ -99,7 +96,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   color: colorScheme.background),
               SizedBox(height: size.height * .02),
               TextWidget(
-                title: widget.projectModel.projDescription,
+                title: widget.result[widget.index]['proj_description'],
                 fontSize: size.height * .025,
                 color: colorScheme.onSecondary,
                 isTextStart: true,
@@ -115,49 +112,52 @@ class _OffersScreenState extends State<OffersScreen> {
                 isTextStart: true,
               ),
               SizedBox(height: size.height * .03),
+
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextWidget(
                     title: "\$",
                     fontSize: size.width * .07,
                     color: colorScheme.primary,
-                    isTextStart: true,
+                    isTextStart: false,
                   ),
                   SizedBox(width: size.width * .03),
                   buildTextFormFaild(
-                    titleController,
+                    controller.priceController,
                     AppConfig.price,
                     false,
                     TextInputType.number,
                     const Icon(Icons.add),
                     colorScheme,
-                    size.width * .3,
-                    size.height * .04,
-                  ),
-                  const Spacer(),
-                  TextWidget(
-                    title: AppConfig.days,
-                    fontSize: size.width * .05,
-                    color: colorScheme.primary,
-                    isTextStart: true,
-                  ),
-                  SizedBox(width: size.width * .03),
-                  buildTextFormFaild(
-                    titleController,
-                    AppConfig.days,
-                    false,
-                    TextInputType.number,
-                    const Icon(Icons.add),
-                    colorScheme,
-                    size.width * .3,
-                    size.height * .04,
+                    size.width * .7,
+                    size.height * .06,
                   ),
                 ],
               ),
               SizedBox(height: size.height * .03),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                TextWidget(
+                  title: AppConfig.days,
+                  fontSize: size.width * .05,
+                  color: colorScheme.primary,
+                  isTextStart: true,
+                ),
+                SizedBox(width: size.width * .03),
+                buildTextFormFaild(
+                  controller.daysController,
+                  AppConfig.days,
+                  false,
+                  TextInputType.number,
+                  const Icon(Icons.add),
+                  colorScheme,
+                  size.width * .7,
+                  size.height * .06,
+                ),
+              ]),
+              SizedBox(height: size.height * .03),
               buildTextFormFaildDescription(
-                titleController,
+                controller.descriptionController,
                 AppConfig.descreiption,
                 false,
                 TextInputType.text,
@@ -165,10 +165,66 @@ class _OffersScreenState extends State<OffersScreen> {
                 colorScheme,
               ),
               SizedBox(height: size.height * .02),
-              ButtonWidget(
-                  title: AppConfig.addOffer,
-                  color: colorScheme.primary,
-                  onTap: () {}),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 25,
+                ),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (controller.daysController.text.isEmpty ||
+                        controller.descriptionController.text.isEmpty ||
+                        controller.priceController.text.isEmpty) {
+                      myLog("priceController.text",
+                          "${controller.priceController.text}");
+                      myLog("daysController.text",
+                          "${controller.daysController.text}");
+                      myLog("descriptionController.text",
+                          "${controller.descriptionController.text}");
+                      Helper.showError(
+                          context: context,
+                          subtitle: AppConfig.allFaildRequired.tr);
+                    } else {
+                      myLog("priceController.text",
+                          "${controller.priceController.text}");
+                      myLog("daysController.text",
+                          "${controller.daysController.text}");
+                      myLog("descriptionController.text",
+                          "${controller.descriptionController.text}");
+                      setState(() => isLoading = true);
+
+                      bool isAddProject = await controller.addOffer(
+                          context, widget.result[widget.index]['id']);
+                      myLog('isAddProject', isAddProject);
+                      setState(() => isLoading = false);
+
+                      if (isAddProject) {
+                        controller.clearController();
+                        Helper.showError(
+                            context: context,
+                            subtitle: "Succesfuly Added Projet");
+
+                        //userSignup sucssufuly
+                        // ignore: use_build_context_synchronously
+                        // Navigator.of(context).pushNamed(AppConfig.login);
+                      } else {
+                        Helper.showError(
+                            context: context, subtitle: "can not add projet");
+                      }
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
+                    child: isLoading
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : TextWidget(
+                            title: AppConfig.addOffer,
+                            fontSize: 20,
+                            color: colorScheme.surface),
+                  ),
+                ),
+              ),
               SizedBox(height: size.height * .02),
 
               const Divider(),
@@ -245,7 +301,7 @@ class _OffersScreenState extends State<OffersScreen> {
     );
   }
 
-  _getAppBar(BuildContext context, bool isMyProject) {
+  _getAppBar(BuildContext context) {
     return AppBar(
       title: const Padding(
         padding: EdgeInsets.only(top: 10),
@@ -292,10 +348,11 @@ class _OffersScreenState extends State<OffersScreen> {
           ),
         ),
         child: TextField(
+          controller: controller,
           keyboardType: inputType,
           scribbleEnabled: true,
           decoration: InputDecoration(hintText: label),
-          // maxLength: 300,
+          maxLength: 30,
         ),
       ),
     );
@@ -327,6 +384,7 @@ class _OffersScreenState extends State<OffersScreen> {
           ),
         ),
         child: TextField(
+          controller: controller,
           keyboardType: inputType,
           scribbleEnabled: true,
           decoration: InputDecoration(hintText: label),
@@ -337,3 +395,43 @@ class _OffersScreenState extends State<OffersScreen> {
     );
   }
 }
+
+ // buildTextFormFaild(
+  //   TextEditingController controller,
+  //   String label,
+  //   bool obscure,
+  //   TextInputType inputType,
+  //   Icon icon,
+  //   ColorScheme colorScheme,
+  //   double width,
+  //   double height,
+  // ) {
+  //   return SizedBox(
+  //     width: width,
+  //     height: height,
+  //     child: Theme(
+  //       data: ThemeData(
+  //         colorScheme: ColorScheme(
+  //           primary: colorScheme.primary,
+  //           onPrimary: Colors.black,
+  //           secondary: Colors.black,
+  //           onSecondary: Colors.white,
+  //           brightness: Brightness.light,
+  //           background: Colors.black,
+  //           onBackground: Colors.black,
+  //           error: Colors.black,
+  //           onError: Colors.black,
+  //           surface: Colors.black,
+  //           onSurface: Colors.black,
+  //         ),
+  //       ),
+  //       child: TextField(
+  //         keyboardType: inputType,
+  //         scribbleEnabled: true,
+
+  //         decoration: InputDecoration(hintText: label),
+  //         // maxLength: 300,
+  //       ),
+  //     ),
+  //   );
+  // }
