@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
+import '../controller/listProject_controller.dart';
 import '../controller/sub_service_screen_controller.dart';
 import '../model/project_by_subcat_model.dart';
 import '../model/project_model.dart';
@@ -25,7 +26,7 @@ class ListProjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SubServiceScreenController controller = Get.find();
+    ListProjectController controller = Get.put(ListProjectController());
 
     return ClipRRect(
       borderRadius: const BorderRadius.only(
@@ -35,11 +36,13 @@ class ListProjectWidget extends StatelessWidget {
       child: CardDecoration(
         onTap: () {
           myLog("ontap", "card");
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => OffersScreen(
-                    index: index,
-                    result: results,
-                  )));
+          controller.goToOfferScreen(index, results);
+          // Navigator.of(context).push(MaterialPageRoute(
+
+          //     builder: (context) => OffersScreen(
+          //           index: index,
+          //           result: results,
+          //         )));
         },
         height: size.height * .3,
         width: size.width * .7,

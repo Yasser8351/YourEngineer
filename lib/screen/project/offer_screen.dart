@@ -16,12 +16,12 @@ import '../../widget/shared_widgets/text_widget.dart';
 class OffersScreen extends StatefulWidget {
   const OffersScreen({
     Key? key,
-    required this.index,
-    required this.result,
+    // required this.index,
+    // required this.result,
     //  required this.projectModel, this.isMyProject = false
   }) : super(key: key);
-  final List<dynamic> result;
-  final int index;
+  // final List<dynamic> result;
+  // final int index;
 
   @override
   State<OffersScreen> createState() => _OffersScreenState();
@@ -31,32 +31,32 @@ class _OffersScreenState extends State<OffersScreen> {
   OfferController controller = Get.put(OfferController());
   bool isLoading = false;
 
-  List<OffersEngineerModel> listOffersEngineer = [
-    OffersEngineerModel(
-        nameEngineer: "nameEngineer",
-        engineerspecialist: "engineerspecialist",
-        offersDetails:
-            "Peace be upon you. I am Eng. Hassan al-Nakhal, a civil engineer. I work in the field of civil engineering, quantification, and preparation of extracts. The work will be delivered to you in a notebook. Limited, provided you have...",
-        offersDate: "2 hours",
-        imageEngineer: AppImage.img11,
-        engineerRating: 3.5),
-    OffersEngineerModel(
-        nameEngineer: "nameEngineer",
-        engineerspecialist: "engineerspecialist",
-        offersDetails:
-            "Peace, mercy, and blessings of God be upon you. Engineer Taha has five years of experience in the work of the technical office in the largest projects in the Arab Republic of Egypt, the last of which is the Monte Galala project, Ain Sokhna, attached to...",
-        offersDate: "3 hours",
-        imageEngineer: AppImage.img4,
-        engineerRating: 4.5),
-    OffersEngineerModel(
-        nameEngineer: "nameEngineer",
-        engineerspecialist: "engineerspecialist",
-        offersDetails:
-            "Peace, mercy, and blessings of God be upon you. Engineer Taha has five years of experience in the work of the technical office in the largest projects in the Arab Republic of Egypt, the last of which is the Monte Galala project, Ain Sokhna, attached to...",
-        offersDate: "4 hours",
-        imageEngineer: AppImage.img12,
-        engineerRating: 5),
-  ];
+  // List<OffersEngineerModel> listOffersEngineer = [
+  //   OffersEngineerModel(
+  //       nameEngineer: "nameEngineer",
+  //       engineerspecialist: "engineerspecialist",
+  //       offersDetails:
+  //           "Peace be upon you. I am Eng. Hassan al-Nakhal, a civil engineer. I work in the field of civil engineering, quantification, and preparation of extracts. The work will be delivered to you in a notebook. Limited, provided you have...",
+  //       offersDate: "2 hours",
+  //       imageEngineer: AppImage.img11,
+  //       engineerRating: 3.5),
+  //   OffersEngineerModel(
+  //       nameEngineer: "nameEngineer",
+  //       engineerspecialist: "engineerspecialist",
+  //       offersDetails:
+  //           "Peace, mercy, and blessings of God be upon you. Engineer Taha has five years of experience in the work of the technical office in the largest projects in the Arab Republic of Egypt, the last of which is the Monte Galala project, Ain Sokhna, attached to...",
+  //       offersDate: "3 hours",
+  //       imageEngineer: AppImage.img4,
+  //       engineerRating: 4.5),
+  //   OffersEngineerModel(
+  //       nameEngineer: "nameEngineer",
+  //       engineerspecialist: "engineerspecialist",
+  //       offersDetails:
+  //           "Peace, mercy, and blessings of God be upon you. Engineer Taha has five years of experience in the work of the technical office in the largest projects in the Arab Republic of Egypt, the last of which is the Monte Galala project, Ain Sokhna, attached to...",
+  //       offersDate: "4 hours",
+  //       imageEngineer: AppImage.img12,
+  //       engineerRating: 5),
+  // ];
 
   @override
   void initState() {
@@ -86,7 +86,7 @@ class _OffersScreenState extends State<OffersScreen> {
             children: [
               SizedBox(height: size.height * .02),
               TextWidget(
-                  title: widget.result[widget.index]['proj_title'],
+                  title: controller.results[controller.index]['proj_title'],
                   fontSize: size.height * .025,
                   color: colorScheme.primary),
               SizedBox(height: size.height * .02),
@@ -96,7 +96,7 @@ class _OffersScreenState extends State<OffersScreen> {
                   color: colorScheme.background),
               SizedBox(height: size.height * .02),
               TextWidget(
-                title: widget.result[widget.index]['proj_description'],
+                title: controller.results[controller.index]['proj_description'],
                 fontSize: size.height * .025,
                 color: colorScheme.onSecondary,
                 isTextStart: true,
@@ -191,10 +191,10 @@ class _OffersScreenState extends State<OffersScreen> {
                           "${controller.daysController.text}");
                       myLog("descriptionController.text",
                           "${controller.descriptionController.text}");
-                      setState(() => isLoading = true);
+                      setState(() => controller.status = true);
 
                       bool isAddProject = await controller.addOffer(
-                          context, widget.result[widget.index]['id']);
+                          context, controller.results[controller.index]['id']);
                       myLog('isAddProject', isAddProject);
                       setState(() => isLoading = false);
 
@@ -240,11 +240,11 @@ class _OffersScreenState extends State<OffersScreen> {
                 shrinkWrap: true,
                 separatorBuilder: (context, index) =>
                     SizedBox(height: size.height * .02),
-                itemCount: listOffersEngineer.length,
+                itemCount: controller.resulte.length,
                 itemBuilder: (context, index) => ListOffersEngineerWidget(
                   colorScheme: colorScheme,
                   size: size,
-                  offersEngineerModel: listOffersEngineer[index],
+                  resulte: controller.resulte[index],
                 ),
               )
               // ListOffersEngineerWidget(),

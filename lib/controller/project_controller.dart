@@ -23,9 +23,9 @@ class ProjectController extends GetxController {
 
   final SharedPrefUser _pref = SharedPrefUser();
 
-  List<Result?>? _listprojects = [];
+  // List<Result?>? _listprojects = [];
 
-  List<Result?>? get listprojects => _listprojects;
+  // List<Result?>? get listprojects => _listprojects;
 
   int totalPages = 0;
   int totalItems = 0;
@@ -109,7 +109,7 @@ class ProjectController extends GetxController {
       }
 
       myLog("catch error", error.toString());
-      myLog("start _listprojects", "${_listprojects}");
+      // myLog("start _listprojects", "${_listprojects}");
     }
     return apiResponse;
   }

@@ -1,4 +1,5 @@
 class ApiUrl {
+  // late String id;
   static const String _root =
       'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1';
   // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/';
@@ -9,6 +10,7 @@ class ApiUrl {
   static String get getProject => '$_root/project?page=1&size=10&search=';
   static String get addProject => '$_root/project';
   static String get addoffer => '$_root/offer';
+  static String get getProjectsOffers => '$_root/offer/project/';
   static String get getRoles => '$_root/auth/roles';
   static String get getFaq => '$_root/questions';
   static String get getPricerange => '$_root/pricerange';
@@ -18,6 +20,7 @@ class ApiUrl {
 // d5ca44c7-5ab5-4934-aaab-0d38ac61d8b1
 // pricerange
 // offer
+// offer/project/6c40c1b8-0d2e-4f3f-82af-b2b37ad85602?page=1&size=10
   static int get timeoutDuration => 20;
 
   static Map<String, String> getHeader({required String token}) {

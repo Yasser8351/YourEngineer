@@ -10,11 +10,11 @@ import 'shared_widgets/card_decoration.dart';
 class ListOffersEngineerWidget extends StatelessWidget {
   const ListOffersEngineerWidget(
       {Key? key,
-      required this.offersEngineerModel,
+      required this.resulte,
       required this.colorScheme,
       required this.size})
       : super(key: key);
-  final OffersEngineerModel offersEngineerModel;
+  final dynamic resulte;
   final ColorScheme colorScheme;
   final Size size;
 
@@ -42,9 +42,9 @@ class ListOffersEngineerWidget extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 40.0,
                       backgroundColor: colorScheme.primary,
-                      backgroundImage: AssetImage(
-                        offersEngineerModel.imageEngineer,
-                      ),
+                      // backgroundImage: AssetImage(
+                      //   offersEngineerModel.imageEngineer,
+                      // ),
                     ),
                   ),
                   SizedBox(height: size.height * .05),
@@ -53,7 +53,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextWidget(
-                          title: offersEngineerModel.nameEngineer,
+                          title: resulte['client']['fullname'],
                           fontSize: 18,
                           color: colorScheme.onSecondary,
                           isTextStart: false,
@@ -63,7 +63,8 @@ class ListOffersEngineerWidget extends StatelessWidget {
                         padding:
                             const EdgeInsets.only(top: 5, left: 10, right: 10),
                         child: TextWidget(
-                          title: offersEngineerModel.engineerspecialist,
+                          title: 'engineerspecialist',
+                          // offersEngineerModel.engineerspecialist,
                           fontSize: 18,
                           color: colorScheme.secondary,
                           isTextStart: true,
@@ -81,15 +82,17 @@ class ListOffersEngineerWidget extends StatelessWidget {
                                 RatingBar(
                                   sizeIcon: 15,
                                   color: Colors.amber,
-                                  rating: offersEngineerModel.engineerRating,
+                                  rating: 3.5,
+                                  //  offersEngineerModel.engineerRating,
                                   onRatingChanged: (rating) {
                                     // setState(() => this.rating = rating)
                                   },
                                 ),
                                 const SizedBox(width: 7),
                                 TextWidget(
-                                  title: offersEngineerModel.engineerRating
-                                      .toString(),
+                                  title: '3.5',
+                                  //  offersEngineerModel.engineerRating
+                                  //     .toString(),
                                   fontSize: 15,
                                   color: colorScheme.secondary,
                                 ),
@@ -98,7 +101,8 @@ class ListOffersEngineerWidget extends StatelessWidget {
                           ),
 
                           TextWidget(
-                            title: offersEngineerModel.offersDate,
+                            title: resulte['createdAt'],
+                            // offersEngineerModel.offersDate,
                             fontSize: 18,
                             color: colorScheme.secondary,
                           ),
@@ -110,7 +114,8 @@ class ListOffersEngineerWidget extends StatelessWidget {
               ),
               SizedBox(height: size.height * .05),
               TextWidget(
-                title: offersEngineerModel.offersDetails,
+                title: resulte['message_desc'],
+                //  offersEngineerModel.offersDetails,
                 fontSize: 18,
                 color: colorScheme.onSecondary,
                 isTextStart: true,
