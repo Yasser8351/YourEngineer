@@ -19,7 +19,7 @@ class ListProjectWidget extends StatelessWidget {
     required this.size,
     required this.index,
   }) : super(key: key);
-  final List<dynamic> results;
+  final dynamic results;
   final ColorScheme colorScheme;
   final Size size;
   final int index;
@@ -36,7 +36,8 @@ class ListProjectWidget extends StatelessWidget {
       child: CardDecoration(
         onTap: () {
           myLog("ontap", "card");
-          controller.goToOfferScreen(index, results);
+          myLog("ontap", "${results}");
+          controller.goToOfferScreen(results);
           // Navigator.of(context).push(MaterialPageRoute(
 
           //     builder: (context) => OffersScreen(
@@ -54,7 +55,7 @@ class ListProjectWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  results[index]['proj_title'],
+                  results['proj_title'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -65,7 +66,7 @@ class ListProjectWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  results[index]['proj_description'],
+                  results['proj_description'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -82,12 +83,12 @@ class ListProjectWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        buildRowList(results[index]['owner']['fullname'],
-                            colorScheme, Icons.person),
-                        buildRowList(results[index]['CreatedAt'], colorScheme,
+                        buildRowList(results['owner']['fullname'], colorScheme,
+                            Icons.person),
+                        buildRowList(results['CreatedAt'], colorScheme,
                             Icons.watch_later),
                         buildRowList(
-                          results[index]['OffersCount'].toString(),
+                          results['OffersCount'].toString(),
                           colorScheme,
                           Icons.post_add,
                         ),

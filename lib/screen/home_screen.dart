@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:your_engineer/controller/project_controller.dart';
+import 'package:your_engineer/controller/project_home_controller.dart';
 import 'package:your_engineer/controller/top_engineer_controller.dart';
 import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
@@ -29,7 +29,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final PopulerServicesController populerServicesController = Get.find();
   final TopEngineerController topEngineerController = Get.find();
-  final ProjectController projectController = Get.find();
+  final ProjectControllerHome projectController = Get.find();
 
   //////
   double rating = 3.5;
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         return ListProjectWidget(
                           index: index,
-                          results: projectController.results,
+                          results: projectController.results[index],
                           colorScheme: colorScheme,
                           size: size,
                         );

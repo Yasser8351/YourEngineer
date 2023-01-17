@@ -17,7 +17,7 @@ import '../app_config/app_config.dart';
 import '../enum/all_enum.dart';
 import 'package:http/http.dart' as http;
 
-class ProjectController extends GetxController {
+class ProjectControllerHome extends GetxController {
   ApiResponse apiResponse = ApiResponse();
   var loadingState = LoadingState.initial.obs;
 
@@ -33,9 +33,9 @@ class ProjectController extends GetxController {
   List<dynamic> results = [];
 
   @override
-  onInit() async {
+  onInit() {
     super.onInit();
-    await getProjects();
+    getProjects();
   }
 
   //get Project

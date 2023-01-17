@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 import 'package:your_engineer/widget/shared_widgets/reviews_widget.dart';
 
 import '../../app_config/app_config.dart';
 import '../../app_config/app_image.dart';
+import '../../controller/profile_controller.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class BottomNavigationCardWidget extends StatelessWidget {
@@ -19,6 +21,8 @@ class BottomNavigationCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProfileController controller = Get.find();
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(right: 0, left: 0),

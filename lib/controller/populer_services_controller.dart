@@ -30,9 +30,9 @@ class PopulerServicesController extends GetxController {
   String message = '';
 
   @override
-  onInit() async {
+  onInit() {
     super.onInit();
-    await getCategorys();
+    getCategorys();
   }
 
   logout(BuildContext context) async {

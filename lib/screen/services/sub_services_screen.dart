@@ -39,13 +39,17 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _getAppBar(context, controller.title),
-      body: Obx(() {
+      body:
+
+          //
+          Obx(() {
         if (controller.loadingState.value == LoadingState.initial ||
             controller.loadingState.value == LoadingState.loading) {
           return Center(
             child: CircularProgressIndicator(),
           );
-        } else if (controller.loadingState.value == LoadingState.error ||
+        }
+        if (controller.loadingState.value == LoadingState.error ||
             controller.loadingState.value == LoadingState.noDataFound) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +135,7 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: controller.results.length,
                           itemBuilder: (context, index) => ListProjectWidget(
-                            results: controller.results,
+                            results: controller.results[index],
                             colorScheme: colorScheme,
                             size: size,
                             index: index,

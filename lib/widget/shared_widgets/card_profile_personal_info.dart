@@ -4,6 +4,7 @@ import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
 import '../../app_config/app_image.dart';
+import '../../model/user_profile_model.dart';
 import 'card_with_image.dart';
 import 'rating_bar.dart';
 import 'text_widget.dart';
@@ -14,14 +15,14 @@ class CardProfilePersonalInfo extends StatelessWidget {
     required this.size,
     required this.colorScheme,
     required this.onTap,
-    this.isMyProfile = false,
-    // required this.userModel
+    this.isMyProfile,
+    required this.userProfileModel,
   }) : super(key: key);
   final Size size;
   final ColorScheme colorScheme;
   final Function() onTap;
   final isMyProfile;
-  // final UserModel userModel;
+  final UserProfileModel userProfileModel;
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +46,13 @@ class CardProfilePersonalInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWidget(
-                        title: "rrrrrrrrrrrrrr",
+                        title: userProfileModel.fullname!,
                         // userModel.fullName,
                         fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),
                     TextWidget(
-                        title: "ddddddddd",
+                        title: userProfileModel.email!,
                         // userModel.email,
                         fontSize: 18,
                         color: colorScheme.onSecondary),

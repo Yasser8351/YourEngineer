@@ -91,18 +91,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: AppRouting.addProjectScreen,
-          page: () => AddProjectScreen(
-            projectModel: ProjectModel(
-                totalItems: 0, results: [], totalPages: 0, currentPage: 0),
-            // projectModel: ProjectModel(
-            //     titleProject: '',
-            //     categoryProject: '',
-            //     descriptionProject: '',
-            //     postBy: '',
-            //     createdDate: '',
-            //     numberOfoffers: ''
-            //     ),
-          ),
+          page: () => AddProjectScreen(),
         ),
         GetPage(
           name: AppRouting.profileUser,

@@ -33,10 +33,10 @@ class _TabScreenState extends State<TabScreen> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    getUserData();
-  }
+  // void initState() {
+  //   super.initState();
+  //   getUserData();
+  // }
 
   getUserData() async {
     SharedPrefUser sharedPrefUser = SharedPrefUser();

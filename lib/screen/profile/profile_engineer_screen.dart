@@ -66,9 +66,11 @@ import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
+import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/widget/shared_widgets/bottom_navigation_card_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/list_profile_horizontal.dart';
 
+import '../../controller/profile_controller.dart';
 import '../../widget/shared_widgets/card_profile_personal_info.dart';
 
 class ProfileEngineerScreen extends StatefulWidget {
@@ -81,7 +83,7 @@ class ProfileEngineerScreen extends StatefulWidget {
 }
 
 class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
-  // SettingControoler controller=Get.find()
+  ProfileController controller = Get.put(ProfileController());
   var profileList = [
     ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
     ListHorizontalProfile(AppConfig.reviews, Icons.star),
@@ -102,11 +104,14 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
           child: Column(
             children: [
               CardProfilePersonalInfo(
+                userProfileModel: controller.userProfile,
                 isMyProfile: true,
                 size: size,
                 colorScheme: colorScheme,
                 onTap: () {
-                  Navigator.of(context).pushNamed(AppConfig.addProtofilo);
+                  // Navigator.of(context).pushNamed(AppConfig.addProtofilo);
+                  //  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>))
+                  Get.to(() => AddProtofiloScreen());
                 },
               ),
               const SizedBox(height: 35),
@@ -116,7 +121,10 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                 listHorizontalProfile: profileList,
                 expandedIndex: expandedIndex,
                 onTap: ((index) {
-                  setState(() => expandedIndex = index);
+                  setState(
+                    () => expandedIndex = index,
+                    //
+                  );
                 }),
               ),
               BottomNavigationCardWidget(

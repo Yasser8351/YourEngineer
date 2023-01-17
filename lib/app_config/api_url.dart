@@ -13,17 +13,30 @@ class ApiUrl {
   static String get getProjectsOffers => '$_root/offer/project/';
   static String get getRoles => '$_root/auth/roles';
   static String get getFaq => '$_root/questions';
+  static String get getUsersShow => '$_root/users/show';
+  static String get getOwnerProject => '$_root/project/owner';
   static String get getPricerange => '$_root/pricerange';
   static String get getSubCatigory => '$_root/category/subcat/';
   static String get getProjectBySubCatigory =>
       '$_root/project/subcat?page=1&size=10&scatid=';
 // d5ca44c7-5ab5-4934-aaab-0d38ac61d8b1
 // pricerange
-// offer
+// offer project/owner
 // offer/project/6c40c1b8-0d2e-4f3f-82af-b2b37ad85602?page=1&size=10
   static int get timeoutDuration => 20;
 
   static Map<String, String> getHeader({required String token}) {
+    return <String, String>{
+      // "accept": "application/json",
+      'Accept': '*/*',
+      'Authorization': "Bearer $token",
+      // 'Authorization':
+      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI5YTQ5YTIzOC0yMThmLTRlYjMtODQwNy0xZGIwN2FjN2RjMzciLCJlbWFpbCI6InRlc3QxMjM0NSIsImZ1bGxuYW1lIjoidGVzdDEyMyIsImlhdCI6MTY3MzU0MjQ0MCwiZXhwIjoxNjczNTQ2MDQwfQ.eEoFPfwsjRgxcMzGRarzvIVrWriBUFZLBQGRJSwGNS4',
+      'Content-Type': 'application/json'
+    };
+  }
+
+  static Map<String, String> getHeader2({required String token}) {
     return <String, String>{
       // "accept": "application/json",
       'Accept': '*/*',

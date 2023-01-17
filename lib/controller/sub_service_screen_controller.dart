@@ -19,13 +19,13 @@ class SubServiceScreenController extends GetxController {
   var results = [];
 
   @override
-  void onInit() async {
+  void onInit() {
     id = Get.arguments['id'];
     title = Get.arguments['title'];
-    await getSubCatigory(id);
+    getSubCatigory(id);
     myLog("start methode  ''''''''''''''''''''''''''", "${scatidvvv}");
     String scatid = scatidvvv;
-    await getProjectBySubCatigory(scatid);
+    getProjectBySubCatigory(scatid);
     super.onInit();
   }
 
@@ -157,12 +157,12 @@ class SubServiceScreenController extends GetxController {
         // Map<String, dynamic> map = json.decode(response.data);
         // List<dynamic> data = map["results"];
         // log(data.toString());
-        isLoadingProject = false;
 
         results = response.data['results'];
         int totalItems = response.data['totalItems'];
         int totalPages = response.data['totalPages'];
         int currentPage = response.data['currentPage'];
+        isLoadingProject = false;
         // projectBySubCatModel = ProjectBySubCatModel(
         //     currentPage: currentPage,
         //     totalItems: totalItems,
@@ -182,7 +182,7 @@ class SubServiceScreenController extends GetxController {
           // loadingState(LoadingState.noDataFound);
           message = 'Empty';
         } else {
-          loadingState(LoadingState.loaded);
+          // loadingState(LoadingState.loaded);
 
           // setApiResponseValue('get Data Cars Sucsessfuly', true,
           //     _listPopulerServices, LoadingState.loaded.obs);
@@ -200,7 +200,7 @@ class SubServiceScreenController extends GetxController {
         //     _listPopulerServices, LoadingState.error.obs);
       }
     } catch (error) {
-      loadingState(LoadingState.error);
+      // loadingState(LoadingState.error);
       message = AppConfig.failedInternet;
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);

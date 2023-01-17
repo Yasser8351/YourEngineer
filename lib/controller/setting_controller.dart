@@ -30,16 +30,16 @@ class SettingControoler extends GetxController {
 
   onProfileTap() {
     if (status == 'ENGINEER') {
-      Get.to(ProfileEngineerScreen(
+      Get.to(() => ProfileEngineerScreen(
           engineerModel: TopEngineerRatingModel(results: [])));
       return;
     }
-    if (status == '') {
-      Get.to(ProfileUserScreen());
+    if (status == 'OWNER') {
+      Get.to(() => ProfileUserScreen());
       return;
     }
     if (status == '') {
-      Get.to(ProfileEngineerScreen(
+      Get.to(() => ProfileEngineerScreen(
           engineerModel: TopEngineerRatingModel(results: [])));
       return;
     }

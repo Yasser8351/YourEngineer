@@ -35,9 +35,9 @@ class AddProjectController extends GetxController {
   String message = "";
 
   @override
-  void onInit() async {
-    await getsubCatigory();
-    await getPriceRange();
+  void onInit() {
+    getsubCatigory();
+    getPriceRange();
   }
 
   //

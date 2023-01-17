@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
-
 import '../app_config/app_config.dart';
 import '../app_config/app_image.dart';
+import '../controller/project_screen_controller.dart';
+import '../enum/all_enum.dart';
 import '../model/project_model.dart';
 import '../widget/list_my_project_widget.dart';
-import '../widget/list_project_widget.dart';
 import '../widget/shared_widgets/no_data.dart';
+import '../widget/shared_widgets/reytry_error_widget.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({Key? key, this.isMyProject = false}) : super(key: key);
@@ -16,65 +17,16 @@ class ProjectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ProjectModel> listProject = [
-      // ProjectModel(
-      //   titleProject: '3D design for interior design',
-      //   categoryProject: '',
-      //   descriptionProject:
-      //       'Project details Project detailsProject details Project details Project details Project detailsProject details',
-      //   postBy: "Open",
-      //   createdDate: "2 days ago",
-      //   numberOfoffers: "add first offers",
-      // ),
-      // ProjectModel(
-      //   titleProject: 'Making tables of quantities',
-      //   categoryProject: '',
-      //   descriptionProject:
-      //       'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
-      //   postBy: "In progress",
-      //   createdDate: "1 hours ago",
-      //   numberOfoffers: "13 offers",
-      // ),
-      // ProjectModel(
-      //   titleProject: 'health club design',
-      //   categoryProject: '',
-      //   descriptionProject:
-      //       'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
-      //   postBy: "Completed",
-      //   createdDate: "15 hours ago",
-      //   numberOfoffers: "5 offers",
-      // ),
-      // ProjectModel(
-      //   titleProject: '3D design for interior design',
-      //   categoryProject: '',
-      //   descriptionProject:
-      //       'Project details Project detailsProject details Project details Project details Project detailsProject details',
-      //   postBy: "Open",
-      //   createdDate: "2 days ago",
-      //   numberOfoffers: "8 offers",
-      // ),
-    ];
-
+    ProjectScreenController controller = Get.put(ProjectScreenController());
     int data = 1;
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.navigate_before, size: 40),
-          color: Colors.white,
-        ),
         title: InkWell(
-          onTap: (() => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AddProjectScreen(
-                  projectModel: ProjectModel(
-                      totalItems: 0,
-                      results: [],
-                      totalPages: 0,
-                      currentPage: 0))))),
+          onTap: () {
+            controller.goToAddProjectScreen();
+          },
           // Navigator.of(context).pushNamed(AppConfig.addProjectScreen)),
           child: Row(
             children: [
@@ -91,34 +43,46 @@ class ProjectScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Builder(builder: (context) {
-        if (data == 0) {
-          return NoData(
-            isPostScreen: true,
-            textMessage: AppConfig.noProjectYet,
-            imageUrlAssets: AppImage.noProject,
-            onTap: (() {
-              //go To AddPostScreen
-              Navigator.of(context).pushNamed(AppConfig.addProjectScreen);
-            }),
+      body: Obx(() {
+        if (controller.loadingState.value == LoadingState.initial ||
+            controller.loadingState.value == LoadingState.loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (controller.loadingState.value == LoadingState.error ||
+            controller.loadingState.value == LoadingState.noDataFound) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("${controller.message}"),
+              ReyTryErrorWidget(
+                  title:
+                      controller.loadingState.value == LoadingState.noDataFound
+                          ? AppConfig.noData.tr
+                          : controller.apiResponse.message,
+                  onTap: () {
+                    controller.getOwnerProject();
+                  })
+            ],
           );
         } else {
           // ListProjectWidget
           return ListView.builder(
             // shrinkWrap: true,
-            itemCount: listProject.length,
+            itemCount: controller.myProjects.length,
             itemBuilder: (context, index) {
               return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                  child: Text("notnow")
-                  //  ListMyProjectWidget(
-                  //   projectModel: listProject[index],
-                  //   colorScheme: colorScheme,
-                  //   isMyProject: isMyProject,
-                  //   size: size,
-                  // ),
-                  );
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child:
+                    // Text("notnow")
+                    ListMyProjectWidget(
+                  ownerProjectModel: controller.myProjects[index],
+                  colorScheme: colorScheme,
+                  isMyProject: isMyProject,
+                  size: size,
+                ),
+              );
             },
           );
         }
@@ -141,13 +105,6 @@ class ProjectScreen extends StatelessWidget {
             fontSize: 18,
             color: Colors.white),
       ),
-      // leading: IconButton(
-      //   onPressed: () {
-      //     Navigator.of(context).pop();
-      //   },
-      //   icon: const Icon(Icons.navigate_before, size: 40),
-      //   color: Colors.white,
-      // ),
     );
   }
 }

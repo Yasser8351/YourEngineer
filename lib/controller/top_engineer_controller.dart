@@ -23,9 +23,9 @@ class TopEngineerController extends GetxController {
   String message = '';
 
   @override
-  onInit() async {
+  onInit() {
     super.onInit();
-    await getTopEngineer();
+    getTopEngineer();
   }
 
   Future<ApiResponse> getTopEngineer() async {

@@ -7,7 +7,7 @@ import 'package:your_engineer/model/project_model.dart';
 
 import '../../app_config/app_config.dart';
 import '../../controller/add_project_controller.dart';
-import '../../controller/project_controller.dart';
+import '../../controller/project_home_controller.dart';
 import '../../debugger/my_debuger.dart';
 import '../../enum/all_enum.dart';
 import '../../utilits/helper.dart';
@@ -16,9 +16,11 @@ import '../../widget/shared_widgets/text_widget.dart';
 
 class AddProjectScreen extends StatefulWidget {
   const AddProjectScreen(
-      {Key? key, required this.projectModel, this.isMyProject = false})
+      {Key? key,
+      //  required this.projectModel,
+      this.isMyProject = false})
       : super(key: key);
-  final ProjectModel projectModel;
+  // final ProjectModel projectModel;
   final bool isMyProject;
 
   @override
@@ -195,124 +197,6 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   300,
                   5,
                 ),
-
-                // InkWell(
-                //   onTap: () async {
-                //     showModalBottomSheet(
-                //         context: context,
-                //         builder: (context) => Container(
-                //               height: 200,
-                //               child: Column(
-                //                 children: [
-                //                   const SizedBox(height: 20),
-                //                   Container(
-                //                     width: double.infinity,
-                //                     alignment: Alignment.center,
-                //                     margin: const EdgeInsets.all(10),
-                //                     padding: const EdgeInsets.symmetric(
-                //                         vertical: 15, horizontal: 10),
-                //                     color: Colors.blueAccent,
-                //                     child: InkWell(
-                //                       onTap: () async {
-                //                         xfile = await ImagePicker()
-                //                             .pickImage(source: ImageSource.camera);
-                //                         Navigator.of(context).pop();
-                //                         projectImage = File(xfile!.path);
-                //                         setState(() {});
-                //                       },
-                //                       child: const Text(
-                //                         "Chose Image From Camera",
-                //                         style: TextStyle(
-                //                             fontSize: 15,
-                //                             fontWeight: FontWeight.bold,
-                //                             color: Colors.white),
-                //                       ),
-                //                     ),
-                //                   ),
-                //                   const SizedBox(height: 10),
-                //                   Container(
-                //                     width: double.infinity,
-                //                     alignment: Alignment.center,
-                //                     margin: const EdgeInsets.all(10),
-                //                     padding: const EdgeInsets.symmetric(
-                //                         vertical: 15, horizontal: 10),
-                //                     color: Colors.blueAccent,
-                //                     child: InkWell(
-                //                       onTap: () async {
-                //                         XFile? xfile = await ImagePicker()
-                //                             .pickImage(source: ImageSource.gallery);
-                //                         Navigator.of(context).pop();
-                //                         projectImage = File(xfile!.path);
-                //                         setState(() {});
-                //                       },
-                //                       child: const Text(
-                //                         "Chose Image From Galary",
-                //                         style: TextStyle(
-                //                             fontSize: 15,
-                //                             fontWeight: FontWeight.bold,
-                //                             color: Colors.white),
-                //                       ),
-                //                     ),
-                //                   )
-                //                 ],
-                //               ),
-                //             ));
-                //   },
-                //   child: Container(
-                //     clipBehavior: Clip.antiAlias,
-                //     decoration: BoxDecoration(
-                //         border: Border.all(
-                //           width: 2,
-                //           color: Colors.grey.shade300,
-                //         ),
-                //         borderRadius: BorderRadius.circular(50)),
-                //     //
-                //     width: size.width * .40,
-                //     height: size.height * .20,
-                //     child: projectImage != null
-                //         ? Image.file(
-                //             projectImage!,
-                //             fit: BoxFit.fill,
-                //           )
-                //         : null,
-                //   ),
-                // ),
-                // RangeSlider(
-                //   values: projectController.selectedRange,
-                //   divisions: 1000,
-                //   max: 10000,
-                //   min: 25,
-                //   labels: RangeLabels(
-                //       projectController.selectedRange.start.toString(),
-                //       projectController.selectedRange.end.toString()),
-                //   onChanged: ((newValue) {
-                //     setState(() {
-                //       if (projectController.selectedRange.start !=
-                //           projectController.selectedRange.start) {
-                //         return;
-                //       } else {
-                //         projectController.isSelectedRange = true;
-                //         projectController.selectedRange = newValue;
-                //         myLog("projectController. selectedRange======",
-                //             "${projectController.selectedRange}");
-                //       }
-                //     });
-                //     //setState(() => {selectedRange = newValue});
-                //   }),
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     TextWidget(
-                //         title: projectController.selectedRange.start.toString(),
-                //         fontSize: 16,
-                //         color: colorScheme.primary),
-                //     TextWidget(
-                //         title: projectController.selectedRange.end.toString(),
-                //         fontSize: 16,
-                //         color: colorScheme.primary),
-                //   ],
-                // ),
               ],
             ),
           );
