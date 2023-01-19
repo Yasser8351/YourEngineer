@@ -134,13 +134,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               // _dialog.hide();
                               myLog('isSignup', isSignup);
                               if (isSignup) {
+                                Get.off(() => TabScreen());
+
                                 /// userSignup sucssufuly
 
                                 // ignore: use_build_context_synchronously
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: ((context) =>
-                                            const TabScreen())));
+                                // Navigator.of(context).pushReplacement(
+                                //     MaterialPageRoute(
+                                //         builder: ((context) =>
+                                //             const TabScreen())));
+
                               } else {
                                 /// userSignup faild try again later
                                 // Get.defaultDialog(

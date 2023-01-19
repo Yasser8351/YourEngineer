@@ -99,7 +99,7 @@ buildRowItem(String title, String description, ColorScheme colorScheme,
 
 buildRowReviews(String title, String description, ColorScheme colorScheme) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 15),
+    padding: const EdgeInsets.only(bottom: 5),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

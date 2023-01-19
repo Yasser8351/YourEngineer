@@ -10,6 +10,8 @@ class ApiUrl {
   static String get getProject => '$_root/project?page=1&size=10&search=';
   static String get addProject => '$_root/project';
   static String get addoffer => '$_root/offer';
+  static String get addprotofilio => '$_root/profile/portfolio';
+  static String get addskill => '$_root/profile/skill';
   static String get getProjectsOffers => '$_root/offer/project/';
   static String get getRoles => '$_root/auth/roles';
   static String get getFaq => '$_root/questions';

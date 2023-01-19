@@ -119,6 +119,8 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                 title: resulte['message_desc'],
                 //  offersEngineerModel.offersDetails,
                 fontSize: 18,
+                textOverflow: TextOverflow.ellipsis,
+
                 color: colorScheme.onSecondary,
                 isTextStart: true,
               ),

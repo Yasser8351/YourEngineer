@@ -8,9 +8,9 @@ import '../controller/setting_controller.dart';
 class BinindingApp implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut((() => PopulerServicesController()), fenix: true);
-    Get.lazyPut((() => TopEngineerController()), fenix: true);
-    Get.lazyPut((() => ProjectControllerHome()), fenix: true);
-    Get.put(SettingControoler());
+    // Get.put(PopulerServicesController());
+    // Get.put(TopEngineerController());
+    // Get.put(ProjectControllerHome());
+    // Get.put(SettingControoler());
   }
 }

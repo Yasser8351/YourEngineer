@@ -55,22 +55,11 @@ class OfferController extends GetxController {
     try {
       var response = await http
           .post(
-            // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/project',
             Uri.parse(ApiUrl.addoffer),
             body: data,
-            headers: ApiUrl.getHeader(token: token),
+            headers: ApiUrl.getHeader2(token: token),
           )
           .timeout(const Duration(seconds: 20));
-      // var response = await Dio()
-      //     .post(
-
-      //       ApiUrl.addoffer,
-      //       data: data,
-      //       options: Options(
-      //         headers: ApiUrl.getHeader(token: token),
-      //       ),
-      //     )
-      //     .timeout(const Duration(seconds: 20));
 
       myLog(
         'statusCode : ${response.statusCode} \n',
@@ -80,6 +69,7 @@ class OfferController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         status = true;
+        // getProjectsOffers(projectId);
         // await _shared.saveToken(response.body['token']);
 
       } else {

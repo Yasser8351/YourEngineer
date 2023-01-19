@@ -5,7 +5,9 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+// import 'package:intl/date_symbol_data_local.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
@@ -16,11 +18,14 @@ import '../model/user_profile_model.dart';
 import '../sharedpref/user_share_pref.dart';
 import '../utilits/helper.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/date_symbol_data_local.dart';
 
-class ProfileController extends GetxController {
+class ProfileUserController extends GetxController {
   @override
   onInit() {
     super.onInit();
+    initializeDateFormatting();
+
     getUsersShow();
   }
 

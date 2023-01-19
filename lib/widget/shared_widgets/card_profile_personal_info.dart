@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/model/user_model.dart';
-import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
-
 import '../../app_config/app_image.dart';
 import '../../model/user_profile_model.dart';
 import 'card_with_image.dart';
@@ -15,7 +12,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
     required this.size,
     required this.colorScheme,
     required this.onTap,
-    this.isMyProfile,
+    this.isMyProfile = true,
     required this.userProfileModel,
   }) : super(key: key);
   final Size size;
@@ -26,7 +23,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _shared = SharedPrefUser();
+    // final _shared = SharedPrefUser();
 
     return CardWithImage(
       height: size.height * .17,

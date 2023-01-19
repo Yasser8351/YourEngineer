@@ -10,11 +10,13 @@ import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
 import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
+import '../model/populer_services_model.dart';
 import '../model/price_range_model.dart';
 import '../model/sub_catigory.dart';
 import '../screen/project_screen.dart';
 import '../sharedpref/user_share_pref.dart';
 import '../utilits/helper.dart';
+import 'package:http/http.dart' as http;
 
 class AddProjectController extends GetxController {
   ApiResponse apiResponse = ApiResponse();
@@ -28,7 +30,11 @@ class AddProjectController extends GetxController {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController skillsController = TextEditingController();
 
+  List<PopulerServicesModel> _listPopulerServices = [];
+
+  List<PopulerServicesModel> get listPopulerServices => _listPopulerServices;
   String? selectedCat;
+  String? selectedSubCat;
   String? selectedPriceRange;
   bool get status => _status;
   bool _status = false;
@@ -36,7 +42,10 @@ class AddProjectController extends GetxController {
 
   @override
   void onInit() {
-    getsubCatigory();
+    getCategorys();
+    // selectedCat = listPopulerServices[0].id;
+    // myLog("caaaaat idddddd", "$selectedCat");
+    // getsubCatigory(selectedCat);
     getPriceRange();
   }
 
@@ -51,8 +60,81 @@ class AddProjectController extends GetxController {
     Get.off(ProjectScreen());
   }
 
+  //Get Cat
+
+  Future<ApiResponse> getCategorys() async {
+    /// This function call the data from the API
+    /// The Post type function takes the search value from the body
+    /// get List of Cars in Home Screen
+
+    loadingState(LoadingState.loading);
+    try {
+      var token = await _pref.getToken();
+
+      myLog("start methode", "getCategorys");
+      myLog("toook================= : $token", '');
+      // loadingState = LoadingState.loading.obs;
+      // var response = await Dio()
+      //     .get(
+      //       ApiUrl.geCategory,
+      //       options: Options(
+      //         headers: ApiUrl.getHeader(token: token),
+      //       ),
+      //     )
+      //     .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+      var response = await http.get(
+        Uri.parse(ApiUrl.geCategory),
+        headers: ApiUrl.getHeader(token: token),
+      );
+
+      myLog("start methode", "${loadingState.value}");
+      myLog("statusCode=================${response.body}", '');
+
+      if (response.statusCode == 200) {
+        _listPopulerServices = populerServicesModelFromJson(response.body);
+
+        if (_listPopulerServices.isEmpty) {
+          loadingState(LoadingState.noDataFound);
+        } else {
+          loadingState(LoadingState.loaded);
+
+          // setApiResponseValue('get Data Cars Sucsessfuly', true,
+          //     _listPopulerServices, LoadingState.loaded.obs);
+        }
+      } else if (response.statusCode == 401) {
+        loadingState(LoadingState.error);
+        message = AppConfig.timeOut;
+        // setApiResponseValue(AppConfig.unAutaristion, false,
+        //     _listPopulerServices, LoadingState.error.obs);
+      } else {
+        loadingState(LoadingState.token);
+        myLog("errrrrrrrorrrr", "${response.statusCode}");
+
+        // setApiResponseValue(AppConfig.errorOoccurred, false,
+        //     _listPopulerServices, LoadingState.error.obs);
+      }
+    } catch (error) {
+      loadingState(LoadingState.error);
+      message = AppConfig.failedInternet;
+      // setApiResponseValue(error.toString(), false, _listPopulerServices,
+      //     LoadingState.error.obs);
+      if (error is TimeoutException) {
+        // showseuessToast(error.toString());
+      } else if (error.toString().contains(
+          'DioError [DioErrorType.response]: Http status error [401]')) {
+        // showseuessToast(AppConfig.unAutaristion);
+        message = AppConfig.unAutaristion;
+      } else {
+        // showseuessToast(error.toString());
+      }
+
+      // myLog("catch error", error.toString());
+    }
+    return apiResponse;
+  }
+
   //Get Sub Cat
-  Future<ApiResponse> getsubCatigory() async {
+  Future<ApiResponse> getsubCatigory(String catId) async {
     try {
       var token = await _pref.getToken();
 
@@ -61,7 +143,7 @@ class AddProjectController extends GetxController {
       // loadingState = LoadingState.loading.obs;
       var response = await Dio()
           .get(
-            ApiUrl.getSubCatigory,
+            "${ApiUrl.getSubCatigory}${catId}",
             options: Options(
               headers: ApiUrl.getHeader(token: token),
             ),
@@ -73,14 +155,14 @@ class AddProjectController extends GetxController {
         listSubCat = subCatigoryFromJson(jsonEncode(response.data));
         // listSubCat = lstSubcatModel;
         // myLog("lstSubcatModel lstSubcatModel", "${lstSubcatModel}");
-        if (listSubCat.isEmpty) {
-          loadingState(LoadingState.noDataFound);
-        } else {
-          loadingState(LoadingState.loaded);
+        // if (listSubCat.isEmpty) {
+        //   loadingState(LoadingState.noDataFound);
+        // } else {
+        //   loadingState(LoadingState.loaded);
 
-          // setApiResponseValue('get Data Cars Sucsessfuly', true,
-          //     _listprojects, LoadingState.loaded.obs);
-        }
+        //   // setApiResponseValue('get Data Cars Sucsessfuly', true,
+        //   //     _listprojects, LoadingState.loaded.obs);
+        // }
       } else if (response.statusCode == 401) {
         loadingState(LoadingState.error);
 

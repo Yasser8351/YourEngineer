@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import '../../app_config/app_config.dart';
+import '../../controller/add_protofilio_controller.dart';
+import '../../debugger/my_debuger.dart';
+import '../../utilits/helper.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class AddProtofiloScreen extends StatefulWidget {
@@ -13,45 +17,25 @@ class AddProtofiloScreen extends StatefulWidget {
 }
 
 class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
-  TextEditingController daysController = TextEditingController();
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  DateTime dateOfProject = DateTime.now();
+  bool isLoading = false;
+  AddProtofilioController controller = Get.put(AddProtofilioController());
 
   @override
-  void initState() {
-    super.initState();
-    initalControllers();
-  }
-
-  initalControllers() {
-    // log(widget.projectModel.titleProject);
-    // titleController.text = widget.projectModel.titleProject;
-    // descriptionController.text = widget.projectModel.descriptionProject;
-    // daysController.text = widget.projectModel.titleProject;
-  }
-
   @override
   void dispose() {
     super.dispose();
-  }
-
-  disposeControllers() {
-    titleController.dispose();
-    descriptionController.dispose();
-    daysController.dispose();
   }
 
   RangeValues selectedRange = const RangeValues(25, 50);
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    String day =
-        "${dateOfProject.day.toString()}-${dateOfProject.month.toString()}-${dateOfProject.year}";
+    controller.day =
+        "${controller.dateOfProject.day.toString()}-${controller.dateOfProject.month.toString()}-${controller.dateOfProject.year}";
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: _getAppBar(context, widget.isEditProject),
+      // appBar: _getAppBar(context, widget.isEditProject),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -60,7 +44,7 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
             children: [
               SizedBox(height: size.height * .02),
               buildTextFormFaild(
-                titleController,
+                controller.titleController,
                 AppConfig.addTitle,
                 false,
                 TextInputType.text,
@@ -70,7 +54,7 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
                 1,
               ),
               buildTextFormFaild(
-                descriptionController,
+                controller.descriptionController,
                 AppConfig.addDiscription,
                 false,
                 TextInputType.text,
@@ -112,7 +96,7 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: TextWidget(
-                        title: day,
+                        title: controller.day!,
                         fontSize: 18,
                         color: colorScheme.onSecondary,
                       ),
@@ -130,18 +114,53 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
           horizontal: 25,
         ),
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             //in this method will
             //send Project to Server
+            if (controller.descriptionController.text.isEmpty ||
+                controller.titleController.text.isEmpty ||
+                controller.day == null) {
+              myLog(
+                  "titleController.text", "${controller.titleController.text}");
+              myLog("descriptionController.text",
+                  "${controller.descriptionController.text}");
+              myLog("day.text", "${controller.day}");
+              Helper.showError(
+                  context: context, subtitle: AppConfig.allFaildRequired.tr);
+              return;
+            }
+
+            setState(() => isLoading = true);
+
+            bool isAddProject = await controller.addProtofilio(
+              context,
+            );
+            myLog('isAddProject', isAddProject);
+            setState(() => isLoading = false);
+
+            if (isAddProject) {
+              controller.clearController();
+              Helper.showError(
+                  context: context, subtitle: "Succesfuly Added Projet");
+
+              //userSignup sucssufuly
+              // ignore: use_build_context_synchronously
+              // Navigator.of(context).pushNamed(AppConfig.login);
+            } else {
+              Helper.showError(
+                  context: context, subtitle: "can not add projet");
+            }
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            child: TextWidget(
-                title: widget.isEditProject
-                    ? AppConfig.editMyProject
-                    : AppConfig.submitYourProject,
-                fontSize: 20,
-                color: colorScheme.surface),
+            child: isLoading
+                ? CircularProgressIndicator(color: Colors.white)
+                : TextWidget(
+                    title: widget.isEditProject
+                        ? AppConfig.editMyProject
+                        : AppConfig.submitYourProject,
+                    fontSize: 20,
+                    color: colorScheme.surface),
           ),
         ),
       ),
@@ -171,26 +190,26 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
     );
   }
 
-  _getAppBar(BuildContext context, bool isEditProject) {
-    return AppBar(
-      title: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: TextWidget(
-            title: isEditProject
-                ? AppConfig.editMyProject
-                : AppConfig.addProtofilo,
-            fontSize: 18,
-            color: Colors.white),
-      ),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.navigate_before, size: 40),
-        color: Colors.white,
-      ),
-    );
-  }
+  // _getAppBar(BuildContext context, bool isEditProject) {
+  //   return AppBar(
+  //     title: Padding(
+  //       padding: const EdgeInsets.only(top: 10),
+  //       child: TextWidget(
+  //           title: isEditProject
+  //               ? AppConfig.editMyProject
+  //               : AppConfig.addProtofilo,
+  //           fontSize: 18,
+  //           color: Colors.white),
+  //     ),
+  //     leading: IconButton(
+  //       onPressed: () {
+  //         Navigator.of(context).pop();
+  //       },
+  //       icon: const Icon(Icons.navigate_before, size: 40),
+  //       color: Colors.white,
+  //     ),
+  //   );
+  // }
 
   buildTextFormFaild(
     TextEditingController controller,
@@ -219,6 +238,7 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
         ),
       ),
       child: TextField(
+        controller: controller,
         keyboardType: inputType,
         maxLength: maxLength,
         maxLines: maxLines,
@@ -231,7 +251,7 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
   Future<void> selectTimePicker(BuildContext context) async {
     DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: dateOfProject,
+      initialDate: controller.dateOfProject,
       firstDate: DateTime(2022),
       lastDate: DateTime(2030),
     );
@@ -239,11 +259,11 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
       return;
     }
     setState(() {
-      dateOfProject = picked;
+      controller.dateOfProject = picked;
     });
-    if (picked == null && picked == dateOfProject) {
+    if (picked == null && picked == controller.dateOfProject) {
       setState(() {
-        dateOfProject = picked;
+        controller.dateOfProject = picked;
       });
     }
   }

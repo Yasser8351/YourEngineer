@@ -73,194 +73,197 @@ class _OffersScreenState extends State<OffersScreen> {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     Size size = MediaQuery.of(context).size;
-    dynamic result = Get.arguments['results'];
+    // dynamic result = Get.arguments['results'];
 
     return Scaffold(
         appBar: _getAppBar(context),
-        body: Obx(() {
-          if (controller.loadingState.value == LoadingState.initial ||
-              controller.loadingState.value == LoadingState.loading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (controller.loadingState.value == LoadingState.error ||
-              controller.loadingState.value == LoadingState.noDataFound) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("noooo"),
-                // Text("${controller.message}"),
-                ReyTryErrorWidget(
-                    title: controller.loadingState.value ==
-                            LoadingState.noDataFound
-                        ? AppConfig.noData.tr
-                        : controller.apiResponse.message,
-                    onTap: () {
-                      controller.getProjectsOffers(result['id']);
-                    })
-              ],
-            );
-          } else {
-            return SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                SizedBox(height: size.height * .02),
+                TextWidget(
+                    title: controller.results['proj_title'],
+                    fontSize: size.height * .025,
+                    color: colorScheme.primary),
+                SizedBox(height: size.height * .02),
+                TextWidget(
+                    title: "${AppConfig.projectDetails} :",
+                    fontSize: size.height * .025,
+                    color: colorScheme.background),
+                SizedBox(height: size.height * .02),
+                TextWidget(
+                  title: controller.results['proj_description'],
+                  fontSize: size.height * .025,
+                  color: colorScheme.onSecondary,
+                  isTextStart: true,
+                ),
+                SizedBox(height: size.height * .01),
+
+                const Divider(),
+                SizedBox(height: size.height * .03),
+                TextWidget(
+                  title: AppConfig.addOffer,
+                  fontSize: size.height * .025,
+                  color: colorScheme.onSecondary,
+                  isTextStart: true,
+                ),
+                SizedBox(height: size.height * .03),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(height: size.height * .02),
                     TextWidget(
-                        title: controller.results['proj_title'],
-                        fontSize: size.height * .025,
-                        color: colorScheme.primary),
-                    SizedBox(height: size.height * .02),
-                    TextWidget(
-                        title: "${AppConfig.projectDetails} :",
-                        fontSize: size.height * .025,
-                        color: colorScheme.background),
-                    SizedBox(height: size.height * .02),
-                    TextWidget(
-                      title: controller.results['proj_description'],
-                      fontSize: size.height * .025,
-                      color: colorScheme.onSecondary,
-                      isTextStart: true,
+                      title: "\$",
+                      fontSize: size.width * .07,
+                      color: colorScheme.primary,
+                      isTextStart: false,
                     ),
-                    SizedBox(height: size.height * .01),
-
-                    const Divider(),
-                    SizedBox(height: size.height * .03),
-                    TextWidget(
-                      title: AppConfig.addOffer,
-                      fontSize: size.height * .025,
-                      color: colorScheme.onSecondary,
-                      isTextStart: true,
-                    ),
-                    SizedBox(height: size.height * .03),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        TextWidget(
-                          title: "\$",
-                          fontSize: size.width * .07,
-                          color: colorScheme.primary,
-                          isTextStart: false,
-                        ),
-                        SizedBox(width: size.width * .03),
-                        buildTextFormFaild(
-                          controller.priceController,
-                          AppConfig.price,
-                          false,
-                          TextInputType.number,
-                          const Icon(Icons.add),
-                          colorScheme,
-                          size.width * .7,
-                          size.height * .06,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * .03),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      TextWidget(
-                        title: AppConfig.days,
-                        fontSize: size.width * .05,
-                        color: colorScheme.primary,
-                        isTextStart: true,
-                      ),
-                      SizedBox(width: size.width * .03),
-                      buildTextFormFaild(
-                        controller.daysController,
-                        AppConfig.days,
-                        false,
-                        TextInputType.number,
-                        const Icon(Icons.add),
-                        colorScheme,
-                        size.width * .7,
-                        size.height * .06,
-                      ),
-                    ]),
-                    SizedBox(height: size.height * .03),
-                    buildTextFormFaildDescription(
-                      controller.descriptionController,
-                      AppConfig.descreiption,
+                    SizedBox(width: size.width * .03),
+                    buildTextFormFaild(
+                      controller.priceController,
+                      AppConfig.price,
                       false,
-                      TextInputType.text,
+                      TextInputType.number,
                       const Icon(Icons.add),
                       colorScheme,
+                      size.width * .7,
+                      size.height * .06,
                     ),
-                    SizedBox(height: size.height * .02),
-                    Padding(
+                  ],
+                ),
+                SizedBox(height: size.height * .03),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  TextWidget(
+                    title: AppConfig.days,
+                    fontSize: size.width * .05,
+                    color: colorScheme.primary,
+                    isTextStart: true,
+                  ),
+                  SizedBox(width: size.width * .03),
+                  buildTextFormFaild(
+                    controller.daysController,
+                    AppConfig.days,
+                    false,
+                    TextInputType.number,
+                    const Icon(Icons.add),
+                    colorScheme,
+                    size.width * .7,
+                    size.height * .06,
+                  ),
+                ]),
+                SizedBox(height: size.height * .03),
+                buildTextFormFaildDescription(
+                  controller.descriptionController,
+                  AppConfig.descreiption,
+                  false,
+                  TextInputType.text,
+                  const Icon(Icons.add),
+                  colorScheme,
+                ),
+                SizedBox(height: size.height * .02),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 25,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (controller.daysController.text.isEmpty ||
+                          controller.descriptionController.text.isEmpty ||
+                          controller.priceController.text.isEmpty) {
+                        myLog("priceController.text",
+                            "${controller.priceController.text}");
+                        myLog("daysController.text",
+                            "${controller.daysController.text}");
+                        myLog("descriptionController.text",
+                            "${controller.descriptionController.text}");
+                        Helper.showError(
+                            context: context,
+                            subtitle: AppConfig.allFaildRequired.tr);
+                      } else {
+                        myLog("priceController.text",
+                            "${controller.priceController.text}");
+                        myLog("daysController.text",
+                            "${controller.daysController.text}");
+                        myLog("descriptionController.text",
+                            "${controller.descriptionController.text}");
+                        setState(() => isLoading = true);
+
+                        bool isAddProject = await controller.addOffer(
+                            context, controller.results['id']);
+                        myLog('isAddProject', isAddProject);
+                        setState(() => isLoading = false);
+
+                        if (isAddProject) {
+                          controller.clearController();
+                          Helper.showseuess(
+                              context: context,
+                              subtitle: "Succesfuly Added Projet");
+                          controller
+                              .getProjectsOffers(controller.results['id']);
+
+                          //userSignup sucssufuly
+                          // ignore: use_build_context_synchronously
+                          // Navigator.of(context).pushNamed(AppConfig.login);
+                        } else {
+                          Helper.showError(
+                              context: context, subtitle: "can not add projet");
+                        }
+                      }
+                    },
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 25,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          if (controller.daysController.text.isEmpty ||
-                              controller.descriptionController.text.isEmpty ||
-                              controller.priceController.text.isEmpty) {
-                            myLog("priceController.text",
-                                "${controller.priceController.text}");
-                            myLog("daysController.text",
-                                "${controller.daysController.text}");
-                            myLog("descriptionController.text",
-                                "${controller.descriptionController.text}");
-                            Helper.showError(
-                                context: context,
-                                subtitle: AppConfig.allFaildRequired.tr);
-                          } else {
-                            myLog("priceController.text",
-                                "${controller.priceController.text}");
-                            myLog("daysController.text",
-                                "${controller.daysController.text}");
-                            myLog("descriptionController.text",
-                                "${controller.descriptionController.text}");
-                            setState(() => controller.status = true);
-
-                            bool isAddProject = await controller.addOffer(
-                                context, controller.results['id']);
-                            myLog('isAddProject', isAddProject);
-                            setState(() => isLoading = false);
-
-                            if (isAddProject) {
-                              controller.clearController();
-                              Helper.showError(
-                                  context: context,
-                                  subtitle: "Succesfuly Added Projet");
-
-                              //userSignup sucssufuly
-                              // ignore: use_build_context_synchronously
-                              // Navigator.of(context).pushNamed(AppConfig.login);
-                            } else {
-                              Helper.showError(
-                                  context: context,
-                                  subtitle: "can not add projet");
-                            }
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 15),
-                          child: isLoading
-                              ? CircularProgressIndicator(color: Colors.white)
-                              : TextWidget(
-                                  title: AppConfig.addOffer,
-                                  fontSize: 20,
-                                  color: colorScheme.surface),
-                        ),
-                      ),
+                          horizontal: 25, vertical: 15),
+                      child: isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : TextWidget(
+                              title: AppConfig.addOffer,
+                              fontSize: 20,
+                              color: colorScheme.surface),
                     ),
-                    SizedBox(height: size.height * .02),
+                  ),
+                ),
+                SizedBox(height: size.height * .02),
 
-                    const Divider(),
-                    TextWidget(
-                      title: AppConfig.allOffer,
-                      fontSize: size.height * .025,
-                      color: colorScheme.onSecondary,
-                      isTextStart: true,
-                    ),
+                const Divider(),
+                TextWidget(
+                  title: AppConfig.allOffer,
+                  fontSize: size.height * .025,
+                  color: colorScheme.onSecondary,
+                  isTextStart: true,
+                ),
 
-                    ListView.separated(
+                Obx(() {
+                  if (controller.loadingState.value == LoadingState.initial ||
+                      controller.loadingState.value == LoadingState.loading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (controller.loadingState.value ==
+                          LoadingState.error ||
+                      controller.loadingState.value ==
+                          LoadingState.noDataFound) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("noooo"),
+                        // Text("${controller.message}"),
+                        ReyTryErrorWidget(
+                            title: controller.loadingState.value ==
+                                    LoadingState.noDataFound
+                                ? AppConfig.noData.tr
+                                : controller.apiResponse.message,
+                            onTap: () {
+                              controller
+                                  .getProjectsOffers(controller.results['id']);
+                            })
+                      ],
+                    );
+                  } else {
+                    return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       separatorBuilder: (context, index) =>
@@ -271,14 +274,15 @@ class _OffersScreenState extends State<OffersScreen> {
                         size: size,
                         resulte: controller.resulte[index],
                       ),
-                    )
-                    // ListOffersEngineerWidget(),
-                  ],
-                ),
-              ),
-            );
-          }
-        })
+                    );
+                  }
+                })
+                // ListOffersEngineerWidget(),
+              ],
+            ),
+          ),
+        )
+
         //////////////////////////////////////////////////////
         /*  
       bottomNavigationBar: Padding(
@@ -424,42 +428,42 @@ class _OffersScreenState extends State<OffersScreen> {
   }
 }
 
- // buildTextFormFaild(
-  //   TextEditingController controller,
-  //   String label,
-  //   bool obscure,
-  //   TextInputType inputType,
-  //   Icon icon,
-  //   ColorScheme colorScheme,
-  //   double width,
-  //   double height,
-  // ) {
-  //   return SizedBox(
-  //     width: width,
-  //     height: height,
-  //     child: Theme(
-  //       data: ThemeData(
-  //         colorScheme: ColorScheme(
-  //           primary: colorScheme.primary,
-  //           onPrimary: Colors.black,
-  //           secondary: Colors.black,
-  //           onSecondary: Colors.white,
-  //           brightness: Brightness.light,
-  //           background: Colors.black,
-  //           onBackground: Colors.black,
-  //           error: Colors.black,
-  //           onError: Colors.black,
-  //           surface: Colors.black,
-  //           onSurface: Colors.black,
-  //         ),
-  //       ),
-  //       child: TextField(
-  //         keyboardType: inputType,
-  //         scribbleEnabled: true,
+// buildTextFormFaild(
+//   TextEditingController controller,
+//   String label,
+//   bool obscure,
+//   TextInputType inputType,
+//   Icon icon,
+//   ColorScheme colorScheme,
+//   double width,
+//   double height,
+// ) {
+//   return SizedBox(
+//     width: width,
+//     height: height,
+//     child: Theme(
+//       data: ThemeData(
+//         colorScheme: ColorScheme(
+//           primary: colorScheme.primary,
+//           onPrimary: Colors.black,
+//           secondary: Colors.black,
+//           onSecondary: Colors.white,
+//           brightness: Brightness.light,
+//           background: Colors.black,
+//           onBackground: Colors.black,
+//           error: Colors.black,
+//           onError: Colors.black,
+//           surface: Colors.black,
+//           onSurface: Colors.black,
+//         ),
+//       ),
+//       child: TextField(
+//         keyboardType: inputType,
+//         scribbleEnabled: true,
 
-  //         decoration: InputDecoration(hintText: label),
-  //         // maxLength: 300,
-  //       ),
-  //     ),
-  //   );
-  // }
+//         decoration: InputDecoration(hintText: label),
+//         // maxLength: 300,
+//       ),
+//     ),
+//   );
+// }

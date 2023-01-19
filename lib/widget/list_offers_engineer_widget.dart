@@ -1,10 +1,9 @@
 // ListOffersEngineerWidget
 
 import 'package:flutter/material.dart';
-import 'package:your_engineer/model/offers_engineer_model.dart';
+import 'package:intl/intl.dart';
 import 'package:your_engineer/widget/shared_widgets/rating_bar.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
-
 import 'shared_widgets/card_decoration.dart';
 
 class ListOffersEngineerWidget extends StatelessWidget {
@@ -99,21 +98,23 @@ class ListOffersEngineerWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-
-                          TextWidget(
-                            title: resulte['createdAt'],
-                            // offersEngineerModel.offersDate,
-                            fontSize: 18,
-                            color: colorScheme.secondary,
-                          ),
                         ],
-                      )
+                      ),
+                      TextWidget(
+                        title:
+                            "${DateFormat('yyyy/MM/dd hh:mm').format(DateTime.parse(resulte['createdAt']))}",
+                        // offersEngineerModel.offersDate,
+                        fontSize: 18,
+                        color: colorScheme.secondary,
+                      ),
                     ],
                   ),
                 ],
               ),
               SizedBox(height: size.height * .05),
               TextWidget(
+                textOverflow: TextOverflow.ellipsis,
+
                 title: resulte['message_desc'],
                 //  offersEngineerModel.offersDetails,
                 fontSize: 18,

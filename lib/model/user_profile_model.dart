@@ -32,8 +32,8 @@ class UserProfileModel {
   bool? isActive;
   dynamic userprofiles;
   Usercredentials? usercredentials;
-  List<dynamic>? userskills;
-  List<dynamic>? userportfolio;
+  List<Userskill?>? userskills;
+  List<Userportfolio?>? userportfolio;
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
       UserProfileModel(
@@ -42,15 +42,15 @@ class UserProfileModel {
         fullname: json["fullname"] ?? '',
         phone: json["phone"] ?? '',
         imgpath: json["imgpath"] ?? '',
-        isActive: json["is_active"] ?? '',
+        isActive: json["is_active"] ?? false,
         userprofiles: json["userprofiles"] ?? '',
         usercredentials: Usercredentials.fromJson(json["usercredentials"]),
-        userskills: json["userskills"] == null
-            ? []
-            : List<dynamic>.from(json["userskills"]!.map((x) => x)),
+        userskills: List<Userskill?>.from(
+            json["userskills"].map((x) => Userskill.fromJson(x))),
         userportfolio: json["userportfolio"] == null
             ? []
-            : List<dynamic>.from(json["userportfolio"]!.map((x) => x)),
+            : List<Userportfolio?>.from(
+                json["userportfolio"]!.map((x) => Userportfolio.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,10 +64,10 @@ class UserProfileModel {
         "usercredentials": usercredentials!.toJson(),
         "userskills": userskills == null
             ? []
-            : List<dynamic>.from(userskills!.map((x) => x)),
+            : List<dynamic>.from(userskills!.map((x) => x!.toJson())),
         "userportfolio": userportfolio == null
             ? []
-            : List<dynamic>.from(userportfolio!.map((x) => x)),
+            : List<dynamic>.from(userportfolio!.map((x) => x!.toJson())),
       };
 }
 
@@ -82,12 +82,60 @@ class Usercredentials {
 
   factory Usercredentials.fromJson(Map<String, dynamic> json) =>
       Usercredentials(
-        attachments: json["attachments"],
-        isAuthorized: json["is_authorized"],
+        attachments: json["attachments"] ?? '',
+        isAuthorized: json["is_authorized"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
         "attachments": attachments,
         "is_authorized": isAuthorized,
+      };
+}
+
+class Userportfolio {
+  Userportfolio({
+    this.title,
+    this.description,
+    this.imgpath,
+    this.urlLink,
+    this.createdAt,
+  });
+
+  String? title;
+  String? description;
+  String? imgpath;
+  String? urlLink;
+  DateTime? createdAt;
+
+  factory Userportfolio.fromJson(Map<String, dynamic> json) => Userportfolio(
+        title: json["title"] ?? '',
+        description: json["description"] ?? '',
+        imgpath: json["imgpath"] ?? '',
+        urlLink: json["url_link"] ?? '',
+        createdAt: DateTime.parse(json["createdAt"] ?? ''),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "imgpath": imgpath,
+        "url_link": urlLink,
+        "createdAt": createdAt?.toIso8601String(),
+      };
+}
+
+class Userskill {
+  Userskill({
+    this.skillName,
+  });
+
+  String? skillName;
+
+  factory Userskill.fromJson(Map<String, dynamic> json) => Userskill(
+        skillName: json["skill_name"] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "skill_name": skillName,
       };
 }

@@ -46,7 +46,7 @@ class ListProjectWidget extends StatelessWidget {
           //         )));
         },
         height: size.height * .3,
-        width: size.width * .7,
+        width: size.width * .8,
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

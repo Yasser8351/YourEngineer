@@ -31,6 +31,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   final AddProjectController addProjectController =
       Get.put(AddProjectController());
   bool isLoading = false;
+  bool isLoadingSubCategory = false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   300,
                   5,
                 ),
-
+                ///////////////////////////////////////
+                ///
                 TextWidget(
                   title: AppConfig.chooseCategory,
                   fontSize: 16,
@@ -109,20 +111,72 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                       width: 300,
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: DropdownButton(
-                        items: addProjectController.listSubCat
+                        hint: Text("Select Category"),
+                        items: addProjectController.listPopulerServices
                             .map((e) => DropdownMenuItem(
-                                  child: Text(e.name!),
+                                  child: Text(e.titleServices),
                                   value: e.id,
                                 ))
                             .toList(),
                         onChanged: (val) {
                           setState(() {
-                            myLog('val', val);
                             addProjectController.selectedCat = val.toString();
+                            isLoadingSubCategory = true;
+                            myLog('val', val);
+                            addProjectController
+                                .getsubCatigory(val.toString())
+                                .then((value) => {
+                                      setState(() {
+                                        isLoadingSubCategory = false;
+                                      })
+                                    });
                           });
                         },
                         value: addProjectController.selectedCat,
                       ),
+                    ),
+                  ],
+                ),
+
+                /////////////////////////////////////////////////
+                ///
+
+                TextWidget(
+                  title: "Choose Sub Category",
+                  fontSize: 16,
+                  color: colorScheme.secondary,
+                  isTextStart: true,
+                ),
+                // buildRowList(
+                //     context, AppConfig.chooseCategory, colorScheme, Icons.category),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.category),
+                    ),
+                    Container(
+                      width: 300,
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: isLoadingSubCategory
+                          ? Center(child: CircularProgressIndicator())
+                          : DropdownButton(
+                              hint: Text("Select Sub Category"),
+                              items: addProjectController.listSubCat
+                                  .map((e) => DropdownMenuItem(
+                                        child: Text(e.name!),
+                                        value: e.id,
+                                      ))
+                                  .toList(),
+                              onChanged: (val) {
+                                setState(() {
+                                  myLog('val', val);
+                                  addProjectController.selectedSubCat =
+                                      val.toString();
+                                });
+                              },
+                              value: addProjectController.selectedSubCat,
+                            ),
                     ),
                   ],
                 ),

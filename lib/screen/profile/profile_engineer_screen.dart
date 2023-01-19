@@ -66,12 +66,14 @@ import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
-import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/widget/shared_widgets/bottom_navigation_card_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/list_profile_horizontal.dart';
 
 import '../../controller/profile_controller.dart';
+import '../../enum/all_enum.dart';
 import '../../widget/shared_widgets/card_profile_personal_info.dart';
+import '../../widget/shared_widgets/reytry_error_widget.dart';
+import 'add_pro_skills_screen.dart';
 
 class ProfileEngineerScreen extends StatefulWidget {
   const ProfileEngineerScreen({Key? key, required this.engineerModel})
@@ -83,7 +85,7 @@ class ProfileEngineerScreen extends StatefulWidget {
 }
 
 class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
-  ProfileController controller = Get.put(ProfileController());
+  ProfileUserController controller = Get.put(ProfileUserController());
   var profileList = [
     ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
     ListHorizontalProfile(AppConfig.reviews, Icons.star),
@@ -97,44 +99,68 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: colorScheme.primary,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40, right: 10, left: 10),
-          child: Column(
-            children: [
-              CardProfilePersonalInfo(
-                userProfileModel: controller.userProfile,
-                isMyProfile: true,
-                size: size,
-                colorScheme: colorScheme,
-                onTap: () {
-                  // Navigator.of(context).pushNamed(AppConfig.addProtofilo);
-                  //  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>))
-                  Get.to(() => AddProtofiloScreen());
-                },
+        backgroundColor: colorScheme.primary,
+        body: Obx(() {
+          if (controller.loadingState.value == LoadingState.initial ||
+              controller.loadingState.value == LoadingState.loading) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
               ),
-              const SizedBox(height: 35),
-              ListProfileHorizontalWidget(
-                size: size,
-                colorScheme: colorScheme,
-                listHorizontalProfile: profileList,
-                expandedIndex: expandedIndex,
-                onTap: ((index) {
-                  setState(
-                    () => expandedIndex = index,
-                    //
-                  );
-                }),
+            );
+          } else if (controller.loadingState.value == LoadingState.error ||
+              controller.loadingState.value == LoadingState.noDataFound) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("${controller.message}"),
+                ReyTryErrorWidget(
+                    title: controller.loadingState.value ==
+                            LoadingState.noDataFound
+                        ? AppConfig.noData.tr
+                        : controller.apiResponse.message,
+                    onTap: () {
+                      controller.getUsersShow();
+                    })
+              ],
+            );
+          } else {
+            return SingleChildScrollView(
+                child: Padding(
+              padding: const EdgeInsets.only(top: 40, right: 10, left: 10),
+              child: Column(
+                children: [
+                  CardProfilePersonalInfo(
+                    userProfileModel: controller.userProfile,
+                    isMyProfile: true,
+                    size: size,
+                    colorScheme: colorScheme,
+                    onTap: () {
+                      Get.to(() => AddPortifolioSkillsScreen());
+                    },
+                  ),
+                  const SizedBox(height: 35),
+                  ListProfileHorizontalWidget(
+                    size: size,
+                    colorScheme: colorScheme,
+                    listHorizontalProfile: profileList,
+                    expandedIndex: expandedIndex,
+                    onTap: ((index) {
+                      setState(
+                        () => expandedIndex = index,
+                        //
+                      );
+                    }),
+                  ),
+                  BottomNavigationCardWidget(
+                      userProfileModel: controller.userProfile,
+                      size: size,
+                      colorScheme: colorScheme,
+                      expandedIndex: expandedIndex),
+                ],
               ),
-              BottomNavigationCardWidget(
-                  size: size,
-                  colorScheme: colorScheme,
-                  expandedIndex: expandedIndex),
-            ],
-          ),
-        ),
-      ),
-    );
+            ));
+          }
+        }));
   }
 }

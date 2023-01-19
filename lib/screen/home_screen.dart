@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/controller/project_home_controller.dart';
@@ -27,15 +29,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final PopulerServicesController populerServicesController = Get.find();
-  final TopEngineerController topEngineerController = Get.find();
-  final ProjectControllerHome projectController = Get.find();
+  ProjectControllerHome projectController = Get.put(ProjectControllerHome());
+  PopulerServicesController populerServicesController =
+      Get.put(PopulerServicesController());
+  TopEngineerController topEngineerController =
+      Get.put(TopEngineerController());
+
+  // PopulerServicesController populerServicesController = Get.find();
+  // TopEngineerController topEngineerController = Get.find();
+  // ProjectControllerHome projectController = Get.find();
 
   //////
   double rating = 3.5;
 
   @override
   Widget build(BuildContext context) {
+    // setState(() {
+    //   log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    //   PopulerServicesController populerServicesController =
+    //       Get.put(PopulerServicesController());
+    //   TopEngineerController topEngineerController =
+    //       Get.put(TopEngineerController());
+    //   ProjectControllerHome projectController =
+    //       Get.put(ProjectControllerHome());
+    // });
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(

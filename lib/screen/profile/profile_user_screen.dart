@@ -20,7 +20,7 @@ class ProfileUserScreen extends StatefulWidget {
 }
 
 class _ProfileUserScreenState extends State<ProfileUserScreen> {
-  ProfileController controller = Get.put(ProfileController());
+  ProfileUserController controller = Get.put(ProfileUserController());
 
   var profileList = [
     ListHorizontalProfile(AppConfig.paypal, Icons.payment,
@@ -62,6 +62,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                 }),
               ),
               BottomNavigationCardWidget(
+                userProfileModel: controller.userProfile,
                 size: size,
                 colorScheme: colorScheme,
                 expandedIndex: expandedIndex,

@@ -38,10 +38,10 @@ class _TabScreenState extends State<TabScreen> {
   //   getUserData();
   // }
 
-  getUserData() async {
-    SharedPrefUser sharedPrefUser = SharedPrefUser();
-    await sharedPrefUser.getUserData();
-  }
+  // getUserData() async {
+  //   SharedPrefUser sharedPrefUser = SharedPrefUser();
+  //   await sharedPrefUser.getUserData();
+  // }
 
   @override
   Widget build(BuildContext context) {

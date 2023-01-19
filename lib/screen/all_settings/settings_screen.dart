@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SettingControoler controller = Get.find();
+    SettingControoler controller = Get.put(SettingControoler());
 
     return Scaffold(
       appBar: _getAppBar(context),
@@ -158,6 +158,7 @@ class SettingsScreen extends StatelessWidget {
   logout(context) async {
     SharedPrefUser sharedPrefUser = SharedPrefUser();
     await sharedPrefUser.logout();
-    Navigator.of(context).pushNamed(AppConfig.login);
+    // Navigator.of(context).pushNamed(AppConfig.login);
+    Get.offAllNamed(AppConfig.login);
   }
 }
