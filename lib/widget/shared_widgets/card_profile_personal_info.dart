@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/sharedpref/user_share_pref.dart';
 import '../../app_config/app_image.dart';
 import '../../model/user_profile_model.dart';
 import 'card_with_image.dart';
@@ -13,12 +12,14 @@ class CardProfilePersonalInfo extends StatelessWidget {
     required this.colorScheme,
     required this.onTap,
     this.isMyProfile = true,
+    this.hidePersonalInfo = false,
     required this.userProfileModel,
   }) : super(key: key);
   final Size size;
   final ColorScheme colorScheme;
   final Function() onTap;
   final isMyProfile;
+  final hidePersonalInfo;
   final UserProfileModel userProfileModel;
 
   @override
@@ -93,17 +94,19 @@ class CardProfilePersonalInfo extends StatelessWidget {
                       backgroundImage: AssetImage(AppImage.img),
                     ),
                     const SizedBox(height: 7),
-                    InkWell(
-                      onTap: onTap,
-                      child: CircleAvatar(
-                        radius: 13.0,
-                        backgroundColor: colorScheme.primary,
-                        child: Icon(
-                          Icons.add,
-                          color: colorScheme.surface,
-                        ),
-                      ),
-                    ),
+                    hidePersonalInfo
+                        ? SizedBox()
+                        : InkWell(
+                            onTap: onTap,
+                            child: CircleAvatar(
+                              radius: 13.0,
+                              backgroundColor: colorScheme.primary,
+                              child: Icon(
+                                Icons.add,
+                                color: colorScheme.surface,
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ],

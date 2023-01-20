@@ -126,6 +126,7 @@ class OfferController extends GetxController {
 
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;
+
         resulte = map['results'];
         totalPages = map["totalPages"];
         totalItems = map["totalItems"];

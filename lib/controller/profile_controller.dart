@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 // import 'package:intl/date_symbol_data_local.dart';
 import '../api/api_response.dart';
@@ -13,22 +10,12 @@ import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
 import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
-import '../model/faq_model.dart';
 import '../model/user_profile_model.dart';
 import '../sharedpref/user_share_pref.dart';
 import '../utilits/helper.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 
 class ProfileUserController extends GetxController {
-  @override
-  onInit() {
-    super.onInit();
-    initializeDateFormatting();
-
-    getUsersShow();
-  }
-
   var loadingState = LoadingState.initial.obs;
   final _shared = SharedPrefUser();
   UserProfileModel userProfile = UserProfileModel();
@@ -37,8 +24,15 @@ class ProfileUserController extends GetxController {
   String message = "";
   bool get status => _status;
   bool _status = false;
+  @override
+  onInit() {
+    super.onInit();
+    initializeDateFormatting();
 
-  Future<ApiResponse> getUsersShow() async {
+    getUsersShow();
+  }
+
+  Future<ApiResponse> getUsersShow([bool showEngeneerById = true]) async {
     loadingState(LoadingState.loading);
     // isloding = true;
     // update();
@@ -47,7 +41,8 @@ class ProfileUserController extends GetxController {
       myLog("strtmethod", "getUsersShow");
       var response = await Dio()
           .post(
-            ApiUrl.getUsersShow,
+            ApiUrl.getUsersById,
+            // showEngeneerById ? ApiUrl.getUsersById : ApiUrl.getUsersShow,
             options: Options(
               headers: ApiUrl.getHeader(token: token),
             ),

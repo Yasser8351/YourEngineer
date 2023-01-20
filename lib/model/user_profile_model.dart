@@ -17,6 +17,7 @@ class UserProfileModel {
     this.fullname,
     this.phone,
     this.imgpath,
+    this.review_avg,
     this.isActive,
     this.userprofiles,
     this.usercredentials,
@@ -28,9 +29,10 @@ class UserProfileModel {
   String? email;
   String? fullname;
   String? phone;
-  dynamic imgpath;
+  String? review_avg;
+  String? imgpath;
   bool? isActive;
-  dynamic userprofiles;
+  Userprofiles? userprofiles;
   Usercredentials? usercredentials;
   List<Userskill?>? userskills;
   List<Userportfolio?>? userportfolio;
@@ -42,8 +44,9 @@ class UserProfileModel {
         fullname: json["fullname"] ?? '',
         phone: json["phone"] ?? '',
         imgpath: json["imgpath"] ?? '',
+        review_avg: json["review_avg"].toString(),
         isActive: json["is_active"] ?? false,
-        userprofiles: json["userprofiles"] ?? '',
+        userprofiles: Userprofiles.fromJson(json["userprofiles"]),
         usercredentials: Usercredentials.fromJson(json["usercredentials"]),
         userskills: List<Userskill?>.from(
             json["userskills"].map((x) => Userskill.fromJson(x))),
@@ -137,5 +140,25 @@ class Userskill {
 
   Map<String, dynamic> toJson() => {
         "skill_name": skillName,
+      };
+}
+
+class Userprofiles {
+  Userprofiles({
+    required this.aboutUser,
+    required this.specialization,
+  });
+
+  final String aboutUser;
+  final String specialization;
+
+  factory Userprofiles.fromJson(Map<String, dynamic> json) => Userprofiles(
+        aboutUser: json["about_user"] ?? '',
+        specialization: json["specialization"] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "about_user": aboutUser,
+        "specialization": specialization,
       };
 }

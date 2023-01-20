@@ -71,34 +71,37 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
                 // List Sub Services horizantial this list using to
                 // filter main List by title Sub Services
                 SizedBox(
-                  height: 50,
+                  height: size.height * .07,
                   width: double.infinity,
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 20),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.listSubServices.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () async {
-                          setState(() {
-                            expandeIndex = index;
-                            controller
-                                .getProjectBySubCatigory(controller
-                                    .listSubServices[index].id
-                                    .toString())
-                                .then((value) => setState(() {}));
-                          });
-                        },
-                        child: ListSubServicesWidget(
-                          subServicesModel: controller.listSubServices[index],
-                          colorScheme: colorScheme,
-                          size: size,
-                          index: index,
-                          expandeIndex: expandeIndex,
-                        ),
-                      );
-                    },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 20),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.listSubServices.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () async {
+                            setState(() {
+                              expandeIndex = index;
+                              controller
+                                  .getProjectBySubCatigory(controller
+                                      .listSubServices[index].id
+                                      .toString())
+                                  .then((value) => setState(() {}));
+                            });
+                          },
+                          child: ListSubServicesWidget(
+                            subServicesModel: controller.listSubServices[index],
+                            colorScheme: colorScheme,
+                            size: size,
+                            index: index,
+                            expandeIndex: expandeIndex,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(height: size.height * .01),

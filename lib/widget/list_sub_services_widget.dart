@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:your_engineer/model/sub_catigory.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
-import '../model/sub_services_model.dart';
-
 class ListSubServicesWidget extends StatefulWidget {
   const ListSubServicesWidget({
     Key? key,
@@ -30,7 +28,7 @@ class _ListSubServicesWidgetState extends State<ListSubServicesWidget> {
       children: [
         Card(
           color: widget.expandeIndex == widget.index
-              ? widget.colorScheme.background
+              ? widget.colorScheme.primary
               : Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),

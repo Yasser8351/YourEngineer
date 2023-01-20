@@ -1,15 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/date_symbol_data_file.dart';
-import 'package:your_engineer/model/user_model.dart';
+import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 import 'package:your_engineer/widget/shared_widgets/reviews_widget.dart';
 import 'package:intl/intl.dart';
-import '../../app_config/app_config.dart';
 import '../../app_config/app_image.dart';
-import '../../controller/profile_controller.dart';
 import '../../model/user_profile_model.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
@@ -19,11 +15,13 @@ class BottomNavigationCardWidget extends StatelessWidget {
     required this.size,
     required this.colorScheme,
     required this.expandedIndex,
+    required this.hidePersonalInfo,
     required this.userProfileModel,
   }) : super(key: key);
   final Size size;
   final ColorScheme colorScheme;
   final int expandedIndex;
+  final bool hidePersonalInfo;
   final UserProfileModel userProfileModel;
 
   @override
@@ -65,34 +63,43 @@ buildPersonalProfile(
   return SingleChildScrollView(
       child: Column(
     children: [
-      TextWidget(
-        title: "About me",
-        fontSize: 18,
-        color: colorScheme.onSecondary,
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: TextWidget(
+          title: AppConfig.aboutme,
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
       ),
       const SizedBox(height: 20),
-      TextWidget(
-        title:
-            "Architect with 2 more than years experience In the field of architectural and interior design.",
-        fontSize: 16,
-        color: colorScheme.onSecondary,
-        isTextStart: true,
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: TextWidget(
+          title: userProfileModel.userprofiles!.aboutUser,
+          fontSize: 16,
+          color: colorScheme.onSecondary,
+          isTextStart: true,
+        ),
       ),
       const SizedBox(height: 10),
       const Divider(),
       const SizedBox(height: 20),
-      buildRowItem("Specialization", "Architectural engineer", colorScheme),
-      buildRowItem("Total Reviews", "5.0", colorScheme),
+      buildRowItem("Specialization",
+          userProfileModel.userprofiles!.specialization, colorScheme),
+      buildRowItem("Total Reviews", userProfileModel.review_avg!, colorScheme),
       buildRowItem("Completed projects", "6", colorScheme),
       buildRowItem("Projects he works on", "1", colorScheme),
       buildRowItem("Date of registration", "12/02/2022", colorScheme),
       // const SizedBox(height: 10),
 
       const Divider(),
-      TextWidget(
-        title: "Skills:",
-        fontSize: 18,
-        color: colorScheme.onSecondary,
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: TextWidget(
+          title: AppConfig.skills,
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
       ),
       const SizedBox(height: 10),
       GridView.builder(
@@ -154,7 +161,15 @@ buildBusinessFair(ColorScheme colorScheme, Size size,
 
 buildPaymentHistory(ColorScheme colorScheme) {
   return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
+      TextWidget(
+        title: "No Payment History found",
+        fontSize: 16,
+        color: colorScheme.onSecondary,
+        isTextStart: true,
+      ),
+      /*
       buildRowReviews(AppConfig.history, AppConfig.seeAll, colorScheme),
       const SizedBox(height: 10),
       buildRowItem("Shipped by PayPal", "\$250 -", colorScheme,
@@ -174,7 +189,7 @@ buildPaymentHistory(ColorScheme colorScheme) {
           isPadingZero: true),
       const SizedBox(height: 5),
       buildRowItem("yasser8351@gmail.com", "01/10/2021", colorScheme),
-      const Divider(),
+      const Divider(),*/
     ],
   );
 }

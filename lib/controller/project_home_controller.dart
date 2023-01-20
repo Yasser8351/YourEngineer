@@ -5,10 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
-import 'package:your_engineer/utilits/helper.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
-import '../app_config/app_config.dart';
 import '../enum/all_enum.dart';
 
 class ProjectControllerHome extends GetxController {
@@ -54,14 +52,12 @@ class ProjectControllerHome extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-      // myLog("response.statusCode methode", "${response.data['results']}");
 
-      // var projectModel = projectModelFromJson(jsonEncode(response.data));
-      // _listprojects = projectModel.results;
       myLog("response  getProjects", "${response.data}");
 
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;
+
         results = map['results'];
         totalPages = map["totalPages"];
         totalItems = map["totalItems"];
@@ -90,13 +86,9 @@ class ProjectControllerHome extends GetxController {
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
       if (error is TimeoutException) {
-        showseuessToast(error.toString());
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
-        showseuessToast(AppConfig.unAutaristion);
-      } else {
-        showseuessToast(error.toString());
-      }
+      } else {}
 
       myLog("catch error", error.toString());
       // myLog("start _listprojects", "${_listprojects}");

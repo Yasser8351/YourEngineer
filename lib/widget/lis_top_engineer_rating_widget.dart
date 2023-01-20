@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
-import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 import 'package:your_engineer/widget/shared_widgets/my_favorite_button.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
+import '../screen/profile/profile_engineer_screen.dart';
 import 'shared_widgets/card_decoration.dart';
 import 'shared_widgets/rating_bar.dart';
 
@@ -24,12 +25,11 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardDecoration(
       onTap: () {
-        // Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (context) => ProfileEngineerScreen(
-        //           engineerModel: topEngineerRatingModel,
-        //           // colorScheme: colorScheme,
-        //           // size: size,
-        //         )));
+        Get.to(() => ProfileEngineerScreen(
+              showEngeneerById: true,
+              hidePersonalInfo: true,
+            ));
+        return;
       },
       height: 0,
       width: size.width * .6,

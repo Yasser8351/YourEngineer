@@ -1,71 +1,9 @@
-// import 'package:flutter/material.dart';
-// import 'package:your_engineer/app_config/app_config.dart';
-// import 'package:your_engineer/app_config/app_image.dart';
-// import 'package:your_engineer/model/horizontal_profile.dart';
+import 'dart:developer';
 
-// import '../../widget/shared_widgets/bottom_navigation_card_widget.dart';
-// import '../../widget/shared_widgets/card_profile_personal_info.dart';
-// import '../../widget/shared_widgets/list_profile_horizontal.dart';
-
-// class ProfileEngineerScreen extends StatefulWidget {
-//   const ProfileEngineerScreen({Key? key}) : super(key: key);
-
-//   @override
-//   State<ProfileEngineerScreen> createState() => _ProfileEngineerScreenState();
-// }
-
-// class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
-//   var profileList = [
-//     ListHorizontalProfile(AppConfig.paypal, Icons.payment,
-//         image: AppImage.paypal),
-//     ListHorizontalProfile(AppConfig.visa, Icons.visibility,
-//         image: AppImage.visa),
-//   ];
-//   int expandedIndex = 0;
-//   @override
-//   Widget build(BuildContext context) {
-//     ColorScheme colorScheme = Theme.of(context).colorScheme;
-//     final size = MediaQuery.of(context).size;
-//     return Scaffold(
-//       backgroundColor: colorScheme.primary,
-//       body: SingleChildScrollView(
-//         child: Padding(
-//           padding: const EdgeInsets.only(top: 40, right: 10, left: 10),
-//           child: Column(
-//             children: [
-//               CardProfilePersonalInfo(
-//                 size: size,
-//                 colorScheme: colorScheme,
-//                 onTap: () {},
-//               ),
-//               const SizedBox(height: 35),
-//               ListProfileHorizontalWidget(
-//                 isPayScreen: true,
-//                 size: size,
-//                 colorScheme: colorScheme,
-//                 listHorizontalProfile: profileList,
-//                 expandedIndex: expandedIndex,
-//                 onTap: ((index) {
-//                   setState(() => expandedIndex = index);
-//                 }),
-//               ),
-//               BottomNavigationCardWidget(
-//                 size: size,
-//                 colorScheme: colorScheme,
-//                 expandedIndex: expandedIndex,
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
-import 'package:your_engineer/model/top_engineer_rating_model.dart';
 import 'package:your_engineer/widget/shared_widgets/bottom_navigation_card_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/list_profile_horizontal.dart';
 
@@ -76,9 +14,12 @@ import '../../widget/shared_widgets/reytry_error_widget.dart';
 import 'add_pro_skills_screen.dart';
 
 class ProfileEngineerScreen extends StatefulWidget {
-  const ProfileEngineerScreen({Key? key, required this.engineerModel})
+  const ProfileEngineerScreen(
+      {Key? key, this.showEngeneerById = false, this.hidePersonalInfo = false})
       : super(key: key);
-  final TopEngineerRatingModel engineerModel;
+  // final TopEngineerRatingModel engineerModel;
+  final bool showEngeneerById;
+  final bool hidePersonalInfo;
 
   @override
   State<ProfileEngineerScreen> createState() => _ProfileEngineerScreenState();
@@ -86,6 +27,7 @@ class ProfileEngineerScreen extends StatefulWidget {
 
 class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
   ProfileUserController controller = Get.put(ProfileUserController());
+
   var profileList = [
     ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
     ListHorizontalProfile(AppConfig.reviews, Icons.star),
@@ -93,9 +35,16 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
     ListHorizontalProfile(
         AppConfig.paymentHistory, Icons.monetization_on_outlined),
   ];
+  var profileList2 = [
+    ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
+    ListHorizontalProfile(AppConfig.reviews, Icons.star),
+    ListHorizontalProfile(AppConfig.businessFair, Icons.badge),
+  ];
   int expandedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    log(widget.hidePersonalInfo.toString());
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -113,12 +62,11 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${controller.message}"),
                 ReyTryErrorWidget(
                     title: controller.loadingState.value ==
                             LoadingState.noDataFound
                         ? AppConfig.noData.tr
-                        : controller.apiResponse.message,
+                        : controller.message,
                     onTap: () {
                       controller.getUsersShow();
                     })
@@ -130,9 +78,22 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
               padding: const EdgeInsets.only(top: 40, right: 10, left: 10),
               child: Column(
                 children: [
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_rounded,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                  ),
                   CardProfilePersonalInfo(
                     userProfileModel: controller.userProfile,
                     isMyProfile: true,
+                    hidePersonalInfo: widget.hidePersonalInfo,
                     size: size,
                     colorScheme: colorScheme,
                     onTap: () {
@@ -143,7 +104,8 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                   ListProfileHorizontalWidget(
                     size: size,
                     colorScheme: colorScheme,
-                    listHorizontalProfile: profileList,
+                    listHorizontalProfile:
+                        widget.hidePersonalInfo ? profileList2 : profileList,
                     expandedIndex: expandedIndex,
                     onTap: ((index) {
                       setState(
@@ -155,6 +117,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                   BottomNavigationCardWidget(
                       userProfileModel: controller.userProfile,
                       size: size,
+                      hidePersonalInfo: widget.hidePersonalInfo,
                       colorScheme: colorScheme,
                       expandedIndex: expandedIndex),
                 ],

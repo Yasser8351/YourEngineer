@@ -26,7 +26,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {},
-        height: size.height * .4,
+        height: size.height * .28,
         width: size.width,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -41,9 +41,6 @@ class ListOffersEngineerWidget extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 40.0,
                       backgroundColor: colorScheme.primary,
-                      // backgroundImage: AssetImage(
-                      //   offersEngineerModel.imageEngineer,
-                      // ),
                     ),
                   ),
                   SizedBox(height: size.height * .05),
@@ -63,7 +60,6 @@ class ListOffersEngineerWidget extends StatelessWidget {
                             const EdgeInsets.only(top: 5, left: 10, right: 10),
                         child: TextWidget(
                           title: 'engineerspecialist',
-                          // offersEngineerModel.engineerspecialist,
                           fontSize: 18,
                           color: colorScheme.secondary,
                           isTextStart: true,
@@ -112,14 +108,16 @@ class ListOffersEngineerWidget extends StatelessWidget {
                 ],
               ),
               SizedBox(height: size.height * .05),
-              TextWidget(
-                textOverflow: TextOverflow.ellipsis,
-
-                title: resulte['message_desc'],
-                //  offersEngineerModel.offersDetails,
-                fontSize: 18,
-                color: colorScheme.onSecondary,
-                isTextStart: true,
+              Container(
+                height: size.height * .06,
+                child: TextWidget(
+                  textOverflow: TextOverflow.ellipsis,
+                  title: resulte['message_desc'],
+                  //  offersEngineerModel.offersDetails,
+                  fontSize: 18,
+                  color: colorScheme.onSecondary,
+                  isTextStart: true,
+                ),
               ),
             ],
           ),

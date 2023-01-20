@@ -75,8 +75,13 @@ class AppLocalization implements Translations {
           AppConfig.submitYourProject: "اضافة المشروع",
           AppConfig.lastProject: "اخر المشاريع",
           AppConfig.seeAll: "عرض الكل",
+          AppConfig.aboutme: "وصف مختصر",
+          AppConfig.cannotaddOffer: "حدث خطأ لم يتم اضافة عرضك",
           AppConfig.topEngineerRating: "الأعلي تقييم",
           AppConfig.populerServices: "الأقسام الرئيسية",
+          AppConfig.addOfferSuccesfuly: "تم اضافة عرضك",
+          AppConfig.projectTitle: "عنوان المشروع",
+          AppConfig.skills: "المهارات",
           AppConfig.allFaildRequired: "جميع الحقول مطلوبة"
         },
         "en": {
@@ -107,6 +112,8 @@ class AppLocalization implements Translations {
           AppConfig.projectDetails: AppConfig.projectDetails,
           AppConfig.editMyProject: AppConfig.editMyProject,
           AppConfig.noData: AppConfig.noData,
+          AppConfig.aboutme: "About me",
+          AppConfig.skills: "Skills",
           AppConfig.send: AppConfig.send,
           AppConfig.exitApp: AppConfig.exitApp,
           AppConfig.chat: AppConfig.chat,
@@ -149,8 +156,11 @@ class AppLocalization implements Translations {
           AppConfig.topEngineerRating: AppConfig.topEngineerRating,
           AppConfig.populerServices: AppConfig.populerServices,
           AppConfig.allFaildRequired: AppConfig.allFaildRequired,
+          AppConfig.cannotaddOffer: "Can not add Offer",
+          AppConfig.addOfferSuccesfuly: "add offer Succesfuly",
           AppConfig.noProjectsFound: "No projects found",
           AppConfig.withKeySearch: "with this key",
+          AppConfig.projectTitle: "Project title"
         },
       };
 }

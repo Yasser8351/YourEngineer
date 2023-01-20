@@ -1,10 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:your_engineer/debugger/my_debuger.dart';
-import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
 import '../model/top_engineer_rating_model.dart';
-import '../model/user_model.dart';
 import '../screen/profile/profile_engineer_screen.dart';
 import '../screen/profile/profile_user_screen.dart';
 
@@ -23,15 +20,11 @@ class SettingControoler extends GetxController {
     s = await SharedPreferences.getInstance();
     token = await s.getString('token');
     status = await s.getString('status');
-
-    myLog("token", "$token");
-    myLog("status", "$status");
   }
 
   onProfileTap() {
     if (status == 'ENGINEER') {
-      Get.to(() => ProfileEngineerScreen(
-          engineerModel: TopEngineerRatingModel(results: [])));
+      Get.to(() => ProfileEngineerScreen());
       return;
     }
     if (status == 'OWNER') {
@@ -39,9 +32,13 @@ class SettingControoler extends GetxController {
       return;
     }
     if (status == '') {
-      Get.to(() => ProfileEngineerScreen(
-          engineerModel: TopEngineerRatingModel(results: [])));
+      Get.to(() => ProfileEngineerScreen());
       return;
     }
+  }
+
+  goToEngineerProfile(List<Result> results) {
+    Get.to(() => ProfileEngineerScreen());
+    return;
   }
 }

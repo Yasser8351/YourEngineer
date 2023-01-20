@@ -1,13 +1,17 @@
 class AppConfig {
   static const String appName = "appName";
+  static const String aboutme = "aboutme";
+  static const String skills = "Skills";
   static const String engineer = "Engineers";
   static const String projectOwner = "Project Owner";
   static const String emal = "email";
   static const String phone = "phone";
+  static const String projectTitle = "projectTitle";
   static const String password = "password";
-  // static const String password = "password";
+  static const String addOfferSuccesfuly = "addOfferSuccesfuly";
   static const String comfirmPassword = "comfirm password";
 
+  static const String cannotaddOffer = "cannotaddOffer";
   static const String signUp = "Sign Up";
   static const String noNet = "no enter connection";
   static const String forgetPassword = "forget password?";

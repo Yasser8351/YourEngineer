@@ -5,8 +5,6 @@ import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
 
 import '../../controller/profile_controller.dart';
-import '../../controller/setting_controller.dart';
-import '../../model/top_engineer_rating_model.dart';
 import '../../widget/shared_widgets/bottom_navigation_card_widget.dart';
 import '../../widget/shared_widgets/card_profile_personal_info.dart';
 import '../../widget/shared_widgets/list_profile_horizontal.dart';
@@ -64,6 +62,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
               BottomNavigationCardWidget(
                 userProfileModel: controller.userProfile,
                 size: size,
+                hidePersonalInfo: false,
                 colorScheme: colorScheme,
                 expandedIndex: expandedIndex,
               ),

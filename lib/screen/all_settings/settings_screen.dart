@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/model/top_engineer_rating_model.dart';
-import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
-import 'package:your_engineer/screen/profile/profile_user_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 

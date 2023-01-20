@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../controller/listProject_controller.dart';
-import '../controller/sub_service_screen_controller.dart';
-import '../model/project_by_subcat_model.dart';
-import '../model/project_model.dart';
-import '../screen/project/offer_screen.dart';
 import 'shared_widgets/card_decoration.dart';
 import 'shared_widgets/text_widget.dart';
 
@@ -35,17 +30,9 @@ class ListProjectWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {
-          myLog("ontap", "card");
-          myLog("ontap", "${results}");
           controller.goToOfferScreen(results);
-          // Navigator.of(context).push(MaterialPageRoute(
-
-          //     builder: (context) => OffersScreen(
-          //           index: index,
-          //           result: results,
-          //         )));
         },
-        height: size.height * .3,
+        height: size.height * .25,
         width: size.width * .8,
         child: SingleChildScrollView(
           child: Padding(

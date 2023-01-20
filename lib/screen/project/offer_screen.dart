@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:your_engineer/app_config/app_image.dart';
-import 'package:your_engineer/model/project_model.dart';
-import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/row_two_with_text.dart';
 
 import '../../app_config/app_config.dart';
 import '../../controller/offers_controller.dart';
-import '../../controller/sub_service_screen_controller.dart';
+import '../../controller/setting_controller.dart';
 import '../../debugger/my_debuger.dart';
 import '../../enum/all_enum.dart';
-import '../../model/offers_engineer_model.dart';
 import '../../utilits/helper.dart';
 import '../../widget/list_offers_engineer_widget.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
+import '../profile/profile_engineer_screen.dart';
 
 class OffersScreen extends StatefulWidget {
   const OffersScreen({
@@ -33,44 +31,18 @@ class _OffersScreenState extends State<OffersScreen> {
   OfferController controller = Get.put(OfferController());
   bool isLoading = false;
 
-  // List<OffersEngineerModel> listOffersEngineer = [
-  //   OffersEngineerModel(
-  //       nameEngineer: "nameEngineer",
-  //       engineerspecialist: "engineerspecialist",
-  //       offersDetails:
-  //           "Peace be upon you. I am Eng. Hassan al-Nakhal, a civil engineer. I work in the field of civil engineering, quantification, and preparation of extracts. The work will be delivered to you in a notebook. Limited, provided you have...",
-  //       offersDate: "2 hours",
-  //       imageEngineer: AppImage.img11,
-  //       engineerRating: 3.5),
-  //   OffersEngineerModel(
-  //       nameEngineer: "nameEngineer",
-  //       engineerspecialist: "engineerspecialist",
-  //       offersDetails:
-  //           "Peace, mercy, and blessings of God be upon you. Engineer Taha has five years of experience in the work of the technical office in the largest projects in the Arab Republic of Egypt, the last of which is the Monte Galala project, Ain Sokhna, attached to...",
-  //       offersDate: "3 hours",
-  //       imageEngineer: AppImage.img4,
-  //       engineerRating: 4.5),
-  //   OffersEngineerModel(
-  //       nameEngineer: "nameEngineer",
-  //       engineerspecialist: "engineerspecialist",
-  //       offersDetails:
-  //           "Peace, mercy, and blessings of God be upon you. Engineer Taha has five years of experience in the work of the technical office in the largest projects in the Arab Republic of Egypt, the last of which is the Monte Galala project, Ain Sokhna, attached to...",
-  //       offersDate: "4 hours",
-  //       imageEngineer: AppImage.img12,
-  //       engineerRating: 5),
-  // ];
-
   // initalControllers() {
   //   titleController.text = widget.projectModel.projTitle;
   //   descriptionController.text = widget.projectModel.projDescription;
   //   daysController.text = widget.projectModel.projTitle;
   // }
 
-  @override
-  RangeValues selectedRange = const RangeValues(25, 50);
+  // @override
+  // RangeValues selectedRange = const RangeValues(25, 50);
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+    SettingControoler controllerSetting = Get.put(SettingControoler());
 
     Size size = MediaQuery.of(context).size;
     // dynamic result = Get.arguments['results'];
@@ -79,33 +51,49 @@ class _OffersScreenState extends State<OffersScreen> {
         appBar: _getAppBar(context),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: size.height * .02),
-                TextWidget(
-                    title: controller.results['proj_title'],
-                    fontSize: size.height * .025,
-                    color: colorScheme.primary),
-                SizedBox(height: size.height * .02),
-                TextWidget(
-                    title: "${AppConfig.projectDetails} :",
-                    fontSize: size.height * .025,
-                    color: colorScheme.background),
-                SizedBox(height: size.height * .02),
-                TextWidget(
-                  title: controller.results['proj_description'],
-                  fontSize: size.height * .025,
-                  color: colorScheme.onSecondary,
-                  isTextStart: true,
-                ),
-                SizedBox(height: size.height * .01),
+                Card(
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Container(
+                    width: size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: size.height * .03),
+                        TextWidget(
+                            title: "${AppConfig.projectTitle.tr} :",
+                            fontSize: size.height * .025,
+                            color: colorScheme.background),
+                        TextWidget(
+                            title: controller.results['proj_title'],
+                            fontSize: size.height * .025,
+                            color: colorScheme.primary),
+                        SizedBox(height: size.height * .02),
+                        TextWidget(
+                            title: "${AppConfig.projectDetails.tr} :",
+                            fontSize: size.height * .025,
+                            color: colorScheme.background),
+                        SizedBox(height: size.height * .02),
+                        TextWidget(
+                          title: controller.results['proj_description'],
+                          fontSize: size.height * .025,
+                          color: colorScheme.primary,
+                          isTextStart: true,
+                        ),
+                        SizedBox(height: size.height * .031),
+                      ],
+                    ),
+                  ),
+                )),
 
+                SizedBox(height: size.height * .07),
                 const Divider(),
-                SizedBox(height: size.height * .03),
                 TextWidget(
-                  title: AppConfig.addOffer,
+                  title: AppConfig.addOffer.tr,
                   fontSize: size.height * .025,
                   color: colorScheme.onSecondary,
                   isTextStart: true,
@@ -124,37 +112,37 @@ class _OffersScreenState extends State<OffersScreen> {
                     SizedBox(width: size.width * .03),
                     buildTextFormFaild(
                       controller.priceController,
-                      AppConfig.price,
+                      AppConfig.price.tr,
                       false,
                       TextInputType.number,
                       const Icon(Icons.add),
                       colorScheme,
                       size.width * .7,
-                      size.height * .06,
+                      size.height * .1,
                     ),
+                    Spacer(),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      TextWidget(
+                        title: AppConfig.days.tr,
+                        fontSize: size.width * .05,
+                        color: colorScheme.primary,
+                        isTextStart: true,
+                      ),
+                      SizedBox(width: size.width * .03),
+                      buildTextFormFaild(
+                        controller.daysController,
+                        AppConfig.days.tr,
+                        false,
+                        TextInputType.number,
+                        const Icon(Icons.add),
+                        colorScheme,
+                        size.width * .7,
+                        size.height * .1,
+                      ),
+                    ]),
                   ],
                 ),
-                SizedBox(height: size.height * .03),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  TextWidget(
-                    title: AppConfig.days,
-                    fontSize: size.width * .05,
-                    color: colorScheme.primary,
-                    isTextStart: true,
-                  ),
-                  SizedBox(width: size.width * .03),
-                  buildTextFormFaild(
-                    controller.daysController,
-                    AppConfig.days,
-                    false,
-                    TextInputType.number,
-                    const Icon(Icons.add),
-                    colorScheme,
-                    size.width * .7,
-                    size.height * .06,
-                  ),
-                ]),
-                SizedBox(height: size.height * .03),
+                SizedBox(height: size.height * .02),
                 buildTextFormFaildDescription(
                   controller.descriptionController,
                   AppConfig.descreiption,
@@ -174,22 +162,10 @@ class _OffersScreenState extends State<OffersScreen> {
                       if (controller.daysController.text.isEmpty ||
                           controller.descriptionController.text.isEmpty ||
                           controller.priceController.text.isEmpty) {
-                        myLog("priceController.text",
-                            "${controller.priceController.text}");
-                        myLog("daysController.text",
-                            "${controller.daysController.text}");
-                        myLog("descriptionController.text",
-                            "${controller.descriptionController.text}");
                         Helper.showError(
                             context: context,
                             subtitle: AppConfig.allFaildRequired.tr);
                       } else {
-                        myLog("priceController.text",
-                            "${controller.priceController.text}");
-                        myLog("daysController.text",
-                            "${controller.daysController.text}");
-                        myLog("descriptionController.text",
-                            "${controller.descriptionController.text}");
                         setState(() => isLoading = true);
 
                         bool isAddProject = await controller.addOffer(
@@ -201,41 +177,48 @@ class _OffersScreenState extends State<OffersScreen> {
                           controller.clearController();
                           Helper.showseuess(
                               context: context,
-                              subtitle: "Succesfuly Added Projet");
+                              subtitle: AppConfig.addOfferSuccesfuly.tr);
                           controller
                               .getProjectsOffers(controller.results['id']);
-
-                          //userSignup sucssufuly
-                          // ignore: use_build_context_synchronously
-                          // Navigator.of(context).pushNamed(AppConfig.login);
                         } else {
                           Helper.showError(
-                              context: context, subtitle: "can not add projet");
+                              context: context,
+                              subtitle: AppConfig.cannotaddOffer.tr);
                         }
                       }
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 25, vertical: 15),
-                      child: isLoading
-                          ? CircularProgressIndicator(color: Colors.white)
-                          : TextWidget(
-                              title: AppConfig.addOffer,
-                              fontSize: 20,
-                              color: colorScheme.surface),
-                    ),
+                    child: isLoading
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 15),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.white)),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 15),
+                            child: TextWidget(
+                                title: AppConfig.addOffer,
+                                fontSize: 20,
+                                color: colorScheme.surface),
+                          ),
                   ),
                 ),
                 SizedBox(height: size.height * .02),
 
-                const Divider(),
-                TextWidget(
-                  title: AppConfig.allOffer,
-                  fontSize: size.height * .025,
-                  color: colorScheme.onSecondary,
-                  isTextStart: true,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: const Divider(),
                 ),
 
+                RowWithTwoText(
+                  title: AppConfig.allOffer.tr,
+                  description: AppConfig.seeAll.tr,
+                  colorScheme: colorScheme.onSecondary,
+                  colorScheme2: colorScheme.primary,
+                  onTap: () {},
+                ),
                 Obx(() {
                   if (controller.loadingState.value == LoadingState.initial ||
                       controller.loadingState.value == LoadingState.loading) {
@@ -249,8 +232,6 @@ class _OffersScreenState extends State<OffersScreen> {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("noooo"),
-                        // Text("${controller.message}"),
                         ReyTryErrorWidget(
                             title: controller.loadingState.value ==
                                     LoadingState.noDataFound
@@ -269,10 +250,16 @@ class _OffersScreenState extends State<OffersScreen> {
                       separatorBuilder: (context, index) =>
                           SizedBox(height: size.height * .02),
                       itemCount: controller.resulte.length,
-                      itemBuilder: (context, index) => ListOffersEngineerWidget(
-                        colorScheme: colorScheme,
-                        size: size,
-                        resulte: controller.resulte[index],
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ProfileEngineerScreen()));
+                        },
+                        child: ListOffersEngineerWidget(
+                          colorScheme: colorScheme,
+                          size: size,
+                          resulte: controller.resulte[index],
+                        ),
                       ),
                     );
                   }
@@ -281,33 +268,7 @@ class _OffersScreenState extends State<OffersScreen> {
               ],
             ),
           ),
-        )
-
-        //////////////////////////////////////////////////////
-        /*  
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 25,
-        ),
-        child: ElevatedButton(
-          onPressed: () {
-            //in this method will
-            //send Project to Server
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            child: TextWidget(
-                title: widget.isMyProject
-                    ? AppConfig.editMyProject
-                    : AppConfig.submitYourProject,
-                fontSize: 20,
-                color: colorScheme.surface),
-          ),
-        ),
-      ),
-   */
-        );
+        ));
   }
 
   buildRowList(context, String title, ColorScheme colorScheme, IconData icon) {
@@ -335,10 +296,10 @@ class _OffersScreenState extends State<OffersScreen> {
 
   _getAppBar(BuildContext context) {
     return AppBar(
-      title: const Padding(
+      title: Padding(
         padding: EdgeInsets.only(top: 10),
         child: TextWidget(
-            title: AppConfig.offerScreen, fontSize: 18, color: Colors.white),
+            title: AppConfig.offerScreen.tr, fontSize: 18, color: Colors.white),
       ),
       leading: IconButton(
         onPressed: () {
@@ -361,7 +322,7 @@ class _OffersScreenState extends State<OffersScreen> {
     double height,
   ) {
     return SizedBox(
-      width: width,
+      width: MediaQuery.of(context).size.width * .3,
       height: height,
       child: Theme(
         data: ThemeData(
@@ -384,7 +345,7 @@ class _OffersScreenState extends State<OffersScreen> {
           keyboardType: inputType,
           scribbleEnabled: true,
           decoration: InputDecoration(hintText: label),
-          maxLength: 30,
+          maxLength: null,
         ),
       ),
     );

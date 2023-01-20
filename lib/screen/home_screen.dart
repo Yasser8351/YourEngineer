@@ -164,13 +164,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("${populerServicesController.message}"),
                         ReyTryErrorWidget(
-                            title: populerServicesController
-                                        .loadingState.value ==
-                                    LoadingState.noDataFound
-                                ? AppConfig.noData.tr
-                                : populerServicesController.apiResponse.message,
+                            title:
+                                populerServicesController.loadingState.value ==
+                                        LoadingState.noDataFound
+                                    ? AppConfig.noData.tr
+                                    : populerServicesController.message,
                             onTap: () {
                               populerServicesController.getCategorys();
                             })
@@ -236,9 +235,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("${topEngineerController.message}"),
                           ReyTryErrorWidget(
-                              title: topEngineerController.apiResponse.message,
+                              title: topEngineerController.message,
                               onTap: () {
                                 topEngineerController.getTopEngineer();
                               })
