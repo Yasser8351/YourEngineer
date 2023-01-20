@@ -152,6 +152,10 @@ class _OffersScreenState extends State<OffersScreen> {
                   colorScheme,
                 ),
                 SizedBox(height: size.height * .02),
+                // int.parse(controller.results["UserOfferCount"]) > 0 ||
+                //         int.parse(controller.results["IsProjectOwner"]) > 0
+                //     ? SizedBox()
+                //     :
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 10,

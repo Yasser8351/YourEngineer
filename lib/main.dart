@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/binding/binding_app.dart';
 import 'package:your_engineer/controller/app_language_controller.dart';
-import 'package:your_engineer/model/project_model.dart';
-import 'package:your_engineer/model/top_engineer_rating_model.dart';
 import 'package:your_engineer/screen/all_settings/faq_screen.dart';
 import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/screen/profile/add_protofilo.dart';
@@ -14,14 +12,11 @@ import 'package:your_engineer/screen/forgot_password_screen.dart';
 import 'package:your_engineer/screen/language_screen.dart';
 import 'package:your_engineer/screen/notifcation_screen.dart';
 import 'package:your_engineer/screen/profile/pay_with_visa.dart';
-import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
-import 'package:your_engineer/screen/profile/profile_user_screen.dart';
 import 'package:your_engineer/screen/splash_screen.dart';
 import 'package:your_engineer/utilits/localization/app_localization.dart';
 
 import 'screen/chat/chat_room_screen.dart';
 import 'screen/project/edit_my_project_screen.dart';
-import 'screen/project/offer_screen.dart';
 import 'screen/services/services_detail_screen.dart';
 import 'screen/services/sub_services_screen.dart';
 import 'screen/sign_up_screen.dart';
@@ -63,7 +58,8 @@ class MyApp extends StatelessWidget {
       ),
       locale: contoller.local ?? Get.deviceLocale,
       translations: AppLocalization(),
-      home: const SplashScreen(),
+      home: const LoginScreen(),
+      // home: const SplashScreen(),
       initialBinding: BinindingApp(),
       initialRoute: '/',
       getPages: [
@@ -124,7 +120,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: AppRouting.chatRoom,
-          page: () => const ChatRoomScreen(),
+          page: () => const ChatRoomScreen(), //receiverName: ''
         ),
         GetPage(
           name: AppRouting.language,

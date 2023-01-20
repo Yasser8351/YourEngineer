@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
 
 import 'package:your_engineer/widget/shared_widgets/text_faild_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
+
+import '../api/user_auth.dart';
+import '../utilits/helper.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -14,6 +18,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _emailController = TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -32,7 +37,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               //const SizedBox(height: 250),
               TextFaildWidget(
                   controller: _emailController,
-                  label: AppConfig.emal,
+                  label: AppConfig.emal.tr,
                   obscure: false,
                   icon: IconButton(
                     onPressed: () {},
@@ -41,17 +46,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   inputType: TextInputType.emailAddress),
               SizedBox(height: size.height * .09),
 
-              ButtonWidget(
-                  title: AppConfig.send,
-                  color: colorScheme.primary,
-                  onTap: () => null),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextWidget(
-                    title: AppConfig.forgetPassword,
-                    fontSize: 15,
-                    color: colorScheme.primary),
-              ),
+              isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ButtonWidget(
+                      title: AppConfig.send.tr,
+                      color: colorScheme.primary,
+                      onTap: () async {
+                        if (_emailController.text.isEmpty) {
+                          Helper.showError(
+                              context: context,
+                              subtitle: AppConfig.allFaildRequired.tr);
+                          return;
+                        }
+
+                        setState(() => isLoading = true);
+                        UserAuth userAuth = UserAuth();
+                        bool isSignup = await userAuth.resetPassword(
+                          context,
+                          _emailController.text,
+                        );
+                        setState(() => isLoading = false);
+                      }),
             ],
           ),
         ),
@@ -61,9 +76,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   _getAppBar() {
     return AppBar(
-      title: const TextWidget(
-          title: AppConfig.forgetPassword, fontSize: 25, color: Colors.white),
-      leading: const Icon(Icons.navigate_before),
+      title: TextWidget(
+          title: AppConfig.resetPassword.tr, fontSize: 25, color: Colors.white),
+      leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icon(Icons.navigate_before, color: Colors.white, size: 40)),
     );
   }
 }

@@ -1,8 +1,6 @@
 class ApiUrl {
-  // late String id;
   static const String _root =
       'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1';
-  // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/';
   static String get signup => '$_root/auth/signup';
   static String get signin => '$_root/auth/signin';
   static String get geCategory => '$_root/category';
@@ -16,6 +14,7 @@ class ApiUrl {
   static String get getRoles => '$_root/auth/roles';
   static String get getFaq => '$_root/questions';
   static String get getUsersShow => '$_root/users/show';
+  static String get resetPassword => '$_root/reset';
   static String get getUsersById =>
       '$_root/users/show/3e9a7698-1ce8-4242-a13f-524cf5cff76f';
   static String get getOwnerProject => '$_root/project/owner';

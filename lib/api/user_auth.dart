@@ -216,6 +216,68 @@ class UserAuth {
     }
     return status;
   }
+
+  Future<bool> resetPassword(BuildContext context, String email) async {
+    myLog('start methode', 'resetPasseord');
+
+    // var token = _shared.getToken();
+
+    final data = {
+      ApiParameters.email: email,
+    };
+
+    final headers = {
+      "Content-Type": "application/json",
+      "Accept": "*/*",
+    };
+
+    try {
+      var response = await Dio()
+          .post(
+            ApiUrl.resetPassword,
+            data: data,
+            options: Options(
+              headers: headers,
+            ),
+          )
+          .timeout(const Duration(seconds: 20));
+
+      myLog(
+        'statusCode : ${response.statusCode} \n',
+        'response : ${response.data}',
+      );
+
+      if (response.statusCode == 200) {
+        status = true;
+        Helper.showseuess(
+            context: context, subtitle: response.data['msg'].toString());
+
+        setValueResponse(true);
+      } else {
+        status = false;
+        Helper.showError(
+            context: context, subtitle: response.data['msg'].toString());
+
+        setValueResponse(false);
+      }
+    } catch (error) {
+      status = false;
+
+      setValueResponse(false);
+
+      myLog('error', error);
+
+      if (error.toString().contains('TimeoutException')) {
+        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else if (error.toString().contains('Http status error [404]')) {
+        Helper.showError(
+            context: context, subtitle: "الايميل غير موجود او غير مسجل");
+      } else {
+        Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
+      }
+    }
+    return status;
+  }
 }
 
 setValueResponse(bool status) {

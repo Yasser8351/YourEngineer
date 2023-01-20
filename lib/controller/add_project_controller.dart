@@ -267,6 +267,7 @@ class AddProjectController extends GetxController {
       'price_range_id': selectedPriceRange,
       'proj_period': daysController.text,
       'ProjectAttach': '',
+    
       'skills': skillsController.text,
     };
     //

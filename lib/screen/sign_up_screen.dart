@@ -10,7 +10,6 @@ import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/model/roles_model.dart';
 import 'package:your_engineer/model/user_model.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
-import 'package:your_engineer/widget/shared_widgets/radio_button_widget.dart';
 
 import 'package:your_engineer/widget/shared_widgets/text_faild_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
@@ -336,7 +335,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               bool isSignup = await userAuth.userSignup(
                                 context,
                                 userModel,
-                                _phoneController.text,
+                                _passwordController.text,
                                 selectedval,
                               );
                               myLog('isSignup', isSignup);
@@ -345,7 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               if (isSignup) {
                                 Navigator.of(context)
                                     .pushNamed(AppConfig.login);
-                                Helper.showError(
+                                Helper.showseuess(
                                     context: context,
                                     subtitle: "تم انشاء حسابك بنجاح");
                                 //userSignup sucssufuly

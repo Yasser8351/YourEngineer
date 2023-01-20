@@ -12,6 +12,7 @@ class AppConfig {
   static const String comfirmPassword = "comfirm password";
 
   static const String cannotaddOffer = "cannotaddOffer";
+  static const String resetPassword = "resetPassword";
   static const String signUp = "Sign Up";
   static const String noNet = "no enter connection";
   static const String forgetPassword = "forget password?";

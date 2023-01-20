@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/app_config/app_image.dart';
+import 'package:your_engineer/screen/forgot_password_screen.dart';
 import 'package:your_engineer/screen/tab_screen.dart';
 import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
@@ -135,20 +135,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               myLog('isSignup', isSignup);
                               if (isSignup) {
                                 Get.off(() => TabScreen());
-
-                                /// userSignup sucssufuly
-
-                                // ignore: use_build_context_synchronously
-                                // Navigator.of(context).pushReplacement(
-                                //     MaterialPageRoute(
-                                //         builder: ((context) =>
-                                //             const TabScreen())));
-
-                              } else {
-                                /// userSignup faild try again later
-                                // Get.defaultDialog(
-                                //     title: "Warning",
-                                //     content: const Text('Yor Not Exist'));
                               }
                             },
                           ),
@@ -156,8 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: InkWell(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(AppConfig.forgetPassword),
+                        onTap: () => Get.to(() => ForgotPasswordScreen()),
                         child: TextWidget(
                             title: AppConfig.forgetPassword.tr,
                             fontSize: 15,

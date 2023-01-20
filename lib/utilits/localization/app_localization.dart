@@ -82,6 +82,7 @@ class AppLocalization implements Translations {
           AppConfig.addOfferSuccesfuly: "تم اضافة عرضك",
           AppConfig.projectTitle: "عنوان المشروع",
           AppConfig.skills: "المهارات",
+          AppConfig.resetPassword: "استعادة كلمة المرور",
           AppConfig.allFaildRequired: "جميع الحقول مطلوبة"
         },
         "en": {
@@ -160,6 +161,7 @@ class AppLocalization implements Translations {
           AppConfig.addOfferSuccesfuly: "add offer Succesfuly",
           AppConfig.noProjectsFound: "No projects found",
           AppConfig.withKeySearch: "with this key",
+          AppConfig.resetPassword: "Reset Password",
           AppConfig.projectTitle: "Project title"
         },
       };
