@@ -5,6 +5,7 @@ class AppConfig {
   static const String emal = "email";
   static const String phone = "phone";
   static const String password = "password";
+  // static const String password = "password";
   static const String comfirmPassword = "comfirm password";
 
   static const String signUp = "Sign Up";
@@ -83,6 +84,8 @@ class AppConfig {
   static const String budget = "Budget";
   static const String yourBudget = "what's your budgets?";
   static const String dateProject = "Date of Project";
+  static const String noProjectsFound = "noProjectsFound";
+  static const String withKeySearch = "withKeySearch";
   static const String projectDelivered =
       "when would you like your project delivered?";
   static const String text1 =

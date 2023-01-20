@@ -1,21 +1,15 @@
 import 'dart:async';
-import 'dart:convert';
 // import 'dart:html';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:get/get.dart';
-import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 import 'package:your_engineer/utilits/helper.dart';
-import '../api/api_parameters.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
 import '../enum/all_enum.dart';
-import 'package:http/http.dart' as http;
 
 class ProjectControllerHome extends GetxController {
   ApiResponse apiResponse = ApiResponse();
@@ -64,8 +58,7 @@ class ProjectControllerHome extends GetxController {
 
       // var projectModel = projectModelFromJson(jsonEncode(response.data));
       // _listprojects = projectModel.results;
-      myLog("response.statusCode methode", "${response.statusCode}");
-      myLog("response.Data methode", "${response.data}");
+      myLog("response  getProjects", "${response.data}");
 
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;
@@ -73,13 +66,10 @@ class ProjectControllerHome extends GetxController {
         totalPages = map["totalPages"];
         totalItems = map["totalItems"];
         currentPage = map["currentPage"];
-        // ProjectModel projectModel =
-        //     projectModelFromJson(jsonDecode(response.data));
-        // _listprojects = projectModel.results;
-        // if (_listprojects == null) {
-        //   loadingState(LoadingState.noDataFound);
-        // } else {
         loadingState(LoadingState.loaded);
+        if (results.isEmpty) {
+          loadingState(LoadingState.noDataFound);
+        }
 
         // setApiResponseValue('get Data Cars Sucsessfuly', true,
         //     _listprojects, LoadingState.loaded.obs);

@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/controller/project_home_controller.dart';
 import 'package:your_engineer/controller/top_engineer_controller.dart';
-import 'package:your_engineer/model/project_model.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
@@ -105,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return ReyTryErrorWidget(
                       title: projectController.loadingState.value ==
                               LoadingState.noDataFound
-                          ? AppConfig.noData.tr
+                          ? AppConfig.noProjectsFound.tr
                           : projectController.apiResponse.message,
                       onTap: () {
                         projectController.getProjects();

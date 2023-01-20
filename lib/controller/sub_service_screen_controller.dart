@@ -12,22 +12,11 @@ import '../sharedpref/user_share_pref.dart';
 // import 'package:http/http.dart' as http;
 
 class SubServiceScreenController extends GetxController {
-  late String id;
-  late String title;
-  late String scatidvvv;
+  String id = '';
+  String title = '';
+  String scatidvvv = '';
   int selectedscat = 0;
   var results = [];
-
-  @override
-  void onInit() {
-    id = Get.arguments['id'];
-    title = Get.arguments['title'];
-    getSubCatigory(id);
-    myLog("start methode  ''''''''''''''''''''''''''", "${scatidvvv}");
-    String scatid = scatidvvv;
-    getProjectBySubCatigory(scatid);
-    super.onInit();
-  }
 
   ApiResponse apiResponse = ApiResponse();
 
@@ -46,8 +35,19 @@ class SubServiceScreenController extends GetxController {
     // isLoadingProject = true;
     selectedscat = listSubServices[selectedscat].id! as int;
     await getProjectBySubCatigory(listSubServices[selectedscat].id!);
-    myLog('iiiiiiiiidddddddddddddd', '${listSubServices[selectedscat].id!}');
     update();
+  }
+
+  @override
+  void onInit() {
+    id = Get.arguments['id'];
+    title = Get.arguments['title'];
+    getSubCatigory(id);
+    myLog("start methode  ''''''''''''''''''''''''''", "${scatidvvv}");
+    String scatid = scatidvvv;
+    getProjectBySubCatigory(scatid);
+    update();
+    super.onInit();
   }
 
   Future<ApiResponse> getSubCatigory(String id) async {
@@ -60,8 +60,6 @@ class SubServiceScreenController extends GetxController {
       var token = await _pref.getToken();
 
       myLog("start methode", "getCategorys");
-      // myLog("toook================= : $token", '');
-      loadingState = LoadingState.loading.obs;
       var response = await Dio()
           .get(
             "${ApiUrl.getSubCatigory}${id}",
@@ -70,13 +68,11 @@ class SubServiceScreenController extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-      // var response = await http.get(
-      //   Uri.parse(ApiUrl.geCategory),
-      //   headers: ApiUrl.getHeader(token: token),
-      // );
 
-      myLog("statusCode=================${response.statusCode}", '');
-      myLog("statusCode=================${response.data}", '');
+      myLog("statusCode${response.statusCode}", '');
+      myLog("statusCode${response.data}", '');
+
+      loadingState(LoadingState.loaded);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         _listSubServices = subCatigoryFromJson(jsonEncode(response.data));
@@ -136,8 +132,7 @@ class SubServiceScreenController extends GetxController {
       var token = await _pref.getToken();
 
       myLog("start methode", "getProjectBySubCatigory");
-      // myLog("toook================= : $token", '');
-      // loadingState = LoadingState.loading.obs;
+
       var response = await Dio()
           .get(
             "${ApiUrl.getProjectBySubCatigory}${id}",
@@ -148,42 +143,21 @@ class SubServiceScreenController extends GetxController {
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
       myLog("statusCode=================${response.statusCode}", '');
-      // myLog("statusCode=================${response.data}", '');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Map<String, dynamic> data =
-        //     new Map<String, dynamic>.from(jsonEncode(response.data.toString()));
-
-        // Map<String, dynamic> map = json.decode(response.data);
-        // List<dynamic> data = map["results"];
-        // log(data.toString());
-
         results = response.data['results'];
         int totalItems = response.data['totalItems'];
         int totalPages = response.data['totalPages'];
         int currentPage = response.data['currentPage'];
         isLoadingProject = false;
-        // projectBySubCatModel = ProjectBySubCatModel(
-        //     currentPage: currentPage,
-        //     totalItems: totalItems,
-        //     totalPages: totalPages,
-        //     results: results);
+        loadingState(LoadingState.loaded);
 
-        myLog(results, totalItems);
-        myLog(currentPage, totalPages);
-        myLog("isLoadingProjectpppppppp", isLoadingProject);
-        // _listProjectSubServices =
-        //     projectBySubCatModelFromJson(jsonDecode(response.data)).results!;
-        //         as List<ProjectBySubCatModel>;
-        // as List<ProjectBySubCatModel>;
-        // myLog("start methode  _listSubServices", "${_listSubServices}");
+        myLog("isLoadingProject", isLoadingProject);
 
-        if (_listSubServices.isEmpty) {
-          // loadingState(LoadingState.noDataFound);
+        if (results.isEmpty) {
+          loadingState(LoadingState.noDataFound);
           message = 'Empty';
         } else {
-          // loadingState(LoadingState.loaded);
-
           // setApiResponseValue('get Data Cars Sucsessfuly', true,
           //     _listPopulerServices, LoadingState.loaded.obs);
         }

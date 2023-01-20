@@ -8,6 +8,8 @@ class AppLocalization implements Translations {
         "ar": {
           AppConfig.appName: "Architect",
           AppConfig.engineer: "مهندس",
+          AppConfig.noProjectsFound: "لاتوجد مشاريع",
+          AppConfig.withKeySearch: "تطابق نتائج البحث",
           AppConfig.projectOwner: "صاحب مشروع",
           AppConfig.emal: "الايميل",
           AppConfig.phone: "رقم الهاتف",
@@ -147,6 +149,8 @@ class AppLocalization implements Translations {
           AppConfig.topEngineerRating: AppConfig.topEngineerRating,
           AppConfig.populerServices: AppConfig.populerServices,
           AppConfig.allFaildRequired: AppConfig.allFaildRequired,
+          AppConfig.noProjectsFound: "No projects found",
+          AppConfig.withKeySearch: "with this key",
         },
       };
 }
