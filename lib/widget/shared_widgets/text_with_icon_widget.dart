@@ -21,7 +21,7 @@ class TextWithIconWidget extends StatelessWidget {
           color: Theme.of(context).colorScheme.onSecondary,
         ),
         Badge(
-          value: '1',
+          value: '',
           color: Colors.green,
           child: IconButton(
             onPressed: onTapNotifications,

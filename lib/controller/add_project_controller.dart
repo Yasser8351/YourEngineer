@@ -263,11 +263,10 @@ class AddProjectController extends GetxController {
       // 'user_added_id': '9a49a238-218f-4eb3-8407-1db07ac7dc37',
       'proj_title': titleController.text,
       'proj_description': descriptionController.text,
-      'category_id': selectedCat,
+      'category_id': selectedSubCat,
       'price_range_id': selectedPriceRange,
       'proj_period': daysController.text,
       'ProjectAttach': '',
-    
       'skills': skillsController.text,
     };
     //

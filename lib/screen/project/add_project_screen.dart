@@ -3,24 +3,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:your_engineer/model/project_model.dart';
+import 'package:your_engineer/screen/tab_screen.dart';
 
 import '../../app_config/app_config.dart';
 import '../../controller/add_project_controller.dart';
-import '../../controller/project_home_controller.dart';
 import '../../debugger/my_debuger.dart';
 import '../../enum/all_enum.dart';
 import '../../utilits/helper.dart';
-import '../../widget/shared_widgets/reytry_error_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class AddProjectScreen extends StatefulWidget {
-  const AddProjectScreen(
-      {Key? key,
-      //  required this.projectModel,
-      this.isMyProject = false})
+  const AddProjectScreen({Key? key, this.isMyProject = false})
       : super(key: key);
-  // final ProjectModel projectModel;
   final bool isMyProject;
 
   @override
@@ -32,14 +26,13 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
       Get.put(AddProjectController());
   bool isLoading = false;
   bool isLoadingSubCategory = false;
-
+  XFile? xfile;
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     // File? projectImage;
 
     Size size = MediaQuery.of(context).size;
-    XFile? xfile;
 
     return Scaffold(
       appBar: _getAppBar(context, widget.isMyProject),
@@ -48,22 +41,6 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             addProjectController.loadingState.value == LoadingState.loading) {
           return Center(
             child: CircularProgressIndicator(),
-          );
-        } else if (addProjectController.loadingState.value ==
-            LoadingState.noDataFound) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("${addProjectController.message}"),
-              ReyTryErrorWidget(
-                  title: addProjectController.loadingState.value ==
-                          LoadingState.noDataFound
-                      ? AppConfig.noData.tr
-                      : addProjectController.apiResponse.message,
-                  onTap: () {
-                    addProjectController.onInit();
-                  })
-            ],
           );
         } else {
           return SingleChildScrollView(
@@ -213,32 +190,37 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                 ),
                 const SizedBox(height: 25),
                 TextWidget(
-                  title: AppConfig.yourBudget,
+                  title: AppConfig.yourBudget.tr,
                   fontSize: 16,
                   color: colorScheme.secondary,
                   isTextStart: true,
                 ),
-                buildRowList(context, AppConfig.budget, colorScheme,
-                    Icons.attach_money_outlined),
-                Container(
-                  width: 300,
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: DropdownButton(
-                    items: addProjectController.listPriceRange
-                        .map((e) => DropdownMenuItem(
-                              child: Text(e.rangeName!),
-                              value: e.id,
-                            ))
-                        .toList(),
-                    onChanged: (val) {
-                      setState(() {
-                        myLog('val', val);
-                        addProjectController.selectedPriceRange =
-                            val.toString();
-                      });
-                    },
-                    value: addProjectController.selectedPriceRange,
-                  ),
+                Row(
+                  children: [
+                    buildRowList(context, AppConfig.budget, colorScheme,
+                        Icons.attach_money_outlined),
+                    Container(
+                      width: 200,
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: DropdownButton(
+                        hint: Text("your budget"),
+                        items: addProjectController.listPriceRange
+                            .map((e) => DropdownMenuItem(
+                                  child: Text(e.rangeName!),
+                                  value: e.id,
+                                ))
+                            .toList(),
+                        onChanged: (val) {
+                          setState(() {
+                            myLog('val', val);
+                            addProjectController.selectedPriceRange =
+                                val.toString();
+                          });
+                        },
+                        value: addProjectController.selectedPriceRange,
+                      ),
+                    ),
+                  ],
                 ),
 
                 buildTextFormFaild(
@@ -249,7 +231,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   const Icon(Icons.add),
                   colorScheme,
                   300,
-                  5,
+                  1,
                 ),
               ],
             ),
@@ -270,11 +252,6 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                 addProjectController.titleController.text.isEmpty ||
                 addProjectController.selectedCat == null ||
                 addProjectController.selectedPriceRange == null) {
-              myLog("selectedCat.text", "${addProjectController.selectedCat}");
-              myLog("selectedPriceRange.text",
-                  "${addProjectController.selectedPriceRange}");
-              myLog("titleController.text",
-                  "${addProjectController.titleController.text}");
               Helper.showError(
                   context: context, subtitle: AppConfig.allFaildRequired.tr);
               return;
@@ -284,17 +261,15 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             bool isAddProject = await addProjectController.addProject(
               context,
             );
-            myLog('isAddProject', isAddProject);
             setState(() => isLoading = false);
 
             if (isAddProject) {
               addProjectController.clearController();
-              Helper.showError(
+              Helper.showseuess(
                   context: context, subtitle: "Succesfuly Added Projet");
 
-              //userSignup sucssufuly
-              // ignore: use_build_context_synchronously
-              // Navigator.of(context).pushNamed(AppConfig.login);
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => TabScreen()));
             } else {
               Helper.showError(
                   context: context, subtitle: "can not add projet");

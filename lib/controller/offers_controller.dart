@@ -125,12 +125,8 @@ class OfferController extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-      // myLog("response.statusCode methode", "${response.data['results']}");
 
-      // var projectModel = projectModelFromJson(jsonEncode(response.data));
-      // _listprojects = projectModel.results;
-      myLog("response.statusCode methode", "${response.statusCode}");
-      myLog("response.Data methode", "${response.data}");
+      myLog("response", "${response.data}");
 
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;
@@ -202,14 +198,11 @@ class OfferController extends GetxController {
       myLog("response.Data methode", "${response.data}");
 
       if (response.statusCode == 200) {
-        loadingProject(LoadingState.loaded);
-
         Map<String, dynamic> map = response.data;
 
         isProjectOwner = map['IsProjectOwner'];
         userOfferCount = map["UserOfferCount"];
-
-        loadingState(LoadingState.loaded);
+        loadingProject(LoadingState.loaded);
       } else if (response.statusCode == 401) {
         loadingProject(LoadingState.error);
       } else {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/controller/project_home_controller.dart';
@@ -7,7 +9,6 @@ import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
-import 'package:your_engineer/widget/shared_widgets/search_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/shimmer_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
@@ -49,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
+    log("message");
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () {
@@ -71,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20),
 
                 // SearchWidget
-                SearchWidget(onTap: () {}),
+                // SearchWidget(onTap: () {}),
 
                 // Space
                 const SizedBox(height: 35),

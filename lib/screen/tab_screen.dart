@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/screen/project_screen.dart';
-import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
 import '../app_config/app_config.dart';
 import 'all_settings/settings_screen.dart';

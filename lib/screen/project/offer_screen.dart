@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/widget/shared_widgets/no_data.dart';
@@ -44,10 +42,10 @@ class _OffersScreenState extends State<OffersScreen> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    int userOfferCount = controller.userOfferCount;
-    int isProjectOwner = controller.isProjectOwner;
-    log(userOfferCount.toString());
-    log(isProjectOwner.toString());
+    // int userOfferCount = controller.userOfferCount;
+    // int isProjectOwner = controller.isProjectOwner;
+    // log(userOfferCount.toString());
+    // log(isProjectOwner.toString());
 
     Size size = MediaQuery.of(context).size;
     // dynamic result = Get.arguments['results'];
@@ -98,14 +96,7 @@ class _OffersScreenState extends State<OffersScreen> {
                 SizedBox(height: size.height * .07),
                 const Divider(),
 
-                // if (userOfferCount > 0 || isProjectOwner == 1)
-                //     return SizedBox();
-                //     }
-
                 Builder(builder: (context) {
-                  if (userOfferCount > 0 || isProjectOwner == 1) {
-                    return SizedBox();
-                  }
                   return Obx(
                     () {
                       if (controller.loadingProject.value ==
@@ -113,8 +104,12 @@ class _OffersScreenState extends State<OffersScreen> {
                           controller.loadingProject.value ==
                               LoadingState.loading)
                         return Center(child: CircularProgressIndicator());
-                      else
+                      else if (controller.userOfferCount > 0 ||
+                          controller.isProjectOwner == 1) {
+                        return SizedBox();
+                      } else
                         return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextWidget(
                               title: AppConfig.addOffer.tr,
