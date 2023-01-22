@@ -28,11 +28,9 @@ class ProfileUserController extends GetxController {
   onInit() {
     super.onInit();
     initializeDateFormatting();
-
-    getUsersShow();
   }
 
-  Future<ApiResponse> getUsersShow([bool showEngeneerById = true]) async {
+  Future<ApiResponse> getUsersShow(String engeneerId) async {
     loadingState(LoadingState.loading);
     // isloding = true;
     // update();
@@ -41,8 +39,10 @@ class ProfileUserController extends GetxController {
       myLog("strtmethod", "getUsersShow");
       var response = await Dio()
           .post(
-            ApiUrl.getUsersById,
-            // showEngeneerById ? ApiUrl.getUsersById : ApiUrl.getUsersShow,
+            // ApiUrl.getUsersById,
+            engeneerId.isEmpty
+                ? ApiUrl.getUsersShow
+                : ApiUrl.getUsersById(engeneerId),
             options: Options(
               headers: ApiUrl.getHeader(token: token),
             ),

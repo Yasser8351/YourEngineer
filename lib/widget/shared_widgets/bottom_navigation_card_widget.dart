@@ -147,7 +147,8 @@ buildBusinessFair(ColorScheme colorScheme, Size size,
 
             buildRowReviews(
                 "${userProfileModel.userportfolio![index]!.title}",
-                "${DateFormat('yyyy MM dd').format((userProfileModel.userportfolio![index]!.createdAt!))}",
+                userProfileModel.userportfolio![index]!.createdAt!,
+                // "${DateFormat('yyyy MM dd').format(userProfileModel.userportfolio![index]!.createdAt!))}",
                 colorScheme),
             // DateTime.now.,
             const SizedBox(height: 10),

@@ -15,8 +15,10 @@ class ApiUrl {
   static String get getFaq => '$_root/questions';
   static String get getUsersShow => '$_root/users/show';
   static String get resetPassword => '$_root/reset';
-  static String get getUsersById =>
-      '$_root/users/show/3e9a7698-1ce8-4242-a13f-524cf5cff76f';
+  static String getUsersById(String id) {
+    return '$_root/users/show/$id';
+  }
+
   static String get getOwnerProject => '$_root/project/owner';
   static String get getPricerange => '$_root/pricerange';
   static String get getSubCatigory => '$_root/category/subcat/';

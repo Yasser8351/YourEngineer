@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../model/top_engineer_rating_model.dart';
 import '../screen/profile/profile_engineer_screen.dart';
 import '../screen/profile/profile_user_screen.dart';
 
@@ -24,7 +23,7 @@ class SettingControoler extends GetxController {
 
   onProfileTap() {
     if (status == 'ENGINEER') {
-      Get.to(() => ProfileEngineerScreen());
+      Get.to(() => ProfileEngineerScreen(engeneerId: ''));
       return;
     }
     if (status == 'OWNER') {
@@ -32,13 +31,8 @@ class SettingControoler extends GetxController {
       return;
     }
     if (status == '') {
-      Get.to(() => ProfileEngineerScreen());
+      Get.to(() => ProfileEngineerScreen(engeneerId: ''));
       return;
     }
-  }
-
-  goToEngineerProfile(List<Result> results) {
-    Get.to(() => ProfileEngineerScreen());
-    return;
   }
 }

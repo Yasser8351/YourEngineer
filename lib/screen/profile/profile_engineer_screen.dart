@@ -15,9 +15,13 @@ import 'add_pro_skills_screen.dart';
 
 class ProfileEngineerScreen extends StatefulWidget {
   const ProfileEngineerScreen(
-      {Key? key, this.showEngeneerById = false, this.hidePersonalInfo = false})
+      {Key? key,
+      this.showEngeneerById = false,
+      this.hidePersonalInfo = false,
+      required this.engeneerId})
       : super(key: key);
   // final TopEngineerRatingModel engineerModel;
+  final String engeneerId;
   final bool showEngeneerById;
   final bool hidePersonalInfo;
 
@@ -27,6 +31,18 @@ class ProfileEngineerScreen extends StatefulWidget {
 
 class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
   ProfileUserController controller = Get.put(ProfileUserController());
+
+  @override
+  void initState() {
+    getUsersShow();
+    super.initState();
+  }
+
+  getUsersShow() async {
+    controller
+        .getUsersShow(widget.engeneerId)
+        .then((value) => setState((() {})));
+  }
 
   var profileList = [
     ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
@@ -44,7 +60,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log(widget.hidePersonalInfo.toString());
+    log(widget.engeneerId.toString());
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -68,7 +84,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                         ? AppConfig.noData.tr
                         : controller.message,
                     onTap: () {
-                      controller.getUsersShow();
+                      controller.getUsersShow(widget.engeneerId);
                     })
               ],
             );
@@ -92,7 +108,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                   ),
                   CardProfilePersonalInfo(
                     userProfileModel: controller.userProfile,
-                    isMyProfile: true,
+                    isMyProfile: widget.engeneerId.isEmpty ? true : false,
                     hidePersonalInfo: widget.hidePersonalInfo,
                     size: size,
                     colorScheme: colorScheme,

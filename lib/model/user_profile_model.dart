@@ -46,8 +46,11 @@ class UserProfileModel {
         imgpath: json["imgpath"] ?? '',
         review_avg: json["review_avg"].toString(),
         isActive: json["is_active"] ?? false,
-        userprofiles: Userprofiles.fromJson(json["userprofiles"]),
-        usercredentials: Usercredentials.fromJson(json["usercredentials"]),
+        userprofiles: json["userprofiles"] == null
+            ? Userprofiles(aboutUser: '', specialization: '')
+            : Userprofiles.fromJson(json["userprofiles"]),
+        usercredentials:
+            Usercredentials.fromJson(json["usercredentials"] ?? []),
         userskills: List<Userskill?>.from(
             json["userskills"].map((x) => Userskill.fromJson(x))),
         userportfolio: json["userportfolio"] == null
@@ -108,14 +111,14 @@ class Userportfolio {
   String? description;
   String? imgpath;
   String? urlLink;
-  DateTime? createdAt;
+  String? createdAt;
 
   factory Userportfolio.fromJson(Map<String, dynamic> json) => Userportfolio(
         title: json["title"] ?? '',
         description: json["description"] ?? '',
         imgpath: json["imgpath"] ?? '',
         urlLink: json["url_link"] ?? '',
-        createdAt: DateTime.parse(json["createdAt"] ?? ''),
+        createdAt: json["createdAt"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -123,7 +126,7 @@ class Userportfolio {
         "description": description,
         "imgpath": imgpath,
         "url_link": urlLink,
-        "createdAt": createdAt?.toIso8601String(),
+        "createdAt": createdAt,
       };
 }
 

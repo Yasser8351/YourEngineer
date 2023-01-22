@@ -289,7 +289,8 @@ class _OffersScreenState extends State<OffersScreen> {
                       itemBuilder: (context, index) => InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ProfileEngineerScreen()));
+                              builder: (context) =>
+                                  ProfileEngineerScreen(engeneerId: '')));
                         },
                         child: ListOffersEngineerWidget(
                           colorScheme: colorScheme,

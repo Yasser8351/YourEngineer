@@ -13,6 +13,7 @@ import 'shared_widgets/rating_bar.dart';
 class ListTopEngineerRatingWidget extends StatelessWidget {
   const ListTopEngineerRatingWidget(
       {Key? key,
+      this.fit = BoxFit.fill,
       required this.topEngineerRatingModel,
       required this.colorScheme,
       required this.size})
@@ -20,6 +21,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
   final Result topEngineerRatingModel;
   final ColorScheme colorScheme;
   final Size size;
+  final BoxFit fit;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
         Get.to(() => ProfileEngineerScreen(
               showEngeneerById: true,
               hidePersonalInfo: true,
+              engeneerId: topEngineerRatingModel.id,
             ));
         return;
       },
@@ -53,7 +56,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                 AppImage.img11,
                 height: size.height * .2,
                 width: double.infinity,
-                fit: BoxFit.fill,
+                fit: fit,
               ),
               const SizedBox(height: 20),
               Padding(

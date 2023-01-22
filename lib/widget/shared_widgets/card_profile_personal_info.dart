@@ -89,9 +89,10 @@ class CardProfilePersonalInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 30.0,
-                      backgroundImage: AssetImage(AppImage.img),
+                      backgroundImage: AssetImage(
+                          isMyProfile ? AppImage.img : AppImage.img11),
                     ),
                     const SizedBox(height: 7),
                     hidePersonalInfo
