@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/controller/populer_services_controller.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
-import 'package:your_engineer/screen/services/sub_services_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import 'shared_widgets/card_decoration.dart';

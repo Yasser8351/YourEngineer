@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../controller/listProject_controller.dart';
@@ -72,7 +73,11 @@ class ListProjectWidget extends StatelessWidget {
                       children: [
                         buildRowList(results['owner']['fullname'], colorScheme,
                             Icons.person),
-                        buildRowList(results['CreatedAt'], colorScheme,
+                        buildRowList(
+                            "${DateFormat('yyyy/MM/dd hh:mm').format(DateTime.parse(results['CreatedAt']))}",
+                            colorScheme,
+                            //"${DateFormat('yyyy/MM/dd hh:mm').format(DateTime.parse(results['CreatedAt']))}",
+
                             Icons.watch_later),
                         buildRowList(
                           results['OffersCount'].toString(),

@@ -23,6 +23,10 @@ class ApiUrl {
   static String get getProjectBySubCatigory =>
       '$_root/project/subcat?page=1&size=10&scatid=';
 
+  static String getProjectById(String projectId) {
+    return '$_root/project/$projectId';
+  }
+
   static int get timeoutDuration => 20;
 
   static Map<String, String> getHeader({required String token}) {

@@ -19,8 +19,12 @@ class OfferController extends GetxController {
   void onInit() {
     results = Get.arguments['results'];
     getProjectsOffers(results['id']);
+    getProjectsById(results['id']);
     super.onInit();
   }
+
+  int userOfferCount = 0;
+  int isProjectOwner = 0;
 
   ApiResponse apiResponse = ApiResponse();
 
@@ -34,7 +38,10 @@ class OfferController extends GetxController {
   int totalItems = 0;
   int currentPage = 0;
   List<dynamic> resulte = [];
+
+  // var projectLoading = false.obs;
   var loadingState = LoadingState.initial.obs;
+  var loadingProject = LoadingState.initial.obs;
 
   //
 
@@ -111,6 +118,7 @@ class OfferController extends GetxController {
       // loadingState = LoadingState.loading.obs;
       var response = await Dio()
           .get(
+            // ApiUrl.getProjectById(proID),
             "${ApiUrl.getProjectsOffers}${proID}?page=1&size=10",
             options: Options(
               headers: ApiUrl.getHeader(token: token),
@@ -157,6 +165,63 @@ class OfferController extends GetxController {
       loadingState(LoadingState.error);
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
+      if (error is TimeoutException) {
+        showseuessToast(error.toString());
+      } else if (error.toString().contains(
+          'DioError [DioErrorType.response]: Http status error [401]')) {
+        showseuessToast(AppConfig.unAutaristion);
+      } else {
+        showseuessToast(error.toString());
+      }
+
+      myLog("catch error", error.toString());
+      // myLog("start _listprojects", "${_listprojects}");
+    }
+    return apiResponse;
+  }
+
+  Future<ApiResponse> getProjectsById(String proID) async {
+    loadingProject(LoadingState.loading);
+    try {
+      var token = await _pref.getToken();
+
+      myLog("start methode", "getProjectsOffers");
+      myLog("Project ID", "${proID}");
+
+      // loadingState = LoadingState.loading.obs;
+      var response = await Dio()
+          .get(
+            ApiUrl.getProjectById(proID),
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog("response.statusCode methode", "${response.statusCode}");
+      myLog("response.Data methode", "${response.data}");
+
+      if (response.statusCode == 200) {
+        loadingProject(LoadingState.loaded);
+
+        Map<String, dynamic> map = response.data;
+
+        isProjectOwner = map['IsProjectOwner'];
+        userOfferCount = map["UserOfferCount"];
+
+        loadingState(LoadingState.loaded);
+      } else if (response.statusCode == 401) {
+        loadingProject(LoadingState.error);
+      } else {
+        loadingProject(LoadingState.error);
+
+        loadingState(LoadingState.error);
+      }
+    } catch (error) {
+      loadingProject(LoadingState.error);
+
+      loadingState(LoadingState.error);
+
       if (error is TimeoutException) {
         showseuessToast(error.toString());
       } else if (error.toString().contains(

@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/widget/shared_widgets/no_data.dart';
 import 'package:your_engineer/widget/shared_widgets/row_two_with_text.dart';
 
 import '../../app_config/app_config.dart';
 import '../../controller/offers_controller.dart';
-import '../../controller/setting_controller.dart';
 import '../../debugger/my_debuger.dart';
 import '../../enum/all_enum.dart';
 import '../../utilits/helper.dart';
@@ -42,7 +44,10 @@ class _OffersScreenState extends State<OffersScreen> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    SettingControoler controllerSetting = Get.put(SettingControoler());
+    int userOfferCount = controller.userOfferCount;
+    int isProjectOwner = controller.isProjectOwner;
+    log(userOfferCount.toString());
+    log(isProjectOwner.toString());
 
     Size size = MediaQuery.of(context).size;
     // dynamic result = Get.arguments['results'];
@@ -92,129 +97,154 @@ class _OffersScreenState extends State<OffersScreen> {
 
                 SizedBox(height: size.height * .07),
                 const Divider(),
-                TextWidget(
-                  title: AppConfig.addOffer.tr,
-                  fontSize: size.height * .025,
-                  color: colorScheme.onSecondary,
-                  isTextStart: true,
-                ),
-                SizedBox(height: size.height * .03),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TextWidget(
-                      title: "\$",
-                      fontSize: size.width * .07,
-                      color: colorScheme.primary,
-                      isTextStart: false,
-                    ),
-                    SizedBox(width: size.width * .03),
-                    buildTextFormFaild(
-                      controller.priceController,
-                      AppConfig.price.tr,
-                      false,
-                      TextInputType.number,
-                      const Icon(Icons.add),
-                      colorScheme,
-                      size.width * .7,
-                      size.height * .1,
-                    ),
-                    Spacer(),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      TextWidget(
-                        title: AppConfig.days.tr,
-                        fontSize: size.width * .05,
-                        color: colorScheme.primary,
-                        isTextStart: true,
-                      ),
-                      SizedBox(width: size.width * .03),
-                      buildTextFormFaild(
-                        controller.daysController,
-                        AppConfig.days.tr,
-                        false,
-                        TextInputType.number,
-                        const Icon(Icons.add),
-                        colorScheme,
-                        size.width * .7,
-                        size.height * .1,
-                      ),
-                    ]),
-                  ],
-                ),
-                SizedBox(height: size.height * .02),
-                buildTextFormFaildDescription(
-                  controller.descriptionController,
-                  AppConfig.descreiption,
-                  false,
-                  TextInputType.text,
-                  const Icon(Icons.add),
-                  colorScheme,
-                ),
-                SizedBox(height: size.height * .02),
-                // int.parse(controller.results["UserOfferCount"]) > 0 ||
-                //         int.parse(controller.results["IsProjectOwner"]) > 0
-                //     ? SizedBox()
-                //     :
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 25,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (controller.daysController.text.isEmpty ||
-                          controller.descriptionController.text.isEmpty ||
-                          controller.priceController.text.isEmpty) {
-                        Helper.showError(
-                            context: context,
-                            subtitle: AppConfig.allFaildRequired.tr);
-                      } else {
-                        setState(() => isLoading = true);
+                // if (userOfferCount > 0 || isProjectOwner == 1)
+                //     return SizedBox();
+                //     }
 
-                        bool isAddProject = await controller.addOffer(
-                            context, controller.results['id']);
-                        myLog('isAddProject', isAddProject);
-                        setState(() => isLoading = false);
+                Builder(builder: (context) {
+                  if (userOfferCount > 0 || isProjectOwner == 1) {
+                    return SizedBox();
+                  }
+                  return Obx(
+                    () {
+                      if (controller.loadingProject.value ==
+                              LoadingState.initial ||
+                          controller.loadingProject.value ==
+                              LoadingState.loading)
+                        return Center(child: CircularProgressIndicator());
+                      else
+                        return Column(
+                          children: [
+                            TextWidget(
+                              title: AppConfig.addOffer.tr,
+                              fontSize: size.height * .025,
+                              color: colorScheme.onSecondary,
+                              isTextStart: true,
+                            ),
+                            SizedBox(height: size.height * .03),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                TextWidget(
+                                  title: "\$",
+                                  fontSize: size.width * .07,
+                                  color: colorScheme.primary,
+                                  isTextStart: false,
+                                ),
+                                SizedBox(width: size.width * .03),
+                                buildTextFormFaild(
+                                  controller.priceController,
+                                  AppConfig.price.tr,
+                                  false,
+                                  TextInputType.number,
+                                  const Icon(Icons.add),
+                                  colorScheme,
+                                  size.width * .7,
+                                  size.height * .1,
+                                ),
+                                Spacer(),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextWidget(
+                                        title: AppConfig.days.tr,
+                                        fontSize: size.width * .05,
+                                        color: colorScheme.primary,
+                                        isTextStart: true,
+                                      ),
+                                      SizedBox(width: size.width * .03),
+                                      buildTextFormFaild(
+                                        controller.daysController,
+                                        AppConfig.days.tr,
+                                        false,
+                                        TextInputType.number,
+                                        const Icon(Icons.add),
+                                        colorScheme,
+                                        size.width * .7,
+                                        size.height * .1,
+                                      ),
+                                    ]),
+                              ],
+                            ),
+                            SizedBox(height: size.height * .02),
+                            buildTextFormFaildDescription(
+                              controller.descriptionController,
+                              AppConfig.descreiption,
+                              false,
+                              TextInputType.text,
+                              const Icon(Icons.add),
+                              colorScheme,
+                            ),
+                            SizedBox(height: size.height * .02),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 25,
+                              ),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (controller.daysController.text.isEmpty ||
+                                      controller
+                                          .descriptionController.text.isEmpty ||
+                                      controller.priceController.text.isEmpty) {
+                                    Helper.showError(
+                                        context: context,
+                                        subtitle:
+                                            AppConfig.allFaildRequired.tr);
+                                  } else {
+                                    setState(() => isLoading = true);
 
-                        if (isAddProject) {
-                          controller.clearController();
-                          Helper.showseuess(
-                              context: context,
-                              subtitle: AppConfig.addOfferSuccesfuly.tr);
-                          controller
-                              .getProjectsOffers(controller.results['id']);
-                        } else {
-                          Helper.showError(
-                              context: context,
-                              subtitle: AppConfig.cannotaddOffer.tr);
-                        }
-                      }
+                                    bool isAddProject =
+                                        await controller.addOffer(
+                                            context, controller.results['id']);
+                                    myLog('isAddProject', isAddProject);
+                                    setState(() => isLoading = false);
+
+                                    if (isAddProject) {
+                                      controller.clearController();
+                                      Helper.showseuess(
+                                          context: context,
+                                          subtitle:
+                                              AppConfig.addOfferSuccesfuly.tr);
+                                      controller.getProjectsOffers(
+                                          controller.results['id']);
+                                    } else {
+                                      Helper.showError(
+                                          context: context,
+                                          subtitle:
+                                              AppConfig.cannotaddOffer.tr);
+                                    }
+                                  }
+                                },
+                                child: isLoading
+                                    ? Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 25, vertical: 15),
+                                        child: Center(
+                                            child: CircularProgressIndicator(
+                                                color: Colors.white)),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 25, vertical: 15),
+                                        child: TextWidget(
+                                            title: AppConfig.addOffer,
+                                            fontSize: 20,
+                                            color: colorScheme.surface),
+                                      ),
+                              ),
+                            ),
+                            SizedBox(height: size.height * .02),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: const Divider(),
+                            ),
+                          ],
+                        );
                     },
-                    child: isLoading
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 15),
-                            child: Center(
-                                child: CircularProgressIndicator(
-                                    color: Colors.white)),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 15),
-                            child: TextWidget(
-                                title: AppConfig.addOffer,
-                                fontSize: 20,
-                                color: colorScheme.surface),
-                          ),
-                  ),
-                ),
-                SizedBox(height: size.height * .02),
-
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: const Divider(),
-                ),
+                  );
+                }),
 
                 RowWithTwoText(
                   title: AppConfig.allOffer.tr,
@@ -248,6 +278,13 @@ class _OffersScreenState extends State<OffersScreen> {
                       ],
                     );
                   } else {
+                    if (controller.resulte.length == 0) {
+                      return NoData(
+                        color: Colors.white,
+                        height: size.height * .4,
+                        textMessage: "لاتوجد عروض بعد",
+                      );
+                    }
                     return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

@@ -13,12 +13,14 @@ class NoData extends StatelessWidget {
     this.isPostScreen = false,
     this.width = 500,
     this.height = 500,
+    this.color = null,
   }) : super(key: key);
 
   final String imageUrlAssets;
   final String textMessage;
   final bool isPostScreen;
   final Function()? onTap;
+  final Color? color;
   final double width;
   final double height;
 
@@ -30,6 +32,7 @@ class NoData extends StatelessWidget {
       onTap: onTap,
       child: Center(
         child: Container(
+          color: color,
           width: width,
           height: height,
           child: Column(

@@ -58,8 +58,8 @@ class MyApp extends StatelessWidget {
       ),
       locale: contoller.local ?? Get.deviceLocale,
       translations: AppLocalization(),
-      home: const LoginScreen(),
-      // home: const SplashScreen(),
+      // home: const LoginScreen(),
+      home: const SplashScreen(),
       initialBinding: BinindingApp(),
       initialRoute: '/',
       getPages: [

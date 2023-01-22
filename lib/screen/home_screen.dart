@@ -39,234 +39,237 @@ class _HomeScreenState extends State<HomeScreen> {
   //////
   double rating = 3.5;
 
+  initController() {
+    projectController.getProjects();
+    populerServicesController.getCategorys();
+    topEngineerController.getTopEngineer();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // setState(() {
-    //   log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-    //   PopulerServicesController populerServicesController =
-    //       Get.put(PopulerServicesController());
-    //   TopEngineerController topEngineerController =
-    //       Get.put(TopEngineerController());
-    //   ProjectControllerHome projectController =
-    //       Get.put(ProjectControllerHome());
-    // });
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(height: size.height * .07),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return initController();
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                SizedBox(height: size.height * .07),
 
-              // Headar of Screen
-              // that contains Text App name and icons of notifcation
-              TextWithIconWidget(
-                  onTapNotifications: () =>
-                      Navigator.of(context).pushNamed(AppConfig.notifcation)),
+                // Headar of Screen
+                // that contains Text App name and icons of notifcation
+                TextWithIconWidget(
+                    onTapNotifications: () =>
+                        Navigator.of(context).pushNamed(AppConfig.notifcation)),
 
-              // Space
-              const SizedBox(height: 20),
+                // Space
+                const SizedBox(height: 20),
 
-              // SearchWidget
-              SearchWidget(onTap: () {}),
+                // SearchWidget
+                SearchWidget(onTap: () {}),
 
-              // Space
-              const SizedBox(height: 35),
+                // Space
+                const SizedBox(height: 35),
 
-//////////==========================================================
+                //////////==========================================================
 
-              // Text Populer Services and See All
-              RowWithTwoText(
-                title: AppConfig.lastProject.tr,
-                description: AppConfig.seeAll.tr,
-                colorScheme: colorScheme.onSecondary,
-                colorScheme2: colorScheme.primary,
-                onTap: (() =>
-                    navigatorToNewScreen(context, const ProjectScreen())),
-              ),
+                // Text Populer Services and See All
+                RowWithTwoText(
+                  title: AppConfig.lastProject.tr,
+                  description: AppConfig.seeAll.tr,
+                  colorScheme: colorScheme.onSecondary,
+                  colorScheme2: colorScheme.primary,
+                  onTap: (() =>
+                      navigatorToNewScreen(context, const ProjectScreen())),
+                ),
 
-              // // ListProjectWidget
+                // // ListProjectWidget
 
-              Obx(() {
-                if (projectController.loadingState.value ==
-                        LoadingState.initial ||
-                    projectController.loadingState.value ==
-                        LoadingState.loading) {
-                  return ShimmerWidget(size: size);
-                } else if (projectController.loadingState.value ==
-                        LoadingState.error ||
-                    projectController.loadingState.value ==
-                        LoadingState.noDataFound) {
-                  return ReyTryErrorWidget(
-                      title: projectController.loadingState.value ==
-                              LoadingState.noDataFound
-                          ? AppConfig.noProjectsFound.tr
-                          : projectController.apiResponse.message,
-                      onTap: () {
-                        projectController.getProjects();
-                      });
-                } else {
-                  return SizedBox(
-                    height: size.height * .25,
-                    width: double.infinity,
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 18),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: projectController.results.length,
-                      itemBuilder: (context, index) {
-                        return ListProjectWidget(
-                          index: index,
-                          results: projectController.results[index],
-                          colorScheme: colorScheme,
-                          size: size,
-                        );
-                        //[index]
-                      },
-                    ),
-                  );
-                }
-              }),
-              // Space between list in Home Screen
-
-              const SizedBox(height: 40),
-
-              // Text Populer Services and See All
-              RowWithTwoText(
-                title: AppConfig.populerServices.tr,
-                description: AppConfig.seeAll.tr,
-                colorScheme: colorScheme.onSecondary,
-                colorScheme2: colorScheme.primary,
-                onTap: (() => navigatorToNewScreen(
-                      context,
-                      AllPopulerServicesScreen(
-                          listPopulerServices:
-                              populerServicesController.listPopulerServices,
-                          colorScheme: colorScheme,
-                          size: size),
-                    )),
-              ),
-
-              // ListPopulerServicesWidget
-              Obx(
-                () {
-                  if (populerServicesController.loadingState.value ==
+                Obx(() {
+                  if (projectController.loadingState.value ==
                           LoadingState.initial ||
-                      populerServicesController.loadingState.value ==
+                      projectController.loadingState.value ==
                           LoadingState.loading) {
                     return ShimmerWidget(size: size);
-                  } else if (populerServicesController.loadingState.value ==
+                  } else if (projectController.loadingState.value ==
                           LoadingState.error ||
-                      populerServicesController.loadingState.value ==
+                      projectController.loadingState.value ==
                           LoadingState.noDataFound) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ReyTryErrorWidget(
-                            title:
-                                populerServicesController.loadingState.value ==
-                                        LoadingState.noDataFound
-                                    ? AppConfig.noData.tr
-                                    : populerServicesController.message,
-                            onTap: () {
-                              populerServicesController.getCategorys();
-                            })
-                      ],
-                    );
-                  } else if (populerServicesController.loadingState ==
-                      LoadingState.token) {
-                    return Text("");
-
-                    // populerServicesController.logout(context);
+                    return ReyTryErrorWidget(
+                        title: projectController.loadingState.value ==
+                                LoadingState.noDataFound
+                            ? AppConfig.noProjectsFound.tr
+                            : projectController.apiResponse.message,
+                        onTap: () {
+                          projectController.getProjects();
+                        });
                   } else {
                     return SizedBox(
-                      height: size.height * .3,
+                      height: size.height * .25,
                       width: double.infinity,
                       child: ListView.separated(
                         separatorBuilder: (context, index) =>
                             const SizedBox(width: 18),
                         scrollDirection: Axis.horizontal,
-                        itemCount: populerServicesController
-                            .listPopulerServices.length,
+                        itemCount: projectController.results.length,
                         itemBuilder: (context, index) {
-                          return ListPopulerServicesWidget(
-                            populerServicesModel: populerServicesController
-                                .listPopulerServices[index],
+                          return ListProjectWidget(
+                            index: index,
+                            results: projectController.results[index],
                             colorScheme: colorScheme,
                             size: size,
                           );
+                          //[index]
                         },
                       ),
                     );
                   }
-                },
-              ),
+                }),
+                // Space between list in Home Screen
 
-              // Space between list in Home Screen
-              const SizedBox(height: 40),
+                const SizedBox(height: 40),
 
-              // Text Top Engineer Rating and See All
-              RowWithTwoText(
-                title: AppConfig.topEngineerRating.tr,
-                description: AppConfig.seeAll.tr,
-                colorScheme: colorScheme.onSecondary,
-                colorScheme2: colorScheme.primary,
-                onTap: (() => navigatorToNewScreen(
-                      context,
-                      AllEngineersScreen(
-                          listEngineers: const [],
-                          colorScheme: colorScheme,
-                          size: size),
-                    )),
-              ),
+                // Text Populer Services and See All
+                RowWithTwoText(
+                  title: AppConfig.populerServices.tr,
+                  description: AppConfig.seeAll.tr,
+                  colorScheme: colorScheme.onSecondary,
+                  colorScheme2: colorScheme.primary,
+                  onTap: (() => navigatorToNewScreen(
+                        context,
+                        AllPopulerServicesScreen(
+                            listPopulerServices:
+                                populerServicesController.listPopulerServices,
+                            colorScheme: colorScheme,
+                            size: size),
+                      )),
+                ),
 
-              // ListTopEngineerRatingWidget
-              Obx(
-                () {
-                  if (topEngineerController.loadingState.value ==
-                          LoadingState.initial ||
-                      topEngineerController.loadingState.value ==
-                          LoadingState.loading) {
-                    return ShimmerWidget(size: size);
-                  } else if (topEngineerController.loadingState.value ==
-                      LoadingState.error) {
-                    return Column(
+                // ListPopulerServicesWidget
+                Obx(
+                  () {
+                    if (populerServicesController.loadingState.value ==
+                            LoadingState.initial ||
+                        populerServicesController.loadingState.value ==
+                            LoadingState.loading) {
+                      return ShimmerWidget(size: size);
+                    } else if (populerServicesController.loadingState.value ==
+                            LoadingState.error ||
+                        populerServicesController.loadingState.value ==
+                            LoadingState.noDataFound) {
+                      return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ReyTryErrorWidget(
-                              title: topEngineerController.message,
+                              title: populerServicesController
+                                          .loadingState.value ==
+                                      LoadingState.noDataFound
+                                  ? AppConfig.noData.tr
+                                  : populerServicesController.message,
                               onTap: () {
-                                topEngineerController.getTopEngineer();
+                                populerServicesController.getCategorys();
                               })
-                        ]);
-                  } else {
-                    return SizedBox(
-                      height: size.height * .36,
-                      width: double.infinity,
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 18),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: topEngineerController.listTopEngineer.length,
-                        itemBuilder: (context, index) {
-                          return ListTopEngineerRatingWidget(
-                            topEngineerRatingModel:
-                                topEngineerController.listTopEngineer[index],
-                            colorScheme: colorScheme,
-                            size: size,
-                          );
-                        },
-                      ),
-                    );
-                  }
-                },
-              ),
+                        ],
+                      );
+                    } else if (populerServicesController.loadingState ==
+                        LoadingState.token) {
+                      return Text("");
 
-              // Space between list and Bottom Page
-              const SizedBox(height: 30),
-            ],
+                      // populerServicesController.logout(context);
+                    } else {
+                      return SizedBox(
+                        height: size.height * .3,
+                        width: double.infinity,
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 18),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: populerServicesController
+                              .listPopulerServices.length,
+                          itemBuilder: (context, index) {
+                            return ListPopulerServicesWidget(
+                              populerServicesModel: populerServicesController
+                                  .listPopulerServices[index],
+                              colorScheme: colorScheme,
+                              size: size,
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+
+                // Space between list in Home Screen
+                const SizedBox(height: 40),
+
+                // Text Top Engineer Rating and See All
+                RowWithTwoText(
+                  title: AppConfig.topEngineerRating.tr,
+                  description: AppConfig.seeAll.tr,
+                  colorScheme: colorScheme.onSecondary,
+                  colorScheme2: colorScheme.primary,
+                  onTap: (() => navigatorToNewScreen(
+                        context,
+                        AllEngineersScreen(
+                            listEngineers: const [],
+                            colorScheme: colorScheme,
+                            size: size),
+                      )),
+                ),
+
+                // ListTopEngineerRatingWidget
+                Obx(
+                  () {
+                    if (topEngineerController.loadingState.value ==
+                            LoadingState.initial ||
+                        topEngineerController.loadingState.value ==
+                            LoadingState.loading) {
+                      return ShimmerWidget(size: size);
+                    } else if (topEngineerController.loadingState.value ==
+                        LoadingState.error) {
+                      return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ReyTryErrorWidget(
+                                title: topEngineerController.message,
+                                onTap: () {
+                                  topEngineerController.getTopEngineer();
+                                })
+                          ]);
+                    } else {
+                      return SizedBox(
+                        height: size.height * .36,
+                        width: double.infinity,
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 18),
+                          scrollDirection: Axis.horizontal,
+                          itemCount:
+                              topEngineerController.listTopEngineer.length,
+                          itemBuilder: (context, index) {
+                            return ListTopEngineerRatingWidget(
+                              topEngineerRatingModel:
+                                  topEngineerController.listTopEngineer[index],
+                              colorScheme: colorScheme,
+                              size: size,
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+
+                // Space between list and Bottom Page
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),
@@ -279,132 +282,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-/* 
-  _getAppBar(BuildContext context) {
-    return AppBar(
-      title: const Padding(
-        padding: EdgeInsets.only(top: 10),
-        child: TextWidget(
-            title: AppConfig.home, fontSize: 18, color: Colors.white),
-      ),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.navigate_before, size: 40),
-        color: Colors.white,
-      ),
-    );
-  }
-  */
-
-  /*
-  List<TopEngineerRatingModel> listTopEngineerRating = [
-    TopEngineerRatingModel(
-      engineerName: "Yasser Abubaker",
-      engineerspecialist: "Architecture Engineer",
-      imageUrl: AppImage.img4,
-      engineerRating: 4.5,
-    ),
-    TopEngineerRatingModel(
-      engineerName: "Ahmed Ali",
-      engineerspecialist: "Civil Engineer",
-      imageUrl: AppImage.img11,
-      engineerRating: 3.5,
-    ),
-    TopEngineerRatingModel(
-      engineerName: "Omer Osman",
-      engineerspecialist: "Civil Engineer",
-      imageUrl: AppImage.img12,
-      engineerRating: 1.5,
-    ),
-  ];
-
-  List<PopulerServicesModel> listPopulerServices = [
-    PopulerServicesModel(
-      titleServices: "Sketches",
-      imageUrlServices: AppImage.img8,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "Electricity Distribution Scheme"),
-        SubServicesModel(id: 2, title: "Pumbing Distribution Chart"),
-        SubServicesModel(id: 3, title: "Furniture Distribution Chart"),
-        SubServicesModel(id: 4, title: "Full Scheme"),
-      ],
-    ),
-    PopulerServicesModel(
-      titleServices: "Interface Design",
-      imageUrlServices: AppImage.img9,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "All Styles"),
-      ],
-    ),
-    PopulerServicesModel(
-      titleServices: "Interior Design",
-      imageUrlServices: AppImage.img7,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "2D or 3D"),
-        SubServicesModel(id: 2, title: "Classic"),
-        SubServicesModel(id: 3, title: "Necolassic"),
-        SubServicesModel(id: 4, title: "Modern"),
-        SubServicesModel(id: 5, title: "Bohemain"),
-        SubServicesModel(id: 6, title: "Rural"),
-      ],
-    ),
-    PopulerServicesModel(
-      titleServices: "Type of Place",
-      imageUrlServices: AppImage.img7,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "Commercial"),
-        SubServicesModel(id: 2, title: "Residential"),
-      ],
-    ),
-    PopulerServicesModel(
-      titleServices: "Customer Type",
-      imageUrlServices: AppImage.img7,
-      listSubServices: [
-        //Sketches
-        SubServicesModel(id: 0, title: "All"),
-        SubServicesModel(id: 1, title: "Company"),
-        SubServicesModel(id: 2, title: "Individuais"),
-      ],
-    ),
-  ];
-   */
-  // List<ProjectModel> listProject = [
-  // ProjectModel(
-  //   titleProject: 'Making tables of quantities',
-  //   categoryProject: '',
-  //   descriptionProject:
-  //       'Quantity surveying is required for all systems for a small villa in Saudi Arabia with high accuracy',
-  //   postBy: "Yasser Abubaker",
-  //   createdDate: "1 hours ago",
-  //   numberOfoffers: "13 offers",
-  // ),
-  // ProjectModel(
-  //   titleProject: 'health club design',
-  //   categoryProject: '',
-  //   descriptionProject:
-  //       'Interior design of a health club (SPA) of about 8 m by 8 m already built, including a salt cave, Moroccan bath, massage, jacuzzi, sauna, toilet and dressing room',
-  //   postBy: "Omer Ali",
-  //   createdDate: "15 hours ago",
-  //   numberOfoffers: "5 offers",
-  // ),
-  // ProjectModel(
-  //   titleProject: '3D design for interior design',
-  //   categoryProject: '',
-  //   descriptionProject:
-  //       'Project details Project detailsProject details Project details Project details Project detailsProject details',
-  //   postBy: "Ahmed osman",
-  //   createdDate: "2 days ago",
-  //   numberOfoffers: "add first offers",
-  // )
-  // ];
