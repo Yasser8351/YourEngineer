@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 import '../app_config/app_config.dart';
-import '../app_config/app_image.dart';
 import '../controller/project_screen_controller.dart';
 import '../enum/all_enum.dart';
-import '../model/project_model.dart';
 import '../widget/list_my_project_widget.dart';
-import '../widget/shared_widgets/no_data.dart';
 import '../widget/shared_widgets/reytry_error_widget.dart';
 
 class ProjectScreen extends StatelessWidget {
@@ -54,11 +50,10 @@ class ProjectScreen extends StatelessWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("${controller.message}"),
               ReyTryErrorWidget(
                   title:
                       controller.loadingState.value == LoadingState.noDataFound
-                          ? AppConfig.noData.tr
+                          ? AppConfig.noProjectsFound.tr
                           : controller.apiResponse.message,
                   onTap: () {
                     controller.getOwnerProject();

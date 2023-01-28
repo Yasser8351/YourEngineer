@@ -1,7 +1,12 @@
 // ListOffersEngineerWidget
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:your_engineer/controller/offers_controller.dart';
+import 'package:your_engineer/enum/all_enum.dart';
+import 'package:your_engineer/screen/chat/chat_room_screen.dart';
+import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/rating_bar.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 import 'shared_widgets/card_decoration.dart';
@@ -10,15 +15,21 @@ class ListOffersEngineerWidget extends StatelessWidget {
   const ListOffersEngineerWidget(
       {Key? key,
       required this.resulte,
+      required this.index,
+      required this.offerController,
       required this.colorScheme,
       required this.size})
       : super(key: key);
   final dynamic resulte;
   final ColorScheme colorScheme;
   final Size size;
+  final OfferController offerController;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    // log("IsProjectOwner " + resulte['projectoffers']['id'].toString());
+
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
@@ -26,7 +37,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {},
-        height: size.height * .28,
+        height: size.height * .3,
         width: size.width,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -107,22 +118,56 @@ class ListOffersEngineerWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: size.height * .05),
+              SizedBox(height: size.height * .01),
               Container(
                 height: size.height * .06,
                 child: TextWidget(
                   textOverflow: TextOverflow.ellipsis,
                   title: resulte['message_desc'],
-                  //  offersEngineerModel.offersDetails,
                   fontSize: 18,
                   color: colorScheme.onSecondary,
                   isTextStart: true,
                 ),
               ),
+
+              // SizedBox(height: size.height * .01),
+
+              if (offerController.isProjectOwner == 1)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    offerController.loadingState == LoadingState.loading
+                        ? LoadingWidget()
+                        : ElevatedButton(
+                            onPressed: () async => acceptOffer(context),
+                            child: Text(
+                              "قبول العرض",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                    SizedBox(width: 30),
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.to(ChatRoomScreen());
+                        },
+                        child: Text(
+                          "محادثة",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ],
+                ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  acceptOffer(BuildContext context) async {
+    bool done = await offerController.acceptOffer(
+        context, resulte['id'], offerController.offerId[index]['id']);
+
+    if (!done) {
+      offerController.getProjectsById(resulte['id'], index);
+    }
   }
 }

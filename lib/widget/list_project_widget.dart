@@ -80,6 +80,19 @@ class ListProjectWidget extends StatelessWidget {
 
                             Icons.watch_later),
                         buildRowList(
+                          results['ProjStatus']['stat_name'],
+                          colorScheme,
+                          results['ProjStatus']['stat_name'].contains("Open")
+                              ? Icons.open_in_browser
+                              : results['ProjStatus']['stat_name']
+                                      .contains("In-Progress")
+                                  ? Icons.blinds
+                                  : results['ProjStatus']['stat_name']
+                                          .contains("Close")
+                                      ? Icons.close
+                                      : Icons.local_dining,
+                        ),
+                        buildRowList(
                           results['OffersCount'].toString(),
                           colorScheme,
                           Icons.post_add,

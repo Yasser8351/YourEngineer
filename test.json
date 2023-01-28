@@ -1,0 +1,14 @@
+{totalItems: 1, results: [
+        {id: 6f23ee03-61e8-48be-9a03-8692265c01bc,
+         price: 77,
+          days_to_deliver: 77, 
+          message_desc: 777777,
+           accept_status: null,
+            createdAt: 2023-01-28T15: 06: 50.000Z, 
+            pdf_url: null, 
+            client: {id: 3e9a7698-1ce8-4242-a13f-524cf5cff76f, email: omer@gmail.com, fullname: omer ali, phone: 555688585, imgPath: null, userprofiles: {about_user: i'm funny, specialization: Software Enginner
+                }
+            }
+        }
+    ], totalPages: 1, currentPage: 1
+}

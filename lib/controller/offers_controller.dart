@@ -15,11 +15,12 @@ import 'package:http/http.dart' as http;
 
 class OfferController extends GetxController {
   late dynamic results;
+  int index = 0;
   @override
   void onInit() {
     results = Get.arguments['results'];
     getProjectsOffers(results['id']);
-    getProjectsById(results['id']);
+    getProjectsById(results['id'], index);
     super.onInit();
   }
 
@@ -36,6 +37,7 @@ class OfferController extends GetxController {
 
   int totalPages = 0;
   int totalItems = 0;
+  late dynamic offerId;
   int currentPage = 0;
   List<dynamic> resulte = [];
 
@@ -105,6 +107,68 @@ class OfferController extends GetxController {
     return status;
   }
 
+  Future<bool> acceptOffer(
+      BuildContext context, String projectId, String offerId) async {
+    loadingState(LoadingState.loading);
+
+    myLog('start methode', 'acceptOffer');
+    // myLog('projectId', projectId);
+    myLog('offerId', offerId);
+
+    var token = await _pref.getToken();
+    final data = {
+      'proj_id': projectId,
+    };
+    //
+
+    try {
+      var response = await http
+          .put(
+            Uri.parse(ApiUrl.acceptOffer(offerId)),
+            body: data,
+            headers: ApiUrl.getHeader2(token: token),
+          )
+          .timeout(const Duration(seconds: 20));
+
+      myLog(
+        'statusCode : ${response.statusCode} \n',
+        'response : ${response.body}',
+      );
+      myLog("offerId User", "$offerId");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        status = true;
+        loadingState(LoadingState.loaded);
+
+        // getProjectsOffers(projectId);
+        // await _shared.saveToken(response.body['token']);
+
+      } else {
+        loadingState(LoadingState.error);
+
+        Helper.showError(
+            context: context, subtitle: response.statusCode.toString());
+
+        status = false;
+      }
+    } catch (error) {
+      loadingState(LoadingState.error);
+
+      status = false;
+
+      myLog('error', error);
+
+      if (error.toString().contains('TimeoutException')) {
+        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else {
+        Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
+      }
+      myLog('catch  erroor', '$error');
+    }
+
+    return status;
+  }
+
 //
 
   Future<ApiResponse> getProjectsOffers(String proID) async {
@@ -119,14 +183,14 @@ class OfferController extends GetxController {
       var response = await Dio()
           .get(
             // ApiUrl.getProjectById(proID),
-            "${ApiUrl.getProjectsOffers}${proID}?page=1&size=10",
+            "${ApiUrl.getProjectsOffers}${proID}?page=1&size=20",
             options: Options(
               headers: ApiUrl.getHeader(token: token),
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      myLog("response", "${response.data}");
+      myLog("data", "${response.data}");
 
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;
@@ -135,6 +199,7 @@ class OfferController extends GetxController {
         totalPages = map["totalPages"];
         totalItems = map["totalItems"];
         currentPage = map["currentPage"];
+        // offerId = map['projectoffers']['id'];
         // ProjectModel projectModel =
         //     projectModelFromJson(jsonDecode(response.data));
         // _listprojects = projectModel.results;
@@ -176,12 +241,11 @@ class OfferController extends GetxController {
     return apiResponse;
   }
 
-  Future<ApiResponse> getProjectsById(String proID) async {
+  Future<ApiResponse> getProjectsById(String proID, int index) async {
     loadingProject(LoadingState.loading);
     try {
       var token = await _pref.getToken();
 
-      myLog("start methode", "getProjectsOffers");
       myLog("Project ID", "${proID}");
 
       // loadingState = LoadingState.loading.obs;
@@ -202,6 +266,8 @@ class OfferController extends GetxController {
 
         isProjectOwner = map['IsProjectOwner'];
         userOfferCount = map["UserOfferCount"];
+        offerId = map['projectoffers'];
+
         loadingProject(LoadingState.loaded);
       } else if (response.statusCode == 401) {
         loadingProject(LoadingState.error);

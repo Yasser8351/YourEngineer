@@ -1,6 +1,7 @@
 class ApiUrl {
   static const String _root =
       'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1';
+  //https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/
   static String get signup => '$_root/auth/signup';
   static String get signin => '$_root/auth/signin';
   static String get geCategory => '$_root/category';
@@ -15,8 +16,13 @@ class ApiUrl {
   static String get getFaq => '$_root/questions';
   static String get getUsersShow => '$_root/users/show';
   static String get resetPassword => '$_root/reset';
+  // static String get acceptOffer => '$_root/offer/project/inprogress';
   static String getUsersById(String id) {
     return '$_root/users/show/$id';
+  }
+
+  static String acceptOffer(String offerId) {
+    return '$_root/offer/project/inprogress/$offerId';
   }
 
   static String get getOwnerProject => '$_root/project/owner';

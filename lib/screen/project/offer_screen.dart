@@ -280,25 +280,30 @@ class _OffersScreenState extends State<OffersScreen> {
                         textMessage: "لاتوجد عروض بعد",
                       );
                     }
+
                     return ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) =>
-                          SizedBox(height: size.height * .02),
-                      itemCount: controller.resulte.length,
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  ProfileEngineerScreen(engeneerId: '')));
-                        },
-                        child: ListOffersEngineerWidget(
-                          colorScheme: colorScheme,
-                          size: size,
-                          resulte: controller.resulte[index],
-                        ),
-                      ),
-                    );
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: size.height * .02),
+                        itemCount: controller.resulte.length,
+                        itemBuilder: (context, index) {
+                          // controller.index = index;
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProfileEngineerScreen(engeneerId: '')));
+                            },
+                            child: ListOffersEngineerWidget(
+                              offerController: controller,
+                              colorScheme: colorScheme,
+                              size: size,
+                              resulte: controller.resulte[index],
+                              index: index,
+                            ),
+                          );
+                        });
                   }
                 })
                 // ListOffersEngineerWidget(),

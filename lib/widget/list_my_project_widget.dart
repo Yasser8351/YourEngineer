@@ -1,14 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../model/owner_project_model.dart';
-import '../model/project_model.dart';
-import '../screen/project/add_project_screen.dart';
 import '../screen/project/myprojectoffers_screen.dart';
-import '../screen/project/offer_screen.dart';
 import 'shared_widgets/card_decoration.dart';
 import 'shared_widgets/text_widget.dart';
 
@@ -34,7 +29,6 @@ class ListMyProjectWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {
-          log("navigatorToNewScreen");
           Get.to(
               () => MyProjectOffersScreen(
                     size: size,
@@ -86,7 +80,7 @@ class ListMyProjectWidget extends StatelessWidget {
                         ownerProjectModel.projStatus!.statName!.contains("Open")
                             ? Icons.open_in_browser
                             : ownerProjectModel.projStatus!.statName!
-                                    .contains("In progress")
+                                    .contains("In-Progress")
                                 ? Icons.blinds
                                 : ownerProjectModel.projStatus!.statName!
                                         .contains("Close")

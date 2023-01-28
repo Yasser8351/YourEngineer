@@ -209,8 +209,8 @@ class AddProjectController extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-      myLog("getPriceRange response.statusCode", "${response.statusCode}");
-      myLog("getPriceRange data", "${response.data}");
+      myLog("statusCode", "${response.statusCode}");
+      myLog("getPriceRange", "${response.data}");
       if (response.statusCode == 200) {
         listPriceRange = priceRangeModelFromJson(jsonEncode(response.data));
         // listSubCat = lstSubcatModel;
