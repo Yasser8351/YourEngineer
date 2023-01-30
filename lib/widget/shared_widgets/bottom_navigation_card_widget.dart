@@ -1,12 +1,16 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 import 'package:your_engineer/widget/shared_widgets/reviews_widget.dart';
 import 'package:intl/intl.dart';
 import '../../app_config/app_image.dart';
+import '../../controller/profile_controller.dart';
+import '../../debugger/my_debuger.dart';
 import '../../model/user_profile_model.dart';
+import '../../screen/profile/add_skills_screen.dart';
+import '../../utilits/helper.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class BottomNavigationCardWidget extends StatelessWidget {
@@ -17,16 +21,19 @@ class BottomNavigationCardWidget extends StatelessWidget {
     required this.expandedIndex,
     required this.hidePersonalInfo,
     required this.userProfileModel,
+    this.isowner = false,
   }) : super(key: key);
   final Size size;
   final ColorScheme colorScheme;
   final int expandedIndex;
   final bool hidePersonalInfo;
   final UserProfileModel userProfileModel;
+  final bool isowner;
 
   @override
   Widget build(BuildContext context) {
     String locale = Localizations.localeOf(context).languageCode;
+    ProfileUserController controller = Get.put(ProfileUserController());
 
     return SingleChildScrollView(
       child: Padding(
@@ -39,17 +46,26 @@ class BottomNavigationCardWidget extends StatelessWidget {
           onTap: () {},
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
-            child: Builder(builder: (context) {
-              if (expandedIndex == 1) {
-                return ReviewsWidget(size: size, colorScheme: colorScheme);
-              } else if (expandedIndex == 2) {
-                return buildBusinessFair(
-                    colorScheme, size, userProfileModel, locale);
-              } else if (expandedIndex == 3) {
-                return buildPaymentHistory(colorScheme);
-              }
-              return buildPersonalProfile(colorScheme, size, userProfileModel);
-            }),
+            child: isowner
+                ? Builder(builder: (context) {
+                    if (expandedIndex == 1) {
+                      return buildVisa(colorScheme, size, controller, context);
+                    }
+                    return buildPaypal(colorScheme, size, controller, context);
+                  })
+                : Builder(builder: (context) {
+                    if (expandedIndex == 1) {
+                      return ReviewsWidget(
+                          size: size, colorScheme: colorScheme);
+                    } else if (expandedIndex == 2) {
+                      return buildBusinessFair(
+                          colorScheme, size, userProfileModel, locale);
+                    } else if (expandedIndex == 3) {
+                      return buildPaymentHistory(colorScheme);
+                    }
+                    return buildPersonalProfile(
+                        colorScheme, size, userProfileModel);
+                  }),
           ),
         ),
       ),
@@ -118,6 +134,275 @@ buildPersonalProfile(
     ],
   ));
   //
+}
+
+buildPaypal(ColorScheme colorScheme, Size size,
+    ProfileUserController controller, BuildContext context) {
+  return SingleChildScrollView(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        TextWidget(
+          title: 'Amount',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+        buildTextFormFaild(
+          controller.amountController,
+          'Add Amount',
+          false,
+          TextInputType.text,
+          const Icon(Icons.add),
+          colorScheme,
+          30,
+          1,
+        ),
+        SizedBox(height: size.height * .02),
+        TextWidget(
+          title: 'Email',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+        buildTextFormFaild(
+          controller.emailController,
+          'Add Your Email',
+          false,
+          TextInputType.text,
+          const Icon(Icons.add),
+          colorScheme,
+          30,
+          1,
+        ),
+        SizedBox(height: size.height * .02),
+
+        //
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 25,
+          ),
+          child: ElevatedButton(
+            onPressed: () async {
+              if (controller.amountController.text.isEmpty ||
+                  controller.emailController.text.isEmpty) {
+                Helper.showError(
+                    context: context, subtitle: AppConfig.allFaildRequired.tr);
+              } else {
+                // setState(() => isLoading = true);
+
+                bool isAddProject = await controller.addPaypal(context);
+                myLog('isAddProject', isAddProject);
+                // setState(() => isLoading = false);
+
+                if (isAddProject) {
+                  controller.clearController();
+                  Helper.showseuess(
+                      context: context,
+                      subtitle: AppConfig.addOfferSuccesfuly.tr);
+                } else {
+                  Helper.showError(
+                      context: context, subtitle: AppConfig.cannotaddOffer.tr);
+                }
+              }
+            },
+            child: GetBuilder<ProfileUserController>(builder: (controller) {
+              if (controller.statuse) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  child: Center(
+                      child: CircularProgressIndicator(color: Colors.white)),
+                );
+              } else {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  child: TextWidget(
+                      title: 'Add your Paypal',
+                      fontSize: 20,
+                      color: colorScheme.surface),
+                );
+              }
+            }),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+buildVisa(ColorScheme colorScheme, Size size, ProfileUserController controller,
+    BuildContext context) {
+  return SingleChildScrollView(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(height: size.height * .02),
+
+        TextWidget(
+          title: 'Amount',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+        buildTextFormFaild(
+          controller.amountVisaController,
+          'Add Amount',
+          false,
+          TextInputType.text,
+          const Icon(Icons.add),
+          colorScheme,
+          30,
+          1,
+        ),
+        SizedBox(height: size.height * .02),
+        TextWidget(
+          title: 'Attachment',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+        buildTextFormFaild(
+          controller.cardNumController,
+          'Add Attachment',
+          false,
+          TextInputType.text,
+          const Icon(Icons.add),
+          colorScheme,
+          30,
+          1,
+        ),
+        SizedBox(height: size.height * .02),
+        TextWidget(
+          title: 'Name',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+        buildTextFormFaild(
+          controller.cardNumController,
+          'Add Your Name',
+          false,
+          TextInputType.text,
+          const Icon(Icons.add),
+          colorScheme,
+          30,
+          1,
+        ),
+        SizedBox(height: size.height * .02),
+        TextWidget(
+          title: 'Card Number',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+        buildTextFormFaild(
+          controller.cardNumController,
+          'Add Your Card Number',
+          false,
+          TextInputType.text,
+          const Icon(Icons.add),
+          colorScheme,
+          30,
+          1,
+        ),
+        SizedBox(height: size.height * .02),
+        TextWidget(
+          title: 'Expiration',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+        buildTextFormFaild(
+          controller.expirationController,
+          'Add Expiration',
+          false,
+          TextInputType.text,
+          const Icon(Icons.add),
+          colorScheme,
+          30,
+          1,
+        ),
+        SizedBox(height: size.height * .02),
+        TextWidget(
+          title: 'Email',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+        buildTextFormFaild(
+          controller.emailController,
+          'Add Your Email',
+          false,
+          TextInputType.text,
+          const Icon(Icons.add),
+          colorScheme,
+          30,
+          1,
+        ),
+        SizedBox(height: size.height * .02),
+
+        //
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 25,
+          ),
+          child: ElevatedButton(
+            onPressed: () async {
+              if (controller.amountVisaController.text.isEmpty ||
+                  controller.attachmentController.text.isEmpty ||
+                  controller.nameController.text.isEmpty ||
+                  controller.cardNumController.text.isEmpty ||
+                  controller.expirationController.text.isEmpty) {
+                Helper.showError(
+                    context: context, subtitle: AppConfig.allFaildRequired.tr);
+              } else {
+                // setState(() => isLoading = true);
+
+                bool isAddProject = await controller.addVisa(context);
+                myLog('isAddProject', isAddProject);
+                // setState(() => isLoading = false);
+
+                if (isAddProject) {
+                  controller.clearController();
+                  Helper.showseuess(
+                      context: context,
+                      subtitle: AppConfig.addOfferSuccesfuly.tr);
+                } else {
+                  Helper.showError(
+                      context: context, subtitle: AppConfig.cannotaddOffer.tr);
+                }
+              }
+            },
+            child: GetBuilder<ProfileUserController>(builder: (controller) {
+              if (controller.statuse) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  child: Center(
+                      child: CircularProgressIndicator(color: Colors.white)),
+                );
+              } else {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  child: TextWidget(
+                      title: 'Add your Paypal',
+                      fontSize: 20,
+                      color: colorScheme.surface),
+                );
+              }
+            }),
+          ),
+        ),
+        SizedBox(height: size.height * .06),
+        // SizedBox(height: size.height * .02),
+      ],
+    ),
+  );
 }
 
 buildBusinessFair(ColorScheme colorScheme, Size size,

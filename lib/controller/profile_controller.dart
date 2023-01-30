@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:intl/date_symbol_data_local.dart';
 import '../api/api_response.dart';
@@ -16,6 +17,13 @@ import '../utilits/helper.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class ProfileUserController extends GetxController {
+  TextEditingController amountController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController amountVisaController = TextEditingController();
+  TextEditingController attachmentController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController cardNumController = TextEditingController();
+  TextEditingController expirationController = TextEditingController();
   var loadingState = LoadingState.initial.obs;
   final _shared = SharedPrefUser();
   UserProfileModel userProfile = UserProfileModel();
@@ -24,10 +32,13 @@ class ProfileUserController extends GetxController {
   String message = "";
   bool get status => _status;
   bool _status = false;
+  bool statuse = false;
+
   @override
   onInit() {
     super.onInit();
     initializeDateFormatting();
+    getUsersShow('');
   }
 
   Future<ApiResponse> getUsersShow(String engeneerId) async {
@@ -99,5 +110,155 @@ class ProfileUserController extends GetxController {
       myLog("catch error getUsersShow: ", error.toString());
     }
     return apiResponse;
+  }
+
+  Future<bool> addPaypal(BuildContext context) async {
+    myLog('start methode', 'addPaypal');
+    // myLog('projectId', projectId);
+
+    var token = await _shared.getToken();
+    final data = {
+      'amount': amountController.text,
+      'attachment': '',
+      'email': emailController.text,
+    };
+    //
+
+    try {
+      // var response = await http
+      //     .post(
+      //       // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/project',
+      //       Uri.parse(ApiUrl.addprotofilio),
+      //       body: data,
+      //       headers: ApiUrl.getHeader2(token: token),
+      //     )
+      //     .timeout(const Duration(seconds: 20));
+      var response = await Dio()
+          .post(
+            ApiUrl.addPaypal,
+            data: data,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(const Duration(seconds: 20));
+
+      myLog(
+        'statusCode : ${response.statusCode} \n',
+        ''
+            'response : ${response.data}',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        statuse = true;
+        update();
+        // await _shared.saveToken(response.body['token']);
+
+      } else {
+        Helper.showError(
+            context: context, subtitle: response.statusCode.toString());
+        print("nnnnnnnnnnonnnnoooooooooooo");
+
+        statuse = false;
+        update();
+      }
+    } catch (error) {
+      statuse = false;
+      update();
+
+      myLog('error', error);
+
+      if (error.toString().contains('TimeoutException')) {
+        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else if (error.toString().contains('Http status error [401]')) {
+        Helper.showError(
+            context: context, subtitle: "خطأ في اسم المستخدم او كلمة المرور");
+      } else {
+        Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
+      }
+      myLog('catch  erroor', '$error');
+    }
+
+    return status;
+  }
+
+//
+//
+  void clearController() {
+    amountController.clear();
+    emailController.clear();
+  }
+
+  Future<bool> addVisa(BuildContext context) async {
+    myLog('start methode', 'addPaypal');
+    // myLog('projectId', projectId);
+
+    var token = await _shared.getToken();
+    final data = {
+      'amount': amountVisaController.text,
+      'attachment': attachmentController,
+      'name': nameController,
+      'card_number': cardNumController,
+      'expiration': expirationController,
+      'security_code': '',
+    };
+    //
+
+    try {
+      // var response = await http
+      //     .post(
+      //       // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/project',
+      //       Uri.parse(ApiUrl.addprotofilio),
+      //       body: data,
+      //       headers: ApiUrl.getHeader2(token: token),
+      //     )
+      //     .timeout(const Duration(seconds: 20));
+      var response = await Dio()
+          .post(
+            ApiUrl.addVisa,
+            data: data,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(const Duration(seconds: 20));
+
+      myLog(
+        'statusCode : ${response.statusCode} \n',
+        ''
+            'response : ${response.data}',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        statuse = true;
+        update();
+        // await _shared.saveToken(response.body['token']);
+
+      } else {
+        Helper.showError(
+            context: context, subtitle: response.statusCode.toString());
+        print("nnnnnnnnnnonnnnoooooooooooo");
+
+        statuse = false;
+        update();
+      }
+    } catch (error) {
+      statuse = false;
+      update();
+
+      myLog('error', error);
+
+      if (error.toString().contains('TimeoutException')) {
+        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else if (error.toString().contains('Http status error [401]')) {
+        Helper.showError(
+            context: context, subtitle: "خطأ في اسم المستخدم او كلمة المرور");
+      } else {
+        Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
+      }
+      myLog('catch  erroor', '$error');
+    }
+
+    return status;
   }
 }
