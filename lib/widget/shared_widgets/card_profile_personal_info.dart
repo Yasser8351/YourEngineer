@@ -12,6 +12,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
     required this.colorScheme,
     required this.onTap,
     this.isMyProfile = true,
+    this.isOwinr = false,
     this.hidePersonalInfo = false,
     required this.userProfileModel,
   }) : super(key: key);
@@ -19,6 +20,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
   final ColorScheme colorScheme;
   final Function() onTap;
   final isMyProfile;
+  final bool isOwinr;
   final hidePersonalInfo;
   final UserProfileModel userProfileModel;
 
@@ -55,9 +57,13 @@ class CardProfilePersonalInfo extends StatelessWidget {
                         fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),
-                    isMyProfile
+                    isOwinr
                         ? // RatingBar
-                        Row(
+                        TextWidget(
+                            title: "Your balance \$200.0 ",
+                            fontSize: 18,
+                            color: colorScheme.onSecondary)
+                        : Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               RatingBar(
@@ -79,10 +85,6 @@ class CardProfilePersonalInfo extends StatelessWidget {
                               ),
                             ],
                           )
-                        : TextWidget(
-                            title: "Your balance \$200.0 ",
-                            fontSize: 18,
-                            color: colorScheme.onSecondary),
                   ],
                 ),
                 Column(

@@ -10,7 +10,6 @@ import '../../widget/shared_widgets/bottom_navigation_card_widget.dart';
 import '../../widget/shared_widgets/card_profile_personal_info.dart';
 import '../../widget/shared_widgets/list_profile_horizontal.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
-import 'add_protofilo.dart';
 
 class ProfileUserScreen extends StatefulWidget {
   const ProfileUserScreen({Key? key}) : super(key: key);
@@ -67,13 +66,14 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                   children: [
                     CardProfilePersonalInfo(
                       userProfileModel: controller.userProfile,
+                      isOwinr: true,
                       // userModel: controller.userModel,
                       //  isMyProfile: widget.engeneerId.isEmpty ? true : false,
                       size: size,
                       colorScheme: colorScheme,
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const AddProtofiloScreen()));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => const AddProtofiloScreen()));
                       },
                     ),
                     const SizedBox(height: 35),

@@ -1,8 +1,14 @@
-// ListOffersEngineerWidget
+// List Offers Engineer Widget
+
+///بعد اضافة عرض يجب عمل تحديث للصفحة لمنع المهندس من اضافة عرض جديد
+///
+///
+/// صفحة المشاريع بعد الضغط علي مشروع معين يقارن حالة المشروع
+/// ادا كان مفتوح يظهر العروض
+/// ادا كان مغلق يظهر تفاصيل المشروع مع اظهار رسالة ان المشروع مغلق
+/// ادا كان قيد التنفيد يظهر بيانات المهندس المنفد للمشروع
 
 import 'package:flutter/material.dart';
-import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/model/offers_engineer_model.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/rating_bar.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
@@ -12,6 +18,7 @@ import 'shared_widgets/card_decoration.dart';
 class ListMyProjectOffersWidget extends StatelessWidget {
   const ListMyProjectOffersWidget(
       {Key? key,
+      this.isMyProject = false,
       required this.resulte,
       required this.colorScheme,
       required this.size})
@@ -19,6 +26,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
   final dynamic resulte;
   final ColorScheme colorScheme;
   final Size size;
+  final bool isMyProject;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +37,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {},
-        height: size.height * .4,
+        height: size.height * .3,
         width: size.width,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -126,11 +134,13 @@ class ListMyProjectOffersWidget extends StatelessWidget {
               ),
               SizedBox(height: size.height * .05),
               // ElevatedButton(onPressed: () {}, child: Text("Acsept"))
-              ButtonWidget(
-                color: colorScheme.primary,
-                title: "Acsept Offers",
-                onTap: () {},
-              )
+              isMyProject
+                  ? SizedBox()
+                  : ButtonWidget(
+                      color: colorScheme.primary,
+                      title: "Acsept Offers",
+                      onTap: () {},
+                    )
             ],
           ),
         ),

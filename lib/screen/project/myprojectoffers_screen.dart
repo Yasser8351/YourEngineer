@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import '../../app_config/app_config.dart';
 import '../../controller/myprojectoffers_screen_controller.dart';
 import '../../enum/all_enum.dart';
 import '../../widget/list_myprojectoffers_widget.dart';
-import '../../widget/shared_widgets/card_decoration.dart';
-import '../../widget/shared_widgets/rating_bar.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
@@ -70,6 +66,7 @@ class MyProjectOffersScreen extends StatelessWidget {
                   itemBuilder: (context, index) => ListMyProjectOffersWidget(
                     colorScheme: colorScheme,
                     size: size,
+                    isMyProject: true,
                     resulte: controller.resulte[index],
                   ),
                 )
