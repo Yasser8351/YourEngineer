@@ -4,7 +4,7 @@ import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../model/owner_project_model.dart';
-import '../screen/project/myprojectoffers_screen.dart';
+import '../screen/project/my_project_offers_screen.dart';
 import '../utilits/helper.dart';
 import 'shared_widgets/card_decoration.dart';
 
@@ -86,7 +86,7 @@ class ListMyProjectWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 18,
-                  color: colorScheme.onSecondary,
+                  color: colorScheme.primary,
                   fontWeight: FontWeight.w500,
                 ),
               ),

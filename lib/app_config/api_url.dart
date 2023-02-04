@@ -9,6 +9,7 @@ class ApiUrl {
   static String get getProject => '$_root/project?page=1&size=10&search=';
   static String get addProject => '$_root/project';
   static String get addoffer => '$_root/offer';
+  static String get accountChargeRequest => '$_root/payments/feed';
   static String get addPaypal => '$_root/payments/withdraw/paypal ';
   static String get addVisa => '$_root/payments/withdraw/creditcard ';
   static String get addprotofilio => '$_root/profile/portfolio';

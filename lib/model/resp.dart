@@ -19,7 +19,7 @@ class ResponseModel {
   final String msg;
 
   factory ResponseModel.fromJson(Map<String, dynamic> json) => ResponseModel(
-        success: json["success"] ?? '',
+        success: json["success"] ?? false,
         msg: json["msg"] ?? '',
       );
 

@@ -1,11 +1,11 @@
 // List Offers Engineer Widget
 
 import 'package:flutter/material.dart';
-import 'package:your_engineer/controller/myprojectoffers_screen_controller.dart';
 import 'package:your_engineer/widget/shared_widgets/accept_offer_or_chat_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/rating_bar.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
+import '../controller/accept_offer_controller.dart';
 import '../enum/all_enum.dart';
 import '../utilits/helper.dart';
 import 'shared_widgets/card_decoration.dart';
@@ -25,7 +25,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
   final Size size;
   final bool isMyProject;
   final ProjectStatus projectStatus;
-  final MyProjectOffersScreenController controller;
+  final AcceptOfferController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
               Builder(builder: (context) {
                 if (projectStatus == ProjectStatus.open) {
                   return AcceptOfferOrChatWidget(
-                    isLoading: false,
+                    isLoading: controller.isLoading.value,
                     acceptOffer: (context) {
                       acceptOffer(context, controller);
                     },
@@ -150,10 +150,12 @@ class ListMyProjectOffersWidget extends StatelessWidget {
     );
   }
 
-  acceptOffer(
-      BuildContext context, MyProjectOffersScreenController controller) async {
-    bool done = await controller.acceptOffer(
-        context, resulte['id'], resulte['client']['id']);
+  acceptOffer(BuildContext context, AcceptOfferController controller) async {
+    bool done = await controller.acceptOfferMyProject(
+        // context, resulte['id'], resulte['client']['id']);
+        context,
+        '32fa12ed-7bb6-47bf-8962-3c45d4ddaaf4',
+        'f35c3b6f-76a8-480d-9c72-b134a581d4bb');
 
     if (!done) {
       // offerController.getProjectsById(resulte['id'], index);

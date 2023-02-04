@@ -125,17 +125,10 @@ class ProfileUserController extends GetxController {
     //
 
     try {
-      // var response = await http
-      //     .post(
-      //       // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/project',
-      //       Uri.parse(ApiUrl.addprotofilio),
-      //       body: data,
-      //       headers: ApiUrl.getHeader2(token: token),
-      //     )
-      //     .timeout(const Duration(seconds: 20));
       var response = await Dio()
           .post(
             ApiUrl.addPaypal,
+            //accountChargeRequest
             data: data,
             options: Options(
               headers: ApiUrl.getHeader(token: token),

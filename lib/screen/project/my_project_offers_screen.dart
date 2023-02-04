@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
 
 import '../../app_config/app_config.dart';
-import '../../controller/myprojectoffers_screen_controller.dart';
+import '../../controller/accept_offer_controller.dart';
+import '../../controller/my_project_offers_screen_controller.dart';
 import '../../enum/all_enum.dart';
 import '../../model/owner_project_model.dart';
 import '../../utilits/helper.dart';
-import '../../widget/list_myprojectoffers_widget.dart';
+import '../../widget/list_my_project_offers_widget.dart';
 import '../../widget/shared_widgets/card_decoration.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
@@ -30,7 +31,8 @@ class MyProjectOffersScreen extends StatelessWidget {
     MyProjectOffersScreenController controller =
         Get.put(MyProjectOffersScreenController());
 
-    // OfferController offerController = Get.put(OfferController());
+    AcceptOfferController acceptofferController =
+        Get.put(AcceptOfferController());
 
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +80,7 @@ class MyProjectOffersScreen extends StatelessWidget {
                     ),
                     child: CardDecoration(
                       onTap: () {},
-                      height: size.height * .35,
+                      height: size.height * .36,
                       width: size.width,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -120,14 +122,17 @@ class MyProjectOffersScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Text(
-                              ownerProjectModel.projDescription,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: colorScheme.primary,
-                                fontWeight: FontWeight.w500,
+                            Container(
+                              height: size.height * .06,
+                              child: Text(
+                                ownerProjectModel.projDescription,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: colorScheme.primary,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 10),
@@ -209,7 +214,7 @@ class MyProjectOffersScreen extends StatelessWidget {
                     itemCount: controller.resulte.length,
                     itemBuilder: (context, index) => ListMyProjectOffersWidget(
                       colorScheme: colorScheme,
-                      controller: controller,
+                      controller: acceptofferController,
                       projectStatus: getProjectStatus(
                           ownerProjectModel.projStatus!.statName!),
                       size: size,
