@@ -1,6 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
+import 'package:your_engineer/enum/all_enum.dart';
 
 void clearText(TextEditingController controller) {
   controller.clear();
@@ -46,5 +49,20 @@ class Helper {
       duration: const Duration(seconds: 3),
       borderRadius: BorderRadius.circular(10.0),
     ).show(context);
+  }
+}
+
+dateFormat(String dateString) {
+  return "${DateFormat('yyyy/MM/dd hh:mm').format(DateTime.parse(dateString))}";
+}
+
+getProjectStatus(String status) {
+  myLog('status', status);
+  if (status.contains("Open")) {
+    return ProjectStatus.open;
+  } else if (status.contains('In-Progress')) {
+    return ProjectStatus.inProgress;
+  } else {
+    return ProjectStatus.close;
   }
 }

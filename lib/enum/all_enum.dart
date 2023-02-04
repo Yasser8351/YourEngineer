@@ -6,3 +6,9 @@ enum LoadingState {
   error,
   token,
 }
+
+enum ProjectStatus {
+  open,
+  inProgress,
+  close,
+}

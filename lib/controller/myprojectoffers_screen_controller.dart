@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/model/resp.dart';
 
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
@@ -107,6 +108,71 @@ class MyProjectOffersScreenController extends GetxController {
       // myLog("start _listprojects", "${_listprojects}");
     }
     return apiResponse;
+  }
+
+  Future<bool> acceptOffer(
+      BuildContext context, String projectId, String offerId) async {
+    loadingState(LoadingState.loading);
+
+    myLog('start methode', 'acceptOffer');
+    // myLog('projectId', projectId);
+    myLog('offerId', offerId);
+
+    var token = await _pref.getToken();
+    final data = {
+      'proj_id': projectId,
+    };
+    //
+
+    try {
+      var response = await http
+          .put(
+            Uri.parse(ApiUrl.acceptOffer(offerId)),
+            body: data,
+            headers: ApiUrl.getHeader2(token: token),
+          )
+          .timeout(const Duration(seconds: 20));
+
+      myLog(
+        'statusCode : ${response.statusCode} \n',
+        'response : ${response.body}',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        status = true;
+        loadingState(LoadingState.loaded);
+
+        // getProjectsOffers(projectId);
+        // await _shared.saveToken(response.body['token']);
+
+      } else {
+        loadingState(LoadingState.error);
+
+        apiResponse.message =
+            responseModelFromJson(response.body.toString()).msg;
+
+        Helper.showError(
+            context: context,
+            subtitle: responseModelFromJson(response.body.toString()).msg);
+
+        status = false;
+      }
+    } catch (error) {
+      loadingState(LoadingState.error);
+
+      status = false;
+
+      myLog('error', error);
+
+      if (error.toString().contains('TimeoutException')) {
+        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else {
+        Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
+      }
+      myLog('catch  erroor', '$error');
+    }
+
+    return status;
   }
 
 //

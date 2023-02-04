@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../model/owner_project_model.dart';
 import '../screen/project/myprojectoffers_screen.dart';
+import '../utilits/helper.dart';
 import 'shared_widgets/card_decoration.dart';
-import 'shared_widgets/text_widget.dart';
 
 class ListMyProjectWidget extends StatelessWidget {
   const ListMyProjectWidget(
@@ -34,10 +35,11 @@ class ListMyProjectWidget extends StatelessWidget {
                     size: size,
                     colorScheme: colorScheme,
                     projectid: ownerProjectModel.id,
+                    ownerProjectModel: ownerProjectModel,
                   ),
               arguments: {'projectId': ownerProjectModel.id});
         },
-        height: size.height * .29,
+        height: size.height * .37,
         width: size.width * .7,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -46,7 +48,29 @@ class ListMyProjectWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
+                "اسم المشروع",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: colorScheme.onSecondary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
                 ownerProjectModel.projTitle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "وصف المشروع",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -74,10 +98,11 @@ class ListMyProjectWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildRowList(
-                        ownerProjectModel.projStatus!.statName,
-                        colorScheme,
-                        ownerProjectModel.projStatus!.statName!.contains("Open")
+                      BuildRowList(
+                        title: ownerProjectModel.projStatus!.statName,
+                        colorScheme: colorScheme,
+                        icon: ownerProjectModel.projStatus!.statName!
+                                .contains("Open")
                             ? Icons.open_in_browser
                             : ownerProjectModel.projStatus!.statName!
                                     .contains("In-Progress")
@@ -86,17 +111,24 @@ class ListMyProjectWidget extends StatelessWidget {
                                         .contains("Close")
                                     ? Icons.close
                                     : Icons.local_dining,
+                        description: "حالة المشروع",
                       ),
-                      buildRowList(ownerProjectModel.createdAt, colorScheme,
-                          Icons.watch_later),
-                      buildRowList(
-                          isMyProject
-                              ? ownerProjectModel.offersCount == 0
-                                  ? "0"
-                                  : ownerProjectModel.offersCount.toString()
-                              : ownerProjectModel.offersCount.toString(),
-                          colorScheme,
-                          Icons.post_add),
+                      BuildRowList(
+                        title: isMyProject
+                            ? ownerProjectModel.offersCount == 0
+                                ? "0"
+                                : ownerProjectModel.offersCount.toString()
+                            : ownerProjectModel.offersCount.toString(),
+                        colorScheme: colorScheme,
+                        icon: Icons.post_add,
+                        description: "عدد العروض",
+                      ),
+                      BuildRowList(
+                        title: dateFormat(ownerProjectModel.createdAt),
+                        colorScheme: colorScheme,
+                        icon: Icons.watch_later,
+                        description: "تاريخ الانشاء",
+                      ),
                     ],
                   ),
                   isMyProject
@@ -129,29 +161,43 @@ class ListMyProjectWidget extends StatelessWidget {
   }
 }
 
-buildRowList(title, ColorScheme colorScheme, icon) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 3),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 20,
-          color: colorScheme.primary,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 2),
-          child: TextWidget(
-            title: title,
-            fontSize: 15,
-            color: colorScheme.secondary,
-          ),
-        ),
-      ],
-    ),
-  );
-}
+// buildRowList(title, ColorScheme colorScheme, icon, description) {
+//   return Padding(
+//     padding: const EdgeInsets.symmetric(vertical: 3),
+//     child: Row(
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: [
+//         Icon(
+//           icon,
+//           size: 20,
+//           color: colorScheme.primary,
+//         ),
+//         const SizedBox(
+//           width: 10,
+//         ),
+//         Padding(
+//           padding: const EdgeInsets.only(top: 2),
+//           child: TextWidget(
+//             title: description,
+//             fontSize: 15,
+//             color: colorScheme.secondary,
+//           ),
+//         ),
+//         TextWidget(
+//           title: "  :  ",
+//           fontSize: 15,
+//           color: colorScheme.secondary,
+//         ),
+//         Padding(
+//           padding: const EdgeInsets.only(top: 2),
+//           child: TextWidget(
+//             title: title,
+//             fontSize: 15,
+//             color: colorScheme.secondary,
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+
+// }

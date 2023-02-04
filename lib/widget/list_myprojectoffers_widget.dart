@@ -1,16 +1,13 @@
 // List Offers Engineer Widget
 
-/// بعد اضافة عرض يجب عمل تحديث للصفحة لمنع المهندس من اضافة عرض جديد
-/// صفحة المشاريع بعد الضغط علي مشروع معين يقارن حالة المشروع
-/// ادا كان مفتوح يظهر العروض
-/// ادا كان مغلق يظهر تفاصيل المشروع مع اظهار رسالة ان المشروع مغلق
-/// ادا كان قيد التنفيد يظهر بيانات المهندس المنفد للمشروع
-
 import 'package:flutter/material.dart';
-import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
+import 'package:your_engineer/controller/myprojectoffers_screen_controller.dart';
+import 'package:your_engineer/widget/shared_widgets/accept_offer_or_chat_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/rating_bar.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
+import '../enum/all_enum.dart';
+import '../utilits/helper.dart';
 import 'shared_widgets/card_decoration.dart';
 
 class ListMyProjectOffersWidget extends StatelessWidget {
@@ -19,15 +16,20 @@ class ListMyProjectOffersWidget extends StatelessWidget {
       this.isMyProject = false,
       required this.resulte,
       required this.colorScheme,
-      required this.size})
+      required this.size,
+      required this.projectStatus,
+      required this.controller})
       : super(key: key);
   final dynamic resulte;
   final ColorScheme colorScheme;
   final Size size;
   final bool isMyProject;
+  final ProjectStatus projectStatus;
+  final MyProjectOffersScreenController controller;
 
   @override
   Widget build(BuildContext context) {
+    // myLog(resulte['id'], resulte['client']['id']);
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
@@ -35,7 +37,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {},
-        height: size.height * .3,
+        height: size.height * .38,
         width: size.width,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -44,19 +46,21 @@ class ListMyProjectOffersWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
                     onTap: () {},
                     child: CircleAvatar(
-                      radius: 40.0,
+                      radius: 30.0,
                       backgroundColor: colorScheme.primary,
                       // backgroundImage: AssetImage(
                       //   offersEngineerModel.imageEngineer,
                       // ),
                     ),
                   ),
-                  SizedBox(height: size.height * .05),
+                  // SizedBox(height: size.height * .05),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -78,44 +82,40 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                           isTextStart: true,
                         ),
                       ),
-                      Row(
-                        children: [
-                          // RatingBar
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                RatingBar(
-                                  sizeIcon: 15,
-                                  color: Colors.amber,
-                                  rating: 3.5,
-                                  //  offersEngineerModel.engineerRating,
-                                  onRatingChanged: (rating) {
-                                    // setState(() => this.rating = rating)
-                                  },
-                                ),
-                                const SizedBox(width: 7),
-                                TextWidget(
-                                  title: '3.5',
-                                  //  offersEngineerModel.engineerRating
-                                  //     .toString(),
-                                  fontSize: 15,
-                                  color: colorScheme.secondary,
-                                ),
-                              ],
-                            ),
-                          ),
 
-                          TextWidget(
-                            title: resulte['createdAt'],
-                            // offersEngineerModel.offersDate,
-                            fontSize: 18,
-                            color: colorScheme.secondary,
-                          ),
-                        ],
-                      )
+                      TextWidget(
+                        title: dateFormat(resulte['createdAt']),
+                        // offersEngineerModel.offersDate,
+                        fontSize: 18,
+                        color: colorScheme.secondary,
+                      ),
+                      // RatingBar
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RatingBar(
+                              sizeIcon: 15,
+                              color: Colors.amber,
+                              rating: 3.5,
+                              //  offersEngineerModel.engineerRating,
+                              onRatingChanged: (rating) {
+                                // setState(() => this.rating = rating)
+                              },
+                            ),
+                            const SizedBox(width: 7),
+                            TextWidget(
+                              title: '3.5',
+                              //  offersEngineerModel.engineerRating
+                              //     .toString(),
+                              fontSize: 15,
+                              color: colorScheme.secondary,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -131,18 +131,32 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                 isTextStart: true,
               ),
               SizedBox(height: size.height * .05),
-              // ElevatedButton(onPressed: () {}, child: Text("Acsept"))
-              isMyProject
-                  ? SizedBox()
-                  : ButtonWidget(
-                      color: colorScheme.primary,
-                      title: "Acsept Offers",
-                      onTap: () {},
-                    )
+              Builder(builder: (context) {
+                if (projectStatus == ProjectStatus.open) {
+                  return AcceptOfferOrChatWidget(
+                    isLoading: false,
+                    acceptOffer: (context) {
+                      acceptOffer(context, controller);
+                    },
+                  );
+                } else {
+                  return SizedBox();
+                }
+              })
             ],
           ),
         ),
       ),
     );
+  }
+
+  acceptOffer(
+      BuildContext context, MyProjectOffersScreenController controller) async {
+    bool done = await controller.acceptOffer(
+        context, resulte['id'], resulte['client']['id']);
+
+    if (!done) {
+      // offerController.getProjectsById(resulte['id'], index);
+    }
   }
 }

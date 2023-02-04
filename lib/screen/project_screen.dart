@@ -14,74 +14,74 @@ class ProjectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProjectScreenController controller = Get.put(ProjectScreenController());
-    int data = 1;
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: InkWell(
-          onTap: () {
-            controller.goToAddProjectScreen();
-          },
-          // Navigator.of(context).pushNamed(AppConfig.addProjectScreen)),
-          child: Row(
-            children: [
-              Icon(Icons.content_paste_go, color: Colors.white),
-              SizedBox(width: size.width * .03),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: TextWidget(
-                    title: AppConfig.addProjectScreen.tr,
-                    fontSize: size.height * .025,
-                    color: Colors.white),
-              ),
-            ],
+    return RefreshIndicator(
+      onRefresh: () => controller.getOwnerProject(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: InkWell(
+            onTap: () {
+              controller.goToAddProjectScreen();
+            },
+            // Navigator.of(context).pushNamed(AppConfig.addProjectScreen)),
+            child: Row(
+              children: [
+                Icon(Icons.content_paste_go, color: Colors.white),
+                SizedBox(width: size.width * .03),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: TextWidget(
+                      title: AppConfig.addProjectScreen.tr,
+                      fontSize: size.height * .025,
+                      color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ),
+        body: Obx(() {
+          if (controller.loadingState.value == LoadingState.initial ||
+              controller.loadingState.value == LoadingState.loading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.loadingState.value == LoadingState.error ||
+              controller.loadingState.value == LoadingState.noDataFound) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ReyTryErrorWidget(
+                    title: controller.loadingState.value ==
+                            LoadingState.noDataFound
+                        ? AppConfig.noProjectsFound.tr
+                        : controller.apiResponse.message,
+                    onTap: () {
+                      controller.getOwnerProject();
+                    })
+              ],
+            );
+          } else {
+            // ListProjectWidget
+            return ListView.builder(
+              // shrinkWrap: true,
+              itemCount: controller.myProjects.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  child: ListMyProjectWidget(
+                    ownerProjectModel: controller.myProjects[index],
+                    colorScheme: colorScheme,
+                    isMyProject: isMyProject,
+                    size: size,
+                  ),
+                );
+              },
+            );
+          }
+        }),
       ),
-      body: Obx(() {
-        if (controller.loadingState.value == LoadingState.initial ||
-            controller.loadingState.value == LoadingState.loading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (controller.loadingState.value == LoadingState.error ||
-            controller.loadingState.value == LoadingState.noDataFound) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ReyTryErrorWidget(
-                  title:
-                      controller.loadingState.value == LoadingState.noDataFound
-                          ? AppConfig.noProjectsFound.tr
-                          : controller.apiResponse.message,
-                  onTap: () {
-                    controller.getOwnerProject();
-                  })
-            ],
-          );
-        } else {
-          // ListProjectWidget
-          return ListView.builder(
-            // shrinkWrap: true,
-            itemCount: controller.myProjects.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child:
-                    // Text("notnow")
-                    ListMyProjectWidget(
-                  ownerProjectModel: controller.myProjects[index],
-                  colorScheme: colorScheme,
-                  isMyProject: isMyProject,
-                  size: size,
-                ),
-              );
-            },
-          );
-        }
-      }),
     );
   }
 
