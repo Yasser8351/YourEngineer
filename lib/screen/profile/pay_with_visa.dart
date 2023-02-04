@@ -4,7 +4,6 @@ import '../../app_config/app_config.dart';
 import '../../app_config/app_image.dart';
 import '../../model/horizontal_profile.dart';
 import '../../widget/shared_widgets/bottom_navigation_card_payment_widget.dart';
-import '../../widget/shared_widgets/card_profile_personal_info.dart';
 import '../../widget/shared_widgets/list_profile_horizontal.dart';
 
 class PayWithPaypal extends StatefulWidget {

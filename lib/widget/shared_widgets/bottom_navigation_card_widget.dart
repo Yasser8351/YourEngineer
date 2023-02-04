@@ -140,7 +140,8 @@ buildPaypal(ColorScheme colorScheme, Size size,
     ProfileUserController controller, BuildContext context) {
   return SingleChildScrollView(
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         TextWidget(
           title: 'Amount',
@@ -237,7 +238,8 @@ buildVisa(ColorScheme colorScheme, Size size, ProfileUserController controller,
     BuildContext context) {
   return SingleChildScrollView(
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         SizedBox(height: size.height * .02),
 

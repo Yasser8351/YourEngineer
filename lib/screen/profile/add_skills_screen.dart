@@ -111,29 +111,33 @@ buildTextFormFaild(
   int maxLength,
   int maxLines,
 ) {
-  return Theme(
-    data: ThemeData(
-      colorScheme: ColorScheme(
-        primary: colorScheme.primary,
-        onPrimary: Colors.black,
-        secondary: Colors.black,
-        onSecondary: Colors.white,
-        brightness: Brightness.light,
-        background: Colors.black,
-        onBackground: Colors.black,
-        error: Colors.black,
-        onError: Colors.black,
-        surface: Colors.black,
-        onSurface: Colors.black,
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: Theme(
+      data: ThemeData(
+        colorScheme: ColorScheme(
+          primary: colorScheme.primary,
+          onPrimary: Colors.black,
+          secondary: Colors.black,
+          onSecondary: Colors.white,
+          brightness: Brightness.light,
+          background: Colors.black,
+          onBackground: Colors.black,
+          error: Colors.black,
+          onError: Colors.black,
+          surface: Colors.black,
+          onSurface: Colors.black,
+        ),
       ),
-    ),
-    child: TextField(
-      controller: controller,
-      keyboardType: inputType,
-      maxLength: maxLength,
-      maxLines: maxLines,
-      scribbleEnabled: true,
-      decoration: InputDecoration(hintText: label),
+      child: TextField(
+        controller: controller,
+        keyboardType: inputType,
+        maxLength: maxLength,
+        maxLines: maxLines,
+        scribbleEnabled: true,
+        textAlign: TextAlign.end,
+        decoration: InputDecoration(hintText: label),
+      ),
     ),
   );
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
@@ -16,12 +17,22 @@ import 'package:http/http.dart' as http;
 class OfferController extends GetxController {
   late dynamic results;
   int index = 0;
+  late SharedPreferences shared;
+  String typeAccount = '';
+
   @override
   void onInit() {
+    getUserInfo();
     results = Get.arguments['results'];
     getProjectsOffers(results['id']);
     getProjectsById(results['id'], index);
     super.onInit();
+  }
+
+  getUserInfo() async {
+    shared = await SharedPreferences.getInstance();
+    typeAccount = await shared.getString('status') ?? '';
+    myLog("typeAccount", typeAccount);
   }
 
   int userOfferCount = 0;

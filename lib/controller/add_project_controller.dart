@@ -294,7 +294,7 @@ class AddProjectController extends GetxController {
       myLog(
         'statusCode : ${response.statusCode} \n',
         ''
-            'response : ${response.data}',
+            'data : ${response.data}',
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {

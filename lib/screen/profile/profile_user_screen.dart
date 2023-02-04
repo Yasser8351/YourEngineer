@@ -64,6 +64,18 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                 padding: const EdgeInsets.only(top: 40, right: 10, left: 10),
                 child: Column(
                   children: [
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.white,
+                            size: 30,
+                          )),
+                    ),
                     CardProfilePersonalInfo(
                       userProfileModel: controller.userProfile,
                       isOwinr: true,

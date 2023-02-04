@@ -42,10 +42,6 @@ class _OffersScreenState extends State<OffersScreen> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    // int userOfferCount = controller.userOfferCount;
-    // int isProjectOwner = controller.isProjectOwner;
-    // log(userOfferCount.toString());
-    // log(isProjectOwner.toString());
 
     Size size = MediaQuery.of(context).size;
     // dynamic result = Get.arguments['results'];
@@ -105,7 +101,8 @@ class _OffersScreenState extends State<OffersScreen> {
                               LoadingState.loading)
                         return Center(child: CircularProgressIndicator());
                       else if (controller.userOfferCount > 0 ||
-                          controller.isProjectOwner == 1) {
+                          controller.isProjectOwner == 1 ||
+                          controller.typeAccount.contains('OWNER')) {
                         return SizedBox();
                       } else
                         return Column(

@@ -57,6 +57,12 @@ class CardProfilePersonalInfo extends StatelessWidget {
                         fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),
+                    TextWidget(
+                        title: isOwinr ? "صاحب مشاريع" : "مهندس",
+                        // userModel.email,
+                        fontSize: 18,
+                        color: colorScheme.onSecondary),
+                    const SizedBox(height: 4),
                     isOwinr
                         ? // RatingBar
                         TextWidget(
