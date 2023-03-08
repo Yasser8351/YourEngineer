@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "976884449464",
+    "project_id": "architect-df796",
+    "storage_bucket": "architect-df796.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976884449464:android:04a64c534daa3f26f2b44d",
+        "android_client_info": {
+          "package_name": "com.app.architect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976884449464-996ov8jg978avnvkuq7nk10eak8tc5mt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUtYOkOhzj0aZoWR4CJbFguRSFH5ZsO_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976884449464-996ov8jg978avnvkuq7nk10eak8tc5mt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

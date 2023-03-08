@@ -1,14 +1,35 @@
+// import 'dart:async';
+// import 'dart:convert';
+
+// // import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
+
+// import 'package:flutter/cupertino.dart';
+// import 'package:get/get.dart';
+// import 'package:your_engineer/app_config/api_url.dart';
+// import 'package:your_engineer/app_config/app_config.dart';
+// import 'package:your_engineer/debugger/my_debuger.dart';
+// import 'package:your_engineer/model/user_model.dart';
+// import '../enum/all_enum.dart';
+// import '../model/roles_model.dart';
+// import '../sharedpref/user_share_pref.dart';
+// import '../utilits/helper.dart';
+// import 'api_parameters.dart';
+
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
-import 'package:your_engineer/app_config/api_url.dart';
-import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/debugger/my_debuger.dart';
-import 'package:your_engineer/model/user_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
+
+import '../app_config/api_url.dart';
+import '../app_config/app_config.dart';
+import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 import '../model/roles_model.dart';
+import '../model/user_model.dart';
 import '../sharedpref/user_share_pref.dart';
 import '../utilits/helper.dart';
 import 'api_parameters.dart';
@@ -90,23 +111,41 @@ class UserAuth {
   }
 
   Future<bool> userSignup(BuildContext context, UserModel userModel,
-      String password, int selectedrole) async {
+      String password, int selectedrole, File imageFile) async {
     myLog('start methode', 'userSignup');
     print("selectedroole   iiiiddd===============${listrole[selectedrole].id}");
 
-    final data = {
-      ApiParameters.email: userModel.email,
-      ApiParameters.fullname: userModel.fistName + " " + userModel.lastName,
-      ApiParameters.password: password,
-      ApiParameters.phone: userModel.phone,
-      ApiParameters.roleId: listrole[selectedrole].id,
-      ApiParameters.profileImage: userModel.userImage,
-    };
+    // final data = {
+    //   ApiParameters.email: userModel.email,
+    //   ApiParameters.fullname: userModel.fistName + " " + userModel.lastName,
+    //   ApiParameters.password: password,
+    //   ApiParameters.phone: userModel.phone,
+    //   ApiParameters.roleId: listrole[selectedrole].id,
+    //   ApiParameters.profileImage: userModel.userImage,
+    // };
 
     final headers = {
       "Content-Type": "application/json",
       'Accept': '*/*',
     };
+    FormData data = FormData.fromMap({
+      ApiParameters.email: userModel.email,
+      ApiParameters.fullname: userModel.fistName + " " + userModel.lastName,
+      ApiParameters.password: password,
+      ApiParameters.phone: userModel.phone,
+      ApiParameters.roleId: listrole[selectedrole].id,
+      // ApiParameters.profileImage: userModel.userImage,
+      ApiParameters.profileImage: await MultipartFile.fromFile(
+        imageFile.path,
+        filename: imageFile.path,
+      ),
+      ApiParameters.credentials: await MultipartFile.fromFile(
+        imageFile.path,
+        filename: imageFile.path,
+      ),
+    });
+
+    myLog("data", data);
 
     try {
       var response = await Dio()

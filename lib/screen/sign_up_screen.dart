@@ -337,6 +337,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 userModel,
                                 _passwordController.text,
                                 selectedval,
+                                myfile!,
                               );
                               myLog('isSignup', isSignup);
                               setState(() => isLoading = false);

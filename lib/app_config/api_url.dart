@@ -1,6 +1,6 @@
 class ApiUrl {
-  static const String _root =
-      'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1';
+  static const String _root = 'http://194.195.87.30:91/api/v1';
+  // 'https://http://194.195.87.30:91';
   //https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/
   static String get signup => '$_root/auth/signup';
   static String get signin => '$_root/auth/signin';

@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/screen/tab_screen.dart';
 
 import '../app_config/app_image.dart';
 import '../sharedpref/user_share_pref.dart';
+import '../utilits/notification_services.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -30,6 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     getUserStatus();
+    FirebaseMessaging.instance.subscribeToTopic("All");
 
     Timer(
       const Duration(seconds: 2),
@@ -41,6 +45,23 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    ///forground work
+    FirebaseMessaging.onMessage.listen(
+      (message) {
+        myLog(message, "message");
+        if (message.notification != null) {
+          NotificationServices().showNotification(
+            title: message.notification!.title,
+            body: message.notification!.body,
+          );
+        }
+      },
+    );
+    super.didChangeDependencies();
   }
 
   @override

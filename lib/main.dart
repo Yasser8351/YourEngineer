@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
@@ -15,6 +17,7 @@ import 'package:your_engineer/screen/profile/pay_with_visa.dart';
 import 'package:your_engineer/screen/splash_screen.dart';
 import 'package:your_engineer/utilits/localization/app_localization.dart';
 
+import 'debugger/my_debuger.dart';
 import 'screen/chat/chat_room_screen.dart';
 import 'screen/project/edit_my_project_screen.dart';
 import 'screen/services/services_detail_screen.dart';
@@ -22,7 +25,31 @@ import 'screen/services/sub_services_screen.dart';
 import 'screen/sign_up_screen.dart';
 import 'screen/tab_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp();
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+            alert: true, badge: true, sound: true);
+
+    await FirebaseMessaging.onMessageOpenedApp;
+    await FirebaseMessaging.instance.getInitialMessage();
+    await FirebaseMessaging.instance.setAutoInitEnabled(true);
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      myLog("onMessageOpenedApp", message);
+    });
+    FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+  } catch (e) {} // var pref = await SharedPreferences.getInstance();
+
   runApp(const MyApp());
 }
 
