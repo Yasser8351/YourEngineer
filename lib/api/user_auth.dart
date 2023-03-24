@@ -1,21 +1,3 @@
-// import 'dart:async';
-// import 'dart:convert';
-
-// // import 'package:dio/dio.dart';
-// import 'package:dio/dio.dart';
-
-// import 'package:flutter/cupertino.dart';
-// import 'package:get/get.dart';
-// import 'package:your_engineer/app_config/api_url.dart';
-// import 'package:your_engineer/app_config/app_config.dart';
-// import 'package:your_engineer/debugger/my_debuger.dart';
-// import 'package:your_engineer/model/user_model.dart';
-// import '../enum/all_enum.dart';
-// import '../model/roles_model.dart';
-// import '../sharedpref/user_share_pref.dart';
-// import '../utilits/helper.dart';
-// import 'api_parameters.dart';
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -23,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
+import 'package:http_parser/http_parser.dart';
 
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
@@ -125,8 +108,10 @@ class UserAuth {
     // };
 
     final headers = {
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
+      // 'Accept': '*/*',
       'Accept': '*/*',
+      'Content-Type': 'multipart/form-data',
     };
     FormData data = FormData.fromMap({
       ApiParameters.email: userModel.email,
@@ -137,15 +122,18 @@ class UserAuth {
       // ApiParameters.profileImage: userModel.userImage,
       ApiParameters.profileImage: await MultipartFile.fromFile(
         imageFile.path,
-        filename: imageFile.path,
+        contentType: MediaType("image", "${imageFile.path.split(".").last}"),
+        // filename: imageFile.path,
       ),
       ApiParameters.credentials: await MultipartFile.fromFile(
         imageFile.path,
-        filename: imageFile.path,
+        contentType: MediaType("image", "${imageFile.path.split(".").last}"),
+
+        // filename: imageFile.path,
       ),
     });
 
-    myLog("data", data);
+    myLog("imageFile", imageFile.path);
 
     try {
       var response = await Dio()

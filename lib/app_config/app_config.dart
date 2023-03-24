@@ -1,6 +1,7 @@
 class AppConfig {
   static const String appName = "appName";
   static const String aboutme = "aboutme";
+  static const String submitYourProtofilo = "submitYourProtofilo";
   static const String skills = "Skills";
   static const String engineer = "Engineers";
   static const String projectOwner = "Project Owner";
@@ -109,6 +110,7 @@ class AppConfig {
   /*
   static const String  ="";
   */
+  static const String ok = "ok";
   static const String loading = "loading...";
   static const String unAutaristion = "unAuthorized";
   static const String serverError = "server Error";

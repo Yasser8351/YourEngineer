@@ -52,6 +52,11 @@ class SharedPrefUser {
     return _prefs.getString('token') ?? '';
   }
 
+  Future<String> getId() async {
+    _prefs = await SharedPreferences.getInstance();
+    return _prefs.getString('id') ?? '';
+  }
+
   Future<bool> logout() async {
     _prefs = await SharedPreferences.getInstance();
     await _prefs.setBool('login', false);

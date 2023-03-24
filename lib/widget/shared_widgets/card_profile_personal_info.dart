@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../app_config/app_image.dart';
 import '../../model/user_profile_model.dart';
 import 'card_with_image.dart';
 import 'rating_bar.dart';
@@ -98,10 +97,12 @@ class CardProfilePersonalInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
-                      radius: 30.0,
-                      backgroundImage: AssetImage(
-                          isMyProfile ? AppImage.img : AppImage.img11),
-                    ),
+                        radius: 30.0,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        backgroundImage: NetworkImage(userProfileModel.imgpath!)
+                        // backgroundImage: AssetImage(
+                        //     isMyProfile ? AppImage.img : AppImage.img11),
+                        ),
                     const SizedBox(height: 7),
                     hidePersonalInfo
                         ? SizedBox()

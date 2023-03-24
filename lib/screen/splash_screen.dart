@@ -19,13 +19,16 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool userStatus = false;
+  String email = '';
 
   getUserStatus() async {
     SharedPrefUser prefs = SharedPrefUser();
     bool currentStatus = await prefs.isLogin();
+    String _email = await prefs.getId();
 
     setState(() {
       userStatus = currentStatus;
+      email = _email;
     });
   }
 
@@ -33,7 +36,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     getUserStatus();
-    FirebaseMessaging.instance.subscribeToTopic("All");
+    FirebaseMessaging.instance.subscribeToTopic("BOTH");
+    FirebaseMessaging.instance.subscribeToTopic("OWNER");
+    FirebaseMessaging.instance.subscribeToTopic("ENGINEER");
+    FirebaseMessaging.instance
+        .subscribeToTopic("af983750-af6a-4c27-bfc6-bb18c2857f13");
+    // FirebaseMessaging.instance.subscribeToTopic(email);
 
     Timer(
       const Duration(seconds: 2),

@@ -16,16 +16,25 @@ class ApiUrl {
   static String get addskill => '$_root/profile/skill';
   static String get getProjectsOffers => '$_root/offer/project/';
   static String get getRoles => '$_root/auth/roles';
+  static String get getNotificationUnRead => '$_root/users/me';
   static String get getFaq => '$_root/questions';
   static String get getUsersShow => '$_root/users/show';
   static String get resetPassword => '$_root/reset';
-  // static String get acceptOffer => '$_root/offer/project/inprogress';
+
   static String getUsersById(String id) {
     return '$_root/users/show/$id';
   }
 
+  static String getAllNotification(int page, int size) {
+    return '$_root/notification?page=$page&size=$size';
+  }
+
   static String acceptOffer(String offerId) {
     return '$_root/offer/project/inprogress/$offerId';
+  }
+
+  static String readNotification(String notificationId) {
+    return '$_root/notification/unread/$notificationId';
   }
 
   static String get getOwnerProject => '$_root/project/owner';
@@ -44,8 +53,6 @@ class ApiUrl {
     return <String, String>{
       'Accept': '*/*',
       'Authorization': "Bearer $token",
-      // 'Authorization':
-      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI5YTQ5YTIzOC0yMThmLTRlYjMtODQwNy0xZGIwN2FjN2RjMzciLCJlbWFpbCI6InRlc3QxMjM0NSIsImZ1bGxuYW1lIjoidGVzdDEyMyIsImlhdCI6MTY3MzU0MjQ0MCwiZXhwIjoxNjczNTQ2MDQwfQ.eEoFPfwsjRgxcMzGRarzvIVrWriBUFZLBQGRJSwGNS4',
       'Content-Type': 'application/json'
     };
   }
@@ -54,6 +61,14 @@ class ApiUrl {
     return <String, String>{
       'Accept': '*/*',
       'Authorization': "Bearer $token",
+    };
+  }
+
+  static Map<String, String> getHeaderImage({required String token}) {
+    return <String, String>{
+      'Accept': '*/*',
+      'Authorization': "Bearer $token",
+      'Content-Type': 'multipart/form-data',
     };
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/controller/project_home_controller.dart';
@@ -13,6 +11,7 @@ import 'package:your_engineer/widget/shared_widgets/shimmer_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
+import '../controller/notification_controller.dart';
 import '../controller/populer_services_controller.dart';
 import '../enum/all_enum.dart';
 import '../widget/lis_top_engineer_rating_widget.dart';
@@ -32,12 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.put(PopulerServicesController());
   TopEngineerController topEngineerController =
       Get.put(TopEngineerController());
+  NotificationController notificationController =
+      Get.put(NotificationController());
 
-  // PopulerServicesController populerServicesController = Get.find();
-  // TopEngineerController topEngineerController = Get.find();
-  // ProjectControllerHome projectController = Get.find();
-
-  //////
   double rating = 3.5;
 
   initController() {
@@ -47,10 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    notificationController.getNotificationUnRead();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    log("message");
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () {
@@ -65,9 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // Headar of Screen
                 // that contains Text App name and icons of notifcation
-                TextWithIconWidget(
-                    onTapNotifications: () =>
-                        Navigator.of(context).pushNamed(AppConfig.notifcation)),
+
+                GetBuilder<NotificationController>(
+                  builder: (controller) => TextWithIconWidget(
+                      notificationsCount: controller.unreadCount,
+                      onTapNotifications: () => Navigator.of(context)
+                          .pushNamed(AppConfig.notifcation)),
+                ),
 
                 // Space
                 const SizedBox(height: 20),

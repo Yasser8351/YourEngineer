@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import 'add_protofilo.dart';
 import 'add_skills_screen.dart';
@@ -21,8 +20,8 @@ class _AddPortifolioSkillsScreen extends State<AddPortifolioSkillsScreen> {
         appBar: AppBar(
           // backgroundColor: Colors.white,
           bottom: TabBar(
-            // labelColor: colo,
-            unselectedLabelColor: Colors.black,
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.white,
             labelStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             indicatorColor: Colors.green,
             padding: const EdgeInsets.symmetric(horizontal: 15),

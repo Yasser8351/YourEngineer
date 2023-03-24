@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import '../../app_config/app_config.dart';
 import '../../controller/add_protofilio_controller.dart';
-import '../../debugger/my_debuger.dart';
 import '../../utilits/helper.dart';
 import '../../widget/shared_widgets/text_widget.dart';
+import 'dart:io';
 
 class AddProtofiloScreen extends StatefulWidget {
   const AddProtofiloScreen({Key? key, this.isEditProject = false})
@@ -18,6 +19,9 @@ class AddProtofiloScreen extends StatefulWidget {
 
 class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
   bool isLoading = false;
+  final ImagePicker _picker = ImagePicker();
+  File? _ImageProfile;
+
   AddProtofilioController controller = Get.put(AddProtofilioController());
 
   @override
@@ -27,6 +31,18 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
   }
 
   RangeValues selectedRange = const RangeValues(25, 50);
+
+  Future<void> _getImageFromGallery() async {
+    /// get Image User Profile From Gallery
+    final imageFile =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+    if (imageFile == null) {
+      return;
+    }
+    setState(() => _ImageProfile = File(imageFile.path));
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -34,6 +50,7 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
         "${controller.dateOfProject.day.toString()}-${controller.dateOfProject.month.toString()}-${controller.dateOfProject.year}";
 
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       // appBar: _getAppBar(context, widget.isEditProject),
       body: SingleChildScrollView(
@@ -70,18 +87,28 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
                 color: colorScheme.onSecondary,
               ),
               SizedBox(height: size.height * .01),
-              Container(
-                width: size.width,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Image.asset(
-                    AppImage.noData,
-                    width: size.width * .3,
-                    height: size.width * .4,
+              InkWell(
+                onTap: _getImageFromGallery,
+                child: Container(
+                  width: size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: _ImageProfile == null
+                        ? Image.asset(
+                            AppImage.noData,
+                            width: size.width * .3,
+                            height: size.width * .4,
+                          )
+                        : Image.file(
+                            _ImageProfile!,
+                            fit: BoxFit.cover,
+                            width: size.width * .3,
+                            height: size.width * .4,
+                          ),
                   ),
                 ),
               ),
@@ -120,11 +147,6 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
             if (controller.descriptionController.text.isEmpty ||
                 controller.titleController.text.isEmpty ||
                 controller.day == null) {
-              myLog(
-                  "titleController.text", "${controller.titleController.text}");
-              myLog("descriptionController.text",
-                  "${controller.descriptionController.text}");
-              myLog("day.text", "${controller.day}");
               Helper.showError(
                   context: context, subtitle: AppConfig.allFaildRequired.tr);
               return;
@@ -134,21 +156,22 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
 
             bool isAddProject = await controller.addProtofilio(
               context,
+              _ImageProfile,
             );
-            myLog('isAddProject', isAddProject);
             setState(() => isLoading = false);
 
             if (isAddProject) {
               controller.clearController();
-              Helper.showError(
-                  context: context, subtitle: "Succesfuly Added Projet");
+              _ImageProfile = null;
+              Helper.showseuess(
+                  context: context, subtitle: "Succesfuly Added protofilio");
 
               //userSignup sucssufuly
               // ignore: use_build_context_synchronously
               // Navigator.of(context).pushNamed(AppConfig.login);
             } else {
               Helper.showError(
-                  context: context, subtitle: "can not add projet");
+                  context: context, subtitle: "Can not add protofilio");
             }
           },
           child: Padding(
@@ -158,7 +181,7 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
                 : TextWidget(
                     title: widget.isEditProject
                         ? AppConfig.editMyProject
-                        : AppConfig.submitYourProject,
+                        : AppConfig.submitYourProtofilo,
                     fontSize: 20,
                     color: colorScheme.surface),
           ),

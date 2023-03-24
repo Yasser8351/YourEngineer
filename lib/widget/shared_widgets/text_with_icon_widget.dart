@@ -6,9 +6,13 @@ import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 import 'badge.dart';
 
 class TextWithIconWidget extends StatelessWidget {
-  const TextWithIconWidget({Key? key, required this.onTapNotifications})
+  const TextWithIconWidget(
+      {Key? key,
+      required this.onTapNotifications,
+      required this.notificationsCount})
       : super(key: key);
   final Function() onTapNotifications;
+  final int notificationsCount;
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +24,23 @@ class TextWithIconWidget extends StatelessWidget {
           fontSize: 20,
           color: Theme.of(context).colorScheme.onSecondary,
         ),
-        Badge(
-          value: '',
-          color: Colors.green,
-          child: IconButton(
-            onPressed: onTapNotifications,
-            iconSize: 30,
-            icon: const Icon(Icons.notifications_none),
-            color: Theme.of(context).colorScheme.onSecondary,
-          ),
-        ),
+        notificationsCount > 0
+            ? Badge(
+                value: notificationsCount.toString(),
+                color: Colors.green,
+                child: IconButton(
+                  onPressed: onTapNotifications,
+                  iconSize: 30,
+                  icon: const Icon(Icons.notifications_none),
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
+              )
+            : IconButton(
+                onPressed: onTapNotifications,
+                iconSize: 30,
+                icon: const Icon(Icons.notifications_none),
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
       ],
     );
   }
