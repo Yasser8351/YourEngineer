@@ -86,7 +86,11 @@ class _NotifcationScreenState extends State<NotifcationScreen> {
                         title: notificationController.results[index].title,
                         middleText:
                             notificationController.results[index].description,
-                        cancel: Text(AppConfig.ok.tr));
+                        cancel: TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text(
+                              AppConfig.ok.tr,
+                            )));
                     controller.readNotification(
                         notificationController.results[index].id);
                   },

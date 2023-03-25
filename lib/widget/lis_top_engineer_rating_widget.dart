@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
+import 'package:your_engineer/widget/shared_widgets/image_network.dart';
 import 'package:your_engineer/widget/shared_widgets/my_favorite_button.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
@@ -46,18 +46,25 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ImageCached(
+                image: topEngineerRatingModel.imgPath,
+                // ApiUrl.root + "/" + populerServicesModel.imageUrlServices,
+                height: 150,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
               // Image.network(
               //   topEngineerRatingModel.user.imgPath,
               //   height: size.height * .2,
               //   width: double.infinity,
               //   fit: BoxFit.fill,
               // ),
-              Image.asset(
-                AppImage.img11,
-                height: size.height * .2,
-                width: double.infinity,
-                fit: fit,
-              ),
+              // Image.asset(
+              //   AppImage.img11,
+              //   height: size.height * .2,
+              //   width: double.infinity,
+              //   fit: fit,
+              // ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5),
@@ -65,8 +72,8 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextWidget(
-                      title: "",
-                      // title: topEngineerRatingModel.fullname,
+                      // title: "",
+                      title: topEngineerRatingModel.fullname,
                       fontSize: 18,
                       color: colorScheme.onSecondary,
                       isTextStart: false,
@@ -88,7 +95,8 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
                 child: TextWidget(
-                  title: "specialization",
+                  // title: "specialization",
+                  title: "",
                   fontSize: 16,
                   color: colorScheme.secondary,
                   isTextStart: true,
@@ -102,7 +110,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     RatingBar(
                       sizeIcon: 15,
                       color: Colors.amber,
-                      rating: 4.5,
+                      rating: 0.0,
                       // rating: topEngineerRatingModel.user.rating,
                       onRatingChanged: (rating) {
                         // setState(() => this.rating = rating)
@@ -112,7 +120,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: TextWidget(
-                        title: 4.5.toString(),
+                        title: 0.0.toString(),
                         // title: topEngineerRatingModel.engineerRating.toString(),
                         fontSize: 15,
                         color: colorScheme.secondary,

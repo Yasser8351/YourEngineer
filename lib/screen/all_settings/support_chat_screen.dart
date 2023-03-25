@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 
+import '../../utilits/helper.dart';
+import '../../widget/shared_widgets/fcb_input.dart';
+import '../../widget/shared_widgets/my_button.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class SupportChatScreen extends StatefulWidget {
@@ -63,54 +65,58 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
             curve: Curves.fastOutSlowIn));
   }
 
+  bool isLoading = false;
+  TextEditingController _descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: _getAppBar(context, widget.name, widget.imageUrl),
-      bottomNavigationBar: Container(
-        height: size.height / 11,
-        width: size.width,
-        color: Theme.of(context).colorScheme.primary,
-        alignment: Alignment.center,
-        child: SizedBox(
-          height: size.height / 12,
-          width: size.width / 1.1,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: size.height / 17,
-                width: size.width / 1.3,
-                child: TextField(
-                  style: const TextStyle(color: Colors.white),
-                  cursorColor: Colors.white,
-                  controller: _message,
-                  decoration: const InputDecoration(
-                    hintStyle: TextStyle(
-                      color: Colors.white,
-                    ),
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                    ),
-                    hintText: "Send Message...",
-                    // border: OutlineInputBorder(
-                    //   borderRadius: BorderRadius.circular(8),
-                    // ),
-                  ),
-                ),
-              ),
-              IconButton(
-                  icon: const Icon(
-                    Icons.send,
-                    color: Colors.white,
-                  ),
-                  onPressed: onSendMessage),
-            ],
-          ),
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   height: size.height / 11,
+      //   width: size.width,
+      //   color: Theme.of(context).colorScheme.primary,
+      //   alignment: Alignment.center,
+      //   child: SizedBox(
+      //     height: size.height / 12,
+      //     width: size.width / 1.1,
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: [
+      //         SizedBox(
+      //           height: size.height / 17,
+      //           width: size.width / 1.3,
+      //           child: TextField(
+      //             style: const TextStyle(color: Colors.white),
+      //             cursorColor: Colors.white,
+      //             controller: _message,
+      //             decoration: const InputDecoration(
+      //               hintStyle: TextStyle(
+      //                 color: Colors.white,
+      //               ),
+      //               labelStyle: TextStyle(
+      //                 color: Colors.white,
+      //               ),
+      //               hintText: "Send Message...",
+      //               // border: OutlineInputBorder(
+      //               //   borderRadius: BorderRadius.circular(8),
+      //               // ),
+      //             ),
+      //           ),
+      //         ),
+      //         IconButton(
+      //             icon: const Icon(
+      //               Icons.send,
+      //               color: Colors.white,
+      //             ),
+      //             onPressed: onSendMessage),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+
       body: SingleChildScrollView(
         child: Container(
           color: Theme.of(context).colorScheme.primary,
@@ -123,6 +129,58 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
                   //   builder: (ctx) => Ch
                   // ));
                 },
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    TextFaildInput(
+                      label: "email",
+                      controller: _descriptionController,
+                      inputType: TextInputType.text,
+                      maxLines: 1,
+                      hint: "add Your Email", labelPaddingBottom: 20,
+                      // validationMessages: accountValidationMessages,
+                      textDirection: TextDirection.ltr,
+                    ),
+                    SizedBox(height: 10),
+                    TextFaildInput(
+                      label: "message",
+                      controller: _descriptionController,
+                      inputType: TextInputType.text,
+                      maxLines: 5,
+                      hint: "add Your Message", labelPaddingBottom: 20,
+                      // validationMessages: accountValidationMessages,
+                      textDirection: TextDirection.ltr,
+                    ),
+                    SizedBox(height: 10),
+                    MyButton(
+                      busy: isLoading,
+                      text: "submit",
+                      color: Theme.of(context).colorScheme.primary,
+                      onTap: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        if (_descriptionController.text.isEmpty) {
+                          Helper.showError(
+                              context: context, subtitle: "pleaseEnterMessage");
+                        } else {
+                          // await emergencyProvider
+                          //     .addContactUs(context,
+                          //         description: _descriptionController.text)
+                          //     .then((value) => setState(() {
+                          //           _descriptionController.clear();
+
+                          //           isLoading = false;
+                          //         }));
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 5),
               const Divider(color: Colors.white),
@@ -137,19 +195,19 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
     return AppBar(
       title: Row(
         children: [
-          InkWell(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => FullImage(imageUrl: imageUrl)));
-            },
-            child: CircleAvatar(
-              maxRadius: 25,
-              backgroundColor: Theme.of(context).primaryColor,
-              backgroundImage: AssetImage(
-                imageUrl,
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //         builder: (context) => FullImage(imageUrl: imageUrl)));
+          //   },
+          //   child: CircleAvatar(
+          //     maxRadius: 25,
+          //     backgroundColor: Theme.of(context).primaryColor,
+          //     backgroundImage: AssetImage(
+          //       imageUrl,
+          //     ),
+          //   ),
+          // ),
           const SizedBox(width: 30),
           Padding(
             padding: const EdgeInsets.only(top: 10),

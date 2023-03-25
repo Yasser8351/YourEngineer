@@ -102,6 +102,15 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                         },
                       ),
                       const SizedBox(height: 35),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextWidget(
+                            title:
+                                "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
+                            fontSize: 15,
+                            color: Colors.white),
+                      ),
+                      const SizedBox(height: 15),
                       ListProfileHorizontalWidget(
                         isPayScreen: true,
                         size: size,
@@ -116,6 +125,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // Text(paymentAccountsController.creditCardAccount),
+
                           Row(
                             children: [
                               TextWidget(
@@ -148,39 +158,6 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                               color: Colors.white),
                         ],
                       ),
-                      InkWell(
-                        onTap: () async {
-                          xfile = await ImagePicker()
-                              .pickImage(source: ImageSource.gallery);
-                          // Navigator.of(context).pop();
-                          myfile = File(xfile!.path);
-                          setState(() {});
-                        },
-                        child: Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 2,
-                                color: Colors.grey.shade300,
-                              ),
-                              borderRadius: BorderRadius.circular(10)),
-                          width: size.width * 1,
-                          height: size.height * .18,
-                          child: myfile != null
-                              ? Image.file(
-                                  myfile!,
-                                  fit: BoxFit.fill,
-                                )
-                              : Align(
-                                  alignment: Alignment.center,
-                                  child: TextWidget(
-                                      title:
-                                          "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
-                                      fontSize: 13,
-                                      color: Colors.white),
-                                ),
-                        ),
-                      ),
                       BottomNavigationCardWidget(
                         userProfileModel: controller.userProfile,
                         size: size,
@@ -189,6 +166,39 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                         expandedIndex: expandedIndex,
                         isowner: true,
                         myfile: myfile,
+                        widget: InkWell(
+                          onTap: () async {
+                            xfile = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            // Navigator.of(context).pop();
+                            myfile = File(xfile!.path);
+                            setState(() {});
+                          },
+                          child: Container(
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 2,
+                                  color: Colors.grey.shade300,
+                                ),
+                                borderRadius: BorderRadius.circular(10)),
+                            width: size.width * 1,
+                            height: size.height * .18,
+                            child: myfile != null
+                                ? Image.file(
+                                    myfile!,
+                                    fit: BoxFit.fill,
+                                  )
+                                : Align(
+                                    alignment: Alignment.center,
+                                    child: TextWidget(
+                                        title:
+                                            "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار هنا",
+                                        fontSize: 13,
+                                        color: Colors.black),
+                                  ),
+                          ),
+                        ),
                         // onTap: () async {
                         //   xfile = await ImagePicker()
                         //       .pickImage(source: ImageSource.gallery);

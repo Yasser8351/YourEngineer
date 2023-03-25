@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
@@ -8,6 +9,7 @@ import '../app_config/app_config.dart';
 import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 import '../model/faq_model.dart';
+import '../model/privacy_policy_model.dart';
 import '../sharedpref/user_share_pref.dart';
 import '../utilits/helper.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +29,8 @@ class FaqController extends GetxController {
   String message = "";
   bool get status => _status;
   bool _status = false;
+  PrivacyPolicyModel privacyPolicyModel =
+      PrivacyPolicyModel(id: '', description: '', createdAt: '', updatedAt: '');
 
   Future<ApiResponse> getFaq() async {
     loadingState(LoadingState.loading);
@@ -95,5 +99,48 @@ class FaqController extends GetxController {
       myLog("catch error getFaq: ", error.toString());
     }
     return apiResponse;
+  }
+
+  Future<void> getPrivacyPolicy() async {
+    loadingState(LoadingState.loading);
+
+    try {
+      var token = await _shared.getToken();
+
+      myLog("start methode", "getPrivacyPolicy");
+
+      var response = await Dio()
+          .get(
+            ApiUrl.getPrivacyPolicy,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog("response.statusCode methode", "${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        privacyPolicyModel = PrivacyPolicyModel.fromJson(response.data);
+
+        loadingState(LoadingState.loaded);
+
+        update();
+      } else {
+        loadingState(LoadingState.error);
+      }
+    } catch (error) {
+      loadingState(LoadingState.error);
+      if (error is TimeoutException) {
+        Get.defaultDialog(title: AppConfig.timeOut.tr);
+      }
+      if (error is SocketException) {
+        Get.defaultDialog(title: AppConfig.failedInternet.tr);
+      } else {
+        Get.defaultDialog(title: AppConfig.errorOoccurred.tr);
+      }
+
+      myLog("catch getPrivacyPolicy", error.toString());
+    }
   }
 }

@@ -30,7 +30,7 @@ class NotificationController extends GetxController {
 
       var response = await Dio()
           .get(
-            ApiUrl.getAllNotification(1, 15),
+            ApiUrl.getAllNotification(1, 25),
             options: Options(
               headers: ApiUrl.getHeader2(token: token),
             ),

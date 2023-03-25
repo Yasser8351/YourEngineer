@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 
@@ -45,15 +46,18 @@ class SettingsScreen extends StatelessWidget {
                   context,
                   AppConfig.addProjectScreen.tr,
                   Icons.content_paste_go,
-                  () => Navigator.of(context)
-                      .pushNamed(AppConfig.addProjectScreen)),
-              buildDivider(),
-              buildCardItem(
-                  context,
-                  AppConfig.termsOfServices.tr,
-                  Icons.front_hand_outlined,
-                  () => Navigator.of(context)
-                      .pushNamed(AppConfig.termsOfServices)),
+                  () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AddProjectScreen(),
+                      ))),
+              // .pushNamed(AppRouting.addProjectScreen)),
+              // buildDivider(),
+              // buildCardItem(
+              //     context,
+              //     AppConfig.termsOfServices.tr,
+              //     Icons.front_hand_outlined,
+              //     () => Navigator.of(context)
+              //         .pushNamed(AppRouting.privacyPolicy)),
+              // .pushNamed(AppConfig.termsOfServices)),
               buildDivider(),
               buildCardItem(
                 context,
@@ -89,7 +93,7 @@ class SettingsScreen extends StatelessWidget {
                   AppConfig.privacyPolicy.tr,
                   Icons.security,
                   () =>
-                      Navigator.of(context).pushNamed(AppConfig.privacyPolicy),
+                      Navigator.of(context).pushNamed(AppRouting.privacyPolicy),
                   true),
               buildDivider(),
               buildCardItem(context, AppConfig.logout.tr, Icons.logout,

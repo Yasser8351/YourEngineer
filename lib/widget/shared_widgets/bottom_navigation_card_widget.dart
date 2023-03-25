@@ -25,6 +25,7 @@ class BottomNavigationCardWidget extends StatefulWidget {
     required this.myfile,
     // required this.onTap,
     this.isowner = false,
+    this.widget = null,
   }) : super(key: key);
   final Size size;
   final ColorScheme colorScheme;
@@ -33,6 +34,7 @@ class BottomNavigationCardWidget extends StatefulWidget {
   final UserProfileModel userProfileModel;
   final bool isowner;
   final File? myfile;
+  final Widget? widget;
   // XFile? xfile;
   // final Function() onTap;
 
@@ -63,16 +65,17 @@ class _BottomNavigationCardWidgetState
             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
             child: widget.isowner
                 ? Builder(builder: (context) {
-                    if (widget.expandedIndex == 1) {
-                      return buildVisa(
-                          widget.colorScheme, widget.size, controller, context);
-                    }
+                    // if (widget.expandedIndex == 1||widget.expandedIndex == 2) {
+                    //   return buildVisa(
+                    //       widget.colorScheme, widget.size, controller, context);
+                    // }
                     return buildPaypal(
                       widget.colorScheme,
                       widget.size,
                       controller,
                       context,
                       widget.myfile,
+                      widget.widget,
                       // onTap: widget.onTap,
                     );
                   })
@@ -165,6 +168,7 @@ buildPaypal(
   ProfileUserController controller,
   BuildContext context,
   myfile,
+  widget,
   // {required Function() onTap}
 ) {
   return SingleChildScrollView(
@@ -172,6 +176,15 @@ buildPaypal(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
+        TextWidget(
+          title: 'اشعار التحويلة',
+          fontSize: 18,
+          color: colorScheme.onSecondary,
+        ),
+        SizedBox(height: size.height * .02),
+
+        widget,
+        SizedBox(height: size.height * .02),
         TextWidget(
           title: 'Amount',
           fontSize: 18,
@@ -182,10 +195,10 @@ buildPaypal(
           controller.amountController,
           'Add Amount',
           false,
-          TextInputType.text,
+          TextInputType.number,
           const Icon(Icons.add),
           colorScheme,
-          30,
+          50,
           1,
         ),
 

@@ -6,6 +6,7 @@ import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/binding/binding_app.dart';
 import 'package:your_engineer/controller/app_language_controller.dart';
 import 'package:your_engineer/screen/all_settings/faq_screen.dart';
+import 'package:your_engineer/screen/all_settings/privacy_policy_screen.dart';
 import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
@@ -194,6 +195,14 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: AppRouting.fag,
           page: () => const FAQScreen(),
+        ),
+        GetPage(
+          name: AppRouting.privacyPolicy,
+          page: () => const PrivacyPolicyScreen(),
+        ),
+        GetPage(
+          name: AppRouting.addProjectScreen,
+          page: () => const AddProjectScreen(),
         ),
       ],
     );

@@ -120,6 +120,7 @@ class AppConfig {
 
 class AppRouting {
   static const String loginScreen = "/Login";
+  static const String privacyPolicy = "/privacyPolicy";
   static const String splashScreen = "/splashScreen";
   static const String signUp = "/SignUp";
   static const String forgetPassword = "/forget password?";

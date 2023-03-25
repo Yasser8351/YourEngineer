@@ -31,7 +31,7 @@ class _ListProfileHorizontalWidgetState
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: widget.size.height * .1,
+      height: widget.size.height * .07,
       child: ListView.separated(
           separatorBuilder: (context, index) => const SizedBox(width: 27),
           scrollDirection: Axis.horizontal,

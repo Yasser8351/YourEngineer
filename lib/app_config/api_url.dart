@@ -1,5 +1,6 @@
 class ApiUrl {
   static const String _root = 'http://194.195.87.30:91/api/v1';
+  static const String root = _root;
   // 'https://http://194.195.87.30:91';
   //https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/
   static String get signup => '$_root/auth/signup';
@@ -23,6 +24,7 @@ class ApiUrl {
   static String get getPaypal => '$_root/site/paypal';
   static String get getCreditcard => '$_root/site/creditcard';
   static String get getCommission => '$_root/site/currentrate';
+  static String get getPrivacyPolicy => '$_root/site/privacy';
 
   static String getUsersById(String id) {
     return '$_root/users/show/$id';
