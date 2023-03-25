@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
@@ -13,7 +14,7 @@ import '../../screen/profile/add_skills_screen.dart';
 import '../../utilits/helper.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
-class BottomNavigationCardWidget extends StatelessWidget {
+class BottomNavigationCardWidget extends StatefulWidget {
   const BottomNavigationCardWidget({
     Key? key,
     required this.size,
@@ -21,6 +22,8 @@ class BottomNavigationCardWidget extends StatelessWidget {
     required this.expandedIndex,
     required this.hidePersonalInfo,
     required this.userProfileModel,
+    required this.myfile,
+    // required this.onTap,
     this.isowner = false,
   }) : super(key: key);
   final Size size;
@@ -29,7 +32,19 @@ class BottomNavigationCardWidget extends StatelessWidget {
   final bool hidePersonalInfo;
   final UserProfileModel userProfileModel;
   final bool isowner;
+  final File? myfile;
+  // XFile? xfile;
+  // final Function() onTap;
 
+  @override
+  State<BottomNavigationCardWidget> createState() =>
+      _BottomNavigationCardWidgetState();
+}
+
+class _BottomNavigationCardWidgetState
+    extends State<BottomNavigationCardWidget> {
+  // File? myfile;
+  // XFile? xfile;
   @override
   Widget build(BuildContext context) {
     String locale = Localizations.localeOf(context).languageCode;
@@ -39,32 +54,40 @@ class BottomNavigationCardWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(right: 0, left: 0),
         child: CardWithImage(
-          height: size.height * .7,
-          width: size.width,
-          colors: colorScheme.surface,
+          height: widget.size.height * .7,
+          width: widget.size.width,
+          colors: widget.colorScheme.surface,
           isBorderRadiusTopLefZero: true,
           onTap: () {},
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
-            child: isowner
+            child: widget.isowner
                 ? Builder(builder: (context) {
-                    if (expandedIndex == 1) {
-                      return buildVisa(colorScheme, size, controller, context);
+                    if (widget.expandedIndex == 1) {
+                      return buildVisa(
+                          widget.colorScheme, widget.size, controller, context);
                     }
-                    return buildPaypal(colorScheme, size, controller, context);
+                    return buildPaypal(
+                      widget.colorScheme,
+                      widget.size,
+                      controller,
+                      context,
+                      widget.myfile,
+                      // onTap: widget.onTap,
+                    );
                   })
                 : Builder(builder: (context) {
-                    if (expandedIndex == 1) {
+                    if (widget.expandedIndex == 1) {
                       return ReviewsWidget(
-                          size: size, colorScheme: colorScheme);
-                    } else if (expandedIndex == 2) {
-                      return buildBusinessFair(
-                          colorScheme, size, userProfileModel, locale);
-                    } else if (expandedIndex == 3) {
-                      return buildPaymentHistory(colorScheme);
+                          size: widget.size, colorScheme: widget.colorScheme);
+                    } else if (widget.expandedIndex == 2) {
+                      return buildBusinessFair(widget.colorScheme, widget.size,
+                          widget.userProfileModel, locale);
+                    } else if (widget.expandedIndex == 3) {
+                      return buildPaymentHistory(widget.colorScheme);
                     }
-                    return buildPersonalProfile(
-                        colorScheme, size, userProfileModel);
+                    return buildPersonalProfile(widget.colorScheme, widget.size,
+                        widget.userProfileModel);
                   }),
           ),
         ),
@@ -136,8 +159,14 @@ buildPersonalProfile(
   //
 }
 
-buildPaypal(ColorScheme colorScheme, Size size,
-    ProfileUserController controller, BuildContext context) {
+buildPaypal(
+  ColorScheme colorScheme,
+  Size size,
+  ProfileUserController controller,
+  BuildContext context,
+  myfile,
+  // {required Function() onTap}
+) {
   return SingleChildScrollView(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -159,24 +188,25 @@ buildPaypal(ColorScheme colorScheme, Size size,
           30,
           1,
         ),
-        SizedBox(height: size.height * .02),
-        TextWidget(
-          title: 'Email',
-          fontSize: 18,
-          color: colorScheme.onSecondary,
-        ),
-        SizedBox(height: size.height * .02),
-        buildTextFormFaild(
-          controller.emailController,
-          'Add Your Email',
-          false,
-          TextInputType.text,
-          const Icon(Icons.add),
-          colorScheme,
-          30,
-          1,
-        ),
-        SizedBox(height: size.height * .02),
+
+        // SizedBox(height: size.height * .02),
+        // TextWidget(
+        //   title: 'Email',
+        //   fontSize: 18,
+        //   color: colorScheme.onSecondary,
+        // ),
+        // SizedBox(height: size.height * .02),
+        // buildTextFormFaild(
+        //   controller.emailController,
+        //   'Add Your Email',
+        //   false,
+        //   TextInputType.text,
+        //   const Icon(Icons.add),
+        //   colorScheme,
+        //   30,
+        //   1,
+        // ),
+        // SizedBox(height: size.height * .02),
 
         //
         Padding(
@@ -186,46 +216,40 @@ buildPaypal(ColorScheme colorScheme, Size size,
           ),
           child: ElevatedButton(
             onPressed: () async {
-              if (controller.amountController.text.isEmpty ||
-                  controller.emailController.text.isEmpty) {
+              if (controller.amountController.text.isEmpty) {
                 Helper.showError(
                     context: context, subtitle: AppConfig.allFaildRequired.tr);
               } else {
                 // setState(() => isLoading = true);
 
-                bool isAddProject = await controller.addPaypal(context);
-                myLog('isAddProject', isAddProject);
+                bool isAddProject =
+                    await controller.accountChargeRequest(context, myfile);
                 // setState(() => isLoading = false);
 
-                if (isAddProject) {
-                  controller.clearController();
-                  Helper.showseuess(
-                      context: context,
-                      subtitle: AppConfig.addOfferSuccesfuly.tr);
-                } else {
-                  Helper.showError(
-                      context: context, subtitle: AppConfig.cannotaddOffer.tr);
-                }
+                // if (isAddProject) {
+                //   controller.clearController();
+                //   Helper.showseuess(
+                //       context: context,
+                //       subtitle: AppConfig.addOfferSuccesfuly.tr);
+                // } else {
+                //   Helper.showError(
+                //       context: context, subtitle: AppConfig.cannotaddOffer.tr);
+                // }
               }
             },
             child: GetBuilder<ProfileUserController>(builder: (controller) {
-              if (controller.statuse) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  child: Center(
-                      child: CircularProgressIndicator(color: Colors.white)),
-                );
-              } else {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  child: TextWidget(
-                      title: 'Add your Paypal',
-                      fontSize: 20,
-                      color: colorScheme.surface),
-                );
-              }
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                child: Center(
+                  child: controller.isLoding
+                      ? CircularProgressIndicator(color: Colors.white)
+                      : TextWidget(
+                          title: 'Send Data',
+                          fontSize: 20,
+                          color: colorScheme.surface),
+                ),
+              );
             }),
           ),
         ),

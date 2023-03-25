@@ -1,14 +1,16 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
-import 'package:your_engineer/widget/shared_widgets/bottom_navigation_card_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/list_profile_horizontal.dart';
 
 import '../../controller/profile_controller.dart';
 import '../../enum/all_enum.dart';
+import '../../widget/shared_widgets/bottom_navigation_card_widget.dart';
 import '../../widget/shared_widgets/card_profile_personal_info.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
 import 'add_pro_skills_screen.dart';
@@ -31,6 +33,8 @@ class ProfileEngineerScreen extends StatefulWidget {
 
 class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
   ProfileUserController controller = Get.put(ProfileUserController());
+  File? myfile;
+  XFile? xfile;
 
   @override
   void initState() {
@@ -131,11 +135,13 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                     }),
                   ),
                   BottomNavigationCardWidget(
-                      userProfileModel: controller.userProfile,
-                      size: size,
-                      hidePersonalInfo: widget.hidePersonalInfo,
-                      colorScheme: colorScheme,
-                      expandedIndex: expandedIndex),
+                    userProfileModel: controller.userProfile,
+                    size: size,
+                    hidePersonalInfo: widget.hidePersonalInfo,
+                    colorScheme: colorScheme,
+                    expandedIndex: expandedIndex,
+                    myfile: myfile,
+                  ),
                 ],
               ),
             ));

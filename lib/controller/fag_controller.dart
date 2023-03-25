@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';

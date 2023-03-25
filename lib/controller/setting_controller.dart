@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,6 +24,7 @@ class SettingControoler extends GetxController {
   }
 
   onProfileTap() {
+    log(status);
     if (status == 'ENGINEER') {
       Get.to(() => ProfileEngineerScreen(engeneerId: ''));
       return;
@@ -30,8 +33,9 @@ class SettingControoler extends GetxController {
       Get.to(() => ProfileUserScreen());
       return;
     }
-    if (status == '') {
-      Get.to(() => ProfileEngineerScreen(engeneerId: ''));
+    if (status == 'BOTH') {
+      // Get.to(() => ProfileEngineerScreen(engeneerId: ''));
+      Get.to(() => ProfileUserScreen());
       return;
     }
   }

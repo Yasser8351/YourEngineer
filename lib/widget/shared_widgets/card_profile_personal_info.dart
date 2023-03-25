@@ -65,7 +65,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                     isOwinr
                         ? // RatingBar
                         TextWidget(
-                            title: "Your balance \$200.0 ",
+                            title: "Your balance \$0.0 ",
                             fontSize: 18,
                             color: colorScheme.onSecondary)
                         : Row(

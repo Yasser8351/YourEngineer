@@ -20,6 +20,9 @@ class ApiUrl {
   static String get getFaq => '$_root/questions';
   static String get getUsersShow => '$_root/users/show';
   static String get resetPassword => '$_root/reset';
+  static String get getPaypal => '$_root/site/paypal';
+  static String get getCreditcard => '$_root/site/creditcard';
+  static String get getCommission => '$_root/site/currentrate';
 
   static String getUsersById(String id) {
     return '$_root/users/show/$id';

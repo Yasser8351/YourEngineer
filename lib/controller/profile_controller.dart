@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:http_parser/http_parser.dart';
+// import 'package:get/get.dart';
 // import 'package:intl/date_symbol_data_local.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
@@ -28,7 +31,7 @@ class ProfileUserController extends GetxController {
   final _shared = SharedPrefUser();
   UserProfileModel userProfile = UserProfileModel();
   ApiResponse apiResponse = ApiResponse();
-  bool isloding = false;
+  bool isLoding = false;
   String message = "";
   bool get status => _status;
   bool _status = false;
@@ -110,6 +113,78 @@ class ProfileUserController extends GetxController {
       myLog("catch error getUsersShow: ", error.toString());
     }
     return apiResponse;
+  }
+
+  Future<bool> accountChargeRequest(
+      BuildContext context, File imageFile) async {
+    myLog('start methode', 'accountChargeRequest');
+
+    var token = await _shared.getToken();
+    // final data = {
+    //   'amount': amountController.text,
+    //   //payments/feed
+    //   'attachment': '',
+    // };
+    FormData data = FormData.fromMap({
+      'amount': amountController.text,
+      'attachment': await MultipartFile.fromFile(
+        imageFile.path,
+        contentType:
+            MediaType("multipart", "${imageFile.path.split(".").last}"),
+      ),
+    });
+
+    try {
+      isLoding = true;
+      update();
+      var response = await Dio()
+          .post(
+            ApiUrl.accountChargeRequest,
+            data: data,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(const Duration(seconds: 20));
+
+      myLog(
+        'statusCode : ${response.statusCode} \n',
+        ''
+            'response : ${response.data}',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        statuse = true;
+        Helper.showseuess(
+            context: context, subtitle: response.data['msg'].toString());
+        isLoding = false;
+        update();
+        // await _shared.saveToken(response.body['token']);
+
+      } else {
+        Helper.showError(
+            context: context, subtitle: response.statusCode.toString());
+        print("nnnnnnnnnnonnnnoooooooooooo");
+
+        statuse = false;
+        update();
+      }
+    } catch (error) {
+      statuse = false;
+      update();
+
+      if (error.toString().contains('TimeoutException')) {
+        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else if (error.toString().contains('Http status error [401]')) {
+        Helper.showError(
+            context: context, subtitle: "خطأ في اسم المستخدم او كلمة المرور");
+      } else {
+        Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
+      }
+      myLog('catch error accountChargeRequest :', '$error');
+    }
+
+    return status;
   }
 
   Future<bool> addPaypal(BuildContext context) async {

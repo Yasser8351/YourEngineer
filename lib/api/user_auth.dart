@@ -123,7 +123,6 @@ class UserAuth {
       ApiParameters.profileImage: await MultipartFile.fromFile(
         imageFile.path,
         contentType: MediaType("image", "${imageFile.path.split(".").last}"),
-        // filename: imageFile.path,
       ),
       ApiParameters.credentials: await MultipartFile.fromFile(
         imageFile.path,
