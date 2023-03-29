@@ -25,10 +25,17 @@ class ApiUrl {
   static String get getCreditcard => '$_root/site/creditcard';
   static String get getCommission => '$_root/site/currentrate';
   static String get getPrivacyPolicy => '$_root/site/privacy';
-  static String get conversations => '$_root/conversations/chat?page=1&size=10';
 
   /// chat url
   ///
+  static String getLastchats(
+      {required int page, required int size, String search = ''}) {
+    return '$_root/conversations/lastchats?page=1&size=10&search=$search';
+  }
+
+  // static String get getLastchats =>
+  //     '$_root/conversations/lastchats?page=1&size=10&search=';
+  static String get conversations => '$_root/conversations/chat?page=1&size=10';
 
   static String getUsersById(String id) {
     return '$_root/users/show/$id';
