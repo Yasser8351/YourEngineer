@@ -31,6 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _passwordController = TextEditingController();
   final _comfirmPasswordController = TextEditingController();
   bool _obscureText = true;
+  bool _obscureText2 = true;
   File? myfile;
   XFile? xfile;
 
@@ -140,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         label: AppConfig.password.tr,
                         icon: IconButton(
                             onPressed: () {
-                              showHidePassword();
+                              showHidePassword(true);
                             },
                             icon: Icon(
                               _obscureText
@@ -155,10 +156,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         label: AppConfig.comfirmPassword.tr,
                         icon: IconButton(
                             onPressed: () {
-                              showHidePassword();
+                              showHidePassword(false);
                             },
-                            icon: const Icon(Icons.remove_red_eye)),
-                        obscure: true,
+                            icon: Icon(
+                              _obscureText2
+                                  ? Icons.remove_red_eye
+                                  : Icons.remove_done_rounded,
+                            )),
+                        obscure: _obscureText2,
                         inputType: TextInputType.text),
                     SizedBox(height: size.height * .025),
                     // const RadioButtonWidget(),
@@ -186,10 +191,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             setState(() {
                                               selectedval = value;
                                             });
-                                            print(
-                                                "selectedroole===============${selectedval}");
-                                            print(
-                                                "selectedroole   iiiiddd===============${userAuth.listrole[selectedval].id}");
                                           }),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 5),
@@ -214,68 +215,76 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                     InkWell(
                       onTap: () async {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) => Container(
-                                  height: 200,
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(height: 20),
-                                      Container(
-                                        width: double.infinity,
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.all(10),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 15, horizontal: 10),
-                                        color: Colors.blueAccent,
-                                        child: InkWell(
-                                          onTap: () async {
-                                            xfile = await ImagePicker()
-                                                .pickImage(
-                                                    source: ImageSource.camera);
-                                            Navigator.of(context).pop();
-                                            myfile = File(xfile!.path);
-                                            setState(() {});
-                                          },
-                                          child: const Text(
-                                            "Chose Image From Camera",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Container(
-                                        width: double.infinity,
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.all(10),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 15, horizontal: 10),
-                                        color: Colors.blueAccent,
-                                        child: InkWell(
-                                          onTap: () async {
-                                            XFile? xfile = await ImagePicker()
-                                                .pickImage(
-                                                    source:
-                                                        ImageSource.gallery);
-                                            Navigator.of(context).pop();
-                                            myfile = File(xfile!.path);
-                                            setState(() {});
-                                          },
-                                          child: const Text(
-                                            "Chose Image From Galary",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ));
+                        XFile? xfile = await ImagePicker()
+                            .pickImage(source: ImageSource.gallery);
+                        // Navigator.of(context).pop();
+                        myfile = File(xfile!.path);
+                        setState(() {});
+
+                        // showModalBottomSheet(
+                        //     context: context,
+                        //     builder: (context) => Container(
+                        //           height: 200,
+                        //           child: Column(
+                        //             children: [
+                        //               const SizedBox(height: 20),
+                        //               Container(
+                        //                 width: double.infinity,
+                        //                 alignment: Alignment.center,
+                        //                 margin: const EdgeInsets.all(10),
+                        //                 padding: const EdgeInsets.symmetric(
+                        //                     vertical: 15, horizontal: 10),
+                        //                 color: Colors.blueAccent,
+                        //                 child: InkWell(
+                        //                   onTap: () async {
+                        //                     xfile = await ImagePicker()
+                        //                         .pickImage(
+                        //                             source: ImageSource.camera);
+                        //                     Navigator.of(context).pop();
+                        //                     myfile = File(xfile!.path);
+                        //                     setState(() {});
+                        //                   },
+                        //                   child: const Text(
+                        //                     "Chose Image From Camera",
+                        //                     style: TextStyle(
+                        //                         fontSize: 15,
+                        //                         fontWeight: FontWeight.bold,
+                        //                         color: Colors.white),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //               const SizedBox(height: 10),
+                        //               Container(
+                        //                 width: double.infinity,
+                        //                 alignment: Alignment.center,
+                        //                 margin: const EdgeInsets.all(10),
+                        //                 padding: const EdgeInsets.symmetric(
+                        //                     vertical: 15, horizontal: 10),
+                        //                 color: Theme.of(context)
+                        //                     .colorScheme
+                        //                     .primary,
+                        //                 child: InkWell(
+                        //                   onTap: () async {
+                        //                     XFile? xfile = await ImagePicker()
+                        //                         .pickImage(
+                        //                             source:
+                        //                                 ImageSource.gallery);
+                        //                     Navigator.of(context).pop();
+                        //                     myfile = File(xfile!.path);
+                        //                     setState(() {});
+                        //                   },
+                        //                   child: const Text(
+                        //                     "Chose Image From Galary",
+                        //                     style: TextStyle(
+                        //                         fontSize: 15,
+                        //                         fontWeight: FontWeight.bold,
+                        //                         color: Colors.white),
+                        //                   ),
+                        //                 ),
+                        //               )
+                        //             ],
+                        //           ),
+                        //         ));
                       },
                       child: Container(
                         clipBehavior: Clip.antiAlias,
@@ -284,16 +293,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               width: 2,
                               color: Colors.grey.shade300,
                             ),
-                            borderRadius: BorderRadius.circular(50)),
+                            borderRadius: BorderRadius.circular(10)),
                         //
-                        width: size.width * .40,
+                        width: size.width * .60,
                         height: size.height * .20,
                         child: myfile != null
                             ? Image.file(
                                 myfile!,
                                 fit: BoxFit.fill,
                               )
-                            : null,
+                            : Center(child: Text("اضغط لاختيار صورة شخصية")),
                       ),
                     ),
                     // ),
@@ -328,7 +337,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     _lastNameController.text,
                                 email: _emailController.text,
                                 phone: _phoneController.text,
-                                userId: 0,
+                                userId: '',
                                 userImage: myfile.toString(),
                               );
 
@@ -422,9 +431,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  void showHidePassword() {
+  void showHidePassword(bool isPassw1) {
     setState(() {
-      _obscureText = !_obscureText;
+      if (isPassw1) {
+        _obscureText = !_obscureText;
+      } else {
+        _obscureText2 = !_obscureText2;
+      }
     });
   }
 }

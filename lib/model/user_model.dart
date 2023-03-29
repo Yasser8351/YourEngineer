@@ -16,6 +16,6 @@ class UserModel {
   String fullName;
   String email;
   String phone;
-  int userId;
+  String userId;
   String userImage;
 }

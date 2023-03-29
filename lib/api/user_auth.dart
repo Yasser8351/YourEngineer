@@ -48,9 +48,8 @@ class UserAuth {
 
       if (response.statusCode == 200) {
         var roles = rolesModelFromJson(jsonEncode(response.data));
-        listrole = roles;
-        // print("listttttttttttttttttttt======== ${listrole}");
-        // roleId = _listrole;
+        listrole =
+            roles.where((element) => element.roleName != "دعم فني").toList();
 
         if (listrole.isEmpty) {
           loadingState(LoadingState.noDataFound);
@@ -108,8 +107,6 @@ class UserAuth {
     // };
 
     final headers = {
-      // "Content-Type": "application/json",
-      // 'Accept': '*/*',
       'Accept': '*/*',
       'Content-Type': 'multipart/form-data',
     };
@@ -147,7 +144,7 @@ class UserAuth {
 
       myLog(
         'statusCode : ${response.statusCode} \n',
-        'response : ${response.data}',
+        'response id : ${response.data['id']}',
       );
 
       if (response.statusCode == 201) {

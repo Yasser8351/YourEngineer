@@ -6,7 +6,7 @@ class SharedPrefUser {
   Future<bool> login(UserModel userModel, int selectedrole) async {
     _prefs = await SharedPreferences.getInstance();
 
-    await _prefs.setInt('id', userModel.userId);
+    await _prefs.setString('id', userModel.userId);
     await _prefs.setString('fist_name', userModel.fistName);
     await _prefs.setString('last_name', userModel.lastName);
     await _prefs.setString(
@@ -57,6 +57,11 @@ class SharedPrefUser {
     return _prefs.getString('id') ?? '';
   }
 
+  Future<String> getUserAccountType() async {
+    _prefs = await SharedPreferences.getInstance();
+    return _prefs.getString('status') ?? '';
+  }
+
   Future<bool> logout() async {
     _prefs = await SharedPreferences.getInstance();
     await _prefs.setBool('login', false);
@@ -67,7 +72,7 @@ class SharedPrefUser {
     _prefs = await SharedPreferences.getInstance();
 
     var model = UserModel(
-      userId: _prefs.getInt('id') ?? 0,
+      userId: _prefs.getString('id') ?? '',
       email: _prefs.getString('email') ?? '',
       fistName: _prefs.getString('fist_name') ?? '',
       fullName: _prefs.getString('full_name') ?? '',
