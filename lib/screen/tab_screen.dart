@@ -8,19 +8,20 @@ import 'chat/chat_screen.dart';
 import 'home_screen.dart';
 
 class TabScreen extends StatefulWidget {
-  const TabScreen({Key? key}) : super(key: key);
+  TabScreen({Key? key, this.selectIndex = 0}) : super(key: key);
+  int selectIndex;
 
   @override
   State<TabScreen> createState() => _TabScreenState();
 }
 
 class _TabScreenState extends State<TabScreen> {
-  int _selectIndex = 0;
+  // int _selectIndex = 0;
   DateTime timeBackPressed = DateTime.now();
 
   void _navigateBottomBar(int index) {
     setState(() {
-      _selectIndex = index;
+      widget.selectIndex = index;
     });
   }
 
@@ -73,10 +74,10 @@ class _TabScreenState extends State<TabScreen> {
                 }
               },
               child: Scaffold(
-                body: _pages[_selectIndex],
+                body: _pages[widget.selectIndex],
                 bottomNavigationBar: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
-                  currentIndex: _selectIndex,
+                  currentIndex: widget.selectIndex,
                   onTap: _navigateBottomBar,
                   items: [
                     BottomNavigationBarItem(

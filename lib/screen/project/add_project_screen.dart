@@ -1,5 +1,7 @@
 // import 'dart:io';
 // import 'dart:html';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,6 +28,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
       Get.put(AddProjectController());
   bool isLoading = false;
   bool isLoadingSubCategory = false;
+  File? myfile;
   XFile? xfile;
   @override
   Widget build(BuildContext context) {
@@ -231,7 +234,102 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   const Icon(Icons.add),
                   colorScheme,
                   300,
-                  1,
+                  5,
+                ),
+
+                InkWell(
+                  onTap: () async {
+                    XFile? xfile = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
+                    // Navigator.of(context).pop();
+                    myfile = File(xfile!.path);
+                    setState(() {});
+
+                    // showModalBottomSheet(
+                    //     context: context,
+                    //     builder: (context) => Container(
+                    //           height: 200,
+                    //           child: Column(
+                    //             children: [
+                    //               const SizedBox(height: 20),
+                    //               Container(
+                    //                 width: double.infinity,
+                    //                 alignment: Alignment.center,
+                    //                 margin: const EdgeInsets.all(10),
+                    //                 padding: const EdgeInsets.symmetric(
+                    //                     vertical: 15, horizontal: 10),
+                    //                 color: Colors.blueAccent,
+                    //                 child: InkWell(
+                    //                   onTap: () async {
+                    //                     xfile = await ImagePicker()
+                    //                         .pickImage(
+                    //                             source: ImageSource.camera);
+                    //                     Navigator.of(context).pop();
+                    //                     myfile = File(xfile!.path);
+                    //                     setState(() {});
+                    //                   },
+                    //                   child: const Text(
+                    //                     "Chose Image From Camera",
+                    //                     style: TextStyle(
+                    //                         fontSize: 15,
+                    //                         fontWeight: FontWeight.bold,
+                    //                         color: Colors.white),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //               const SizedBox(height: 10),
+                    //               Container(
+                    //                 width: double.infinity,
+                    //                 alignment: Alignment.center,
+                    //                 margin: const EdgeInsets.all(10),
+                    //                 padding: const EdgeInsets.symmetric(
+                    //                     vertical: 15, horizontal: 10),
+                    //                 color: Theme.of(context)
+                    //                     .colorScheme
+                    //                     .primary,
+                    //                 child: InkWell(
+                    //                   onTap: () async {
+                    //                     XFile? xfile = await ImagePicker()
+                    //                         .pickImage(
+                    //                             source:
+                    //                                 ImageSource.gallery);
+                    //                     Navigator.of(context).pop();
+                    //                     myfile = File(xfile!.path);
+                    //                     setState(() {});
+                    //                   },
+                    //                   child: const Text(
+                    //                     "Chose Image From Galary",
+                    //                     style: TextStyle(
+                    //                         fontSize: 15,
+                    //                         fontWeight: FontWeight.bold,
+                    //                         color: Colors.white),
+                    //                   ),
+                    //                 ),
+                    //               )
+                    //             ],
+                    //           ),
+                    //         ));
+                  },
+                  child: Center(
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.grey.shade300,
+                          ),
+                          borderRadius: BorderRadius.circular(10)),
+                      //
+                      width: size.width * .60,
+                      height: size.height * .15,
+                      child: myfile != null
+                          ? Image.file(
+                              myfile!,
+                              fit: BoxFit.fill,
+                            )
+                          : Center(child: Text("ارفق ملف")),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -260,6 +358,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
             bool isAddProject = await addProjectController.addProject(
               context,
+              myfile,
             );
             setState(() => isLoading = false);
 
@@ -268,8 +367,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
               Helper.showseuess(
                   context: context, subtitle: "Succesfuly Added Projet");
 
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => TabScreen()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => TabScreen(selectIndex: 2)));
             } else {
               Helper.showError(
                   context: context, subtitle: "can not add projet");
@@ -366,6 +465,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
         controller: controller,
         keyboardType: inputType,
         maxLength: maxLength,
+        textInputAction: TextInputAction.next,
         maxLines: maxLines,
         scribbleEnabled: true,
         decoration: InputDecoration(hintText: label),

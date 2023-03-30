@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
           // name: AppRouting.tabScreen,
           name: '/',
 
-          page: () => const TabScreen(),
+          page: () => TabScreen(),
         ),
         GetPage(
           name: AppRouting.loginScreen,

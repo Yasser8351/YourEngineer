@@ -34,6 +34,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _obscureText2 = true;
   File? myfile;
   XFile? xfile;
+  File? myfile2;
+  XFile? xfile2;
 
   var selectedval;
 
@@ -220,71 +222,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // Navigator.of(context).pop();
                         myfile = File(xfile!.path);
                         setState(() {});
-
-                        // showModalBottomSheet(
-                        //     context: context,
-                        //     builder: (context) => Container(
-                        //           height: 200,
-                        //           child: Column(
-                        //             children: [
-                        //               const SizedBox(height: 20),
-                        //               Container(
-                        //                 width: double.infinity,
-                        //                 alignment: Alignment.center,
-                        //                 margin: const EdgeInsets.all(10),
-                        //                 padding: const EdgeInsets.symmetric(
-                        //                     vertical: 15, horizontal: 10),
-                        //                 color: Colors.blueAccent,
-                        //                 child: InkWell(
-                        //                   onTap: () async {
-                        //                     xfile = await ImagePicker()
-                        //                         .pickImage(
-                        //                             source: ImageSource.camera);
-                        //                     Navigator.of(context).pop();
-                        //                     myfile = File(xfile!.path);
-                        //                     setState(() {});
-                        //                   },
-                        //                   child: const Text(
-                        //                     "Chose Image From Camera",
-                        //                     style: TextStyle(
-                        //                         fontSize: 15,
-                        //                         fontWeight: FontWeight.bold,
-                        //                         color: Colors.white),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //               const SizedBox(height: 10),
-                        //               Container(
-                        //                 width: double.infinity,
-                        //                 alignment: Alignment.center,
-                        //                 margin: const EdgeInsets.all(10),
-                        //                 padding: const EdgeInsets.symmetric(
-                        //                     vertical: 15, horizontal: 10),
-                        //                 color: Theme.of(context)
-                        //                     .colorScheme
-                        //                     .primary,
-                        //                 child: InkWell(
-                        //                   onTap: () async {
-                        //                     XFile? xfile = await ImagePicker()
-                        //                         .pickImage(
-                        //                             source:
-                        //                                 ImageSource.gallery);
-                        //                     Navigator.of(context).pop();
-                        //                     myfile = File(xfile!.path);
-                        //                     setState(() {});
-                        //                   },
-                        //                   child: const Text(
-                        //                     "Chose Image From Galary",
-                        //                     style: TextStyle(
-                        //                         fontSize: 15,
-                        //                         fontWeight: FontWeight.bold,
-                        //                         color: Colors.white),
-                        //                   ),
-                        //                 ),
-                        //               )
-                        //             ],
-                        //           ),
-                        //         ));
                       },
                       child: Container(
                         clipBehavior: Clip.antiAlias,
@@ -305,7 +242,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             : Center(child: Text("اضغط لاختيار صورة شخصية")),
                       ),
                     ),
-                    // ),
+
+                    SizedBox(height: size.height * .045),
+                    InkWell(
+                      onTap: () async {
+                        XFile? xfile2 = await ImagePicker()
+                            .pickImage(source: ImageSource.gallery);
+                        // Navigator.of(context).pop();
+                        myfile2 = File(xfile2!.path);
+                        setState(() {});
+                      },
+                      child: Container(
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.grey.shade300,
+                            ),
+                            borderRadius: BorderRadius.circular(10)),
+                        //
+                        width: size.width * .60,
+                        height: size.height * .20,
+                        child: myfile2 != null
+                            ? Image.file(
+                                myfile2!,
+                                fit: BoxFit.fill,
+                              )
+                            : Center(child: Text("اضغط لاختيار صورة الهوية")),
+                      ),
+                    ),
 
                     SizedBox(height: size.height * .045),
                     isLoading

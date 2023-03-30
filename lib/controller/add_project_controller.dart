@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/route_manager.dart';
+// import 'package:get/get.dart';
 
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
@@ -253,32 +257,52 @@ class AddProjectController extends GetxController {
   }
 
   //addProject
-  Future<bool> addProject(BuildContext context) async {
+  Future<bool> addProject(
+    BuildContext context,
+    File? imageFile,
+  ) async {
     myLog('start methode', 'addProject');
 
     var token = await _pref.getToken();
     // print("token========================$token");
 
-    final data = {
-      // 'user_added_id': '9a49a238-218f-4eb3-8407-1db07ac7dc37',
+    // final data = {
+    //   // 'user_added_id': '9a49a238-218f-4eb3-8407-1db07ac7dc37',
+    //   'proj_title': titleController.text,
+    //   'proj_description': descriptionController.text,
+    //   'category_id': selectedSubCat,
+    //   'price_range_id': selectedPriceRange,
+    //   'proj_period': daysController.text,
+    //   'ProjectAttach': '',
+    //   'skills': skillsController.text,
+    // };
+    FormData data = FormData.fromMap({
       'proj_title': titleController.text,
       'proj_description': descriptionController.text,
       'category_id': selectedSubCat,
       'price_range_id': selectedPriceRange,
       'proj_period': daysController.text,
-      'ProjectAttach': '',
       'skills': skillsController.text,
-    };
+      "ProjectAttach": "",
+      // "ProjectAttach": imageFile == null
+      //     ? ""
+      //     : await MultipartFile.fromFile(
+      //         imageFile.path,
+      //         contentType: MediaType(
+      //           "image",
+      //           "${imageFile.path.split(".").last}",
+      //         ),
+      //       ),
+    });
     //
 
     try {
       var response = await Dio()
           .post(
-            // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/project',
             ApiUrl.addProject,
             data: data,
             options: Options(
-              headers: ApiUrl.getHeader(token: token),
+              headers: ApiUrl.getHeaderImage(token: token),
             ),
           )
           .timeout(const Duration(seconds: 20));
