@@ -32,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {
       userStatus = currentStatus;
       userId = _userId;
+
       userAccountType = _userAccountType;
     });
   }

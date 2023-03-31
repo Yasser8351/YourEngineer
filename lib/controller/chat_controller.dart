@@ -28,8 +28,8 @@ class ChatController extends GetxController {
 
   @override
   onInit() {
-    getLastchats();
     getUserId();
+    getLastchats();
     super.onInit();
   }
 

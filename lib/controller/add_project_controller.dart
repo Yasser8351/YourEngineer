@@ -264,18 +264,7 @@ class AddProjectController extends GetxController {
     myLog('start methode', 'addProject');
 
     var token = await _pref.getToken();
-    // print("token========================$token");
 
-    // final data = {
-    //   // 'user_added_id': '9a49a238-218f-4eb3-8407-1db07ac7dc37',
-    //   'proj_title': titleController.text,
-    //   'proj_description': descriptionController.text,
-    //   'category_id': selectedSubCat,
-    //   'price_range_id': selectedPriceRange,
-    //   'proj_period': daysController.text,
-    //   'ProjectAttach': '',
-    //   'skills': skillsController.text,
-    // };
     FormData data = FormData.fromMap({
       'proj_title': titleController.text,
       'proj_description': descriptionController.text,
@@ -306,14 +295,6 @@ class AddProjectController extends GetxController {
             ),
           )
           .timeout(const Duration(seconds: 20));
-      // var response = await http
-      //     .post(
-      //       // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/project',
-      //       Uri.parse(ApiUrl.addProject),
-      //       body: data,
-      //       headers: ApiUrl.getHeader(token: token),
-      //     )
-      //     .timeout(const Duration(seconds: 20));
 
       myLog(
         'statusCode : ${response.statusCode} \n',
@@ -334,8 +315,11 @@ class AddProjectController extends GetxController {
       }
     } catch (error) {
       _status = false;
-
-      myLog('error', error);
+      if (error is DioError) {
+        message = error.response!.data['msg'];
+        Helper.showError(
+            context: context, subtitle: error.response!.data['msg']);
+      }
 
       if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');

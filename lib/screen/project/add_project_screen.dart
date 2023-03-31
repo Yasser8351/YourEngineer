@@ -371,7 +371,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   builder: (context) => TabScreen(selectIndex: 2)));
             } else {
               Helper.showError(
-                  context: context, subtitle: "can not add projet");
+                  context: context, subtitle: addProjectController.message);
             }
           },
           child: Padding(

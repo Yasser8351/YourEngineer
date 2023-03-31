@@ -184,6 +184,7 @@ import 'package:your_engineer/controller/chat_controller.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 
 import '../../app_config/app_config.dart';
@@ -292,7 +293,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            icon: Icon(Icons.arrow_back_ios)),
+      ),
       body: SingleChildScrollView(
         child: GetBuilder<ChatController>(builder: (controller) {
           if (controller.loadingState.value == LoadingState.initial ||
@@ -317,6 +322,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   itemCount: controller.listChatBetweenUsers.length,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
+                    myLog("receiverId",
+                        controller.listChatBetweenUsers[index].receiverId);
                     return InkWell(
                       onTap: () {
                         // Navigator.of(context).push(MaterialPageRoute(
@@ -328,23 +335,49 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       },
                       // child: ChatWidget(
                       //   messageModel: listChat[index],
-                      child: Column(
-                        children: [
-                          Center(
-                              child: Align(
-                            alignment: controller.listChatBetweenUsers[index]
-                                        .receiverId ==
-                                    controller.userId
-                                ? Alignment.centerRight
-                                : Alignment.centerLeft,
-                            child: Text(
-                              controller.listChatBetweenUsers[index].message
-                                  .toString(),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * .1,
+                        color:
+                            controller.listChatBetweenUsers[index].receiverId ==
+                                    "3e801c4b-072e-433b-8065-4e791675ef37"
+                                ? Colors.grey
+                                : Colors.green,
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(14.0),
+                                child: Align(
+                                  alignment: controller
+                                              .listChatBetweenUsers[index]
+                                              .receiverId ==
+                                          "3e801c4b-072e-433b-8065-4e791675ef37"
+                                      ? Alignment.centerRight
+                                      : Alignment.centerLeft,
+                                  child: Text(
+                                    controller
+                                        .listChatBetweenUsers[index].message
+                                        .toString(),
+                                  ),
+                                ),
+                              ),
                             ),
-                          )),
-                          // Center(child: Text(list[index]['time'].toString())),
-                          // Center(child: Text(list[index]['senderId'].toString())),
-                        ],
+                            Align(
+                              alignment: controller.listChatBetweenUsers[index]
+                                          .receiverId ==
+                                      "3e801c4b-072e-433b-8065-4e791675ef37"
+                                  ? Alignment.centerRight
+                                  : Alignment.centerLeft,
+                              child: Text(
+                                dateFormat(controller
+                                    .listChatBetweenUsers[index].createdAt
+                                    .toString()),
+                              ),
+                            ),
+                            // Center(child: Text(list[index]['time'].toString())),
+                            // Center(child: Text(list[index]['senderId'].toString())),
+                          ],
+                        ),
                       ),
                     );
                   },
