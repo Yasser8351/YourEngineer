@@ -19,6 +19,12 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   ChatController chatController = Get.put(ChatController());
 
+  @override
+  void initState() {
+    super.initState();
+    // chatController.getLastchats();
+  }
+
   // List<MessageModel> listChat = [
   //   MessageModel(
   //       name: "rasheed@g1.com",
@@ -45,29 +51,32 @@ class _ChatScreenState extends State<ChatScreen> {
                   }),
             );
           } else {
-            return Column(
-              children: [
-                const SizedBox(height: 20),
-                ListView.separated(
-                  separatorBuilder: (context, index) => const Divider(),
-                  shrinkWrap: true,
-                  itemCount: controller.lastChatsList.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ChatRoomScreen(
-                              // receiverName: 'rasheed@g1.com',
-                              ),
-                        ));
-                      },
-                      child: ChatWidget(
-                        messageModel: controller.lastChatsList[index],
-                      ),
-                    );
-                  },
-                ),
-              ],
+            return RefreshIndicator(
+              onRefresh: () => controller.getLastchats(),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  ListView.separated(
+                    separatorBuilder: (context, index) => const Divider(),
+                    shrinkWrap: true,
+                    itemCount: controller.lastChatsList.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ChatRoomScreen(
+                                // receiverName: 'rasheed@g1.com',
+                                ),
+                          ));
+                        },
+                        child: ChatWidget(
+                          messageModel: controller.lastChatsList[index],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             );
             // SingleChildScrollView(
             //   child: Center(

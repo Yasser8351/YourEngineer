@@ -93,9 +93,8 @@ class UserAuth {
   }
 
   Future<bool> userSignup(BuildContext context, UserModel userModel,
-      String password, int selectedrole, File imageFile) async {
+      String password, int selectedrole, File imageFile, File imageId) async {
     myLog('start methode', 'userSignup');
-    print("selectedroole   iiiiddd===============${listrole[selectedrole].id}");
 
     // final data = {
     //   ApiParameters.email: userModel.email,
@@ -116,16 +115,13 @@ class UserAuth {
       ApiParameters.password: password,
       ApiParameters.phone: userModel.phone,
       ApiParameters.roleId: listrole[selectedrole].id,
-      // ApiParameters.profileImage: userModel.userImage,
       ApiParameters.profileImage: await MultipartFile.fromFile(
         imageFile.path,
         contentType: MediaType("image", "${imageFile.path.split(".").last}"),
       ),
       ApiParameters.credentials: await MultipartFile.fromFile(
-        imageFile.path,
-        contentType: MediaType("image", "${imageFile.path.split(".").last}"),
-
-        // filename: imageFile.path,
+        imageId.path,
+        contentType: MediaType("image", "${imageId.path.split(".").last}"),
       ),
     });
 

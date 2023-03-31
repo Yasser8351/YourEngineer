@@ -178,13 +178,17 @@
 //   );
 // }
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart';
+import 'package:your_engineer/controller/chat_controller.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 
-import '../../app_config/app_image.dart';
-import '../../widget/shared_widgets/no_data.dart';
+import '../../app_config/app_config.dart';
+import '../../enum/all_enum.dart';
+import '../../widget/shared_widgets/reytry_error_widget.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({Key? key}) : super(key: key);
@@ -194,13 +198,17 @@ class ChatRoomScreen extends StatefulWidget {
 }
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
+  ChatController controller = Get.put(ChatController());
+
   late IO.Socket socket;
   bool onConnectError = false;
   String message = '';
+  List<dynamic> list = [];
 
   @override
   initState() {
     connectSocket();
+    controller.getChatBetweenUsers();
     super.initState();
   }
 
@@ -281,60 +289,88 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     super.dispose();
   }
 
-  List<dynamic> list = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      floatingActionButton: ElevatedButton(
-          onPressed: () {
-            sendMessage();
-          },
-          child: Text("data")),
       body: SingleChildScrollView(
-        child: Builder(builder: (context) {
-          if (onConnectError) {
-            return NoData(
-              textMessage: "Connect Error",
-              imageUrlAssets: AppImage.noData,
-              onTap: (() {}),
+        child: GetBuilder<ChatController>(builder: (controller) {
+          if (controller.loadingState.value == LoadingState.initial ||
+              controller.loadingState.value == LoadingState.loading) {
+            return Center(child: LoadingWidget());
+          } else if (controller.loadingState.value == LoadingState.error ||
+              controller.loadingState.value == LoadingState.noDataFound) {
+            return Center(
+              child: ReyTryErrorWidget(
+                  title: AppConfig.errorOoccurred.tr,
+                  onTap: () {
+                    controller.getChatBetweenUsers();
+                  }),
+            );
+          } else {
+            return Column(
+              children: [
+                const SizedBox(height: 20),
+                ListView.separated(
+                  separatorBuilder: (context, index) => const Divider(),
+                  shrinkWrap: true,
+                  itemCount: controller.listChatBetweenUsers.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => SupportChatScreen(
+                        //           imageUrl: listChat[index].imgeUrl,
+                        //           name: listChat[index].name,
+                        //         )));
+                        // Navigator.of(context).pushNamed(AppConfig.chatRoom);
+                      },
+                      // child: ChatWidget(
+                      //   messageModel: listChat[index],
+                      child: Column(
+                        children: [
+                          Center(
+                              child: Align(
+                            alignment: controller.listChatBetweenUsers[index]
+                                        .receiverId ==
+                                    controller.userId
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            child: Text(
+                              controller.listChatBetweenUsers[index].message
+                                  .toString(),
+                            ),
+                          )),
+                          // Center(child: Text(list[index]['time'].toString())),
+                          // Center(child: Text(list[index]['senderId'].toString())),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                controller.loadingStateChat.value == LoadingState.loading
+                    ? Center(child: CircularProgressIndicator())
+                    : ElevatedButton(
+                        onPressed: () {
+                          sendMessage();
+                          controller.createChat();
+                        },
+                        child: Text("Send")),
+              ],
             );
           }
-          return Column(
-            children: [
-              const SizedBox(height: 20),
-              ListView.separated(
-                separatorBuilder: (context, index) => const Divider(),
-                shrinkWrap: true,
-                itemCount: list.length,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => SupportChatScreen(
-                      //           imageUrl: listChat[index].imgeUrl,
-                      //           name: listChat[index].name,
-                      //         )));
-                      // Navigator.of(context).pushNamed(AppConfig.chatRoom);
-                    },
-                    // child: ChatWidget(
-                    //   messageModel: listChat[index],
-                    // ),
-
-                    child: Column(
-                      children: [
-                        Center(child: Text(list[index]['text'].toString())),
-                        Center(child: Text(list[index]['time'].toString())),
-                        Center(child: Text(list[index]['senderId'].toString())),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          );
-        }),
+          // else {
+          //   if (onConnectError) {
+          //     return NoData(
+          //       textMessage: "Connect Error",
+          //       imageUrlAssets: AppImage.noData,
+          //       onTap: (() {}),
+          //     );
+          //   }
+        }
+            // },
+            ),
       ),
     );
   }

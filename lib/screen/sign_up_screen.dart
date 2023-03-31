@@ -33,9 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _obscureText = true;
   bool _obscureText2 = true;
   File? myfile;
-  XFile? xfile;
   File? myfile2;
-  XFile? xfile2;
 
   var selectedval;
 
@@ -312,6 +310,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 _passwordController.text,
                                 selectedval,
                                 myfile!,
+                                myfile2!,
                               );
                               myLog('isSignup', isSignup);
                               setState(() => isLoading = false);

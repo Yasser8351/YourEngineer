@@ -27,15 +27,18 @@ class ApiUrl {
   static String get getPrivacyPolicy => '$_root/site/privacy';
 
   /// chat url
-  ///
   static String getLastchats(
       {required int page, required int size, String search = ''}) {
     return '$_root/conversations/lastchats?page=1&size=10&search=$search';
   }
 
-  // static String get getLastchats =>
-  //     '$_root/conversations/lastchats?page=1&size=10&search=';
-  static String get conversations => '$_root/conversations/chat?page=1&size=10';
+  static String getChatBetweenUsers({required int page, required int size}) {
+    return '$_root/conversations/chat?page=$page&size=$size';
+  }
+
+  static String get createChat => '$_root/conversations';
+
+  ///
 
   static String getUsersById(String id) {
     return '$_root/users/show/$id';
