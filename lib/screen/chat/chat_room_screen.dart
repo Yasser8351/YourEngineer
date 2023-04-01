@@ -184,12 +184,12 @@ import 'package:your_engineer/controller/chat_controller.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 
 import '../../app_config/app_config.dart';
 import '../../enum/all_enum.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
+import 'package:your_engineer/model/chat_models/chat_between_users_model.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({Key? key}) : super(key: key);
@@ -200,11 +200,12 @@ class ChatRoomScreen extends StatefulWidget {
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   ChatController controller = Get.put(ChatController());
+  TextEditingController messageController = TextEditingController();
 
   late IO.Socket socket;
   bool onConnectError = false;
-  String message = '';
-  List<dynamic> list = [];
+  // String message = '';
+  // List<ChatBetweenUsers> list = [];
 
   @override
   initState() {
@@ -227,12 +228,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       socket.onConnect((data) {
         myLog('onConnect', socket.connected);
       });
-      socket.emit('addUser', 'yasir@g1.com');
+      socket.emit('addUser', '"0a2e1e95-8607-48d2-9301-639945344a5e');
       socket.on(
           'getMessage',
           (data) => {
                 setState(() {
-                  list.add(data);
+                  controller.listChatBetweenUsers.add(data);
                 }),
               });
       socket.onDisconnect((data) => {
@@ -254,7 +255,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           'getMessage',
           (data) => {
                 setState(
-                  () => list.add(data),
+                  () => controller.listChatBetweenUsers
+                      .add(ChatBetweenUsers.fromJson(data)),
                 ),
               });
     } catch (e) {
@@ -265,20 +267,28 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 /**/
   sendMessage() {
     myLog('sendMessage', '');
-    String message = 'Test Test';
-    if (message.isEmpty) return;
+    // String message = 'Hi abohurira';
+    if (messageController.text.isEmpty) return;
+
+    // var map = ChatBetweenUsers.fromJson({
+    //   'receiverId': 'abohurira@g1.com',
+    //   'senderId': '"0a2e1e95-8607-48d2-9301-639945344a5e',
+    //   'text': message,
+    //   'time': DateTime.now().toIso8601String(),
+    // });
 
     Map<String, dynamic> map = {
-      'receiverId': 'rasheed@g1.com',
-      'senderId': 'yasir@g1.com',
-      'text': message,
+      'receiverId': '3e801c4b-072e-433b-8065-4e791675ef37',
+      'senderId': '"0a2e1e95-8607-48d2-9301-639945344a5e',
+      'text': messageController.text,
       'time': DateTime.now().toIso8601String(),
     };
 
     socket.emit('sendMessage', {
       map,
       setState((() {
-        list.add(map);
+        controller.createChat(message: messageController.text);
+        controller.listChatBetweenUsers.add(ChatBetweenUsers.fromJson2(map));
       }))
     });
   }
@@ -368,11 +378,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                                       "3e801c4b-072e-433b-8065-4e791675ef37"
                                   ? Alignment.centerRight
                                   : Alignment.centerLeft,
-                              child: Text(
-                                dateFormat(controller
-                                    .listChatBetweenUsers[index].createdAt
-                                    .toString()),
-                              ),
+                              // child: Text(
+                              //   dateFormat(controller
+                              //       .listChatBetweenUsers[index].createdAt
+                              //       .toString()),
+                              // ),
                             ),
                             // Center(child: Text(list[index]['time'].toString())),
                             // Center(child: Text(list[index]['senderId'].toString())),
@@ -384,12 +394,18 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                 ),
                 controller.loadingStateChat.value == LoadingState.loading
                     ? Center(child: CircularProgressIndicator())
-                    : ElevatedButton(
+                    : buildTextMessage(
                         onPressed: () {
                           sendMessage();
-                          controller.createChat();
                         },
-                        child: Text("Send")),
+                        message: messageController)
+                // controller.loadingStateChat.value == LoadingState.loading
+                //     ? Center(child: CircularProgressIndicator())
+                //     : ElevatedButton(
+                //         onPressed: () {
+                //           sendMessage();
+                //         },
+                //         child: Text("Send")),
               ],
             );
           }
@@ -405,6 +421,70 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             // },
             ),
       ),
+    );
+  }
+
+  buildTextMessage({
+    required TextEditingController message,
+    required Function() onPressed,
+  }) {
+    return Stack(
+      children: <Widget>[
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: Container(
+            padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+            height: 60,
+            width: double.infinity,
+            color: Colors.white,
+            child: Row(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlue,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: message,
+                    decoration: InputDecoration(
+                        hintText: "Write message...",
+                        hintStyle: TextStyle(color: Colors.black54),
+                        border: InputBorder.none),
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                FloatingActionButton(
+                  onPressed: onPressed,
+                  child: Icon(
+                    Icons.send,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  backgroundColor: Colors.blue,
+                  elevation: 0,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

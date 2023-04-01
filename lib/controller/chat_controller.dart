@@ -98,7 +98,7 @@ class ChatController extends GetxController {
 
       var response = await Dio()
           .post(
-            ApiUrl.getChatBetweenUsers(page: 1, size: 10),
+            ApiUrl.getChatBetweenUsers(page: 1, size: 20),
             data: data,
             options: Options(
               headers: ApiUrl.getHeader(token: token),
@@ -113,7 +113,7 @@ class ChatController extends GetxController {
         var chatBetweenUsersModel =
             ChatBetweenUsersModel.fromJson(response.data);
 
-        listChatBetweenUsers = chatBetweenUsersModel.results!;
+        listChatBetweenUsers = chatBetweenUsersModel.results!.reversed.toList();
 
         loadingState(LoadingState.loaded);
 
@@ -140,7 +140,7 @@ class ChatController extends GetxController {
     }
   }
 
-  Future<void> createChat() async {
+  Future<void> createChat({required String message}) async {
     loadingStateChat(LoadingState.loading);
 
     try {
@@ -148,7 +148,7 @@ class ChatController extends GetxController {
 
       FormData data = FormData.fromMap({
         "receiver_id": "3e801c4b-072e-433b-8065-4e791675ef37",
-        "message": "Hi Rasheed Test",
+        "message": message,
         "message_type": "message",
         "attachment": ""
         // "attachment": await MultipartFile.fromFile(
