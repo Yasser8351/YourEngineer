@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/state_manager.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -74,6 +75,10 @@ class UserAuth {
       loadingState(LoadingState.error);
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
+      if (error is DioError) {
+        showseuessToast(
+            error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
+      }
       if (error is TimeoutException) {
         showseuessToast(error.toString());
       } else if (error.toString().contains(
@@ -156,6 +161,12 @@ class UserAuth {
       }
     } catch (error) {
       status = false;
+      if (error is DioError) {
+        Helper.showError(
+            context: context,
+            subtitle:
+                error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
+      }
 
       setValueResponse(false);
 
@@ -221,6 +232,12 @@ class UserAuth {
       status = false;
 
       setValueResponse(false);
+      if (error is DioError) {
+        Helper.showError(
+            context: context,
+            subtitle:
+                error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
+      }
 
       myLog('error', error);
 
@@ -283,6 +300,12 @@ class UserAuth {
       status = false;
 
       setValueResponse(false);
+      if (error is DioError) {
+        Helper.showError(
+            context: context,
+            subtitle:
+                error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
+      }
 
       myLog('error', error);
 

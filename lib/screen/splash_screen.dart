@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:your_engineer/screen/tab_screen.dart';
@@ -69,6 +70,12 @@ class _SplashScreenState extends State<SplashScreen> {
         FirebaseMessaging.onMessage.listen((message) {
           if (message.notification != null) {
             log("FirebaseMessaging :  " + message.data.toString());
+
+            Get.rawSnackbar(
+              title: message.notification!.title,
+              message: message.notification!.body,
+              snackPosition: SnackPosition.TOP,
+            );
             showTopSnackBar(
               animationDuration: Duration(seconds: 7),
               context,

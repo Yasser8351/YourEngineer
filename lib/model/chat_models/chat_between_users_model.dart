@@ -59,6 +59,7 @@ class ChatBetweenUsers {
     senderId = json['senderId'] ?? '';
     receiverId = json['receiverId'] ?? '';
     message = json['text'] ?? '';
+    messageType = json['message_type'] ?? '';
   }
 
   Map<String, dynamic> toJson() {

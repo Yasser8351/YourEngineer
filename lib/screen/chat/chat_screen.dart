@@ -65,8 +65,11 @@ class _ChatScreenState extends State<ChatScreen> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatRoomScreen(
-                                // receiverName: 'rasheed@g1.com',
-                                ),
+                              receiverId: controller.userId ==
+                                      controller.lastChatsList[index].senderId
+                                  ? controller.lastChatsList[index].receiverId
+                                  : controller.lastChatsList[index].senderId,
+                            ),
                           ));
                         },
                         child: ChatWidget(

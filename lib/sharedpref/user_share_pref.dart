@@ -54,7 +54,7 @@ class SharedPrefUser {
 
   Future<String> getId() async {
     _prefs = await SharedPreferences.getInstance();
-    return _prefs.getString('id') ?? '';
+    return _prefs.getString('id') ?? '2f8fd23e-d3fc-43a6-b111-2678b065d2c0';
   }
 
   Future<String> getUserAccountType() async {

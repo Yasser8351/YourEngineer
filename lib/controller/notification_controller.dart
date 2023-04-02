@@ -19,6 +19,7 @@ class NotificationController extends GetxController {
   List<Result> results = [];
 
   int unreadCount = 0;
+  String imggProfile = '';
 
   Future<void> getAllNotification() async {
     loadingState(LoadingState.loading);
@@ -89,6 +90,7 @@ class NotificationController extends GetxController {
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;
         unreadCount = map['unreadCount'] ?? 0;
+        imggProfile = map['imgPath'] ?? '';
 
         // unreadCount = notificationUnReadModel.unreadCount;
         myLog("unreadCount", "${unreadCount}");

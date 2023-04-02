@@ -21,22 +21,22 @@ class ChatController extends GetxController {
   final SharedPrefUser _pref = SharedPrefUser();
   var loadingState = LoadingState.initial.obs;
   var loadingStateChat = LoadingState.initial.obs;
-  String userId = '';
+  String userId = '2f8fd23e-d3fc-43a6-b111-2678b065d2c0';
 
   List<Chats> lastChatsList = [];
   List<ChatBetweenUsers> listChatBetweenUsers = [];
 
   @override
   onInit() {
-    getUserId();
+    // getUserId();
     getLastchats();
     super.onInit();
   }
 
-  getUserId() async {
-    userId = await _pref.getId();
-    myLog("userId", userId);
-  }
+  // getUserId() async {
+  //   userId = await _pref.getId();
+  //   myLog("userId", userId);
+  // }
 
   Future<void> getLastchats() async {
     loadingState(LoadingState.loading);
@@ -84,14 +84,14 @@ class ChatController extends GetxController {
     }
   }
 
-  Future<void> getChatBetweenUsers() async {
+  Future<void> getChatBetweenUsers({required String receiver_id}) async {
     loadingState(LoadingState.loading);
 
     try {
       var token = await _pref.getToken();
 
       final data = {
-        "receiver_id": "6204dcf5-c729-4add-a4c3-a26eca1808c9",
+        "receiver_id": receiver_id,
       };
 
       myLog("start methode", "getChatBetweenUsers");
@@ -140,14 +140,16 @@ class ChatController extends GetxController {
     }
   }
 
-  Future<void> createChat({required String message}) async {
+  Future<void> createChat(
+      {required String message, required String receiver_id}) async {
     loadingStateChat(LoadingState.loading);
 
     try {
       var token = await _pref.getToken();
 
       FormData data = FormData.fromMap({
-        "receiver_id": "3e801c4b-072e-433b-8065-4e791675ef37",
+        // "receiver_id": "3e801c4b-072e-433b-8065-4e791675ef37",
+        "receiver_id": receiver_id,
         "message": message,
         "message_type": "message",
         "attachment": ""

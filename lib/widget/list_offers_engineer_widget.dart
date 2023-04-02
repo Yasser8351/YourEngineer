@@ -147,7 +147,9 @@ class ListOffersEngineerWidget extends StatelessWidget {
                     SizedBox(width: 30),
                     ElevatedButton(
                         onPressed: () {
-                          Get.to(ChatRoomScreen());
+                          Get.to(ChatRoomScreen(
+                            receiverId: '',
+                          ));
                         },
                         child: Text(
                           "محادثة",

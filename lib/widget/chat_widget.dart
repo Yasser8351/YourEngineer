@@ -14,7 +14,7 @@ class ChatWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: TextWidget(
-          title: messageModel.recieverName,
+          title: messageModel.senderName,
           // textOverflow: TextOverflow.ellipsis,
           fontSize: 14,
           color: Colors.black),

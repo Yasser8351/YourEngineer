@@ -148,7 +148,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: AppRouting.chatRoom,
-          page: () => const ChatRoomScreen(), //receiverName: ''
+          page: () => const ChatRoomScreen(receiverId: ''), //receiverName: ''
         ),
         GetPage(
           name: AppRouting.language,

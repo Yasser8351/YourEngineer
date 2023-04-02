@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/state_manager.dart';
+import 'package:your_engineer/controller/notification_controller.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import '../../model/user_profile_model.dart';
 import 'card_with_image.dart';
@@ -27,6 +29,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var primaryColor = Theme.of(context).colorScheme.primary;
     // final _shared = SharedPrefUser();
 
     return CardWithImage(
@@ -98,19 +101,20 @@ class CardProfilePersonalInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    InkWell(
-                      onTap: () => Get.to(
-                          () => FullImage(imageUrl: userProfileModel.imgpath!)),
-                      child: CircleAvatar(
-                          radius: 30.0,
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                          backgroundImage:
-                              NetworkImage(userProfileModel.imgpath!)
-                          // backgroundImage: AssetImage(
-                          //     isMyProfile ? AppImage.img : AppImage.img11),
-                          ),
-                    ),
+                    GetBuilder<NotificationController>(builder: (controller) {
+                      return InkWell(
+                        onTap: () => Get.to(
+                            () => FullImage(imageUrl: controller.imggProfile)),
+                        child: CircleAvatar(
+                            radius: 30.0,
+                            backgroundColor: primaryColor,
+                            backgroundImage:
+                                NetworkImage(controller.imggProfile)
+                            // backgroundImage: AssetImage(
+                            //     isMyProfile ? AppImage.img : AppImage.img11),
+                            ),
+                      );
+                    }),
                     const SizedBox(height: 7),
                     hidePersonalInfo
                         ? SizedBox()
