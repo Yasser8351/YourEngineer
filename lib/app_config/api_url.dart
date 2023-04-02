@@ -22,6 +22,7 @@ class ApiUrl {
   static String get getUsersShow => '$_root/users/show';
   static String get resetPassword => '$_root/reset';
   static String get getPaypal => '$_root/site/paypal';
+  static String get getCurrentrateCommission => '$_root/site/currentrate';
   static String get getCreditcard => '$_root/site/creditcard';
   static String get getCommission => '$_root/site/currentrate';
   static String get getPrivacyPolicy => '$_root/site/privacy';

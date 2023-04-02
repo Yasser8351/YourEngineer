@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 
 import '../../utilits/helper.dart';
@@ -67,6 +69,50 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
 
   bool isLoading = false;
   TextEditingController _descriptionController = TextEditingController();
+
+  sendEmail({required String body, required String title}) async {
+    String data = 'رسالة جديدة';
+
+    setState(() {
+      // _isLoading = true;
+    });
+
+    // String username = "username@c-pinal.com";
+    // String password = "password";
+    String username = "sender@gulfsmo.net";
+    String password = "-zxu[vtQ.pU(";
+    final smtpServer = new SmtpServer("mail.gulfsmo.net",
+        // final smtpServer = new SmtpServer("domin.com",
+        username: username,
+        password: password,
+        port: 465,
+        ssl: true);
+
+    final message = Message()
+      ..from = Address(username, AppConfig.appName)
+      //..recipients.add('batagroup.info@gmail.com')
+      ..recipients.add('yasser8351@gmail.com')
+      ..subject = _message.text
+      ..text = data
+      ..html = data;
+
+    try {
+      await send(message, smtpServer);
+      setState(() {
+        // _isLoading = false;
+      });
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: ((context) => CompletSend())));
+    } on MailerException {
+      setState(
+        () {
+          // _isLoading = false;
+        },
+      );
+
+      // toastMessage(AppConfig.notsendemail);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

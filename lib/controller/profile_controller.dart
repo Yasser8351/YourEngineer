@@ -6,7 +6,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/utils.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:your_engineer/model/commission_model.dart';
 // import 'package:get/get.dart';
 // import 'package:intl/date_symbol_data_local.dart';
 import '../api/api_response.dart';
@@ -36,12 +38,14 @@ class ProfileUserController extends GetxController {
   bool get status => _status;
   bool _status = false;
   bool statuse = false;
+  double commission = 0.0;
 
   @override
   onInit() {
     super.onInit();
     initializeDateFormatting();
     getUsersShow('');
+    getCurrentrateCommission();
   }
 
   Future<ApiResponse> getUsersShow(String engeneerId) async {
@@ -328,5 +332,59 @@ class ProfileUserController extends GetxController {
     }
 
     return status;
+  }
+
+  /// getCurrentrateCommission
+
+  Future<void> getCurrentrateCommission() async {
+    loadingState(LoadingState.loading);
+
+    try {
+      var token = await _shared.getToken();
+
+      myLog("start methode", "getCurrentrateCommission");
+
+      var response = await Dio()
+          .get(
+            ApiUrl.getCurrentrateCommission,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog("response.statusCode methode", "${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        // final allNotificationModel =
+        commission = CommissionModel.fromJson(response.data).ratepercent!;
+
+        loadingState(LoadingState.loaded);
+
+        update();
+      } else {
+        loadingState(LoadingState.error);
+      }
+    } catch (error) {
+      loadingState(LoadingState.error);
+      if (error is DioError) {
+        showseuessToast(error.response!.data['msg']);
+        // Get.defaultDialog(title: AppConfig.timeOut.tr);
+      }
+      if (error is TimeoutException) {
+        showseuessToast(AppConfig.timeOut.tr);
+        // Get.defaultDialog(title: AppConfig.timeOut.tr);
+      }
+      if (error is SocketException) {
+        // Get.defaultDialog(title: AppConfig.failedInternet.tr);
+        showseuessToast(AppConfig.failedInternet.tr);
+      } else {
+        // Get.defaultDialog(title: AppConfig.errorOoccurred.tr);
+
+        showseuessToast(AppConfig.errorOoccurred.tr);
+      }
+
+      myLog("catch getCurrentrateCommission", error.toString());
+    }
   }
 }

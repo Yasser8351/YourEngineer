@@ -105,9 +105,8 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                         alignment: Alignment.centerRight,
                         child: TextWidget(
                             title:
-                                "عمولة التطبيق هي  ${controller.commission} دولار \n ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
+                                "${controller.commission} عمولة التطبيق هي /n ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
                             fontSize: 15,
-                            isTextStart: true,
                             color: Colors.white),
                       ),
                       const SizedBox(height: 15),

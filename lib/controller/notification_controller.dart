@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/utilits/helper.dart';
 
 import '../app_config/api_url.dart';
 import '../debugger/my_debuger.dart';
@@ -53,13 +54,21 @@ class NotificationController extends GetxController {
       }
     } catch (error) {
       loadingState(LoadingState.error);
+      if (error is DioError) {
+        showseuessToast(error.response!.data['msg']);
+        // Get.defaultDialog(title: AppConfig.timeOut.tr);
+      }
       if (error is TimeoutException) {
-        Get.defaultDialog(title: AppConfig.timeOut.tr);
+        showseuessToast(AppConfig.timeOut.tr);
+        // Get.defaultDialog(title: AppConfig.timeOut.tr);
       }
       if (error is SocketException) {
-        Get.defaultDialog(title: AppConfig.failedInternet.tr);
+        // Get.defaultDialog(title: AppConfig.failedInternet.tr);
+        showseuessToast(AppConfig.failedInternet.tr);
       } else {
-        Get.defaultDialog(title: AppConfig.errorOoccurred.tr);
+        // Get.defaultDialog(title: AppConfig.errorOoccurred.tr);
+
+        showseuessToast(AppConfig.errorOoccurred.tr);
       }
 
       myLog("catch getAllNotification", error.toString());

@@ -43,6 +43,7 @@ dependencies:
   another_flushbar: ^1.12.29
   simple_fontellico_progress_dialog: ^0.2.1
   top_snackbar_flutter: ^2.1.1
+  mailer:
 
   # firebase setup
   firebase_core: ^2.7.0
