@@ -148,10 +148,9 @@ class ChatController extends GetxController {
       var token = await _pref.getToken();
 
       FormData data = FormData.fromMap({
-        // "receiver_id": "3e801c4b-072e-433b-8065-4e791675ef37",
         "receiver_id": receiver_id,
         "message": message,
-        "message_type": "message",
+        "message_type": "text",
         "attachment": ""
         // "attachment": await MultipartFile.fromFile(
         //   imageId.path,
@@ -173,7 +172,6 @@ class ChatController extends GetxController {
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
       myLog("response.statusCode methode", "${response.statusCode} ");
-      myLog("response data", "${response.data}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         // var chatBetweenUsersModel =

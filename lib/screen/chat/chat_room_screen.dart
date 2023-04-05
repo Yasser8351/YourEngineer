@@ -181,6 +181,7 @@ _getAppBar(BuildContext context, String recevierName) {
 }
 
 */
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -207,17 +208,19 @@ class ChatRoomScreen extends StatefulWidget {
 }
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
-  ChatController controller = Get.put(ChatController());
+  ChatController chatController = Get.put(ChatController());
   TextEditingController messageController = TextEditingController();
 
   late IO.Socket socket;
   bool onConnectError = false;
+  List<dynamic> listChat = [];
+
   // List<ChatBetweenUsers> list = [];
 
   @override
   initState() {
     connectSocket();
-    controller.getChatBetweenUsers(receiver_id: widget.receiverId);
+    chatController.getChatBetweenUsers(receiver_id: widget.receiverId);
     super.initState();
   }
 
@@ -236,15 +239,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         myLog('onConnect', socket.connected);
       });
       socket.emit('addUser', "dash2022tech@gmail.com");
-      // socket.emit('addUser', controller.email);
-      socket.on(
-          'getMessage',
-          (data) => {
-                setState(() {
-                  myLog("data message", data);
-                  controller.listChatBetweenUsers.add(data);
-                }),
-              });
+      socket.on('getMessage', handleMessage);
+      // socket.on(
+      //     'getMessage',
+      //     (data) => {
+      //           setState(() {
+      //             chatController.listChatBetweenUsers.add(data);
+      //           }),
+      //         });
       socket.onDisconnect((data) => {
             myLog("message", data),
             setState(
@@ -258,20 +260,32 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             },
           ));
       socket.on('fromServer', (_) => myLog("fromServer", '_'));
-      socket.on(
-          'getMessage',
-          (data) => {
-                setState(
-                  () => controller.listChatBetweenUsers
-                      .add(ChatBetweenUsers.fromJson(data)),
-                ),
-              });
     } catch (e) {
       myLog('catch error', e.toString());
     }
   }
 
-/**/
+  handleMessage(dynamic data) {
+    log("getMessage");
+    // Map<String, dynamic> map = json.decode(data);
+    // List<dynamic> data = map["dataKey"];
+    // print(data[0]["name"]);
+    var d = data as Map<String, dynamic>;
+    // listChat.add(data);
+    log(data.toString());
+    myLog("message", d['text'].toString());
+    chatController.listChatBetweenUsers.add(ChatBetweenUsers.fromJson2(d));
+    setState(() {});
+
+    socket.on(
+        'getMessage',
+        (data) => {
+              setState(() {
+                listChat.add(data);
+              }),
+            });
+  }
+
   sendMessage() {
     myLog('sendMessage', '');
     if (messageController.text.isEmpty) return;
@@ -284,20 +298,29 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     // });
 
     Map<String, dynamic> map = {
-      // 'receiverId': '3e801c4b-072e-433b-8065-4e791675ef37',
-      'receiverId': widget.receiverId,
-      'senderId': controller.userId,
+      'senderId': "dash2022tech@gmail.com",
+      'receiverId': "rasheed@g1.com",
       'text': messageController.text,
       'time': DateTime.now().toIso8601String(),
+      'fileUrl': '',
       'message_type': 'text', //fileUrl
     };
 
     socket.emit('sendMessage', {
       map,
+      myLog('sendMessage', map),
       setState((() {
-        controller.createChat(
+        listChat.add(map['text']);
+      }))
+    });
+
+    socket.emit('sendMessage', {
+      map,
+      setState((() {
+        chatController.createChat(
             message: messageController.text, receiver_id: widget.receiverId);
-        controller.listChatBetweenUsers.add(ChatBetweenUsers.fromJson2(map));
+        chatController.listChatBetweenUsers
+            .add(ChatBetweenUsers.fromJson2(map));
         messageController.clear();
       }))
     });
@@ -312,7 +335,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log("idddd" + controller.userId);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -352,8 +374,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   itemCount: controller.listChatBetweenUsers.length,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    myLog("receiverId",
-                        controller.listChatBetweenUsers[index].receiverId);
                     return InkWell(
                       onTap: () {
                         // Navigator.of(context).push(MaterialPageRoute(
