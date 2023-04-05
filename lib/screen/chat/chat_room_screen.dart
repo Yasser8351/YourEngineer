@@ -27,11 +27,10 @@ class ChatRoomScreen extends StatefulWidget {
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   ChatController chatController = Get.put(ChatController());
   TextEditingController messageController = TextEditingController();
+  ScrollController scrollController = ScrollController();
 
   late IO.Socket socket;
   bool onConnectError = false;
-  // List<dynamic> listChat = [];
-
   @override
   initState() {
     connectSocket();
@@ -77,6 +76,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     log("getMessage");
     var d = data as Map<String, dynamic>;
     log(data.toString());
+    // scrollController.jumpTo(1);
     chatController.listChatBetweenUsers.add(ChatBetweenUsers.fromJson2(d));
     setState(() {});
   }
@@ -110,6 +110,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   void dispose() {
     socket.disconnect();
     socket.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -126,6 +127,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       ),
       bottomNavigationBar: buildTextMessage(
           onPressed: () {
+            scrollList();
             sendMessage();
           },
           message: messageController),
@@ -148,7 +150,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             return Column(
               children: [
                 const SizedBox(height: 20),
+                // ListView.separated(
                 ListView.separated(
+                  reverse: true,
+                  controller: scrollController,
                   separatorBuilder: (context, index) => const Divider(),
                   shrinkWrap: true,
                   itemCount: controller.listChatBetweenUsers.length,
@@ -213,6 +218,15 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           }
         }),
       ),
+    );
+  }
+
+  scrollList() {
+    log("scrollList");
+    scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
     );
   }
 
