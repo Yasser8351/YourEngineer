@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/model/resp.dart';
@@ -59,6 +60,10 @@ class AcceptOfferController extends GetxController {
       isLoading(false);
       status = false;
       myLog('error', error);
+      if (error is DioError) {
+        Helper.showError(
+            context: context, subtitle: error.response!.data['msg']);
+      }
 
       if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
