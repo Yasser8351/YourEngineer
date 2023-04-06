@@ -42,6 +42,7 @@ class AppConfig {
   static const String settings = "Settings";
   static const String home = "Home";
   static const String days = "Days";
+  static const String daysToDeliver = "days to deliver";
   static const String descreiption = "descreiptions";
   static const String price = "price";
   static const String project = "Project";
@@ -78,6 +79,9 @@ class AppConfig {
   static const String allOffer = "All offers";
 
   static const String seeAll = "See All";
+  static const String dayProject = "dayProject";
+  static const String priceRange = "Price Range";
+  static const String offer = "Offer";
   static const String allFaildRequired = "All fields are required";
   static const String topEngineerRating = "Top Engineer Rating";
   static const String populerServices = "Populer Services";

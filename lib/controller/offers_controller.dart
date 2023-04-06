@@ -89,6 +89,7 @@ class OfferController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         status = true;
+
         // getProjectsOffers(projectId);
         // await _shared.saveToken(response.body['token']);
 

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
+import '../app_config/app_config.dart';
 import '../enum/all_enum.dart';
 
 class ProjectControllerHome extends GetxController {
@@ -22,8 +23,9 @@ class ProjectControllerHome extends GetxController {
   int totalPages = 0;
   int totalItems = 0;
   int currentPage = 0;
+  String priceRange = '';
+  String projPeriod = '';
   List<dynamic> results = [];
-
   @override
   onInit() {
     super.onInit();
@@ -58,33 +60,30 @@ class ProjectControllerHome extends GetxController {
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;
 
-        results = map['results'];
-        totalPages = map["totalPages"];
-        totalItems = map["totalItems"];
-        currentPage = map["currentPage"];
+        // priceRange = ProjectModel.fromJson(map).results[0].priceRange.rangeName;
+        results = map['results'] ?? "";
+        totalPages = map["totalPages"] ?? "";
+        totalItems = map["totalItems"] ?? "";
+        currentPage = map["currentPage"] ?? "";
+        projPeriod = map["proj_period"] ?? "";
         loadingState(LoadingState.loaded);
         if (results.isEmpty) {
           loadingState(LoadingState.noDataFound);
         }
-
-        // setApiResponseValue('get Data Cars Sucsessfuly', true,
-        //     _listprojects, LoadingState.loaded.obs);
-        // }
       } else if (response.statusCode == 401) {
         loadingState(LoadingState.error);
-
-        // setApiResponseValue(AppConfig.unAutaristion, false,
-        //     _listPopulerServices, LoadingState.error.obs);
       } else {
         loadingState(LoadingState.error);
-
-        // setApiResponseValue(AppConfig.errorOoccurred, false,
-        //     _listPopulerServices, LoadingState.error.obs);
       }
     } catch (error) {
       loadingState(LoadingState.error);
-      // setApiResponseValue(error.toString(), false, _listPopulerServices,
-      //     LoadingState.error.obs);
+
+      if (error is DioError) {
+        if (error.response!.statusCode == 403) {
+          Get.offAll(() => AppRouting.loginScreen);
+          // Get.offAll(() => LoginScreen());
+        }
+      }
       if (error is TimeoutException) {
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {

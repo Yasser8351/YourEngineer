@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                   } else {
                     return SizedBox(
-                      height: size.height * .25,
+                      height: size.height * .41,
                       width: double.infinity,
                       child: ListView.separated(
                         separatorBuilder: (context, index) =>

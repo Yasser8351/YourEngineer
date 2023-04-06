@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/controller/offers_controller.dart';
 import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/screen/chat/chat_room_screen.dart';
+import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
-import 'package:your_engineer/widget/shared_widgets/rating_bar.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 import 'shared_widgets/card_decoration.dart';
 
@@ -28,8 +28,6 @@ class ListOffersEngineerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // log("IsProjectOwner " + resulte['projectoffers']['id'].toString());
-
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
@@ -50,8 +48,10 @@ class ListOffersEngineerWidget extends StatelessWidget {
                   InkWell(
                     onTap: () {},
                     child: CircleAvatar(
-                      radius: 40.0,
+                      radius: 45.0,
                       backgroundColor: colorScheme.primary,
+                      backgroundImage:
+                          NetworkImage(resulte['client']['imgPath'].toString()),
                     ),
                   ),
                   SizedBox(height: size.height * .05),
@@ -70,35 +70,30 @@ class ListOffersEngineerWidget extends StatelessWidget {
                         padding:
                             const EdgeInsets.only(top: 5, left: 10, right: 10),
                         child: TextWidget(
-                          title: 'engineerspecialist',
+                          title: '', // engineerspecialist
                           fontSize: 18,
                           color: colorScheme.secondary,
                           isTextStart: true,
                         ),
                       ),
+                      SizedBox(height: size.height * .01),
+
                       Row(
                         children: [
-                          // RatingBar
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                RatingBar(
-                                  sizeIcon: 15,
-                                  color: Colors.amber,
-                                  rating: 3.5,
-                                  //  offersEngineerModel.engineerRating,
-                                  onRatingChanged: (rating) {
-                                    // setState(() => this.rating = rating)
-                                  },
+                                TextWidget(
+                                  title: AppConfig.price.tr,
+                                  fontSize: 15,
+                                  color: colorScheme.secondary,
                                 ),
                                 const SizedBox(width: 7),
                                 TextWidget(
-                                  title: '3.5',
-                                  //  offersEngineerModel.engineerRating
-                                  //     .toString(),
+                                  title: resulte['price'].toString(),
                                   fontSize: 15,
                                   color: colorScheme.secondary,
                                 ),
@@ -107,10 +102,68 @@ class ListOffersEngineerWidget extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: size.height * .01),
+
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextWidget(
+                                  title: AppConfig.daysToDeliver.tr,
+                                  fontSize: 15,
+                                  color: colorScheme.secondary,
+                                ),
+                                const SizedBox(width: 7),
+                                TextWidget(
+                                  title: resulte['days_to_deliver'].toString(),
+                                  fontSize: 15,
+                                  color: colorScheme.secondary,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height * .01),
+
+                      // Row(
+                      //   children: [
+                      //     // RatingBar
+                      //     Padding(
+                      //       padding: const EdgeInsets.symmetric(horizontal: 10),
+                      //       child: Row(
+                      //         mainAxisAlignment: MainAxisAlignment.start,
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           RatingBar(
+                      //             sizeIcon: 15,
+                      //             color: Colors.amber,
+                      //             rating: 3.5,
+                      //             //  offersEngineerModel.engineerRating,
+                      //             onRatingChanged: (rating) {
+                      //               // setState(() => this.rating = rating)
+                      //             },
+                      //           ),
+                      //           const SizedBox(width: 7),
+                      //           TextWidget(
+                      //             title: '3.5',
+                      //             //  offersEngineerModel.engineerRating
+                      //             //     .toString(),
+                      //             fontSize: 15,
+                      //             color: colorScheme.secondary,
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+
+                      //   ],
+                      // ),
                       TextWidget(
-                        title:
-                            "${DateFormat('yyyy/MM/dd hh:mm').format(DateTime.parse(resulte['createdAt']))}",
-                        // offersEngineerModel.offersDate,
+                        title: dateFormat(resulte['createdAt']),
                         fontSize: 18,
                         color: colorScheme.secondary,
                       ),
@@ -118,7 +171,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: size.height * .01),
+              SizedBox(height: size.height * .02),
               Container(
                 height: size.height * .06,
                 child: TextWidget(
