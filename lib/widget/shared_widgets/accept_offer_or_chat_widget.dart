@@ -27,9 +27,7 @@ class AcceptOfferOrChatWidget extends StatelessWidget {
         SizedBox(width: 30),
         ElevatedButton(
             onPressed: () {
-              Get.to(ChatRoomScreen(
-                receiverId: '',
-              ));
+              Get.to(ChatRoomScreen(receiverId: '', receiverEmail: ''));
             },
             child: Text(
               "محادثة",

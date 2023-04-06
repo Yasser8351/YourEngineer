@@ -20,6 +20,7 @@ import 'api_parameters.dart';
 
 class UserAuth {
   bool status = false;
+
   final _shared = SharedPrefUser();
   String? roleId;
   List<RolesModel> listrole = [];
@@ -208,17 +209,14 @@ class UserAuth {
           )
           .timeout(const Duration(seconds: 20));
 
-      myLog(
-        'statusCode : ${response.statusCode} \n',
-        'response : ${response.data}',
-      );
-
       if (response.statusCode == 200) {
         status = true;
         await _shared.saveToken(
-            response.data['token'], response.data['status']);
-        // await _shared.login(userModel, selectedrole)
-        // print("toooken===========${response.data['token']}");
+            response.data['token'], response.data['status'], email);
+        myLog(
+          'statusCode : ${response.statusCode} \n',
+          'response : $email',
+        );
 
         setValueResponse(true);
       } else {

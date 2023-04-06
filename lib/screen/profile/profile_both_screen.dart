@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/app_config/app_image.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
+import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../../controller/payment_account_controller.dart';
@@ -18,19 +19,24 @@ import '../../widget/shared_widgets/card_profile_personal_info.dart';
 import '../../widget/shared_widgets/list_profile_horizontal.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
 
-class ProfileUserScreen extends StatefulWidget {
-  const ProfileUserScreen({Key? key}) : super(key: key);
+class ProfileBothScreen extends StatefulWidget {
+  const ProfileBothScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileUserScreen> createState() => _ProfileUserScreenState();
+  State<ProfileBothScreen> createState() => _ProfileBothScreenState();
 }
 
-class _ProfileUserScreenState extends State<ProfileUserScreen> {
+class _ProfileBothScreenState extends State<ProfileBothScreen> {
   ProfileUserController controller = Get.put(ProfileUserController());
   PaymentAccountsController paymentAccountsController =
       Get.put(PaymentAccountsController());
 
   var profileList = [
+    ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
+    ListHorizontalProfile(AppConfig.reviews, Icons.star),
+    ListHorizontalProfile(AppConfig.businessFair, Icons.badge),
+    ListHorizontalProfile(
+        AppConfig.paymentHistory, Icons.monetization_on_outlined),
     ListHorizontalProfile(AppConfig.paypal, Icons.payment,
         image: AppImage.paypal),
     ListHorizontalProfile(AppConfig.visa, Icons.visibility,
@@ -91,14 +97,28 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                       ),
                       CardProfilePersonalInfo(
                         userProfileModel: controller.userProfile,
-                        isOwinr: true,
-                        hidePersonalInfo: true,
+                        isOwinr: false,
+                        hidePersonalInfo: false,
                         size: size,
                         colorScheme: colorScheme,
                         onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => const AddProtofiloScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  const AddProtofiloScreen()));
                         },
+                      ),
+                      const SizedBox(height: 35),
+                      ListProfileHorizontalWidget(
+                        size: size,
+                        colorScheme: colorScheme,
+                        listHorizontalProfile: profileList,
+                        expandedIndex: expandedIndex,
+                        onTap: ((index) {
+                          setState(
+                            () => expandedIndex = index,
+                            //
+                          );
+                        }),
                       ),
                       const SizedBox(height: 35),
                       Align(

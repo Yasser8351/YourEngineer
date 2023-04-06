@@ -29,13 +29,15 @@ class ChatController extends GetxController {
 
   @override
   onInit() {
-    getUserId();
     getLastchats();
     super.onInit();
   }
 
   getUserId() async {
+    myLog("email", email);
+
     email = await _pref.getEmail();
+    update();
     myLog("email", email);
   }
 
@@ -114,6 +116,7 @@ class ChatController extends GetxController {
         var chatBetweenUsersModel =
             ChatBetweenUsersModel.fromJson(response.data);
 
+        // listChatBetweenUsers = chatBetweenUsersModel.results!;
         listChatBetweenUsers = chatBetweenUsersModel.results!.reversed.toList();
 
         loadingState(LoadingState.loaded);

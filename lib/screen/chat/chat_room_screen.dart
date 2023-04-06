@@ -17,8 +17,11 @@ import '../../widget/shared_widgets/reytry_error_widget.dart';
 import 'package:your_engineer/model/chat_models/chat_between_users_model.dart';
 
 class ChatRoomScreen extends StatefulWidget {
-  const ChatRoomScreen({Key? key, required this.receiverId}) : super(key: key);
+  const ChatRoomScreen(
+      {Key? key, required this.receiverId, required this.receiverEmail})
+      : super(key: key);
   final String receiverId;
+  final String receiverEmail;
 
   @override
   State<ChatRoomScreen> createState() => _ChatRoomScreenState();
@@ -27,7 +30,8 @@ class ChatRoomScreen extends StatefulWidget {
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   ChatController chatController = Get.put(ChatController());
   TextEditingController messageController = TextEditingController();
-  // ScrollController scrollController = ScrollController();
+
+  // ScrollController scrollController = ScrollController(); "dash2022tech@gmail.com
 
   late IO.Socket socket;
   bool onConnectError = false;
@@ -35,6 +39,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   initState() {
     connectSocket();
     chatController.getChatBetweenUsers(receiver_id: widget.receiverId);
+    chatController.getUserId();
     super.initState();
   }
 
@@ -52,7 +57,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       socket.onConnect((data) {
         myLog('onConnect', socket.connected);
       });
-      socket.emit('addUser', "dash2022tech@gmail.com");
+      socket.emit('addUser', chatController.email);
       socket.on('getMessage', handleMessage);
       socket.onDisconnect((data) => {
             myLog("message", data),
@@ -86,12 +91,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     if (messageController.text.isEmpty) return;
 
     Map<String, dynamic> map = {
-      'senderId': " dash2022tech@gmail.com",
-      'receiverId': "rasheed@g1.com",
+      'senderId': chatController.email,
+      'receiverId': widget.receiverEmail,
+      // 'receiverId': "rasheed@g1.com",
       'text': messageController.text,
       'time': DateTime.now().toIso8601String(),
       'fileUrl': '',
-      'message_type': 'text', //fileUrl
+      'message_type': 'text',
     };
 
     socket.emit('sendMessage', {
@@ -116,7 +122,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   @override
   Widget build(BuildContext context) {
-    myLog(chatController.email, "email");
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

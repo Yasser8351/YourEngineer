@@ -35,11 +35,13 @@ class SharedPrefUser {
     await _prefs.setString('phone', phone);
   }
 
-  Future<bool> saveToken(String token, String status) async {
+  Future<bool> saveToken(String token, String status,
+      [String email = '']) async {
     _prefs = await SharedPreferences.getInstance();
 
     await _prefs.setString('token', token);
     await _prefs.setString('status', status);
+    await _prefs.setString('email', email);
 
     return await _prefs.setBool('login', true);
   }

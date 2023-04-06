@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:your_engineer/screen/profile/profile_both_screen.dart';
 
 import '../screen/profile/profile_engineer_screen.dart';
 import '../screen/profile/profile_user_screen.dart';
@@ -35,7 +36,7 @@ class SettingControoler extends GetxController {
     }
     if (status == 'BOTH') {
       // Get.to(() => ProfileEngineerScreen(engeneerId: ''));
-      Get.to(() => ProfileUserScreen());
+      Get.to(() => ProfileBothScreen());
       return;
     }
   }
