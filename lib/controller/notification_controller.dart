@@ -48,6 +48,13 @@ class NotificationController extends GetxController {
         results = allNotificationModel.results;
         loadingState(LoadingState.loaded);
 
+        await _pref.save(
+            userId: response.data['id'],
+            fullname: response.data['fullname'],
+            phone: response.data['phone'],
+            email: response.data['email'],
+            userImage: response.data['imgPath']);
+
         update();
       } else {
         loadingState(LoadingState.error);

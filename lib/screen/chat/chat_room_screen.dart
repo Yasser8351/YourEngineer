@@ -27,7 +27,7 @@ class ChatRoomScreen extends StatefulWidget {
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   ChatController chatController = Get.put(ChatController());
   TextEditingController messageController = TextEditingController();
-  ScrollController scrollController = ScrollController();
+  // ScrollController scrollController = ScrollController();
 
   late IO.Socket socket;
   bool onConnectError = false;
@@ -86,7 +86,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     if (messageController.text.isEmpty) return;
 
     Map<String, dynamic> map = {
-      'senderId': "dash2022tech@gmail.com",
+      'senderId': " dash2022tech@gmail.com",
       'receiverId': "rasheed@g1.com",
       'text': messageController.text,
       'time': DateTime.now().toIso8601String(),
@@ -110,12 +110,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   void dispose() {
     socket.disconnect();
     socket.dispose();
-    scrollController.dispose();
+    // scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    myLog(chatController.email, "email");
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -127,7 +128,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       ),
       bottomNavigationBar: buildTextMessage(
           onPressed: () {
-            scrollList();
+            // scrollList();
             sendMessage();
           },
           message: messageController),
@@ -153,7 +154,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                 // ListView.separated(
                 ListView.separated(
                   reverse: true,
-                  controller: scrollController,
+                  // controller: scrollController,
                   separatorBuilder: (context, index) => const Divider(),
                   shrinkWrap: true,
                   itemCount: controller.listChatBetweenUsers.length,
@@ -221,14 +222,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     );
   }
 
-  scrollList() {
-    log("scrollList");
-    scrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
-  }
+  // scrollList() {
+  //   log("scrollList");
+  //   scrollController.animateTo(
+  //     0.0,
+  //     curve: Curves.easeOut,
+  //     duration: const Duration(milliseconds: 300),
+  //   );
+  // }
 
   buildTextMessage({
     required TextEditingController message,

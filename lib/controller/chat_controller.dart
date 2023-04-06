@@ -22,21 +22,22 @@ class ChatController extends GetxController {
   var loadingState = LoadingState.initial.obs;
   var loadingStateChat = LoadingState.initial.obs;
   String userId = '2f8fd23e-d3fc-43a6-b111-2678b065d2c0';
+  String email = '';
 
   List<Chats> lastChatsList = [];
   List<ChatBetweenUsers> listChatBetweenUsers = [];
 
   @override
   onInit() {
-    // getUserId();
+    getUserId();
     getLastchats();
     super.onInit();
   }
 
-  // getUserId() async {
-  //   userId = await _pref.getId();
-  //   myLog("userId", userId);
-  // }
+  getUserId() async {
+    email = await _pref.getEmail();
+    myLog("email", email);
+  }
 
   Future<void> getLastchats() async {
     loadingState(LoadingState.loading);

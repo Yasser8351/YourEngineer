@@ -217,7 +217,7 @@ class UserAuth {
         status = true;
         await _shared.saveToken(
             response.data['token'], response.data['status']);
-        // await _shared.login();
+        // await _shared.login(userModel, selectedrole)
         // print("toooken===========${response.data['token']}");
 
         setValueResponse(true);
