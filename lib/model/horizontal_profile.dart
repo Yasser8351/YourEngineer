@@ -4,6 +4,7 @@ class ListHorizontalProfile {
   String title;
   IconData icon;
   String image;
+  Widget widget;
 
-  ListHorizontalProfile(this.title, this.icon, {this.image = ''});
+  ListHorizontalProfile(this.title, this.icon, this.widget, {this.image = ''});
 }

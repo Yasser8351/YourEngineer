@@ -219,10 +219,6 @@ class OfferController extends GetxController {
         //   loadingState(LoadingState.noDataFound);
         // } else {
         loadingState(LoadingState.loaded);
-
-        // setApiResponseValue('get Data Cars Sucsessfuly', true,
-        //     _listprojects, LoadingState.loaded.obs);
-        // }
       } else if (response.statusCode == 401) {
         loadingState(LoadingState.error);
 

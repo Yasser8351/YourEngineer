@@ -7,7 +7,6 @@ import 'package:your_engineer/app_config/app_config.dart';
 
 import '../../utilits/helper.dart';
 import '../../widget/shared_widgets/fcb_input.dart';
-import '../../widget/shared_widgets/my_button.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
 class SupportChatScreen extends StatefulWidget {
@@ -58,7 +57,7 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
     super.dispose();
   }
 
-  void __scrollListToBottom() {
+  scrollListToBottom() {
     Timer(
         const Duration(milliseconds: 500),
         () => _scrollController.animateTo(
@@ -68,11 +67,12 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
   }
 
   bool isLoading = false;
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
   sendEmail({required String body, required String title}) async {
     String data = 'رسالة جديدة';
-
+    title = data;
     setState(() {
       // _isLoading = true;
     });
@@ -165,17 +165,10 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
 
       body: SingleChildScrollView(
         child: Container(
-          color: Theme.of(context).colorScheme.primary,
+          // color: Theme.of(context).colorScheme.primary,
           child: Column(
             children: [
               const SizedBox(height: 30),
-              GestureDetector(
-                onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (ctx) => Ch
-                  // ));
-                },
-              ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -184,7 +177,7 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
                     SizedBox(height: 10),
                     TextFaildInput(
                       label: "email",
-                      controller: _descriptionController,
+                      controller: _emailController,
                       inputType: TextInputType.text,
                       maxLines: 1,
                       hint: "add Your Email", labelPaddingBottom: 20,
@@ -201,30 +194,27 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
                       // validationMessages: accountValidationMessages,
                       textDirection: TextDirection.ltr,
                     ),
-                    SizedBox(height: 10),
-                    MyButton(
-                      busy: isLoading,
-                      text: "submit",
-                      color: Theme.of(context).colorScheme.primary,
-                      onTap: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        if (_descriptionController.text.isEmpty) {
-                          Helper.showError(
-                              context: context, subtitle: "pleaseEnterMessage");
-                        } else {
-                          // await emergencyProvider
-                          //     .addContactUs(context,
-                          //         description: _descriptionController.text)
-                          //     .then((value) => setState(() {
-                          //           _descriptionController.clear();
-
-                          //           isLoading = false;
-                          //         }));
-                        }
-                      },
-                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                        onPressed: () async {
+                          if (_descriptionController.text.isEmpty) {
+                            Helper.showError(
+                                context: context,
+                                subtitle: "pleaseEnterMessage");
+                          } else {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            sendEmail(
+                                body: _descriptionController.text, title: '');
+                          }
+                        },
+                        child: isLoading
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Padding(
+                                padding: const EdgeInsets.all(11.0),
+                                child: Text('Submit'),
+                              )),
                   ],
                 ),
               ),

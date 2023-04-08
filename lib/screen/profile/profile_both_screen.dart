@@ -32,16 +32,74 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
       Get.put(PaymentAccountsController());
 
   var profileList = [
-    ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
-    ListHorizontalProfile(AppConfig.reviews, Icons.star),
-    ListHorizontalProfile(AppConfig.businessFair, Icons.badge),
     ListHorizontalProfile(
-        AppConfig.paymentHistory, Icons.monetization_on_outlined),
-    ListHorizontalProfile(AppConfig.paypal, Icons.payment,
-        image: AppImage.paypal),
-    ListHorizontalProfile(AppConfig.visa, Icons.visibility,
-        image: AppImage.visa),
+      AppConfig.personalProfile,
+      Icons.person,
+      Icon(
+        Icons.person,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.reviews,
+      Icons.star,
+      Icon(
+        Icons.star,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.businessFair,
+      Icons.badge,
+      Icon(
+        Icons.person,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.paymentHistory,
+      Icons.monetization_on_outlined,
+      Icon(
+        Icons.person,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.paypal,
+      Icons.payment,
+      image: AppImage.paypal,
+      Image.asset(
+        AppImage.paypal,
+        width: 25,
+        height: 25,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.visa,
+      Icons.visibility,
+      image: AppImage.visa,
+      Image.asset(
+        AppImage.visa,
+        width: 25,
+        height: 25,
+      ),
+    ),
   ];
+
+  // ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
+  // ListHorizontalProfile(AppConfig.reviews, Icons.star),
+  // ListHorizontalProfile(AppConfig.businessFair, Icons.badge),
+  // ListHorizontalProfile(
+  //     AppConfig.paymentHistory, Icons.monetization_on_outlined),
+  // ListHorizontalProfile(AppConfig.paypal, Icons.payment,
+  //     image: AppImage.paypal),
+  // ListHorizontalProfile(AppConfig.visa, Icons.visibility,
+  //     image: AppImage.visa),
+
   int expandedIndex = 0;
   File? myfile;
   XFile? xfile;
@@ -110,6 +168,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                       const SizedBox(height: 35),
                       ListProfileHorizontalWidget(
                         size: size,
+                        isPayScreen: true,
                         colorScheme: colorScheme,
                         listHorizontalProfile: profileList,
                         expandedIndex: expandedIndex,
@@ -124,22 +183,24 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextWidget(
+                            isTextStart: true,
                             title:
-                                "${controller.commission} عمولة التطبيق هي /n ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
-                            fontSize: 15,
+                                "عمولة التطبيق هي  ${controller.commission} دولار \n ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
+                            fontSize: 16,
                             color: Colors.white),
                       ),
                       const SizedBox(height: 15),
-                      ListProfileHorizontalWidget(
-                        isPayScreen: true,
-                        size: size,
-                        colorScheme: colorScheme,
-                        listHorizontalProfile: profileList,
-                        expandedIndex: expandedIndex,
-                        onTap: ((index) {
-                          setState(() => expandedIndex = index);
-                        }),
-                      ),
+                      // ListProfileHorizontalWidget(
+                      //   isPayScreen: true,
+                      //   size: size,
+                      //   colorScheme: colorScheme,
+                      //   listHorizontalProfile: profileList,
+                      //   expandedIndex: expandedIndex,
+                      //   onTap: ((index) {
+                      //     setState(() => expandedIndex = index);
+                      //   }),
+                      // ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -185,8 +246,8 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                         hidePersonalInfo: false,
                         colorScheme: colorScheme,
                         expandedIndex: expandedIndex,
-                        isowner: true,
                         myfile: myfile,
+                        isoBoth: true,
                         widget: InkWell(
                           onTap: () async {
                             xfile = await ImagePicker()
@@ -220,16 +281,59 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                                   ),
                           ),
                         ),
-                        // onTap: () async {
-                        //   xfile = await ImagePicker()
-                        //       .pickImage(source: ImageSource.gallery);
-                        //   // Navigator.of(context).pop();
-                        //   log(myfile!.path);
-
-                        //   myfile = File(xfile!.path);
-                        //   setState(() {});
-                        // },
                       ),
+                      // BottomNavigationCardWidget(
+                      //   userProfileModel: controller.userProfile,
+                      //   size: size,
+                      //   hidePersonalInfo: true,
+                      //   colorScheme: colorScheme,
+                      //   expandedIndex: expandedIndex,
+                      //   isowner: true,
+                      //   myfile: myfile,
+                      //   widget: InkWell(
+                      //     onTap: () async {
+                      //       xfile = await ImagePicker()
+                      //           .pickImage(source: ImageSource.gallery);
+                      //       // Navigator.of(context).pop();
+                      //       myfile = File(xfile!.path);
+                      //       setState(() {});
+                      //     },
+                      //     child: Container(
+                      //       clipBehavior: Clip.antiAlias,
+                      //       decoration: BoxDecoration(
+                      //           border: Border.all(
+                      //             width: 2,
+                      //             color: Colors.grey.shade300,
+                      //           ),
+                      //           borderRadius: BorderRadius.circular(10)),
+                      //       width: size.width * 1,
+                      //       height: size.height * .18,
+                      //       child: myfile != null
+                      //           ? Image.file(
+                      //               myfile!,
+                      //               fit: BoxFit.fill,
+                      //             )
+                      //           : Align(
+                      //               alignment: Alignment.center,
+                      //               child: TextWidget(
+                      //                   title:
+                      //                       "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار هنا",
+                      //                   fontSize: 13,
+                      //                   color: Colors.black),
+                      //             ),
+                      //     ),
+                      //   ),
+
+                      //   // onTap: () async {
+                      //   //   xfile = await ImagePicker()
+                      //   //       .pickImage(source: ImageSource.gallery);
+                      //   //   // Navigator.of(context).pop();
+                      //   //   log(myfile!.path);
+
+                      //   //   myfile = File(xfile!.path);
+                      //   //   setState(() {});
+                      //   // },
+                      // ),
                     ],
                   ),
                 ),

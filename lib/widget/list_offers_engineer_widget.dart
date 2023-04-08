@@ -203,6 +203,8 @@ class ListOffersEngineerWidget extends StatelessWidget {
                           Get.to(ChatRoomScreen(
                             receiverId: '',
                             receiverEmail: '',
+                            image: resulte['client']['imgPath'],
+                            receiverName: resulte['client']['fullname'],
                           ));
                         },
                         child: Text(

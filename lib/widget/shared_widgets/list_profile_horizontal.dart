@@ -48,17 +48,20 @@ class _ListProfileHorizontalWidgetState
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      widget.isPayScreen
-                          ? Image.asset(
-                              widget.listHorizontalProfile[index].image,
-                              width: 25,
-                              height: 25,
-                            )
-                          : Icon(
-                              widget.listHorizontalProfile[index].icon,
-                              size: 22,
-                              color: widget.colorScheme.surface,
-                            ),
+                      widget.listHorizontalProfile[index].widget,
+                      // widget.listHorizontalProfile[index].image.isNotEmpty ||
+                      //         !widget.isPayScreen ||
+                      //         widget.isBoth
+                      //     ? Image.asset(
+                      //         widget.listHorizontalProfile[index].image,
+                      //         width: 25,
+                      //         height: 25,
+                      //       )
+                      //     : Icon(
+                      //         widget.listHorizontalProfile[index].icon,
+                      //         size: 22,
+                      //         color: widget.colorScheme.surface,
+                      //       ),
                       const SizedBox(
                         width: 3,
                       ),

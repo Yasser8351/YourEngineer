@@ -49,16 +49,78 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
   }
 
   var profileList = [
-    ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
-    ListHorizontalProfile(AppConfig.reviews, Icons.star),
-    ListHorizontalProfile(AppConfig.businessFair, Icons.badge),
     ListHorizontalProfile(
-        AppConfig.paymentHistory, Icons.monetization_on_outlined),
+      AppConfig.personalProfile,
+      Icons.person,
+      Icon(
+        Icons.person,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+
+    // Image.asset(
+    //       widget.listHorizontalProfile[index].image,
+    //       width: 25,
+    //       height: 25,
+    //     )
+    ListHorizontalProfile(
+      AppConfig.reviews,
+      Icons.star,
+      Icon(
+        Icons.star,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.businessFair,
+      Icons.badge,
+      Icon(
+        Icons.person,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.paymentHistory,
+      Icons.monetization_on_outlined,
+      Icon(
+        Icons.person,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
   ];
+
   var profileList2 = [
-    ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
-    ListHorizontalProfile(AppConfig.reviews, Icons.star),
-    ListHorizontalProfile(AppConfig.businessFair, Icons.badge),
+    ListHorizontalProfile(
+      AppConfig.personalProfile,
+      Icons.person,
+      Icon(
+        Icons.person,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.reviews,
+      Icons.star,
+      Icon(
+        Icons.star,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.businessFair,
+      Icons.badge,
+      Icon(
+        Icons.badge,
+        size: 22,
+        color: Colors.white,
+      ),
+    ),
   ];
   int expandedIndex = 0;
 

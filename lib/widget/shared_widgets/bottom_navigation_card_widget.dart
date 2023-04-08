@@ -26,6 +26,7 @@ class BottomNavigationCardWidget extends StatefulWidget {
     required this.myfile,
     // required this.onTap,
     this.isowner = false,
+    this.isoBoth = false,
     this.widget = null,
   }) : super(key: key);
   final Size size;
@@ -34,6 +35,7 @@ class BottomNavigationCardWidget extends StatefulWidget {
   final bool hidePersonalInfo;
   final UserProfileModel userProfileModel;
   final bool isowner;
+  final bool isoBoth;
   final File? myfile;
   final Widget? widget;
   // XFile? xfile;
@@ -64,23 +66,12 @@ class _BottomNavigationCardWidgetState
           onTap: () {},
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
-            child: widget.isowner
+            child: widget.isoBoth
                 ? Builder(builder: (context) {
-                    // if (widget.expandedIndex == 1||widget.expandedIndex == 2) {
-                    //   return buildVisa(
-                    //       widget.colorScheme, widget.size, controller, context);
-                    // }
-                    return buildPaypal(
-                      widget.colorScheme,
-                      widget.size,
-                      controller,
-                      context,
-                      widget.myfile,
-                      widget.widget,
-                      // onTap: widget.onTap,
-                    );
-                  })
-                : Builder(builder: (context) {
+                    if (widget.expandedIndex == 0) {
+                      return buildPersonalProfile(widget.colorScheme,
+                          widget.size, widget.userProfileModel);
+                    }
                     if (widget.expandedIndex == 1) {
                       return ReviewsWidget(
                           size: widget.size, colorScheme: widget.colorScheme);
@@ -94,10 +85,53 @@ class _BottomNavigationCardWidgetState
                       );
                     } else if (widget.expandedIndex == 3) {
                       return buildPaymentHistory(widget.colorScheme);
+                    } else {
+                      return buildPaypal(
+                        widget.colorScheme,
+                        widget.size,
+                        controller,
+                        context,
+                        widget.myfile,
+                        widget.widget,
+                        // onTap: widget.onTap,
+                      );
                     }
-                    return buildPersonalProfile(widget.colorScheme, widget.size,
-                        widget.userProfileModel);
-                  }),
+                  })
+                : widget.isowner
+                    ? Builder(builder: (context) {
+                        // if (widget.expandedIndex == 1||widget.expandedIndex == 2) {
+                        //   return buildVisa(
+                        //       widget.colorScheme, widget.size, controller, context);
+                        // }
+                        return buildPaypal(
+                          widget.colorScheme,
+                          widget.size,
+                          controller,
+                          context,
+                          widget.myfile,
+                          widget.widget,
+                          // onTap: widget.onTap,
+                        );
+                      })
+                    : Builder(builder: (context) {
+                        if (widget.expandedIndex == 1) {
+                          return ReviewsWidget(
+                              size: widget.size,
+                              colorScheme: widget.colorScheme);
+                        } else if (widget.expandedIndex == 2) {
+                          return buildBusinessFair(
+                            widget.colorScheme,
+                            widget.size,
+                            widget.userProfileModel,
+                            locale,
+                            // controller.listportfolioModel
+                          );
+                        } else if (widget.expandedIndex == 3) {
+                          return buildPaymentHistory(widget.colorScheme);
+                        }
+                        return buildPersonalProfile(widget.colorScheme,
+                            widget.size, widget.userProfileModel);
+                      }),
           ),
         ),
       ),

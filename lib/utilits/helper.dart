@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/enum/all_enum.dart';
 
-void clearText(TextEditingController controller) {
+clearText(TextEditingController controller) {
   controller.clear();
 }
 
@@ -19,6 +19,12 @@ showseuessToast(message) {
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.green);
+}
+
+navigatorToNewScreens(BuildContext context, screen) {
+  Navigator.of(context).push(
+    MaterialPageRoute(builder: (context) => screen),
+  );
 }
 
 class Helper {

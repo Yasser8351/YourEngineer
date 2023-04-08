@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -8,7 +9,9 @@ import 'package:your_engineer/debugger/my_debuger.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:your_engineer/screen/tab_screen.dart';
+import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../../app_config/app_config.dart';
 import '../../enum/all_enum.dart';
@@ -17,11 +20,17 @@ import '../../widget/shared_widgets/reytry_error_widget.dart';
 import 'package:your_engineer/model/chat_models/chat_between_users_model.dart';
 
 class ChatRoomScreen extends StatefulWidget {
-  const ChatRoomScreen(
-      {Key? key, required this.receiverId, required this.receiverEmail})
-      : super(key: key);
+  const ChatRoomScreen({
+    Key? key,
+    required this.receiverId,
+    required this.receiverEmail,
+    required this.receiverName,
+    required this.image,
+  }) : super(key: key);
   final String receiverId;
   final String receiverEmail;
+  final String receiverName;
+  final String image;
 
   @override
   State<ChatRoomScreen> createState() => _ChatRoomScreenState();
@@ -30,8 +39,10 @@ class ChatRoomScreen extends StatefulWidget {
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   ChatController chatController = Get.put(ChatController());
   TextEditingController messageController = TextEditingController();
+  bool isLoading = false;
 
-  // ScrollController scrollController = ScrollController(); "dash2022tech@gmail.com
+  ScrollController scrollController =
+      ScrollController(); // "dash2022tech@gmail.com
 
   late IO.Socket socket;
   bool onConnectError = false;
@@ -87,7 +98,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   }
 
   sendMessage() {
-    myLog('sendMessage', '');
+    myLog('sendMessage', chatController.email);
+    myLog('sendMessage', widget.receiverEmail);
     if (messageController.text.isEmpty) return;
 
     Map<String, dynamic> map = {
@@ -102,34 +114,73 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
     socket.emit('sendMessage', {
       map,
-      setState((() {
-        chatController.createChat(
-            message: messageController.text, receiver_id: widget.receiverId);
-        chatController.listChatBetweenUsers
-            .add(ChatBetweenUsers.fromJson2(map));
-        messageController.clear();
-      }))
+      // setState((() {
+      setState(
+        () => isLoading = !isLoading,
+      ),
+      chatController
+          .createChat(
+              message: messageController.text, receiver_id: widget.receiverId)
+          .then((value) => {
+                setState(() {
+                  isLoading = !isLoading;
+                  chatController.listChatBetweenUsers
+                      .add(ChatBetweenUsers.fromJson2(map));
+                  messageController.clear();
+                }),
+              })
     });
+
+    // }))
+    // });
   }
 
   @override
   void dispose() {
     socket.disconnect();
     socket.dispose();
-    // scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
+  }
+
+  scrollListToBottom() {
+    log("scrollListToBottom");
+    Timer(
+        Duration(milliseconds: 500),
+        () => scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Row(
+          children: [
+            InkWell(
+              onTap: () =>
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => FullImage(imageUrl: widget.image),
+              )),
+              child: CircleAvatar(
+                // backgroundColor: colorScheme.surface,
+                radius: 26.0,
+                backgroundImage: NetworkImage(widget.image),
+              ),
+            ),
+            SizedBox(width: 15),
+            TextWidget(
+                title: widget.receiverName, fontSize: 16, color: Colors.white),
+          ],
+        ),
         leading: IconButton(
             onPressed: () =>
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => TabScreen(selectIndex: 1),
                 )),
-            icon: Icon(Icons.arrow_back_ios)),
+            icon: Icon(Icons.arrow_back_ios, color: Colors.white)),
       ),
       bottomNavigationBar: buildTextMessage(
           onPressed: () {
@@ -139,6 +190,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           message: messageController),
       body: SingleChildScrollView(
         child: GetBuilder<ChatController>(builder: (controller) {
+          controller.listChatBetweenUsers =
+              controller.listChatBetweenUsers.reversed.toList();
           if (controller.loadingState.value == LoadingState.initial ||
               controller.loadingState.value == LoadingState.loading) {
             return Center(child: LoadingWidget());
@@ -159,12 +212,17 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                 // ListView.separated(
                 ListView.separated(
                   reverse: true,
-                  // controller: scrollController,
+                  controller: scrollController,
                   separatorBuilder: (context, index) => const Divider(),
                   shrinkWrap: true,
                   itemCount: controller.listChatBetweenUsers.length,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
+                    myLog("controller.email", controller.email);
+                    myLog("controller.receiverId",
+                        controller.listChatBetweenUsers[index].receiverId);
+                    scrollListToBottom();
+
                     return InkWell(
                       onTap: () {
                         // Navigator.of(context).push(MaterialPageRoute(
@@ -176,44 +234,54 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       },
                       // child: ChatWidget(
                       //   messageModel: listChat[index],
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * .1,
-                        color:
-                            controller.listChatBetweenUsers[index].receiverId ==
-                                    controller.userId
-                                ? Colors.grey
-                                : Colors.green,
-                        child: Column(
-                          children: [
-                            Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(14.0),
-                                child: Align(
-                                  alignment: controller
-                                              .listChatBetweenUsers[index]
-                                              .receiverId ==
-                                          controller.userId
-                                      ? Alignment.centerRight
-                                      : Alignment.centerLeft,
-                                  child: Text(
-                                    controller
-                                        .listChatBetweenUsers[index].message
-                                        .toString(),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 7),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .1,
+                          decoration: BoxDecoration(
+                              color: controller.listChatBetweenUsers[index]
+                                          .receiverId ==
+                                      controller.email
+                                  ? Colors.grey
+                                  : Colors.green,
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.grey.shade50,
+                              ),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(14.0),
+                                  child: Align(
+                                    alignment: controller
+                                                .listChatBetweenUsers[index]
+                                                .receiverId ==
+                                            controller.email
+                                        ? Alignment.centerRight
+                                        : Alignment.centerLeft,
+                                    child: Text(
+                                      controller
+                                          .listChatBetweenUsers[index].message
+                                          .toString(),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: controller.listChatBetweenUsers[index]
-                                          .receiverId ==
-                                      controller.userId
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
-                              child: Text(dateFormat(controller
-                                  .listChatBetweenUsers[index].createdAt
-                                  .toString())),
-                            ),
-                          ],
+                              Align(
+                                alignment: controller
+                                            .listChatBetweenUsers[index]
+                                            .receiverId ==
+                                        controller.userId
+                                    ? Alignment.centerRight
+                                    : Alignment.centerLeft,
+                                child: Text(dateFormat(controller
+                                    .listChatBetweenUsers[index].createdAt
+                                    .toString())),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -286,11 +354,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   ),
                   FloatingActionButton(
                     onPressed: onPressed,
-                    child: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                      size: 18,
-                    ),
+                    child: isLoading
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : Icon(
+                            Icons.send,
+                            color: Colors.white,
+                            size: 18,
+                          ),
                     backgroundColor: Colors.blue,
                     elevation: 0,
                   ),

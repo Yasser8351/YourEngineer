@@ -338,7 +338,9 @@ class _OffersScreenState extends State<OffersScreen> {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           ProfileEngineerScreen(
-                                              engeneerId: '')));
+                                              engeneerId:
+                                                  controller.resulte[index]
+                                                      ['client']['id'])));
                                 },
                                 child: ListOffersEngineerWidget(
                                   offerController: controller,

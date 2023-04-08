@@ -135,6 +135,10 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                 if (projectStatus == ProjectStatus.open) {
                   return AcceptOfferOrChatWidget(
                     isLoading: controller.isLoading.value,
+                    receiverId: resulte['client']['id'],
+                    receiverEmail: resulte['client']['email'],
+                    receiverName: resulte['client']['fullname'],
+                    image: resulte['client']['imgPath'],
                     acceptOffer: (context) {
                       acceptOffer(context, controller);
                     },

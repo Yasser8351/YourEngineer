@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/widget/shared_widgets/no_data.dart';
 
 import '../app_config/app_config.dart';
 import '../controller/notification_controller.dart';
@@ -34,7 +37,11 @@ class _NotifcationScreenState extends State<NotifcationScreen> {
       appBar: _getAppBar(context),
       body: GetBuilder<NotificationController>(
         builder: (controller) {
-          if (controller.loadingState.value == LoadingState.initial ||
+          if (controller.results.isEmpty)
+            return NoData(
+              textMessage: "ليس لديك اشعارات",
+            );
+          else if (controller.loadingState.value == LoadingState.initial ||
               controller.loadingState.value == LoadingState.loading) {
             return ShimmerWidget(size: size);
           } else if (controller.loadingState.value == LoadingState.error ||
@@ -45,6 +52,7 @@ class _NotifcationScreenState extends State<NotifcationScreen> {
                   controller.getAllNotification();
                 });
           } else {
+            log(notificationController.results.length.toString());
             return ListView.separated(
               shrinkWrap: true,
               separatorBuilder: (context, index) => const Divider(),

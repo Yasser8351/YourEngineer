@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
-import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
+import 'package:your_engineer/screen/chat/chat_room_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/image_network.dart';
-import 'package:your_engineer/widget/shared_widgets/my_favorite_button.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
-import '../screen/profile/profile_engineer_screen.dart';
 import 'shared_widgets/card_decoration.dart';
 import 'shared_widgets/rating_bar.dart';
 
@@ -27,12 +25,18 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardDecoration(
       onTap: () {
-        Get.to(() => ProfileEngineerScreen(
-              showEngeneerById: true,
-              hidePersonalInfo: true,
-              engeneerId: topEngineerRatingModel.id,
+        Get.to(() => ChatRoomScreen(
+              receiverId: topEngineerRatingModel.id,
+              receiverEmail: topEngineerRatingModel.email,
+              receiverName: topEngineerRatingModel.fullname,
+              image: topEngineerRatingModel.imgPath,
             ));
-        return;
+        // Get.to(() => ProfileEngineerScreen(
+        //       showEngeneerById: true,
+        //       hidePersonalInfo: true,
+        //       engeneerId: topEngineerRatingModel.id,
+        //     ));
+        // return;
       },
       height: 0,
       width: size.width * .6,
@@ -78,17 +82,17 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                       color: colorScheme.onSecondary,
                       isTextStart: false,
                     ),
-                    CardWithImage(
-                        colors: Colors.green.shade50,
-                        onTap: () {},
-                        height: 35,
-                        width: 35,
-                        child: MyFavoriteButton(
-                          iconSize: 35,
-                          iconColor: Colors.red,
-                          isFavorite: false,
-                          valueChanged: (isFavorite) async {},
-                        ))
+                    // CardWithImage(
+                    //     colors: Colors.green.shade50,
+                    //     onTap: () {},
+                    //     height: 35,
+                    //     width: 35,
+                    //     child: MyFavoriteButton(
+                    //       iconSize: 35,
+                    //       iconColor: Colors.red,
+                    //       isFavorite: false,
+                    //       valueChanged: (isFavorite) async {},
+                    //     ))
                   ],
                 ),
               ),

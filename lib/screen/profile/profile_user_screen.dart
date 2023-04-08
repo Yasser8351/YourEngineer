@@ -31,10 +31,26 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
       Get.put(PaymentAccountsController());
 
   var profileList = [
-    ListHorizontalProfile(AppConfig.paypal, Icons.payment,
-        image: AppImage.paypal),
-    ListHorizontalProfile(AppConfig.visa, Icons.visibility,
-        image: AppImage.visa),
+    ListHorizontalProfile(
+      AppConfig.paypal,
+      Icons.payment,
+      image: AppImage.paypal,
+      Image.asset(
+        AppImage.paypal,
+        width: 25,
+        height: 25,
+      ),
+    ),
+    ListHorizontalProfile(
+      AppConfig.visa,
+      Icons.visibility,
+      image: AppImage.visa,
+      Image.asset(
+        AppImage.visa,
+        width: 25,
+        height: 25,
+      ),
+    ),
   ];
   int expandedIndex = 0;
   File? myfile;
@@ -201,6 +217,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                                   ),
                           ),
                         ),
+
                         // onTap: () async {
                         //   xfile = await ImagePicker()
                         //       .pickImage(source: ImageSource.gallery);

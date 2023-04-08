@@ -35,7 +35,6 @@ class ChatController extends GetxController {
 
   getUserId() async {
     myLog("email", email);
-
     email = await _pref.getEmail();
     update();
     myLog("email", email);
@@ -97,7 +96,7 @@ class ChatController extends GetxController {
         "receiver_id": receiver_id,
       };
 
-      myLog("start methode", "getChatBetweenUsers");
+      myLog("start methode \n $receiver_id", "getChatBetweenUsers");
 
       var response = await Dio()
           .post(
@@ -116,8 +115,8 @@ class ChatController extends GetxController {
         var chatBetweenUsersModel =
             ChatBetweenUsersModel.fromJson(response.data);
 
-        // listChatBetweenUsers = chatBetweenUsersModel.results!;
-        listChatBetweenUsers = chatBetweenUsersModel.results!.reversed.toList();
+        listChatBetweenUsers = chatBetweenUsersModel.results!;
+        // listChatBetweenUsers = chatBetweenUsersModel.results!.reversed.toList();
 
         loadingState(LoadingState.loaded);
 
