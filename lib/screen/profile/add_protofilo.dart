@@ -81,6 +81,17 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
                 5,
               ),
               SizedBox(height: size.height * .02),
+              buildTextFormFaild(
+                controller.linkProjectController,
+                AppConfig.linkProject,
+                false,
+                TextInputType.text,
+                const Icon(Icons.add),
+                colorScheme,
+                null,
+                1,
+              ),
+              SizedBox(height: size.height * .02),
               TextWidget(
                 title: AppConfig.selectImageProject,
                 fontSize: 18,
@@ -169,9 +180,6 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
               //userSignup sucssufuly
               // ignore: use_build_context_synchronously
               // Navigator.of(context).pushNamed(AppConfig.login);
-            } else {
-              Helper.showError(
-                  context: context, subtitle: "Can not add protofilio");
             }
           },
           child: Padding(
@@ -241,8 +249,8 @@ class _AddProtofiloScreenState extends State<AddProtofiloScreen> {
     TextInputType inputType,
     Icon icon,
     ColorScheme colorScheme,
-    int maxLength,
-    int maxLines,
+    int? maxLength,
+    int? maxLines,
   ) {
     return Theme(
       data: ThemeData(

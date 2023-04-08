@@ -50,13 +50,13 @@ class CardProfilePersonalInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWidget(
-                        title: userProfileModel.fullname!,
+                        title: userProfileModel.fullname,
                         // userModel.fullName,
                         fontSize: 18,
                         color: colorScheme.onSecondary),
                     const SizedBox(height: 4),
                     TextWidget(
-                        title: userProfileModel.email!,
+                        title: userProfileModel.email,
                         // userModel.email,
                         fontSize: 18,
                         color: colorScheme.onSecondary),

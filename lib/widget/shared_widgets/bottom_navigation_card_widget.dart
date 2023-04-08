@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
+import 'package:your_engineer/widget/shared_widgets/full_image.dart';
+import 'package:your_engineer/widget/shared_widgets/image_network.dart';
 import 'package:your_engineer/widget/shared_widgets/reviews_widget.dart';
 import 'package:intl/intl.dart';
-import '../../app_config/app_image.dart';
 import '../../controller/profile_controller.dart';
 import '../../debugger/my_debuger.dart';
 import '../../model/user_profile_model.dart';
@@ -84,8 +85,13 @@ class _BottomNavigationCardWidgetState
                       return ReviewsWidget(
                           size: widget.size, colorScheme: widget.colorScheme);
                     } else if (widget.expandedIndex == 2) {
-                      return buildBusinessFair(widget.colorScheme, widget.size,
-                          widget.userProfileModel, locale);
+                      return buildBusinessFair(
+                        widget.colorScheme,
+                        widget.size,
+                        widget.userProfileModel,
+                        locale,
+                        // controller.listportfolioModel
+                      );
                     } else if (widget.expandedIndex == 3) {
                       return buildPaymentHistory(widget.colorScheme);
                     }
@@ -126,12 +132,23 @@ buildPersonalProfile(
       const SizedBox(height: 10),
       const Divider(),
       const SizedBox(height: 20),
-      buildRowItem("Specialization",
+      buildRowItem(
+          AppConfig.statusAccount.tr,
+          userProfileModel.usercredentials!.isAuthorized
+              ? AppConfig.acctive.tr
+              : AppConfig.unAcctive.tr,
+          colorScheme),
+      buildRowItem(AppConfig.specialization.tr,
           userProfileModel.userprofiles!.specialization, colorScheme),
-      buildRowItem("Total Reviews", userProfileModel.review_avg!, colorScheme),
-      buildRowItem("Completed projects", "6", colorScheme),
-      buildRowItem("Projects he works on", "1", colorScheme),
-      buildRowItem("Date of registration", "12/02/2022", colorScheme),
+      buildRowItem(
+          AppConfig.totalReviews.tr,
+          userProfileModel.review_avg.contains('null')
+              ? "0"
+              : userProfileModel.review_avg,
+          colorScheme),
+      buildRowItem(AppConfig.completedProjects.tr, "0", colorScheme),
+      buildRowItem(AppConfig.projectsWorksOn.tr, "0", colorScheme),
+      buildRowItem(AppConfig.dateofRegistration.tr, "----", colorScheme),
       // const SizedBox(height: 10),
 
       const Divider(),
@@ -444,8 +461,13 @@ buildVisa(ColorScheme colorScheme, Size size, ProfileUserController controller,
   );
 }
 
-buildBusinessFair(ColorScheme colorScheme, Size size,
-    UserProfileModel userProfileModel, String locale) {
+buildBusinessFair(
+  ColorScheme colorScheme,
+  Size size,
+  UserProfileModel userProfileModel,
+  String locale,
+  // List<PortfolioModel> listBusinessFair
+) {
   log(userProfileModel.userportfolio!.length.toString());
   dynamic d = DateFormat('yyyy MM dd').format(DateTime.now());
 
@@ -454,6 +476,11 @@ buildBusinessFair(ColorScheme colorScheme, Size size,
     children: [
       buildRowReviews(
           "Project ${userProfileModel.userportfolio!.length}", "", colorScheme),
+      if (userProfileModel.userportfolio!.isEmpty)
+        TextWidget(
+            title: AppConfig.noProjectsFound,
+            fontSize: 14,
+            color: Colors.black),
       ListView.builder(
         padding: EdgeInsets.zero,
         physics: NeverScrollableScrollPhysics(),
@@ -462,19 +489,28 @@ buildBusinessFair(ColorScheme colorScheme, Size size,
         itemBuilder: (context, index) => Column(
           children: [
             const Divider(),
-            Image.asset(
-              AppImage.img5,
-              height: 290,
-              fit: BoxFit.cover,
+            InkWell(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => FullImage(
+                      imageUrl:
+                          userProfileModel.userportfolio![index]!.imgpath))),
+              child: ImageCached(
+                image: userProfileModel.userportfolio![index]!.imgpath,
+                width: double.infinity,
+                height: size.height * .23,
+                fit: BoxFit.cover,
+              ),
             ),
+            // Image.asset(
+            //   AppImage.img5,
+            //   height: 290,
+            //   fit: BoxFit.cover,
+            // ),
             const SizedBox(height: 13),
-
             buildRowReviews(
                 "${userProfileModel.userportfolio![index]!.title}",
-                userProfileModel.userportfolio![index]!.createdAt!,
-                // "${DateFormat('yyyy MM dd').format(userProfileModel.userportfolio![index]!.createdAt!))}",
+                dateFormat(userProfileModel.userportfolio![index]!.createdAt!),
                 colorScheme),
-            // DateTime.now.,
             const SizedBox(height: 10),
           ],
         ),

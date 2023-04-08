@@ -33,6 +33,7 @@ class AddProtofilioController extends GetxController {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController linkProjectController = TextEditingController();
   DateTime dateOfProject = DateTime.now();
   String? day;
 
@@ -46,17 +47,9 @@ class AddProtofilioController extends GetxController {
     BuildContext context,
     File? imageFile,
   ) async {
-    myLog('start methode', 'addoffer');
-    // myLog('projectId', projectId);
+    myLog('start methode', 'addProtofilio');
 
     var token = await _pref.getToken();
-    // final data = {
-    //   'title': titleController.text,
-    //   'description': descriptionController.text,
-    //   'PortfolioImg': imageFile,
-    //   'urllink': '',
-    // };
-    //
 
     // FormData data = FormData.fromMap({
     //   'title': titleController.text,
@@ -73,20 +66,11 @@ class AddProtofilioController extends GetxController {
     // });
 
     try {
-      // var response = await http
-      //     .post(
-      //       // 'https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/project',
-      //       Uri.parse(ApiUrl.addprotofilio),
-      //       body: data,
-      //       headers: ApiUrl.getHeaderImage(token: token),
-      //     )
-      //     .timeout(const Duration(seconds: 20));
-
       String fileName = imageFile!.path.split('/').last;
       FormData formData = FormData.fromMap({
         'title': titleController.text,
         'description': descriptionController.text,
-        'urllink': '',
+        'urllink': linkProjectController.text,
         "PortfolioImg": await MultipartFile.fromFile(
           imageFile.path,
           filename: fileName,
@@ -131,6 +115,11 @@ class AddProtofilioController extends GetxController {
 
       myLog('error', error);
 
+      if (error is DioError) {
+        Helper.showError(
+            context: context, subtitle: error.response!.data['msg']);
+      }
+
       if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
       } else {
@@ -147,5 +136,6 @@ class AddProtofilioController extends GetxController {
   void clearController() {
     titleController.clear();
     descriptionController.clear();
+    linkProjectController.clear();
   }
 }

@@ -9,6 +9,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/utils.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:your_engineer/model/commission_model.dart';
+import 'package:your_engineer/model/portfolio_model.dart';
 // import 'package:get/get.dart';
 // import 'package:intl/date_symbol_data_local.dart';
 import '../api/api_response.dart';
@@ -31,7 +32,14 @@ class ProfileUserController extends GetxController {
   TextEditingController expirationController = TextEditingController();
   var loadingState = LoadingState.initial.obs;
   final _shared = SharedPrefUser();
-  UserProfileModel userProfile = UserProfileModel();
+  UserProfileModel userProfile = UserProfileModel(
+      id: '',
+      email: '',
+      fullname: '',
+      phone: '',
+      imgpath: '',
+      review_avg: '',
+      isActive: false);
   ApiResponse apiResponse = ApiResponse();
   bool isLoding = false;
   String message = "";
@@ -39,6 +47,7 @@ class ProfileUserController extends GetxController {
   bool _status = false;
   bool statuse = false;
   double commission = 0.0;
+  // List<PortfolioModel> listportfolioModel = [];
 
   @override
   onInit() {
@@ -46,6 +55,7 @@ class ProfileUserController extends GetxController {
     initializeDateFormatting();
     getUsersShow('');
     getCurrentrateCommission();
+    // getPortfolioEngenneir();
   }
 
   Future<ApiResponse> getUsersShow(String engeneerId) async {
@@ -259,6 +269,51 @@ class ProfileUserController extends GetxController {
   void clearController() {
     amountController.clear();
     emailController.clear();
+  }
+
+  Future<void> getPortfolioEngenneir() async {
+    loadingState(LoadingState.loading);
+
+    try {
+      var token = await _shared.getToken();
+
+      myLog("start methode", "getPortfolioEngenneir");
+
+      var response = await Dio()
+          .get(
+            ApiUrl.addprotofilio,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog("response data : ", "${response.data}");
+
+      if (response.statusCode == 200) {
+        PortfolioModel listportfolioModel =
+            PortfolioModel.fromJson(response.data);
+        // listportfolioModel = portfolioModelFromJson(response.data);
+        update();
+      } else {
+        loadingState(LoadingState.error);
+      }
+    } catch (error) {
+      loadingState(LoadingState.error);
+      if (error is DioError) {
+        showseuessToast(error.response!.data['msg']);
+      }
+      if (error is TimeoutException) {
+        showseuessToast(AppConfig.timeOut.tr);
+      }
+      if (error is SocketException) {
+        showseuessToast(AppConfig.failedInternet.tr);
+      } else {
+        showseuessToast(AppConfig.errorOoccurred.tr);
+      }
+
+      myLog("catch getPortfolioEngenneir", error.toString());
+    }
   }
 
   Future<bool> addVisa(BuildContext context) async {

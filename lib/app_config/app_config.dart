@@ -22,6 +22,7 @@ class AppConfig {
   static const String addProtofilo = "Add Protofilo";
   static const String offerScreen = "Add Offer";
   static const String paypal = "Paypal";
+  static const String addSkills = "Add Skill";
   static const String visa = "Visa";
   static const String chatRoom = "chat Room";
   static const String addSomeProject = "add some project";
@@ -41,7 +42,10 @@ class AppConfig {
   static const String agreeTotermsOfServices = "By joining, you agree to";
   static const String settings = "Settings";
   static const String home = "Home";
+  static const String statusAccount = "Status Account";
   static const String days = "Days";
+  static const String unAcctive = "un Acctive";
+  static const String acctive = "Acctive";
   static const String daysToDeliver = "days to deliver";
   static const String descreiption = "descreiptions";
   static const String price = "price";
@@ -87,7 +91,14 @@ class AppConfig {
   static const String populerServices = "Populer Services";
   ////////////////////////////// Done Tran
 
+  static const String completedProjects = "Completed projects";
+  static const String specialization = "Specialization";
+  static const String dateofRegistration = "Date of registration";
+  static const String projectsWorksOn = "Projects he works on";
+  static const String totalReviews = "Total Reviews";
+
   static const String addTitle = "Add the project title ";
+  static const String linkProject = "link Project";
   static const String addDiscription = "Add a discription of project";
   static const String lastProject = "Last Projects";
   static const String delivaryTime = "Delivary Time";

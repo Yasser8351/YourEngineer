@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_engineer/app_config/app_config.dart';
 
 import 'add_protofilo.dart';
 import 'add_skills_screen.dart';
@@ -27,22 +28,18 @@ class _AddPortifolioSkillsScreen extends State<AddPortifolioSkillsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             tabs: [
               Tab(
-                text: "Add Protofilio",
-                // child:
-                //     TextWidget(title: 'ggg', fontSize: 20, color: Colors.black),
+                text: AppConfig.addProtofilo,
               ),
               Tab(
-                text: "Add Skills",
+                text: AppConfig.addSkills,
               ),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            // Text("tab 1"),
-            AddProtofiloScreen(),
-            AddSkillsSreen()
-            // Text("tab 2"),
+            const AddProtofiloScreen(),
+            const AddSkillsSreen(),
           ],
         ),
       ),

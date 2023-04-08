@@ -12,26 +12,26 @@ String userProfileModelToJson(UserProfileModel data) =>
 
 class UserProfileModel {
   UserProfileModel({
-    this.id,
-    this.email,
-    this.fullname,
-    this.phone,
-    this.imgpath,
-    this.review_avg,
-    this.isActive,
+    required this.id,
+    required this.email,
+    required this.fullname,
+    required this.phone,
+    required this.imgpath,
+    required this.review_avg,
+    required this.isActive,
     this.userprofiles,
     this.usercredentials,
     this.userskills,
     this.userportfolio,
   });
 
-  String? id;
-  String? email;
-  String? fullname;
-  String? phone;
-  String? review_avg;
-  String? imgpath;
-  bool? isActive;
+  String id;
+  String email;
+  String fullname;
+  String phone;
+  String review_avg;
+  String imgpath;
+  bool isActive;
   Userprofiles? userprofiles;
   Usercredentials? usercredentials;
   List<Userskill?>? userskills;
@@ -80,11 +80,11 @@ class UserProfileModel {
 class Usercredentials {
   Usercredentials({
     this.attachments,
-    this.isAuthorized,
+    this.isAuthorized = false,
   });
 
   dynamic attachments;
-  bool? isAuthorized;
+  bool isAuthorized;
 
   factory Usercredentials.fromJson(Map<String, dynamic> json) =>
       Usercredentials(
@@ -102,14 +102,14 @@ class Userportfolio {
   Userportfolio({
     this.title,
     this.description,
-    this.imgpath,
+    required this.imgpath,
     this.urlLink,
     this.createdAt,
   });
 
   String? title;
   String? description;
-  String? imgpath;
+  String imgpath;
   String? urlLink;
   String? createdAt;
 
