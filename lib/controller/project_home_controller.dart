@@ -4,10 +4,10 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
-import '../app_config/app_config.dart';
 import '../enum/all_enum.dart';
 
 class ProjectControllerHome extends GetxController {
@@ -80,7 +80,7 @@ class ProjectControllerHome extends GetxController {
 
       if (error is DioError) {
         if (error.response!.statusCode == 403) {
-          Get.offAll(() => AppRouting.loginScreen);
+          Get.offAll(() => LoginScreen());
           // Get.offAll(() => LoginScreen());
         }
       }

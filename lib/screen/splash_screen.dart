@@ -27,12 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
   getUserStatus() async {
     SharedPrefUser prefs = SharedPrefUser();
     bool currentStatus = await prefs.isLogin();
+    String token = await prefs.getToken();
     String _userId = await prefs.getId();
     String _userAccountType = await prefs.getUserAccountType();
 
     setState(() {
       userStatus = currentStatus;
       userId = _userId;
+      log("token $token");
 
       userAccountType = _userAccountType;
     });

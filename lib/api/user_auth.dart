@@ -77,6 +77,9 @@ class UserAuth {
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
       if (error is DioError) {
+        if (error.response!.statusCode == 401) {
+          myLog("************************", "${loadingState.value}");
+        }
         showseuessToast(
             error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
       }
@@ -146,7 +149,7 @@ class UserAuth {
 
       myLog(
         'statusCode : ${response.statusCode} \n',
-        'response id : ${response.data['id']}',
+        'response : ${response.data}',
       );
 
       if (response.statusCode == 201) {

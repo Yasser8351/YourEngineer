@@ -3,8 +3,6 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
-import 'badge.dart';
-
 class TextWithIconWidget extends StatelessWidget {
   const TextWithIconWidget(
       {Key? key,
@@ -26,8 +24,8 @@ class TextWithIconWidget extends StatelessWidget {
         ),
         notificationsCount > 0
             ? Badge(
-                value: notificationsCount.toString(),
-                color: Colors.green,
+                label: Text(notificationsCount.toString()),
+                backgroundColor: Colors.green,
                 child: IconButton(
                   onPressed: onTapNotifications,
                   iconSize: 30,

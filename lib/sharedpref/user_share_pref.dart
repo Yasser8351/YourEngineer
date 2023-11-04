@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import '/model/user_model.dart';
 
 class SharedPrefUser {
@@ -16,6 +17,8 @@ class SharedPrefUser {
     await _prefs.setString('email', userModel.email);
     await _prefs.setString('image', userModel.userImage);
     await _prefs.setInt('roleid', selectedrole);
+
+    myLog('token', userModel.token);
 
     return await _prefs.setBool('login', true);
   }
