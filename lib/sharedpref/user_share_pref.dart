@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import '/model/user_model.dart';
@@ -18,7 +20,7 @@ class SharedPrefUser {
     await _prefs.setString('image', userModel.userImage);
     await _prefs.setInt('roleid', selectedrole);
 
-    myLog('token', userModel.token);
+    myLog('email', userModel.email);
 
     return await _prefs.setBool('login', true);
   }
@@ -79,7 +81,9 @@ class SharedPrefUser {
 
   Future<String> getEmail() async {
     _prefs = await SharedPreferences.getInstance();
-    return _prefs.getString('email') ?? '';
+    String email = _prefs.getString('email') ?? '';
+    log("email $email");
+    return email;
   }
 
   Future<String> getUserAccountType() async {

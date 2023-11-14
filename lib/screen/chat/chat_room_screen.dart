@@ -50,7 +50,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   initState() {
     connectSocket();
     chatController.getChatBetweenUsers(receiver_id: widget.receiverId);
-    chatController.getUserId();
+    chatController.getEmail();
     super.initState();
   }
 
@@ -167,6 +167,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
               child: CircleAvatar(
                 // backgroundColor: colorScheme.surface,
                 radius: 26.0,
+                // child: Image.network(widget.image),
                 backgroundImage: NetworkImage(widget.image),
               ),
             ),
@@ -218,9 +219,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   itemCount: controller.listChatBetweenUsers.length,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    myLog("controller.email", controller.email);
-                    myLog("controller.receiverId",
-                        controller.listChatBetweenUsers[index].receiverId);
                     scrollListToBottom();
 
                     return InkWell(
@@ -237,13 +235,15 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 7),
                         child: Container(
-                          width: MediaQuery.of(context).size.width * .1,
+                          width: Get.width * .1,
                           decoration: BoxDecoration(
-                              color: controller.listChatBetweenUsers[index]
-                                          .receiverId ==
-                                      controller.email
+                              color: controller
+                                      .listChatBetweenUsers[index].receiverId!
+                                      .contains(
+                                          "f6be2348-b831-4b82-9af8-f8527aee0798")
+                                  // .contains(controller.userId)
                                   ? Colors.grey
-                                  : Colors.green,
+                                  : Colors.green.shade100,
                               border: Border.all(
                                 width: 1,
                                 color: Colors.grey.shade50,
@@ -256,9 +256,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                                   padding: const EdgeInsets.all(14.0),
                                   child: Align(
                                     alignment: controller
-                                                .listChatBetweenUsers[index]
-                                                .receiverId ==
-                                            controller.email
+                                            .listChatBetweenUsers[index]
+                                            .receiverId!
+                                            .contains(
+                                                "f6be2348-b831-4b82-9af8-f8527aee0798")
                                         ? Alignment.centerRight
                                         : Alignment.centerLeft,
                                     child: Text(
@@ -271,9 +272,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                               ),
                               Align(
                                 alignment: controller
-                                            .listChatBetweenUsers[index]
-                                            .receiverId ==
-                                        controller.userId
+                                        .listChatBetweenUsers[index].receiverId!
+                                        .contains(
+                                            'f6be2348-b831-4b82-9af8-f8527aee0798')
                                     ? Alignment.centerRight
                                     : Alignment.centerLeft,
                                 child: Text(dateFormat(controller
@@ -287,6 +288,15 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     );
                   },
                 ),
+                // Align(
+                //   alignment: Alignment.center,
+                //   child: buildTextMessage(
+                //       onPressed: () {
+                //         // scrollList();
+                //         sendMessage();
+                //       },
+                //       message: messageController),
+                // ),
               ],
             );
           }
@@ -308,67 +318,71 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     required TextEditingController message,
     required Function() onPressed,
   }) {
-    return Container(
-      height: 60,
-      child: Stack(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
-              height: 60,
-              width: double.infinity,
-              color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: Colors.lightBlue,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 20,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: Get.height * .07,
+        color: Colors.red,
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                height: 60,
+                width: double.infinity,
+                color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 20,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: message,
-                      decoration: InputDecoration(
-                          hintText: "Write message...",
-                          hintStyle: TextStyle(color: Colors.black54),
-                          border: InputBorder.none),
+                    SizedBox(
+                      width: 15,
                     ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  FloatingActionButton(
-                    onPressed: onPressed,
-                    child: isLoading
-                        ? CircularProgressIndicator(color: Colors.white)
-                        : Icon(
-                            Icons.send,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                    backgroundColor: Colors.blue,
-                    elevation: 0,
-                  ),
-                ],
+                    Expanded(
+                      child: TextField(
+                        controller: message,
+                        decoration: InputDecoration(
+                            hintText: "Write message...",
+                            hintStyle: TextStyle(color: Colors.black54),
+                            border: InputBorder.none),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    FloatingActionButton(
+                      onPressed: onPressed,
+                      child: isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Icon(
+                              Icons.send,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                      backgroundColor: Colors.green,
+                      elevation: 0,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

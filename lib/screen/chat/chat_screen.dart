@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/app_config/api_url.dart';
 import 'package:your_engineer/controller/chat_controller.dart';
 import 'package:your_engineer/screen/chat/chat_room_screen.dart';
 import 'package:your_engineer/widget/chat_widget.dart';
@@ -22,7 +23,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    // chatController.getLastchats();
+    chatController.getLastchats();
   }
 
   // List<MessageModel> listChat = [
@@ -36,19 +37,27 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: GetBuilder<ChatController>(builder: (controller) {
+      backgroundColor: Colors.white,
+      body: GetBuilder<ChatController>(
+        builder: (controller) {
           if (controller.loadingState.value == LoadingState.initial ||
               controller.loadingState.value == LoadingState.loading) {
             return ShimmerWidget(size: MediaQuery.of(context).size);
-          } else if (controller.loadingState.value == LoadingState.error ||
-              controller.loadingState.value == LoadingState.noDataFound) {
+          } else if (controller.loadingState.value == LoadingState.error) {
             return Center(
               child: ReyTryErrorWidget(
                   title: AppConfig.errorOoccurred.tr,
                   onTap: () {
                     controller.getLastchats();
                   }),
+            );
+          } else if (controller.loadingState.value ==
+              LoadingState.noDataFound) {
+            return Center(
+              child: ReyTryErrorWidget(
+                title: AppConfig.noMessageYet.tr,
+                hiderButtonTryAgent: true,
+              ),
             );
           } else {
             return RefreshIndicator(
@@ -65,7 +74,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatRoomScreen(
-                              image: controller.lastChatsList[index].senderImg,
+                              image: ApiUrl.imageUrl +
+                                  controller.lastChatsList[index].senderImg,
                               receiverName:
                                   controller.lastChatsList[index].senderName,
                               receiverEmail:
@@ -78,6 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ));
                         },
                         child: ChatWidget(
+                          userEmail: controller.email,
                           messageModel: controller.lastChatsList[index],
                         ),
                       );
@@ -86,17 +97,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 ],
               ),
             );
-            // SingleChildScrollView(
-            //   child: Center(
-            //     child: NoData(
-            //       textMessage: AppConfig.noMessageYet.tr,
-            //       imageUrlAssets: AppImage.noData.tr,
-            //       onTap: (() {}),
-            //     ),
-            //   ),
-            // );
-
           }
-        }));
+        },
+      ),
+    );
   }
 }

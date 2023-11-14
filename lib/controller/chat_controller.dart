@@ -21,7 +21,7 @@ class ChatController extends GetxController {
   final SharedPrefUser _pref = SharedPrefUser();
   var loadingState = LoadingState.initial.obs;
   var loadingStateChat = LoadingState.initial.obs;
-  String userId = '2f8fd23e-d3fc-43a6-b111-2678b065d2c0';
+  String userId = 'f6be2348-b831-4b82-9af8-f8527aee0798';
   String email = '';
 
   List<Chats> lastChatsList = [];
@@ -30,10 +30,11 @@ class ChatController extends GetxController {
   @override
   onInit() {
     getLastchats();
+    getEmail();
     super.onInit();
   }
 
-  getUserId() async {
+  getEmail() async {
     myLog("email", email);
     email = await _pref.getEmail();
     update();
@@ -62,9 +63,12 @@ class ChatController extends GetxController {
 
       if (response.statusCode == 200) {
         lastChatsList = LastchatsModel.fromJson(response.data).results;
-        // final lastchatsModel = lastchatsModelFromJson(response.data);
 
+        if (lastChatsList.length == 0) {
+          loadingState(LoadingState.noDataFound);
+        }
         loadingState(LoadingState.loaded);
+        // final lastchatsModel = lastchatsModelFromJson(response.data);
 
         update();
       } else {
@@ -115,8 +119,8 @@ class ChatController extends GetxController {
         var chatBetweenUsersModel =
             ChatBetweenUsersModel.fromJson(response.data);
 
-        listChatBetweenUsers = chatBetweenUsersModel.results!;
-        // listChatBetweenUsers = chatBetweenUsersModel.results!.reversed.toList();
+        // listChatBetweenUsers = chatBetweenUsersModel.results!;
+        listChatBetweenUsers = chatBetweenUsersModel.results!.reversed.toList();
 
         loadingState(LoadingState.loaded);
 

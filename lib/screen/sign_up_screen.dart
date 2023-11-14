@@ -323,10 +323,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     subtitle: "تم انشاء حسابك بنجاح");
                                 //userSignup sucssufuly
                                 // ignore: use_build_context_synchronously
-
                               } else {
                                 //userSignup faild try again later
-
                               }
                             },
                           ),

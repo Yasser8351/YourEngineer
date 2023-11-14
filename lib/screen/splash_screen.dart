@@ -21,20 +21,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool userStatus = false;
-  String userId = 'sc;scds';
+  String userId = '';
   String userAccountType = '';
 
   getUserStatus() async {
     SharedPrefUser prefs = SharedPrefUser();
     bool currentStatus = await prefs.isLogin();
-    String token = await prefs.getToken();
     String _userId = await prefs.getId();
     String _userAccountType = await prefs.getUserAccountType();
 
     setState(() {
       userStatus = currentStatus;
       userId = _userId;
-      log("token $token");
 
       userAccountType = _userAccountType;
     });
@@ -58,7 +56,9 @@ class _SplashScreenState extends State<SplashScreen> {
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => userStatus ? TabScreen() : const LoginScreen(),
+          builder: (context) =>
+              // userStatus ? const ChatScreen() : const LoginScreen(),
+              userStatus ? TabScreen() : const LoginScreen(),
         ),
       ),
     );
