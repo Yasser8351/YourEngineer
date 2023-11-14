@@ -171,9 +171,7 @@ class UserAuth {
             subtitle:
                 error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
       }
-
       setValueResponse(false);
-
       myLog('error', error);
 
       if (error.toString().contains('TimeoutException')) {
@@ -187,8 +185,6 @@ class UserAuth {
 
   Future<bool> userSignIn(
       BuildContext context, String email, String password) async {
-    myLog('start methode', 'userSignIn');
-
     // var token = _shared.getToken();
 
     final data = {
@@ -238,11 +234,8 @@ class UserAuth {
             context: context,
             subtitle:
                 error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
-      }
-
-      myLog('error', error);
-
-      if (error.toString().contains('TimeoutException')) {
+        myLog('catch error', error.response!.data['msg']);
+      } else if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
       } else if (error.toString().contains('Http status error [401]')) {
         Helper.showError(
@@ -306,11 +299,7 @@ class UserAuth {
             context: context,
             subtitle:
                 error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
-      }
-
-      myLog('error', error);
-
-      if (error.toString().contains('TimeoutException')) {
+      } else if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
       } else if (error.toString().contains('Http status error [404]')) {
         Helper.showError(
