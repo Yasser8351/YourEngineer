@@ -46,7 +46,7 @@ class ProfileUserController extends GetxController {
   bool get status => _status;
   bool _status = false;
   bool statuse = false;
-  double commission = 0.0;
+  int commission = 0;
   // List<PortfolioModel> listportfolioModel = [];
 
   @override

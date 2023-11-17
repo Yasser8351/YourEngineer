@@ -228,7 +228,8 @@ buildPaypal(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         TextWidget(
-          title: 'اشعار التحويلة',
+          title: AppConfig.transferReceipt.tr,
+          // title: 'اشعار التحويلة',
           fontSize: 18,
           color: colorScheme.onSecondary,
         ),
@@ -237,7 +238,8 @@ buildPaypal(
         widget,
         SizedBox(height: size.height * .02),
         TextWidget(
-          title: 'Amount',
+          title: AppConfig.amount.tr,
+          // title: 'Amount',
           fontSize: 18,
           color: colorScheme.onSecondary,
         ),
@@ -284,21 +286,9 @@ buildPaypal(
                 Helper.showError(
                     context: context, subtitle: AppConfig.allFaildRequired.tr);
               } else {
-                // setState(() => isLoading = true);
-
                 bool isAddProject =
                     await controller.accountChargeRequest(context, myfile);
-                // setState(() => isLoading = false);
-
-                // if (isAddProject) {
-                //   controller.clearController();
-                //   Helper.showseuess(
-                //       context: context,
-                //       subtitle: AppConfig.addOfferSuccesfuly.tr);
-                // } else {
-                //   Helper.showError(
-                //       context: context, subtitle: AppConfig.cannotaddOffer.tr);
-                // }
+                controller.amountController.clear();
               }
             },
             child: GetBuilder<ProfileUserController>(builder: (controller) {
@@ -511,10 +501,13 @@ buildBusinessFair(
       buildRowReviews(
           "Project ${userProfileModel.userportfolio!.length}", "", colorScheme),
       if (userProfileModel.userportfolio!.isEmpty)
-        TextWidget(
-            title: AppConfig.noProjectsFound,
-            fontSize: 14,
-            color: Colors.black),
+        Padding(
+          padding: const EdgeInsets.only(top: 100),
+          child: TextWidget(
+              title: AppConfig.noProjectsFound.tr,
+              fontSize: 14,
+              color: Colors.black),
+        ),
       ListView.builder(
         padding: EdgeInsets.zero,
         physics: NeverScrollableScrollPhysics(),

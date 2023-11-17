@@ -124,6 +124,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: Get.height / 3.8),
                   ReyTryErrorWidget(
                       title: controller.loadingState.value ==
                               LoadingState.noDataFound
@@ -181,25 +182,17 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                       ),
                       const SizedBox(height: 35),
                       Align(
-                        alignment: Alignment.centerRight,
+                        alignment: AlignmentDirectional.centerEnd,
                         child: TextWidget(
-                            isTextStart: true,
+                            // isTextStart: true,
+                            isTextEnd: true,
                             title:
-                                "عمولة التطبيق هي  ${controller.commission} دولار \n ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
+                                "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n ${AppConfig.attachReceipt.tr}",
+                            // "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
                             fontSize: 16,
                             color: Colors.white),
                       ),
                       const SizedBox(height: 15),
-                      // ListProfileHorizontalWidget(
-                      //   isPayScreen: true,
-                      //   size: size,
-                      //   colorScheme: colorScheme,
-                      //   listHorizontalProfile: profileList,
-                      //   expandedIndex: expandedIndex,
-                      //   onTap: ((index) {
-                      //     setState(() => expandedIndex = index);
-                      //   }),
-                      // ),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -209,33 +202,41 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                           Row(
                             children: [
                               TextWidget(
-                                  title: expandedIndex == 0
+                                  title: expandedIndex == 4
                                       ? paymentAccountsController.emailAccount
-                                      : paymentAccountsController
-                                          .creditCardAccount,
+                                      : expandedIndex == 5
+                                          ? paymentAccountsController
+                                              .creditCardAccount
+                                          : "",
                                   fontSize: 16,
                                   color: Colors.white),
-                              IconButton(
-                                  onPressed: () async {
-                                    Helper.showseuess(
-                                        context: context,
-                                        subtitle: "تم النسخ بنجاح");
-                                    await Clipboard.setData(ClipboardData(
-                                        text: expandedIndex == 0
-                                            ? paymentAccountsController
-                                                .emailAccount
-                                            : paymentAccountsController
-                                                .creditCardAccount));
-                                    // copied successfully
-                                  },
-                                  icon: Icon(Icons.copy_all),
-                                  color: Colors.white),
+                              expandedIndex == 4 || expandedIndex == 5
+                                  ? IconButton(
+                                      onPressed: () async {
+                                        Helper.showseuess(
+                                            context: context,
+                                            subtitle: "تم النسخ بنجاح");
+                                        await Clipboard.setData(ClipboardData(
+                                            text: expandedIndex == 4
+                                                ? paymentAccountsController
+                                                    .emailAccount
+                                                : expandedIndex == 5
+                                                    ? paymentAccountsController
+                                                        .creditCardAccount
+                                                    : ""));
+                                        // copied successfully
+                                      },
+                                      icon: Icon(Icons.copy_all),
+                                      color: Colors.white)
+                                  : SizedBox(),
                             ],
                           ),
                           TextWidget(
-                              title: expandedIndex == 0
+                              title: expandedIndex == 4
                                   ? "Email Paypal"
-                                  : "Visa Account",
+                                  : expandedIndex == 5
+                                      ? "Visa Account"
+                                      : "",
                               fontSize: 16,
                               color: Colors.white),
                         ],
@@ -272,10 +273,12 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                                     fit: BoxFit.fill,
                                   )
                                 : Align(
-                                    alignment: Alignment.center,
+                                    alignment: AlignmentDirectional.center,
                                     child: TextWidget(
-                                        title:
-                                            "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار هنا",
+                                        title: AppConfig.attachReceipt.tr +
+                                            " " +
+                                            AppConfig.here.tr,
+                                        // "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار هنا",
                                         fontSize: 13,
                                         color: Colors.black),
                                   ),

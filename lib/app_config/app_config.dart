@@ -105,6 +105,11 @@ class AppConfig {
   static const String lastProject = "Last Projects";
   static const String delivaryTime = "Delivary Time";
   static const String budget = "Budget";
+  static const String dollar = "dollar";
+  static const String here = "here";
+  static const String attachReceipt =
+      "Note: Make the transfer and attach the receipt";
+  static const String appCommissionIs = "app commission is";
   static const String yourBudget = "what's your budgets?";
   static const String dateProject = "Date of Project";
   static const String noProjectsFound = "noProjectsFound";
@@ -119,6 +124,7 @@ class AppConfig {
   static const String paySecurely =
       "* Pay securely your connection is encrypted";
   static const String amount = "Amount";
+  static const String transferReceipt = "Transfer receipt";
   static const String fullNameInCard = "Full name on the card";
 
   static const String cardNumber = "Card Number";

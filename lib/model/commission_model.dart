@@ -1,6 +1,6 @@
 class CommissionModel {
   String? id;
-  double? ratepercent;
+  int? ratepercent;
   bool? iscurrent;
   String? createdAt;
   String? updatedAt;
@@ -14,8 +14,8 @@ class CommissionModel {
 
   CommissionModel.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? '';
-    ratepercent = json['ratepercent'] ?? '';
-    iscurrent = json['iscurrent'] ?? '';
+    ratepercent = json['ratepercent'] ?? 0;
+    iscurrent = json['iscurrent'] ?? false;
     createdAt = json['createdAt'] ?? '';
     updatedAt = json['updatedAt'] ?? '';
   }

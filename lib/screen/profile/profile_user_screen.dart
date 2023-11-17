@@ -76,6 +76,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: Get.height / 3.8),
                   ReyTryErrorWidget(
                       title: controller.loadingState.value ==
                               LoadingState.noDataFound
