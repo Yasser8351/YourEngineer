@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:your_engineer/app_config/api_url.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
 import 'package:your_engineer/screen/chat/chat_room_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/image_network.dart';
@@ -52,7 +53,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ImageCached(
-                image: topEngineerRatingModel.imgPath,
+                image: ApiUrl.imageUrl + topEngineerRatingModel.imgPath,
                 // ApiUrl.root + "/" + populerServicesModel.imageUrlServices,
                 height: 150,
                 width: double.infinity,

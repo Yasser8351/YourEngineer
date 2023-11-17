@@ -134,18 +134,20 @@ class ProfileUserController extends GetxController {
     myLog('start methode', 'accountChargeRequest');
 
     var token = await _shared.getToken();
-    // final data = {
-    //   'amount': amountController.text,
-    //   //payments/feed
-    //   'attachment': '',
-    // };
+
     FormData data = FormData.fromMap({
       'amount': amountController.text,
       'attachment': await MultipartFile.fromFile(
         imageFile.path,
-        contentType:
-            MediaType("multipart", "${imageFile.path.split(".").last}"),
+        filename: 'upload.jpg',
+        contentType: MediaType(
+            "multipart/form-data", "${imageFile.path.split(".").last}"),
       ),
+      // 'attachment': await MultipartFile.fromFile(
+      //   imageFile.path,
+      //   contentType:
+      //       MediaType("multipart", "${imageFile.path.split(".").last}"),
+      // ),
     });
 
     try {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
@@ -24,7 +24,11 @@ class TextWithIconWidget extends StatelessWidget {
         ),
         notificationsCount > 0
             ? Badge(
-                label: Text(notificationsCount.toString()),
+                label: Text(
+                  notificationsCount.toString(),
+                  style: TextStyle(
+                      color: Colors.white, fontSize: Get.width * .045),
+                ),
                 backgroundColor: Colors.green,
                 child: IconButton(
                   onPressed: onTapNotifications,
