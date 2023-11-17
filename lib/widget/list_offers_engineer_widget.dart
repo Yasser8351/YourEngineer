@@ -202,6 +202,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
                         onPressed: () {
                           Get.to(ChatRoomScreen(
                             receiverId: '',
+                            senderId: resulte['client']['id'],
                             receiverEmail: '',
                             image: resulte['client']['imgPath'],
                             receiverName: resulte['client']['fullname'],

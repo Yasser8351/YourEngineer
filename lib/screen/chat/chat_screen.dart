@@ -26,14 +26,6 @@ class _ChatScreenState extends State<ChatScreen> {
     chatController.getLastchats();
   }
 
-  // List<MessageModel> listChat = [
-  //   MessageModel(
-  //       name: "rasheed@g1.com",
-  //       message: "Hi",
-  //       imgeUrl: AppImage.img11,
-  //       messageTime: "01:22 PM"),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,10 +72,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                   controller.lastChatsList[index].senderName,
                               receiverEmail:
                                   controller.lastChatsList[index].senderEmail,
-                              receiverId: controller.userId ==
-                                      controller.lastChatsList[index].senderId
-                                  ? controller.lastChatsList[index].receiverId
-                                  : controller.lastChatsList[index].senderId,
+                              senderId:
+                                  controller.lastChatsList[index].receiverId,
+                              receiverId:
+                                  controller.lastChatsList[index].senderId,
+                              // receiverId: controller.userId ==
+                              //         controller.lastChatsList[index].senderId
+                              //     ? controller.lastChatsList[index].receiverId
+                              //     : controller.lastChatsList[index].senderId,
                             ),
                           ));
                         },

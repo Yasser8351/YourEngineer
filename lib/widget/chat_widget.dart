@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/api_url.dart';
@@ -20,7 +18,6 @@ class ChatWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var senderImg = ApiUrl.imageUrl + messageModel.senderImg;
 
-    log("senderImg $userEmail");
     return ListTile(
       title: TextWidget(
           title: messageModel.senderName, fontSize: 14, color: Colors.black),
@@ -30,13 +27,15 @@ class ChatWidget extends StatelessWidget {
               ? Icon(Icons.done_all, color: Colors.green)
               : const SizedBox(),
           Container(
-            height: 10,
+            height: Get.width * .1,
             width: Get.width * .31,
-            child: TextWidget(
-                title: messageModel.message,
-                textOverflow: TextOverflow.ellipsis,
-                fontSize: 14,
-                color: Colors.black),
+            child: Center(
+              child: TextWidget(
+                  title: messageModel.message,
+                  textOverflow: TextOverflow.clip,
+                  fontSize: 14,
+                  color: Colors.black),
+            ),
           ),
         ],
       ),

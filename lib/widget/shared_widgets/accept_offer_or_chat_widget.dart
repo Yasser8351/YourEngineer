@@ -10,12 +10,14 @@ class AcceptOfferOrChatWidget extends StatelessWidget {
       required this.isLoading,
       required this.acceptOffer,
       required this.receiverId,
+      required this.senderId,
       required this.receiverEmail,
       required this.receiverName,
       required this.image})
       : super(key: key);
   final bool isLoading;
   final String receiverId;
+  final String senderId;
   final String receiverEmail;
   final String receiverName;
   final String image;
@@ -42,6 +44,7 @@ class AcceptOfferOrChatWidget extends StatelessWidget {
                 receiverEmail: receiverEmail,
                 image: image,
                 receiverName: receiverName,
+                senderId: senderId,
               ));
             },
             child: Text(

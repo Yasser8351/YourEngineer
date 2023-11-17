@@ -21,7 +21,7 @@ class ChatController extends GetxController {
   final SharedPrefUser _pref = SharedPrefUser();
   var loadingState = LoadingState.initial.obs;
   var loadingStateChat = LoadingState.initial.obs;
-  String userId = 'f6be2348-b831-4b82-9af8-f8527aee0798';
+  String userId = "";
   String email = '';
 
   List<Chats> lastChatsList = [];
@@ -31,14 +31,20 @@ class ChatController extends GetxController {
   onInit() {
     getLastchats();
     getEmail();
+    getUserId();
     super.onInit();
   }
 
   getEmail() async {
-    myLog("email", email);
     email = await _pref.getEmail();
     update();
     myLog("email", email);
+  }
+
+  getUserId() async {
+    userId = await _pref.getId();
+    update();
+    myLog("getUserId", userId);
   }
 
   Future<void> getLastchats() async {
@@ -51,7 +57,7 @@ class ChatController extends GetxController {
 
       var response = await Dio()
           .post(
-            ApiUrl.getLastchats(page: 1, size: 10, search: ''),
+            ApiUrl.getLastchats(page: 1, size: 1, search: ''),
             options: Options(
               headers: ApiUrl.getHeader2(token: token),
             ),
@@ -66,9 +72,9 @@ class ChatController extends GetxController {
 
         if (lastChatsList.length == 0) {
           loadingState(LoadingState.noDataFound);
+        } else {
+          loadingState(LoadingState.loaded);
         }
-        loadingState(LoadingState.loaded);
-        // final lastchatsModel = lastchatsModelFromJson(response.data);
 
         update();
       } else {

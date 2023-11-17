@@ -25,9 +25,11 @@ class ChatRoomScreen extends StatefulWidget {
     required this.receiverId,
     required this.receiverEmail,
     required this.receiverName,
+    required this.senderId,
     required this.image,
   }) : super(key: key);
   final String receiverId;
+  final String senderId;
   final String receiverEmail;
   final String receiverName;
   final String image;
@@ -41,15 +43,15 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   TextEditingController messageController = TextEditingController();
   bool isLoading = false;
 
-  ScrollController scrollController =
-      ScrollController(); // "dash2022tech@gmail.com
+  ScrollController scrollController = ScrollController();
 
   late IO.Socket socket;
   bool onConnectError = false;
   @override
   initState() {
+    log("senderId senderId " + widget.senderId);
     connectSocket();
-    chatController.getChatBetweenUsers(receiver_id: widget.receiverId);
+    chatController.getChatBetweenUsers(receiver_id: widget.senderId);
     chatController.getEmail();
     super.initState();
   }
@@ -92,7 +94,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     log("getMessage");
     var d = data as Map<String, dynamic>;
     log(data.toString());
-    // scrollController.jumpTo(1);
     chatController.listChatBetweenUsers.add(ChatBetweenUsers.fromJson2(d));
     setState(() {});
   }
@@ -105,7 +106,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     Map<String, dynamic> map = {
       'senderId': chatController.email,
       'receiverId': widget.receiverEmail,
-      // 'receiverId': "rasheed@g1.com",
       'text': messageController.text,
       'time': DateTime.now().toIso8601String(),
       'fileUrl': '',
@@ -114,13 +114,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
     socket.emit('sendMessage', {
       map,
-      // setState((() {
       setState(
         () => isLoading = !isLoading,
       ),
       chatController
           .createChat(
-              message: messageController.text, receiver_id: widget.receiverId)
+              message: messageController.text, receiver_id: widget.senderId)
           .then((value) => {
                 setState(() {
                   isLoading = !isLoading;
@@ -203,7 +202,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   title: AppConfig.errorOoccurred.tr,
                   onTap: () {
                     controller.getChatBetweenUsers(
-                        receiver_id: widget.receiverId);
+                        receiver_id: widget.senderId);
                   }),
             );
           } else {
@@ -230,8 +229,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                         //         )));
                         // Navigator.of(context).pushNamed(AppConfig.chatRoom);
                       },
-                      // child: ChatWidget(
-                      //   messageModel: listChat[index],
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 7),
                         child: Container(
@@ -239,10 +236,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                           decoration: BoxDecoration(
                               color: controller
                                       .listChatBetweenUsers[index].receiverId!
-                                      .contains(
-                                          "f6be2348-b831-4b82-9af8-f8527aee0798")
-                                  // .contains(controller.userId)
-                                  ? Colors.grey
+                                      .contains(controller.userId)
+                                  ? Colors.grey.shade300
                                   : Colors.green.shade100,
                               border: Border.all(
                                 width: 1,
@@ -258,8 +253,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                                     alignment: controller
                                             .listChatBetweenUsers[index]
                                             .receiverId!
-                                            .contains(
-                                                "f6be2348-b831-4b82-9af8-f8527aee0798")
+                                            .contains(controller.userId)
                                         ? Alignment.centerRight
                                         : Alignment.centerLeft,
                                     child: Text(
@@ -270,16 +264,20 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: controller
-                                        .listChatBetweenUsers[index].receiverId!
-                                        .contains(
-                                            'f6be2348-b831-4b82-9af8-f8527aee0798')
-                                    ? Alignment.centerRight
-                                    : Alignment.centerLeft,
-                                child: Text(dateFormat(controller
-                                    .listChatBetweenUsers[index].createdAt
-                                    .toString())),
+                              Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.only(end: 10),
+                                child: Align(
+                                  alignment: controller
+                                          .listChatBetweenUsers[index]
+                                          .receiverId!
+                                          .contains(controller.userId)
+                                      ? Alignment.centerRight
+                                      : Alignment.centerLeft,
+                                  child: Text(dateFormat(controller
+                                      .listChatBetweenUsers[index].createdAt
+                                      .toString())),
+                                ),
                               ),
                             ],
                           ),
@@ -288,15 +286,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                     );
                   },
                 ),
-                // Align(
-                //   alignment: Alignment.center,
-                //   child: buildTextMessage(
-                //       onPressed: () {
-                //         // scrollList();
-                //         sendMessage();
-                //       },
-                //       message: messageController),
-                // ),
               ],
             );
           }

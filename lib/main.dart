@@ -152,6 +152,7 @@ class MyApp extends StatelessWidget {
               image: '',
               receiverName: '',
               receiverId: '',
+              senderId: '',
               receiverEmail: ''), //receiverName: ''
         ),
         GetPage(

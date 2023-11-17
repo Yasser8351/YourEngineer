@@ -30,6 +30,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
               receiverEmail: topEngineerRatingModel.email,
               receiverName: topEngineerRatingModel.fullname,
               image: topEngineerRatingModel.imgPath,
+              senderId: topEngineerRatingModel.id,
             ));
         // Get.to(() => ProfileEngineerScreen(
         //       showEngeneerById: true,

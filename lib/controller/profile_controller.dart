@@ -79,7 +79,7 @@ class ProfileUserController extends GetxController {
 
       myLog(
         'statusCode : ${response.statusCode} \n',
-        'response : ${response.data}',
+        'response  getUsersShow : ${response.data}',
       );
 
       if (response.statusCode == 200) {
@@ -174,7 +174,6 @@ class ProfileUserController extends GetxController {
         isLoding = false;
         update();
         // await _shared.saveToken(response.body['token']);
-
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
@@ -235,7 +234,6 @@ class ProfileUserController extends GetxController {
         statuse = true;
         update();
         // await _shared.saveToken(response.body['token']);
-
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
@@ -360,7 +358,6 @@ class ProfileUserController extends GetxController {
         statuse = true;
         update();
         // await _shared.saveToken(response.body['token']);
-
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());

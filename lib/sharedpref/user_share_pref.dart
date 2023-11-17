@@ -40,13 +40,23 @@ class SharedPrefUser {
     await _prefs.setString('phone', phone);
   }
 
+  Future<void> saveUserId({required String userId}) async {
+    _prefs = await SharedPreferences.getInstance();
+    myLog('save UserId', userId);
+
+    await _prefs.setString('id', userId);
+  }
+
   Future<bool> saveToken(String token, String status,
-      [String email = '']) async {
+      [String email = '', String userId = '']) async {
     _prefs = await SharedPreferences.getInstance();
 
     await _prefs.setString('token', token);
     await _prefs.setString('status', status);
     await _prefs.setString('email', email);
+    await _prefs.setString('id', userId);
+
+    log("email form SharedPreferences :   $email");
 
     return await _prefs.setBool('login', true);
   }
@@ -76,13 +86,15 @@ class SharedPrefUser {
 
   Future<String> getId() async {
     _prefs = await SharedPreferences.getInstance();
+    String userId = _prefs.getString('id') ?? '';
+    log("userId userId userId $userId");
+
     return _prefs.getString('id') ?? '';
   }
 
   Future<String> getEmail() async {
     _prefs = await SharedPreferences.getInstance();
     String email = _prefs.getString('email') ?? '';
-    log("email $email");
     return email;
   }
 

@@ -4,9 +4,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/utils.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:your_engineer/model/user_profile_model.dart';
 
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
@@ -25,6 +26,33 @@ class UserAuth {
   String? roleId;
   List<RolesModel> listrole = [];
   var loadingState = LoadingState.initial.obs;
+
+  Future<void> getUsersShow(String token) async {
+    try {
+      myLog("strt method", "getUsersShow");
+      var response = await Dio()
+          .post(
+            ApiUrl.getUsersShow,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog(
+        'statusCode : ${response.statusCode} \n',
+        'response  getUsersShow : ${response.data}',
+      );
+
+      if (response.statusCode == 200) {
+        await _shared.saveUserId(
+            userId: userProfileModelFromJson(jsonEncode(response.data)).id);
+      }
+    } catch (error) {
+      myLog("catch error getUsersShow: ", error.toString());
+    }
+  }
+
   Future<List<RolesModel>> getRoles() async {
     /// This function call the data from the API
     /// The Post type function takes the search value from the body
@@ -185,8 +213,6 @@ class UserAuth {
 
   Future<bool> userSignIn(
       BuildContext context, String email, String password) async {
-    // var token = _shared.getToken();
-
     final data = {
       ApiParameters.email: email,
       ApiParameters.password: password,
@@ -194,7 +220,7 @@ class UserAuth {
 
     final headers = {
       "Content-Type": "application/json",
-      "Accept": "*/*", // "Authorization": token,
+      "Accept": "*/*",
     };
 
     try {
@@ -209,15 +235,16 @@ class UserAuth {
           .timeout(const Duration(seconds: 20));
 
       if (response.statusCode == 200) {
-        status = true;
+        getUsersShow(response.data['token']);
         await _shared.saveToken(
             response.data['token'], response.data['status'], email);
         myLog(
           'statusCode : ${response.statusCode} \n',
-          'response : $email',
+          'response : $response',
         );
 
         setValueResponse(true);
+        status = true;
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
