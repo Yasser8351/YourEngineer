@@ -166,14 +166,15 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                     Align(
                       alignment: AlignmentDirectional.centerStart,
                       child: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: Icon(
-                            Icons.arrow_back_rounded,
-                            color: Colors.white,
-                            size: 30,
-                          )),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_rounded,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
                     ),
                     CardProfilePersonalInfo(
                       userProfileModel: controller.userProfile,

@@ -19,10 +19,12 @@ class UserProfileModel {
     required this.imgpath,
     required this.review_avg,
     required this.isActive,
-    this.userprofiles,
-    this.usercredentials,
-    this.userskills,
-    this.userportfolio,
+    required this.userprofiles,
+    required this.usercredentials,
+    required this.userskills,
+    required this.userportfolio,
+    required this.wallet,
+    required this.talentreview,
   });
 
   String id;
@@ -32,10 +34,12 @@ class UserProfileModel {
   String review_avg;
   String imgpath;
   bool isActive;
-  Userprofiles? userprofiles;
-  Usercredentials? usercredentials;
-  List<Userskill?>? userskills;
+  Userprofiles userprofiles;
+  Usercredentials usercredentials;
+  List<Userskill?> userskills;
   List<Userportfolio?>? userportfolio;
+  Wallet wallet;
+  List<dynamic> talentreview;
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
       UserProfileModel(
@@ -57,6 +61,8 @@ class UserProfileModel {
             ? []
             : List<Userportfolio?>.from(
                 json["userportfolio"]!.map((x) => Userportfolio.fromJson(x))),
+        wallet: Wallet.fromJson(json["wallet"]),
+        talentreview: json["talentreview"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -67,10 +73,10 @@ class UserProfileModel {
         "imgpath": imgpath,
         "is_active": isActive,
         "userprofiles": userprofiles,
-        "usercredentials": usercredentials!.toJson(),
+        "usercredentials": usercredentials.toJson(),
         "userskills": userskills == null
             ? []
-            : List<dynamic>.from(userskills!.map((x) => x!.toJson())),
+            : List<dynamic>.from(userskills.map((x) => x!.toJson())),
         "userportfolio": userportfolio == null
             ? []
             : List<dynamic>.from(userportfolio!.map((x) => x!.toJson())),
@@ -164,4 +170,28 @@ class Userprofiles {
         "about_user": aboutUser,
         "specialization": specialization,
       };
+}
+
+class Wallet {
+  Wallet({
+    required this.id,
+    required this.user_id,
+    required this.credit,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  final String id;
+  final String user_id;
+  final String credit;
+  final String createdAt;
+  final String updatedAt;
+
+  factory Wallet.fromJson(Map<String, dynamic> json) => Wallet(
+        id: json["id"] ?? '',
+        user_id: json["user_id"] ?? '',
+        createdAt: json["createdAt"] ?? '',
+        credit: json["credit"] ?? '',
+        updatedAt: json["updatedAt"] ?? '',
+      );
 }

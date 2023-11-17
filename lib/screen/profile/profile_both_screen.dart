@@ -90,16 +90,6 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
     ),
   ];
 
-  // ListHorizontalProfile(AppConfig.personalProfile, Icons.person),
-  // ListHorizontalProfile(AppConfig.reviews, Icons.star),
-  // ListHorizontalProfile(AppConfig.businessFair, Icons.badge),
-  // ListHorizontalProfile(
-  //     AppConfig.paymentHistory, Icons.monetization_on_outlined),
-  // ListHorizontalProfile(AppConfig.paypal, Icons.payment,
-  //     image: AppImage.paypal),
-  // ListHorizontalProfile(AppConfig.visa, Icons.visibility,
-  //     image: AppImage.visa),
-
   int expandedIndex = 0;
   File? myfile;
   XFile? xfile;
@@ -156,7 +146,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                       ),
                       CardProfilePersonalInfo(
                         userProfileModel: controller.userProfile,
-                        isOwinr: false,
+                        isOwinr: true,
                         hidePersonalInfo: false,
                         size: size,
                         colorScheme: colorScheme,
@@ -180,12 +170,13 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                           );
                         }),
                       ),
-                      const SizedBox(height: 35),
+                      SizedBox(height: Get.height * .01),
                       Align(
-                        alignment: AlignmentDirectional.centerEnd,
+                        alignment: AlignmentDirectional.centerStart,
                         child: TextWidget(
+
                             // isTextStart: true,
-                            isTextEnd: true,
+                            // isTextEnd: true,
                             title:
                                 "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n ${AppConfig.attachReceipt.tr}",
                             // "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
@@ -193,7 +184,6 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                             color: Colors.white),
                       ),
                       const SizedBox(height: 15),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -285,58 +275,6 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                           ),
                         ),
                       ),
-                      // BottomNavigationCardWidget(
-                      //   userProfileModel: controller.userProfile,
-                      //   size: size,
-                      //   hidePersonalInfo: true,
-                      //   colorScheme: colorScheme,
-                      //   expandedIndex: expandedIndex,
-                      //   isowner: true,
-                      //   myfile: myfile,
-                      //   widget: InkWell(
-                      //     onTap: () async {
-                      //       xfile = await ImagePicker()
-                      //           .pickImage(source: ImageSource.gallery);
-                      //       // Navigator.of(context).pop();
-                      //       myfile = File(xfile!.path);
-                      //       setState(() {});
-                      //     },
-                      //     child: Container(
-                      //       clipBehavior: Clip.antiAlias,
-                      //       decoration: BoxDecoration(
-                      //           border: Border.all(
-                      //             width: 2,
-                      //             color: Colors.grey.shade300,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10)),
-                      //       width: size.width * 1,
-                      //       height: size.height * .18,
-                      //       child: myfile != null
-                      //           ? Image.file(
-                      //               myfile!,
-                      //               fit: BoxFit.fill,
-                      //             )
-                      //           : Align(
-                      //               alignment: Alignment.center,
-                      //               child: TextWidget(
-                      //                   title:
-                      //                       "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار هنا",
-                      //                   fontSize: 13,
-                      //                   color: Colors.black),
-                      //             ),
-                      //     ),
-                      //   ),
-
-                      //   // onTap: () async {
-                      //   //   xfile = await ImagePicker()
-                      //   //       .pickImage(source: ImageSource.gallery);
-                      //   //   // Navigator.of(context).pop();
-                      //   //   log(myfile!.path);
-
-                      //   //   myfile = File(xfile!.path);
-                      //   //   setState(() {});
-                      //   // },
-                      // ),
                     ],
                   ),
                 ),

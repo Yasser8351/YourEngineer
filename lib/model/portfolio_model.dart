@@ -9,17 +9,6 @@
 // String portfolioModelToJson(List<PortfolioModel> data) =>
 //     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-// final List<PortfolioModel> results;
-
-// factory PortfolioModels.fromJson(Map<String, dynamic> json) =>
-//     AllNotificationModel(
-//       totalItems: json["totalItems"] ?? 0,
-//       results:
-//           List<PortfolioModel>.from(json["results"].map((x) => PortfolioModel.fromJson(x))),
-//       totalPages: json["totalPages"] ?? 0,
-//       currentPage: json["currentPage"] ?? 0,
-//     );
-
 class PortfolioModel {
   PortfolioModel({
     required this.id,

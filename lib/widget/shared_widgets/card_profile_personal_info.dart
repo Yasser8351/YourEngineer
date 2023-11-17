@@ -70,7 +70,8 @@ class CardProfilePersonalInfo extends StatelessWidget {
                     isOwinr
                         ? // RatingBar
                         TextWidget(
-                            title: "Your balance \$0.0 ",
+                            title:
+                                "Your balance \$ ${userProfileModel.wallet.credit} ",
                             fontSize: 18,
                             color: colorScheme.onSecondary)
                         : Row(

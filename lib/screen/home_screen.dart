@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:your_engineer/controller/project_home_controller.dart';
 import 'package:your_engineer/controller/top_engineer_controller.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
+import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/shimmer_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_with_icon_widget.dart';
 
 import '../app_config/app_config.dart';
@@ -104,14 +106,39 @@ class _HomeScreenState extends State<HomeScreen> {
                           LoadingState.loading) {
                     return ShimmerWidget(size: size);
                   } else if (projectController.loadingState.value ==
-                          LoadingState.error ||
-                      projectController.loadingState.value ==
-                          LoadingState.noDataFound) {
+                      LoadingState.noDataFound) {
+                    return Column(
+                      children: [
+                        SizedBox(height: Get.height * .02),
+                        TextWidget(
+                            title: AppConfig.noProjectsFound.tr,
+                            fontSize: 16,
+                            color: Colors.black),
+                        SizedBox(height: Get.height * .02),
+                        InkWell(
+                          onTap: () => Get.to(() => const AddProjectScreen()),
+                          child: Container(
+                            width: size.width * .35,
+                            height: size.height * .06,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                                child: TextWidget(
+                              title: AppConfig.addProjectScreen.tr,
+                              color: Colors.white,
+                              fontSize: size.height * .02,
+                            )),
+                          ),
+                        ),
+                        SizedBox(height: Get.height * .02),
+                      ],
+                    );
+                  } else if (projectController.loadingState.value ==
+                      LoadingState.error) {
                     return ReyTryErrorWidget(
-                        title: projectController.loadingState.value ==
-                                LoadingState.noDataFound
-                            ? AppConfig.noProjectsFound.tr
-                            : projectController.apiResponse.message,
+                        title: projectController.apiResponse.message,
                         onTap: () {
                           projectController.getProjects();
                         });

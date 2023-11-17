@@ -122,7 +122,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                         alignment: Alignment.centerRight,
                         child: TextWidget(
                             title:
-                                "عمولة التطبيق هي  ${controller.commission} دولار \n ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
+                                "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n ${AppConfig.attachReceipt.tr}",
                             fontSize: 15,
                             isTextStart: true,
                             color: Colors.white),

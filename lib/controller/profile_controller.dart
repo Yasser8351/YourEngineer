@@ -36,6 +36,13 @@ class ProfileUserController extends GetxController {
       id: '',
       email: '',
       fullname: '',
+      talentreview: [],
+      usercredentials: Usercredentials(attachments: '', isAuthorized: false),
+      userportfolio: [],
+      userskills: [],
+      userprofiles: Userprofiles(aboutUser: '', specialization: ''),
+      wallet:
+          Wallet(id: '', user_id: '', credit: '', createdAt: '', updatedAt: ''),
       phone: '',
       imgpath: '',
       review_avg: '',
@@ -143,11 +150,6 @@ class ProfileUserController extends GetxController {
         contentType: MediaType(
             "multipart/form-data", "${imageFile.path.split(".").last}"),
       ),
-      // 'attachment': await MultipartFile.fromFile(
-      //   imageFile.path,
-      //   contentType:
-      //       MediaType("multipart", "${imageFile.path.split(".").last}"),
-      // ),
     });
 
     try {

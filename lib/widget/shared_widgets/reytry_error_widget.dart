@@ -7,12 +7,14 @@ class ReyTryErrorWidget extends StatelessWidget {
   const ReyTryErrorWidget({
     Key? key,
     required this.title,
+    this.height,
     this.onTap,
     this.isClear = false,
     this.hiderButtonTryAgent = false,
   }) : super(key: key);
   final String title;
   final Function()? onTap;
+  final double? height;
   final bool isClear;
   final bool hiderButtonTryAgent;
 

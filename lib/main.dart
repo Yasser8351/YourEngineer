@@ -49,7 +49,7 @@ void main() async {
       provisional: false,
       sound: true,
     );
-  } catch (e) {} // var pref = await SharedPreferences.getInstance();
+  } catch (e) {}
 
   runApp(const MyApp());
 }
@@ -159,31 +159,6 @@ class MyApp extends StatelessWidget {
           name: AppRouting.language,
           page: () => const LanguageScreen(),
         ),
-        // GetPage(
-        //   name: AppRouting.offerScreen,
-        //   page: () => OffersScreen(
-        //     projectModel: Result(
-
-        //       id: '',
-        //       attatchmentFile: '',
-        //       createdAt: '',
-        //       offersCount: 1,
-        //       owner: Owner(fullname: '', avatar: ''),
-        //       priceRange: PriceRange(rangeName: ''),
-        //       projPeriod: 1,
-        //       projStatus: ProjStatus(statName: ''),
-        //       projTitle: '',
-        //       skills: '',
-        //       subCategory: SubCategory(
-        //           category: Category(catImg: '', catName: ''), name: ''),
-        //       // categoryProject: '',
-        //       projDescription: '',
-        //       // postBy: '',
-        //       // createdDate: '',
-        //       // numberOfoffers: '',
-        //     ),
-        //   ),
-        // ),
 
         GetPage(
           name: AppRouting.subServices,

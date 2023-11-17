@@ -157,7 +157,7 @@ buildPersonalProfile(
       Align(
         alignment: AlignmentDirectional.centerStart,
         child: TextWidget(
-          title: userProfileModel.userprofiles!.aboutUser,
+          title: userProfileModel.userprofiles.aboutUser,
           fontSize: 16,
           color: colorScheme.onSecondary,
           isTextStart: true,
@@ -168,12 +168,12 @@ buildPersonalProfile(
       const SizedBox(height: 20),
       buildRowItem(
           AppConfig.statusAccount.tr,
-          userProfileModel.usercredentials!.isAuthorized
+          userProfileModel.usercredentials.isAuthorized
               ? AppConfig.acctive.tr
               : AppConfig.unAcctive.tr,
           colorScheme),
       buildRowItem(AppConfig.specialization.tr,
-          userProfileModel.userprofiles!.specialization, colorScheme),
+          userProfileModel.userprofiles.specialization, colorScheme),
       buildRowItem(
           AppConfig.totalReviews.tr,
           userProfileModel.review_avg.contains('null')
@@ -200,11 +200,11 @@ buildPersonalProfile(
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, crossAxisSpacing: 200),
-        itemCount: userProfileModel.userskills!.length,
+        itemCount: userProfileModel.userskills.length,
         itemBuilder: ((context, index) => Container(
               // height: 10,
               // width: 10,
-              child: Text("${userProfileModel.userskills![index]!.skillName}"),
+              child: Text("${userProfileModel.userskills[index]!.skillName}"),
             )),
       ),
       const SizedBox(height: 30),
