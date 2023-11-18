@@ -195,7 +195,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
                         : ElevatedButton(
                             onPressed: () async => acceptOffer(context),
                             child: Text(
-                              "قبول العرض",
+                              AppConfig.acceptOffer.tr,
                               style: TextStyle(color: Colors.white),
                             )),
                     SizedBox(width: 30),
@@ -210,7 +210,8 @@ class ListOffersEngineerWidget extends StatelessWidget {
                           ));
                         },
                         child: Text(
-                          "محادثة",
+                          AppConfig.chatEng.tr,
+                          // "محادثة",
                           style: TextStyle(color: Colors.white),
                         )),
                   ],

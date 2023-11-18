@@ -18,12 +18,7 @@ class AcceptOfferController extends GetxController {
 
   Future<bool> acceptOfferMyProject(
       BuildContext context, String projectId, String offerId) async {
-    myLog("loadingState", isLoading.toString());
-
     myLog('start methode', 'acceptOffer');
-    myLog('projectId', projectId);
-    myLog('offerId', offerId);
-
     var token = await _pref.getToken();
     final data = {
       'proj_id': projectId,

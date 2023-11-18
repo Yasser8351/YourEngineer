@@ -102,6 +102,7 @@ class AppLocalization implements Translations {
           AppConfig.specialization: "التخصص",
           AppConfig.acceptOffer: "قبول العرض",
           AppConfig.here: "هنا",
+          // ignore: equal_keys_in_map
           AppConfig.chatEng: "محادثة",
           AppConfig.dateofRegistration: "تاريخ التسجيل",
           AppConfig.totalReviews: "عدد المراجعات",
@@ -158,6 +159,7 @@ class AppLocalization implements Translations {
           AppConfig.skills: "Skills",
           AppConfig.send: AppConfig.send,
           AppConfig.exitApp: AppConfig.exitApp,
+          // ignore: equal_keys_in_map
           AppConfig.chat: AppConfig.chat,
           AppConfig.myProject: AppConfig.myProject,
           AppConfig.project: AppConfig.project,

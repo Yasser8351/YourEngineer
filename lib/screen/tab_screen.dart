@@ -90,7 +90,7 @@ class _TabScreenState extends State<TabScreen> {
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.content_paste_go),
-                      label: AppConfig.project.tr,
+                      label: AppConfig.myProject.tr,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.settings),

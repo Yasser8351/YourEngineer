@@ -39,7 +39,7 @@ class ListMyProjectWidget extends StatelessWidget {
                   ),
               arguments: {'projectId': ownerProjectModel.id});
         },
-        height: size.height * .37,
+        height: size.height * .3,
         width: size.width * .7,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -52,7 +52,7 @@ class ListMyProjectWidget extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: size.height * .02,
                   color: colorScheme.onSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -63,7 +63,7 @@ class ListMyProjectWidget extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: size.height * .02,
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -74,7 +74,7 @@ class ListMyProjectWidget extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: size.height * .02,
                   color: colorScheme.onSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -85,7 +85,7 @@ class ListMyProjectWidget extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: size.height * .02,
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w500,
                 ),

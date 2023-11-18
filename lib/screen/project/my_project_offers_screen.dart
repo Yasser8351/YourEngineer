@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
@@ -33,6 +35,9 @@ class MyProjectOffersScreen extends StatelessWidget {
 
     AcceptOfferController acceptofferController =
         Get.put(AcceptOfferController());
+
+    log(ownerProjectModel.id.toString());
+    log(ownerProjectModel.projTitle.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -201,7 +206,7 @@ class MyProjectOffersScreen extends StatelessWidget {
                       alignment: AlignmentDirectional.centerStart,
                       child: TextWidget(
                           isTextStart: true,
-                          title: "كل العروض ",
+                          title: AppConfig.allOffer.tr,
                           fontSize: 20,
                           color: Colors.black),
                     ),
@@ -214,6 +219,7 @@ class MyProjectOffersScreen extends StatelessWidget {
                     itemCount: controller.resulte.length,
                     itemBuilder: (context, index) => ListMyProjectOffersWidget(
                       colorScheme: colorScheme,
+                      projectId: ownerProjectModel.id,
                       controller: acceptofferController,
                       projectStatus: getProjectStatus(
                           ownerProjectModel.projStatus!.statName!),

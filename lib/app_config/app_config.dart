@@ -44,8 +44,8 @@ class AppConfig {
   static const String home = "Home";
   static const String statusAccount = "Status Account";
   static const String days = "Days";
-  static const String chatEng = "محادثة";
-  static const String acceptOffer = "قبول العرض";
+  static const String chatEng = "Chat";
+  static const String acceptOffer = "Accept offer";
   static const String unAcctive = "un Acctive";
   static const String acctive = "Acctive";
   static const String daysToDeliver = "days to deliver";
