@@ -1,6 +1,6 @@
 class AppConfig {
   static const String appName = "appName";
-  static const String aboutme = "aboutme";
+  static const String aboutme = "About me";
   static const String submitYourProtofilo = "submitYourProtofilo";
   static const String skills = "Skills";
   static const String engineer = "Engineers";
@@ -10,6 +10,7 @@ class AppConfig {
   static const String projectTitle = "projectTitle";
   static const String password = "password";
   static const String addOfferSuccesfuly = "addOfferSuccesfuly";
+  static const String addSuccesfuly = "Added successfully";
   static const String comfirmPassword = "comfirm password";
 
   static const String cannotaddOffer = "cannotaddOffer";
@@ -44,6 +45,7 @@ class AppConfig {
   static const String home = "Home";
   static const String statusAccount = "Status Account";
   static const String days = "Days";
+  static const String add = "Add";
   static const String chatEng = "Chat";
   static const String acceptOffer = "Accept offer";
   static const String unAcctive = "un Acctive";

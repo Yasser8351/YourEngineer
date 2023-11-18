@@ -17,6 +17,7 @@ class ApiUrl {
   static String get addVisa => '$_root/payments/withdraw/creditcard ';
   static String get addprotofilio => '$_root/profile/portfolio';
   static String get addskill => '$_root/profile/skill';
+  static String get profile => '$_root/profile';
   static String get getProjectsOffers => '$_root/offer/project/';
   static String get getRoles => '$_root/auth/roles';
   static String get getNotificationUnRead => '$_root/users/me';

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/screen/profile/add_info_about_me_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/image_network.dart';
@@ -11,7 +12,6 @@ import 'package:intl/intl.dart';
 import '../../controller/profile_controller.dart';
 import '../../debugger/my_debuger.dart';
 import '../../model/user_profile_model.dart';
-import '../../screen/profile/add_skills_screen.dart';
 import '../../utilits/helper.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
@@ -149,20 +149,43 @@ buildPersonalProfile(
         alignment: AlignmentDirectional.centerStart,
         child: TextWidget(
           title: AppConfig.aboutme,
-          fontSize: 18,
+          fontSize: Get.height * .02,
           color: colorScheme.onSecondary,
         ),
       ),
-      const SizedBox(height: 20),
-      Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: TextWidget(
-          title: userProfileModel.userprofiles.aboutUser,
-          fontSize: 16,
-          color: colorScheme.onSecondary,
-          isTextStart: true,
-        ),
-      ),
+      const SizedBox(height: 10),
+
+      userProfileModel.userprofiles.aboutUser.isEmpty
+          ? ElevatedButton(
+              onPressed: () => Get.to(() => const AddInfoAboutMeSreen()),
+              child: Text(
+                "اضف معلومات عنك",
+                style: TextStyle(color: Colors.white),
+              ))
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextWidget(
+                    title: userProfileModel.userprofiles.aboutUser,
+                    fontSize: Get.height * .02,
+                    color: colorScheme.onSecondary,
+                    isTextStart: true,
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Get.to(() => const AddInfoAboutMeSreen()),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(end: Get.height * .024),
+                    child: Icon(
+                      Icons.edit,
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                )
+              ],
+            ),
       const SizedBox(height: 10),
       const Divider(),
       const SizedBox(height: 20),
@@ -286,8 +309,7 @@ buildPaypal(
                 Helper.showError(
                     context: context, subtitle: AppConfig.allFaildRequired.tr);
               } else {
-                bool isAddProject =
-                    await controller.accountChargeRequest(context, myfile);
+                await controller.accountChargeRequest(context, myfile);
                 controller.amountController.clear();
               }
             },
