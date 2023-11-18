@@ -62,11 +62,11 @@ class UserAuth {
     try {
       var token = await _shared.getToken();
 
-      myLog("start methode", "getProjects");
+      myLog("start methode", "getRoles");
 
-      // loadingState = LoadingState.loading.obs;
       var response = await Dio()
           .get(
+            // "http://194.195.87.30:91/api/v1/roles?page=1&size=10",
             ApiUrl.getRoles,
             options: Options(
               headers: ApiUrl.getHeader(token: token),
@@ -74,12 +74,12 @@ class UserAuth {
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      myLog("start methode", "${loadingState.value}");
+      myLog("response", "$response");
 
       if (response.statusCode == 200) {
         var roles = rolesModelFromJson(jsonEncode(response.data));
         listrole =
-            roles.where((element) => element.roleName != "دعم فني").toList();
+            roles.where((element) => element.roleName != "admin").toList();
 
         if (listrole.isEmpty) {
           loadingState(LoadingState.noDataFound);
@@ -184,6 +184,7 @@ class UserAuth {
         status = true;
         setValueResponse(true);
         await _shared.login(userModel, selectedrole);
+        dialogApp();
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());

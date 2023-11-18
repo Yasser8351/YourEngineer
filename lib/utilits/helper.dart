@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/enum/all_enum.dart';
+import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 clearText(TextEditingController controller) {
   controller.clear();
@@ -71,4 +72,44 @@ getProjectStatus(String status) {
   } else {
     return ProjectStatus.close;
   }
+}
+
+dialogApp() {
+  Get.dialog(
+    Dialog(
+      backgroundColor: Colors.white70,
+      child: WillPopScope(
+        onWillPop: () async => true,
+        child: Container(
+          height: Get.height * .4,
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.green,
+                radius: Get.height * .06,
+                child: Icon(
+                  Icons.done,
+                  color: Colors.white,
+                  size: Get.height * .05,
+                ),
+              ),
+
+              SizedBox(height: Get.height * .027),
+              TextWidget(
+                  title:
+                      "تم تسجيل حسابك بنجاح \n سيتم مراجعة حسابك وتأكيدة في اقل من 24 ساعة",
+                  fontSize: Get.height * .02,
+                  color: Colors.black),
+              // ElevatedButton(onPressed: onPressed, child: )
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

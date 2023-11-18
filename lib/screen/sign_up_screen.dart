@@ -165,7 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             )),
                         obscure: _obscureText2,
                         inputType: TextInputType.text),
-                    SizedBox(height: size.height * .025),
+                    SizedBox(height: size.height * .0),
                     // const RadioButtonWidget(),
 
                     Row(
@@ -277,9 +277,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             title: AppConfig.signUp.tr,
                             color: colorScheme.primary,
                             onTap: () async {
-                              // _showDialog('');
-
-                              // validateData();
                               if (_emailController.text.isEmpty ||
                                   _firstNameController.text.isEmpty ||
                                   _lastNameController.text.isEmpty ||
@@ -308,7 +305,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 context,
                                 userModel,
                                 _passwordController.text,
-                                selectedval,
+                                selectedval != null ? selectedval : -1,
                                 myfile!,
                                 myfile2!,
                               );
