@@ -92,6 +92,9 @@ class AppLocalization implements Translations {
           AppConfig.projectTitle: "عنوان المشروع",
           AppConfig.skills: "المهارات",
           AppConfig.offer: "عرض",
+          AppConfig.dateProject: "عدد ايام المشروع",
+          AppConfig.amountLess: "يجب ألا يقل مبلغ العرض عن",
+
           AppConfig.attachReceipt:
               " ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار",
           AppConfig.linkProject: "رابط المشروع",
@@ -160,6 +163,7 @@ class AppLocalization implements Translations {
           AppConfig.amount: AppConfig.amount,
           AppConfig.transferReceipt: AppConfig.transferReceipt,
           AppConfig.skills: "Skills",
+          AppConfig.dateProject: AppConfig.dateProject,
           AppConfig.send: AppConfig.send,
           AppConfig.exitApp: AppConfig.exitApp,
           // ignore: equal_keys_in_map
@@ -210,6 +214,7 @@ class AppLocalization implements Translations {
           AppConfig.topEngineerRating: AppConfig.topEngineerRating,
           AppConfig.populerServices: AppConfig.populerServices,
           AppConfig.allFaildRequired: AppConfig.allFaildRequired,
+          AppConfig.amountLess: AppConfig.amountLess,
           AppConfig.cannotaddOffer: "Can not add Offer",
           AppConfig.addOfferSuccesfuly: "add offer Succesfuly",
           AppConfig.noProjectsFound: "No projects found",

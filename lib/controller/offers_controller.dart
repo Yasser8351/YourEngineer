@@ -92,7 +92,6 @@ class OfferController extends GetxController {
 
         // getProjectsOffers(projectId);
         // await _shared.saveToken(response.body['token']);
-
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
@@ -154,7 +153,6 @@ class OfferController extends GetxController {
 
         // getProjectsOffers(projectId);
         // await _shared.saveToken(response.body['token']);
-
       } else {
         loadingState(LoadingState.error);
 

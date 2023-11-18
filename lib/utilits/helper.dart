@@ -34,7 +34,7 @@ class Helper {
   }) {
     Flushbar(
       message: subtitle,
-      backgroundColor: Theme.of(context).colorScheme.error,
+      backgroundColor: Colors.red,
       padding: const EdgeInsets.all(24.0),
       margin: const EdgeInsets.all(24.0),
       duration: const Duration(seconds: 3),

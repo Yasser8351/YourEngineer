@@ -7,6 +7,7 @@ import 'all_settings/settings_screen.dart';
 import 'chat/chat_screen.dart';
 import 'home_screen.dart';
 
+// ignore: must_be_immutable
 class TabScreen extends StatefulWidget {
   TabScreen({Key? key, this.selectIndex = 0}) : super(key: key);
   int selectIndex;

@@ -175,12 +175,15 @@ class ListOffersEngineerWidget extends StatelessWidget {
               SizedBox(height: size.height * .02),
               Container(
                 height: size.height * .06,
-                child: TextWidget(
-                  textOverflow: TextOverflow.ellipsis,
-                  title: resulte['message_desc'],
-                  fontSize: Get.height * .02,
-                  color: colorScheme.onSecondary,
-                  isTextStart: true,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 10),
+                  child: TextWidget(
+                    textOverflow: TextOverflow.ellipsis,
+                    title: resulte['message_desc'],
+                    fontSize: Get.height * .02,
+                    color: colorScheme.onSecondary,
+                    isTextStart: true,
+                  ),
                 ),
               ),
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/widget/shared_widgets/no_data.dart';
@@ -16,10 +18,7 @@ class OffersScreen extends StatefulWidget {
   const OffersScreen({
     Key? key,
     // required this.index,
-    // required this.result,
-    //  required this.projectModel, this.isMyProject = false
   }) : super(key: key);
-  // final List<dynamic> result;
   // final int index;
 
   @override
@@ -30,21 +29,35 @@ class _OffersScreenState extends State<OffersScreen> {
   OfferController controller = Get.put(OfferController());
   bool isLoading = false;
   bool isAddProject = false;
+  int priceRange = 0;
+  @override
+  initState() {
+    Future.delayed(Duration.zero, () {
+      trimPrice();
+    });
+    super.initState();
+  }
 
-  // initalControllers() {
-  //   titleController.text = widget.projectModel.projTitle;
-  //   descriptionController.text = widget.projectModel.projDescription;
-  //   daysController.text = widget.projectModel.projTitle;
-  // }
+  trimPrice() {
+    /// range_name: 50 - 100}
+    String str =
+        controller.results['PriceRange']['range_name'].toString().trim();
+    const start = "";
+    const end = "-";
 
-  // @override
-  // RangeValues selectedRange = const RangeValues(25, 50);
+    final startIndex = str.indexOf(start);
+    final endIndex = str.indexOf(end, startIndex + start.length);
+    var sub = str.substring(startIndex + start.length, endIndex);
+    priceRange = int.parse(sub);
+
+    log("priceRange  $priceRange");
+    return sub;
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-
     Size size = MediaQuery.of(context).size;
-    // dynamic result = Get.arguments['results'];
 
     return Scaffold(
         appBar: _getAppBar(context),
@@ -56,7 +69,7 @@ class _OffersScreenState extends State<OffersScreen> {
               children: [
                 Card(
                     child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * .025),
                   child: Container(
                     width: size.width,
                     child: Column(
@@ -85,25 +98,34 @@ class _OffersScreenState extends State<OffersScreen> {
                           isTextStart: true,
                         ),
                         SizedBox(height: size.height * .031),
-                        buildRowText(
-                            AppConfig.priceRange,
-                            controller.results['PriceRange']['range_name'],
-                            size,
-                            colorScheme),
+                        Row(
+                          children: [
+                            buildRowText(
+                                AppConfig.priceRange.tr,
+                                controller.results['PriceRange']['range_name'],
+                                size,
+                                colorScheme),
+                            SizedBox(width: 3),
+                            TextWidget(
+                                title: "\$",
+                                fontSize: Get.height * .025,
+                                color: colorScheme.primary)
+                          ],
+                        ),
                         SizedBox(height: size.height * .031),
                         buildRowText(
-                            AppConfig.offer,
+                            AppConfig.offer.tr,
                             controller.results['OffersCount'].toString(),
                             size,
                             colorScheme),
                         SizedBox(height: size.height * .031),
                         buildRowText(
-                            AppConfig.dateProject,
+                            AppConfig.dateProject.tr,
                             controller.results['proj_period'].toString(),
                             size,
                             colorScheme),
                         SizedBox(height: size.height * .031),
-                        buildRowText(AppConfig.skills,
+                        buildRowText(AppConfig.skills.tr,
                             controller.results['skills'], size, colorScheme),
                         SizedBox(height: size.height * .03),
                       ],
@@ -209,39 +231,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                     ),
                                     child: ElevatedButton(
                                       onPressed: () async {
-                                        if (controller
-                                                .daysController.text.isEmpty ||
-                                            controller.descriptionController
-                                                .text.isEmpty ||
-                                            controller
-                                                .priceController.text.isEmpty) {
-                                          Helper.showError(
-                                              context: context,
-                                              subtitle: AppConfig
-                                                  .allFaildRequired.tr);
-                                        } else {
-                                          setState(() => isLoading = true);
-
-                                          isAddProject =
-                                              await controller.addOffer(context,
-                                                  controller.results['id']);
-                                          setState(() => isLoading = false);
-
-                                          if (isAddProject) {
-                                            controller.clearController();
-                                            Helper.showseuess(
-                                                context: context,
-                                                subtitle: AppConfig
-                                                    .addOfferSuccesfuly.tr);
-                                            controller.getProjectsOffers(
-                                                controller.results['id']);
-                                          } else {
-                                            Helper.showError(
-                                                context: context,
-                                                subtitle: AppConfig
-                                                    .cannotaddOffer.tr);
-                                          }
-                                        }
+                                        await addOffer(context);
                                       },
                                       child: isLoading
                                           ? Padding(
@@ -359,6 +349,34 @@ class _OffersScreenState extends State<OffersScreen> {
             ),
           ),
         ));
+  }
+
+  Future<void> addOffer(BuildContext context) async {
+    if (controller.daysController.text.isEmpty ||
+        controller.descriptionController.text.isEmpty ||
+        controller.priceController.text.isEmpty) {
+      Helper.showError(
+          context: context, subtitle: AppConfig.allFaildRequired.tr);
+    } else if (int.parse(controller.priceController.text) < priceRange) {
+      Helper.showError(
+          context: context, subtitle: "${AppConfig.amountLess.tr} $priceRange");
+    } else {
+      setState(() => isLoading = true);
+
+      isAddProject =
+          await controller.addOffer(context, controller.results['id']);
+      setState(() => isLoading = false);
+
+      if (isAddProject) {
+        controller.clearController();
+        Helper.showseuess(
+            context: context, subtitle: AppConfig.addOfferSuccesfuly.tr);
+        controller.getProjectsOffers(controller.results['id']);
+      } else {
+        Helper.showError(
+            context: context, subtitle: AppConfig.cannotaddOffer.tr);
+      }
+    }
   }
 
   buildRowList(context, String title, ColorScheme colorScheme, IconData icon) {
@@ -483,7 +501,7 @@ class _OffersScreenState extends State<OffersScreen> {
       children: [
         TextWidget(
           title: title + " : ",
-          fontSize: size.height * .025,
+          fontSize: size.height * .02,
           color: colorScheme.onSecondary,
           isTextStart: true,
         ),

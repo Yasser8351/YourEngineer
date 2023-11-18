@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
@@ -35,9 +33,6 @@ class MyProjectOffersScreen extends StatelessWidget {
 
     AcceptOfferController acceptofferController =
         Get.put(AcceptOfferController());
-
-    log(ownerProjectModel.id.toString());
-    log(ownerProjectModel.projTitle.toString());
 
     return Scaffold(
       appBar: AppBar(

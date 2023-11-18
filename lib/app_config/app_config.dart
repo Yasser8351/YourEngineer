@@ -5,6 +5,7 @@ class AppConfig {
   static const String skills = "Skills";
   static const String engineer = "Engineers";
   static const String projectOwner = "Project Owner";
+  static const String amountLess = "The bid amount must not be less than";
   static const String emal = "email";
   static const String phone = "phone";
   static const String projectTitle = "projectTitle";
