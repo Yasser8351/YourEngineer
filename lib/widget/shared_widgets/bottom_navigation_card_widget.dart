@@ -257,7 +257,6 @@ buildPaypal(
           color: colorScheme.onSecondary,
         ),
         SizedBox(height: size.height * .02),
-
         widget,
         SizedBox(height: size.height * .02),
         TextWidget(
@@ -277,27 +276,6 @@ buildPaypal(
           50,
           1,
         ),
-
-        // SizedBox(height: size.height * .02),
-        // TextWidget(
-        //   title: 'Email',
-        //   fontSize: 18,
-        //   color: colorScheme.onSecondary,
-        // ),
-        // SizedBox(height: size.height * .02),
-        // buildTextFormFaild(
-        //   controller.emailController,
-        //   'Add Your Email',
-        //   false,
-        //   TextInputType.text,
-        //   const Icon(Icons.add),
-        //   colorScheme,
-        //   30,
-        //   1,
-        // ),
-        // SizedBox(height: size.height * .02),
-
-        //
         Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 10,

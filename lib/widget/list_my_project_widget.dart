@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
@@ -39,7 +40,7 @@ class ListMyProjectWidget extends StatelessWidget {
                   ),
               arguments: {'projectId': ownerProjectModel.id});
         },
-        height: size.height * .3,
+        height: size.height * .33,
         width: size.width * .7,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -52,7 +53,7 @@ class ListMyProjectWidget extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: size.height * .02,
+                  fontSize: size.height * .017,
                   color: colorScheme.onSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -74,7 +75,7 @@ class ListMyProjectWidget extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: size.height * .02,
+                  fontSize: size.height * .017,
                   color: colorScheme.onSecondary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -122,6 +123,12 @@ class ListMyProjectWidget extends StatelessWidget {
                         colorScheme: colorScheme,
                         icon: Icons.post_add,
                         description: "عدد العروض",
+                      ),
+                      BuildRowList(
+                        title: ownerProjectModel.priceRange!.rangeName,
+                        colorScheme: colorScheme,
+                        icon: CupertinoIcons.money_dollar,
+                        description: "ميزانية المشروع",
                       ),
                       BuildRowList(
                         title: dateFormat(ownerProjectModel.createdAt),
