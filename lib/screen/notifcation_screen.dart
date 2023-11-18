@@ -37,7 +37,7 @@ class _NotifcationScreenState extends State<NotifcationScreen> {
       appBar: _getAppBar(context),
       body: GetBuilder<NotificationController>(
         builder: (controller) {
-          if (controller.results.isEmpty)
+          if (controller.loadingState.value == LoadingState.noDataFound)
             return NoData(
               textMessage: "ليس لديك اشعارات",
             );

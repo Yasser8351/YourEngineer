@@ -46,7 +46,12 @@ class NotificationController extends GetxController {
             AllNotificationModel.fromJson(response.data);
 
         results = allNotificationModel.results;
-        loadingState(LoadingState.loaded);
+
+        if (results.isEmpty) {
+          loadingState(LoadingState.noDataFound);
+        } else {
+          loadingState(LoadingState.loaded);
+        }
 
         await _pref.save(
             userId: response.data['id'] ?? '',
