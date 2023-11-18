@@ -43,33 +43,33 @@ class ListProjectWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                results['proj_title'],
+                "اسم المشروع" + " : " + results['proj_title'],
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 18,
-                  color: colorScheme.onSecondary,
+                  fontSize: Get.height * .02,
+                  color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                results['proj_description'],
-                maxLines: 2,
+                "الوصف" + " : " + results['proj_description'],
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: Get.height * .02,
                   color: colorScheme.onSecondary,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                results['skills'],
+                "المهارات" + " : " + results['skills'],
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: Get.height * .02,
                   color: colorScheme.onSecondary,
                   fontWeight: FontWeight.w500,
                 ),

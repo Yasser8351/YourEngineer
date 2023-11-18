@@ -332,7 +332,6 @@ class _OffersScreenState extends State<OffersScreen> {
                                 SizedBox(height: size.height * .02),
                             itemCount: controller.resulte.length,
                             itemBuilder: (context, index) {
-                              // controller.index = index;
                               return InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(

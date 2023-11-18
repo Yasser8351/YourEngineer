@@ -30,6 +30,14 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
   PaymentAccountsController paymentAccountsController =
       Get.put(PaymentAccountsController());
 
+  @override
+  void initState() {
+    Future.delayed(Duration(), () {
+      controller.getUsersShow('').then((value) => setState(() {}));
+    });
+    super.initState();
+  }
+
   var profileList = [
     ListHorizontalProfile(
       AppConfig.paypal,
@@ -60,181 +68,188 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-        backgroundColor: colorScheme.primary,
-        body: SingleChildScrollView(
-          child: Obx(() {
-            if (controller.loadingState.value == LoadingState.initial ||
-                controller.loadingState.value == LoadingState.loading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              );
-            } else if (controller.loadingState.value == LoadingState.error ||
-                controller.loadingState.value == LoadingState.noDataFound) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: Get.height / 3.8),
-                  ReyTryErrorWidget(
-                      title: controller.loadingState.value ==
-                              LoadingState.noDataFound
-                          ? AppConfig.noData.tr
-                          : controller.message,
-                      onTap: () {
-                        controller.getUsersShow('');
-                      })
-                ],
-              );
-            } else {
-              return SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 40, right: 10, left: 10),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            icon: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.white,
-                              size: 30,
-                            )),
-                      ),
-                      CardProfilePersonalInfo(
-                        userProfileModel: controller.userProfile,
-                        isOwinr: true,
-                        hidePersonalInfo: true,
-                        size: size,
-                        colorScheme: colorScheme,
-                        onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => const AddProtofiloScreen()));
-                        },
-                      ),
-                      const SizedBox(height: 35),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextWidget(
-                            title:
-                                "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n ${AppConfig.attachReceipt.tr}",
-                            fontSize: 15,
-                            isTextStart: true,
-                            color: Colors.white),
-                      ),
-                      const SizedBox(height: 15),
-                      ListProfileHorizontalWidget(
-                        isPayScreen: true,
-                        size: size,
-                        colorScheme: colorScheme,
-                        listHorizontalProfile: profileList,
-                        expandedIndex: expandedIndex,
-                        onTap: ((index) {
-                          setState(() => expandedIndex = index);
-                        }),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Text(paymentAccountsController.creditCardAccount),
-
-                          Row(
-                            children: [
-                              TextWidget(
-                                  title: expandedIndex == 0
-                                      ? paymentAccountsController.emailAccount
-                                      : paymentAccountsController
-                                          .creditCardAccount,
-                                  fontSize: 16,
-                                  color: Colors.white),
-                              IconButton(
-                                  onPressed: () async {
-                                    Helper.showseuess(
-                                        context: context,
-                                        subtitle: "تم النسخ بنجاح");
-                                    await Clipboard.setData(ClipboardData(
-                                        text: expandedIndex == 0
-                                            ? paymentAccountsController
-                                                .emailAccount
-                                            : paymentAccountsController
-                                                .creditCardAccount));
-                                    // copied successfully
-                                  },
-                                  icon: Icon(Icons.copy_all),
-                                  color: Colors.white),
-                            ],
-                          ),
-                          TextWidget(
-                              title: expandedIndex == 0
-                                  ? "Email Paypal"
-                                  : "Visa Account",
-                              fontSize: 16,
-                              color: Colors.white),
-                        ],
-                      ),
-                      BottomNavigationCardWidget(
-                        userProfileModel: controller.userProfile,
-                        size: size,
-                        hidePersonalInfo: false,
-                        colorScheme: colorScheme,
-                        expandedIndex: expandedIndex,
-                        isowner: true,
-                        myfile: myfile,
-                        widget: InkWell(
-                          onTap: () async {
-                            xfile = await ImagePicker()
-                                .pickImage(source: ImageSource.gallery);
-                            // Navigator.of(context).pop();
-                            myfile = File(xfile!.path);
-                            setState(() {});
-                          },
-                          child: Container(
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 2,
-                                  color: Colors.grey.shade300,
-                                ),
-                                borderRadius: BorderRadius.circular(10)),
-                            width: size.width * 1,
-                            height: size.height * .18,
-                            child: myfile != null
-                                ? Image.file(
-                                    myfile!,
-                                    fit: BoxFit.fill,
-                                  )
-                                : Align(
-                                    alignment: Alignment.center,
-                                    child: TextWidget(
-                                        title:
-                                            "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار هنا",
-                                        fontSize: 13,
-                                        color: Colors.black),
-                                  ),
-                          ),
-                        ),
-
-                        // onTap: () async {
-                        //   xfile = await ImagePicker()
-                        //       .pickImage(source: ImageSource.gallery);
-                        //   // Navigator.of(context).pop();
-                        //   log(myfile!.path);
-
-                        //   myfile = File(xfile!.path);
-                        //   setState(() {});
-                        // },
-                      ),
-                    ],
+    return RefreshIndicator(
+      onRefresh: () =>
+          controller.getUsersShow('').then((value) => setState(() {})),
+      child: Scaffold(
+          backgroundColor: colorScheme.primary,
+          body: SingleChildScrollView(
+            child: Obx(() {
+              if (controller.loadingState.value == LoadingState.initial ||
+                  controller.loadingState.value == LoadingState.loading) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
                   ),
-                ),
-              );
-            }
-          }),
-        ));
+                );
+              } else if (controller.loadingState.value == LoadingState.error ||
+                  controller.loadingState.value == LoadingState.noDataFound) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: Get.height / 3.8),
+                    ReyTryErrorWidget(
+                        title: controller.loadingState.value ==
+                                LoadingState.noDataFound
+                            ? AppConfig.noData.tr
+                            : controller.message,
+                        onTap: () {
+                          controller.getUsersShow('');
+                        })
+                  ],
+                );
+              } else {
+                return SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 40, right: 10, left: 10),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.white,
+                                size: 30,
+                              )),
+                        ),
+                        GetBuilder<ProfileUserController>(builder: (_) {
+                          return CardProfilePersonalInfo(
+                            userProfileModel: controller.userProfile,
+                            isOwinr: true,
+                            hidePersonalInfo: true,
+                            size: size,
+                            colorScheme: colorScheme,
+                            onTap: () {
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (context) => const AddProtofiloScreen()));
+                            },
+                          );
+                        }),
+                        const SizedBox(height: 35),
+                        Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: TextWidget(
+                              isTextStart: true,
+                              title:
+                                  "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n ${AppConfig.attachReceipt.tr}",
+                              fontSize: 15,
+                              color: Colors.white),
+                        ),
+                        const SizedBox(height: 15),
+                        ListProfileHorizontalWidget(
+                          isPayScreen: true,
+                          size: size,
+                          colorScheme: colorScheme,
+                          listHorizontalProfile: profileList,
+                          expandedIndex: expandedIndex,
+                          onTap: ((index) {
+                            setState(() => expandedIndex = index);
+                          }),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Text(paymentAccountsController.creditCardAccount),
+
+                            Row(
+                              children: [
+                                TextWidget(
+                                    title: expandedIndex == 0
+                                        ? paymentAccountsController.emailAccount
+                                        : paymentAccountsController
+                                            .creditCardAccount,
+                                    fontSize: 16,
+                                    color: Colors.white),
+                                IconButton(
+                                    onPressed: () async {
+                                      Helper.showseuess(
+                                          context: context,
+                                          subtitle: "تم النسخ بنجاح");
+                                      await Clipboard.setData(ClipboardData(
+                                          text: expandedIndex == 0
+                                              ? paymentAccountsController
+                                                  .emailAccount
+                                              : paymentAccountsController
+                                                  .creditCardAccount));
+                                      // copied successfully
+                                    },
+                                    icon: Icon(Icons.copy_all),
+                                    color: Colors.white),
+                              ],
+                            ),
+                            TextWidget(
+                                title: expandedIndex == 0
+                                    ? "Email Paypal"
+                                    : "Visa Account",
+                                fontSize: 16,
+                                color: Colors.white),
+                          ],
+                        ),
+                        BottomNavigationCardWidget(
+                          userProfileModel: controller.userProfile,
+                          size: size,
+                          hidePersonalInfo: false,
+                          colorScheme: colorScheme,
+                          expandedIndex: expandedIndex,
+                          isowner: true,
+                          myfile: myfile,
+                          widget: InkWell(
+                            onTap: () async {
+                              xfile = await ImagePicker()
+                                  .pickImage(source: ImageSource.gallery);
+                              // Navigator.of(context).pop();
+                              myfile = File(xfile!.path);
+                              setState(() {});
+                            },
+                            child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.grey.shade300,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10)),
+                              width: size.width * 1,
+                              height: size.height * .18,
+                              child: myfile != null
+                                  ? Image.file(
+                                      myfile!,
+                                      fit: BoxFit.fill,
+                                    )
+                                  : Align(
+                                      alignment: Alignment.center,
+                                      child: TextWidget(
+                                          title:
+                                              "ملحوظة : قم باجراء التحويلة ثم ارفق الاشعار هنا",
+                                          fontSize: 13,
+                                          color: Colors.black),
+                                    ),
+                            ),
+                          ),
+
+                          // onTap: () async {
+                          //   xfile = await ImagePicker()
+                          //       .pickImage(source: ImageSource.gallery);
+                          //   // Navigator.of(context).pop();
+                          //   log(myfile!.path);
+
+                          //   myfile = File(xfile!.path);
+                          //   setState(() {});
+                          // },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+            }),
+          )),
+    );
   }
 }

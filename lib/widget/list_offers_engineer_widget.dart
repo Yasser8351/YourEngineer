@@ -35,7 +35,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {},
-        height: size.height * .3,
+        height: size.height * .28,
         width: size.width,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -61,7 +61,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextWidget(
                           title: resulte['client']['fullname'],
-                          fontSize: 18,
+                          fontSize: Get.height * .022,
                           color: colorScheme.onSecondary,
                           isTextStart: false,
                         ),
@@ -71,7 +71,8 @@ class ListOffersEngineerWidget extends StatelessWidget {
                             const EdgeInsets.only(top: 5, left: 10, right: 10),
                         child: TextWidget(
                           title: '', // engineerspecialist
-                          fontSize: 18,
+                          fontSize: Get.height * .02,
+
                           color: colorScheme.secondary,
                           isTextStart: true,
                         ),
@@ -88,13 +89,13 @@ class ListOffersEngineerWidget extends StatelessWidget {
                               children: [
                                 TextWidget(
                                   title: AppConfig.price.tr,
-                                  fontSize: 15,
+                                  fontSize: Get.height * .02,
                                   color: colorScheme.secondary,
                                 ),
                                 const SizedBox(width: 7),
                                 TextWidget(
-                                  title: resulte['price'].toString(),
-                                  fontSize: 15,
+                                  title: "\$" + resulte['price'].toString(),
+                                  fontSize: Get.height * .02,
                                   color: colorScheme.secondary,
                                 ),
                               ],
@@ -164,7 +165,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
                       // ),
                       TextWidget(
                         title: dateFormat(resulte['createdAt']),
-                        fontSize: 18,
+                        fontSize: Get.height * .02,
                         color: colorScheme.secondary,
                       ),
                     ],
@@ -177,7 +178,7 @@ class ListOffersEngineerWidget extends StatelessWidget {
                 child: TextWidget(
                   textOverflow: TextOverflow.ellipsis,
                   title: resulte['message_desc'],
-                  fontSize: 18,
+                  fontSize: Get.height * .02,
                   color: colorScheme.onSecondary,
                   isTextStart: true,
                 ),

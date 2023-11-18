@@ -60,7 +60,7 @@ class ProfileUserController extends GetxController {
   onInit() {
     super.onInit();
     initializeDateFormatting();
-    getUsersShow('');
+    // getUsersShow('');
     getCurrentrateCommission();
     // getPortfolioEngenneir();
   }
@@ -91,6 +91,8 @@ class ProfileUserController extends GetxController {
 
       if (response.statusCode == 200) {
         userProfile = userProfileModelFromJson(jsonEncode(response.data));
+
+        update();
 
         if (userProfile == null) {
           message = "no data found";
@@ -133,6 +135,7 @@ class ProfileUserController extends GetxController {
 
       myLog("catch error getUsersShow: ", error.toString());
     }
+    update();
     return apiResponse;
   }
 

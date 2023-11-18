@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:your_engineer/app_config/api_url.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
-import 'package:your_engineer/screen/chat/chat_room_screen.dart';
+import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/image_network.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
@@ -26,19 +26,15 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardDecoration(
       onTap: () {
-        Get.to(() => ChatRoomScreen(
-              receiverId: topEngineerRatingModel.id,
-              receiverEmail: topEngineerRatingModel.email,
-              receiverName: topEngineerRatingModel.fullname,
-              image: topEngineerRatingModel.imgPath,
-              senderId: topEngineerRatingModel.id,
-            ));
-        // Get.to(() => ProfileEngineerScreen(
-        //       showEngeneerById: true,
-        //       hidePersonalInfo: true,
-        //       engeneerId: topEngineerRatingModel.id,
+        Get.to(
+            () => ProfileEngineerScreen(engeneerId: topEngineerRatingModel.id));
+        // Get.to(() => ChatRoomScreen(
+        //       receiverId: topEngineerRatingModel.id,
+        //       receiverEmail: topEngineerRatingModel.email,
+        //       receiverName: topEngineerRatingModel.fullname,
+        //       image: topEngineerRatingModel.imgPath,
+        //       senderId: topEngineerRatingModel.id,
         //     ));
-        // return;
       },
       height: 0,
       width: size.width * .6,
@@ -55,22 +51,11 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
               ImageCached(
                 image: ApiUrl.imageUrl + topEngineerRatingModel.imgPath,
                 // ApiUrl.root + "/" + populerServicesModel.imageUrlServices,
-                height: 150,
+                height: Get.height * .16,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
-              // Image.network(
-              //   topEngineerRatingModel.user.imgPath,
-              //   height: size.height * .2,
-              //   width: double.infinity,
-              //   fit: BoxFit.fill,
-              // ),
-              // Image.asset(
-              //   AppImage.img11,
-              //   height: size.height * .2,
-              //   width: double.infinity,
-              //   fit: fit,
-              // ),
+
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5),
@@ -84,30 +69,10 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                       color: colorScheme.onSecondary,
                       isTextStart: false,
                     ),
-                    // CardWithImage(
-                    //     colors: Colors.green.shade50,
-                    //     onTap: () {},
-                    //     height: 35,
-                    //     width: 35,
-                    //     child: MyFavoriteButton(
-                    //       iconSize: 35,
-                    //       iconColor: Colors.red,
-                    //       isFavorite: false,
-                    //       valueChanged: (isFavorite) async {},
-                    //     ))
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
-                child: TextWidget(
-                  // title: "specialization",
-                  title: "",
-                  fontSize: 16,
-                  color: colorScheme.secondary,
-                  isTextStart: true,
-                ),
-              ),
+
               // RatingBar
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -116,7 +81,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     RatingBar(
                       sizeIcon: 15,
                       color: Colors.amber,
-                      rating: 0.0,
+                      rating: 4.5,
                       // rating: topEngineerRatingModel.user.rating,
                       onRatingChanged: (rating) {
                         // setState(() => this.rating = rating)
@@ -126,7 +91,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: TextWidget(
-                        title: 0.0.toString(),
+                        title: 4.5.toString(),
                         // title: topEngineerRatingModel.engineerRating.toString(),
                         fontSize: 15,
                         color: colorScheme.secondary,
