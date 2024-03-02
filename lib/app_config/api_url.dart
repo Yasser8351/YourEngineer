@@ -1,8 +1,10 @@
 class ApiUrl {
-  static const String _root = 'http://194.195.87.30:91/api/v1';
+  static const String _root = 'http://62.171.175.75:83/api/v1';
+  // static const String _root = 'http://62.171.175.75:3000/api';
+  // static const String _root = 'http://194.195.87.30:91/api/v1';
 
   static const String root = _root;
-  static const String imageUrl = "http://194.195.87.30:91/";
+  static const String imageUrl = "http://62.171.175.75:3000/";
   // 'https://http://194.195.87.30:91';
   //https://calm-cyan-bullfrog-tie.cyclic.app/api/v1/
   static String get signup => '$_root/auth/signup';

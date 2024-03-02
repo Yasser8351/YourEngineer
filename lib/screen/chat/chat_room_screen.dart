@@ -53,6 +53,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     connectSocket();
     chatController.getChatBetweenUsers(receiver_id: widget.senderId);
     chatController.getEmail();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    });
     super.initState();
   }
 
@@ -218,7 +225,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   itemCount: controller.listChatBetweenUsers.length,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    scrollListToBottom();
+                    // scrollListToBottom();
 
                     return InkWell(
                       onTap: () {

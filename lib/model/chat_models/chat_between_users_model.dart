@@ -62,12 +62,6 @@ class ChatBetweenUsers {
     messageType = json['message_type'] ?? '';
     fileUrl = json['fileUrl'] ?? '';
     createdAt = json['time'] ?? '';
-
-    /* {senderId: rasheed@g1.com, receiverId: dash2022tech@gmail.com,
-     text: qqqqqqqqqqqqqqqq, fileUrl: http://194.195.87.30:91/qqqqqqqqqqqqqqqq,
-      message_type: text, time: 2023-04-05T14:24:15.000Z}
-
-    */
   }
 
   Map<String, dynamic> toJson() {

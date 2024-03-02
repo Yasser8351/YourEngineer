@@ -101,6 +101,8 @@ class UserAuth {
         //     _listPopulerServices, LoadingState.error.obs);
       }
     } catch (error) {
+      myLog("response", "$error");
+
       loadingState(LoadingState.error);
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);

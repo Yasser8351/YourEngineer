@@ -20,7 +20,7 @@ class ChatWidget extends StatelessWidget {
 
     return ListTile(
       title: TextWidget(
-          title: messageModel.senderName, fontSize: 14, color: Colors.black),
+          title: messageModel.recieverName, fontSize: 14, color: Colors.black),
       subtitle: Row(
         children: [
           messageModel.senderEmail.contains(userEmail)
