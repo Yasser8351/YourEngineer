@@ -23,6 +23,7 @@ class ChatController extends GetxController {
   var loadingStateChat = LoadingState.initial.obs;
   String userId = "";
   String email = '';
+  String message = "";
 
   List<Chats> lastChatsList = [];
   List<ChatBetweenUsers> listChatBetweenUsers = [];
@@ -81,19 +82,24 @@ class ChatController extends GetxController {
         loadingState(LoadingState.error);
       }
     } on DioError catch (error) {
+      message = error.response!.data['msg'] ?? "";
+
       // error.response.data[""];
       loadingState(LoadingState.error);
       if (error is TimeoutException) {
-        // Get.defaultDialog(title: AppConfig.timeOut.tr);
+        message = AppConfig.timeOut.tr;
       }
       if (error is SocketException) {
-        // Get.defaultDialog(title: AppConfig.failedInternet.tr);
+        message = AppConfig.failedInternet.tr;
       } else {
-        // Get.defaultDialog(title: AppConfig.errorOoccurred.tr);
+        // message = AppConfig.errorOoccurred.tr;
+        message = error.response!.data['msg'] ?? "";
       }
 
       myLog("catch last chat", error.toString());
+      update();
     }
+    update();
   }
 
   Future<void> getChatBetweenUsers({required String receiver_id}) async {

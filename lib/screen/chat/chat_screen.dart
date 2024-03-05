@@ -38,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
           } else if (controller.loadingState.value == LoadingState.error) {
             return Center(
               child: ReyTryErrorWidget(
-                  title: AppConfig.errorOoccurred.tr,
+                  title: controller.message,
                   onTap: () {
                     controller.getLastchats();
                   }),

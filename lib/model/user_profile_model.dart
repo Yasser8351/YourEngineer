@@ -61,7 +61,10 @@ class UserProfileModel {
             ? []
             : List<Userportfolio?>.from(
                 json["userportfolio"]!.map((x) => Userportfolio.fromJson(x))),
-        wallet: Wallet.fromJson(json["wallet"]),
+        wallet: json["wallet"] == null
+            ? Wallet(
+                id: '', user_id: '', credit: '', createdAt: '', updatedAt: '')
+            : Wallet.fromJson(json["wallet"]),
         talentreview: json["talentreview"] ?? '',
       );
 

@@ -67,8 +67,7 @@ class ProfileUserController extends GetxController {
 
   Future<ApiResponse> getUsersShow(String engeneerId) async {
     loadingState(LoadingState.loading);
-    // isloding = true;
-    // update();
+
     try {
       var token = await _shared.getToken();
       myLog("strtmethod", "getUsersShow");
@@ -118,8 +117,7 @@ class ProfileUserController extends GetxController {
       loadingState(LoadingState.error);
     } catch (error) {
       loadingState(LoadingState.error);
-      // setApiResponseValue(error.toString(), false, _listPopulerServices,
-      //     LoadingState.error.obs);
+
       if (error is TimeoutException) {
         message = AppConfig.timeOut;
 
@@ -133,7 +131,7 @@ class ProfileUserController extends GetxController {
         showseuessToast(error.toString());
       }
 
-      myLog("catch error getUsersShow: ", error.toString());
+      myLog("catch error getUsersShow: error", error.toString());
     }
     update();
     return apiResponse;
