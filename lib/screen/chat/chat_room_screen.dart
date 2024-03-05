@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -236,6 +237,16 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                         //         )));
                         // Navigator.of(context).pushNamed(AppConfig.chatRoom);
                       },
+//                       BubbleSpecialThree(
+//   text: 'Added iMessage shape bubbles',
+//   color: Color(0xFF1B97F3),
+//   tail: false,
+//   textStyle: TextStyle(
+//       color: Colors.white,
+//       fontSize: 16
+//   ),
+// ),
+
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 7),
                         child: Container(
@@ -303,12 +314,23 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   // scrollList() {
   //   log("scrollList");
+
   //   scrollController.animateTo(
   //     0.0,
   //     curve: Curves.easeOut,
   //     duration: const Duration(milliseconds: 300),
   //   );
   // }
+
+  pickerFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+    } else {
+      // User canceled the picker
+    }
+  }
 
   buildTextMessage({
     required TextEditingController message,

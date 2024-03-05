@@ -23,5 +23,6 @@ class MyDebugger {
 }
 
 myLog(dynamic key, dynamic value) {
-  return log(" $key :  ${value.toString()}");
+  return log("");
+  // return log(" $key :  ${value.toString()}");
 }
