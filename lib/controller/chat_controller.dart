@@ -51,21 +51,21 @@ class ChatController extends GetxController {
   Future<void> getLastchats() async {
     loadingState(LoadingState.loading);
 
+    myLog("start methode", "getLastchats");
     try {
       var token = await _pref.getToken();
 
-      myLog("start methode", "getLastchats");
-
       var response = await Dio()
           .post(
-            ApiUrl.getLastchats(page: 1, size: 1, search: ''),
+            ApiUrl.getLastchats(page: 1, size: 20, search: ''),
             options: Options(
               headers: ApiUrl.getHeader2(token: token),
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      myLog("response.statusCode methode", "${response.statusCode}");
+      print("${response}");
+      myLog("response.statusCode methode", "${response}");
       myLog("response data", "${response.data}");
 
       if (response.statusCode == 200) {

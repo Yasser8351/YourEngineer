@@ -120,6 +120,7 @@ class ProfileUserController extends GetxController {
 
       if (error is TimeoutException) {
         message = AppConfig.timeOut;
+        myLog("catch error getUsersShow: error", error.toString());
 
         showseuessToast(error.toString());
       } else if (error.toString().contains(

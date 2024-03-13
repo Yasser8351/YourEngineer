@@ -53,8 +53,9 @@ class UserProfileModel {
         userprofiles: json["userprofiles"] == null
             ? Userprofiles(aboutUser: '', specialization: '')
             : Userprofiles.fromJson(json["userprofiles"]),
-        usercredentials:
-            Usercredentials.fromJson(json["usercredentials"] ?? []),
+        usercredentials: json["userprofiles"] == null
+            ? Usercredentials()
+            : Usercredentials.fromJson(json["usercredentials"]),
         userskills: List<Userskill?>.from(
             json["userskills"].map((x) => Userskill.fromJson(x))),
         userportfolio: json["userportfolio"] == null

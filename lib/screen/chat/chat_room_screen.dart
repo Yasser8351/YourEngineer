@@ -1,3 +1,4 @@
+import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
@@ -10,13 +11,13 @@ import 'package:your_engineer/debugger/my_debuger.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:your_engineer/screen/tab_screen.dart';
+import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../../app_config/app_config.dart';
 import '../../enum/all_enum.dart';
-import '../../utilits/helper.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
 import 'package:your_engineer/model/chat_models/chat_between_users_model.dart';
 
@@ -50,9 +51,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   bool onConnectError = false;
   @override
   initState() {
-    log("senderId senderId " + widget.senderId);
+    log("senderId senderId " + widget.receiverId);
     connectSocket();
-    chatController.getChatBetweenUsers(receiver_id: widget.senderId);
+    chatController.getChatBetweenUsers(receiver_id: widget.receiverId);
     chatController.getEmail();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollController.animateTo(
@@ -112,8 +113,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     if (messageController.text.isEmpty) return;
 
     Map<String, dynamic> map = {
-      'senderId': chatController.email,
-      'receiverId': widget.receiverEmail,
+      // 'senderId': chatController.email,
+      'senderId': widget.receiverId,
+      'receiverId': widget.senderId,
       'text': messageController.text,
       'time': DateTime.now().toIso8601String(),
       'fileUrl': '',
@@ -127,7 +129,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       ),
       chatController
           .createChat(
-              message: messageController.text, receiver_id: widget.senderId)
+              message: messageController.text, receiver_id: widget.receiverId)
           .then((value) => {
                 setState(() {
                   isLoading = !isLoading;
@@ -210,7 +212,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   title: AppConfig.errorOoccurred.tr,
                   onTap: () {
                     controller.getChatBetweenUsers(
-                        receiver_id: widget.senderId);
+                        receiver_id: widget.receiverId);
                   }),
             );
           } else {
@@ -237,54 +239,27 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                         //         )));
                         // Navigator.of(context).pushNamed(AppConfig.chatRoom);
                       },
-//                       BubbleSpecialThree(
-//   text: 'Added iMessage shape bubbles',
-//   color: Color(0xFF1B97F3),
-//   tail: false,
-//   textStyle: TextStyle(
-//       color: Colors.white,
-//       fontSize: 16
-//   ),
-// ),
-
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 7),
-                        child: Container(
-                          width: Get.width * .1,
-                          decoration: BoxDecoration(
-                              color: controller
-                                      .listChatBetweenUsers[index].receiverId!
-                                      .contains(controller.userId)
-                                  ? Colors.grey.shade300
-                                  : Colors.green.shade100,
-                              border: Border.all(
-                                width: 1,
-                                color: Colors.grey.shade50,
-                              ),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(14.0),
-                                  child: Align(
-                                    alignment: controller
-                                            .listChatBetweenUsers[index]
-                                            .receiverId!
-                                            .contains(controller.userId)
-                                        ? Alignment.centerRight
-                                        : Alignment.centerLeft,
-                                    child: Text(
-                                      controller
-                                          .listChatBetweenUsers[index].message
-                                          .toString(),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.only(end: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
+                        // child: Container(
+                        //   width: Get.width * .1,
+                        //   decoration: BoxDecoration(
+                        //       color: controller
+                        //               .listChatBetweenUsers[index].receiverId!
+                        //               .contains(controller.userId)
+                        //           ? Colors.grey.shade300
+                        //           : Colors.green.shade100,
+                        //       border: Border.all(
+                        //         width: 1,
+                        //         color: Colors.grey.shade50,
+                        //       ),
+                        //       borderRadius: BorderRadius.circular(10)),
+
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
                                 child: Align(
                                   alignment: controller
                                           .listChatBetweenUsers[index]
@@ -292,13 +267,65 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                                           .contains(controller.userId)
                                       ? Alignment.centerRight
                                       : Alignment.centerLeft,
-                                  child: Text(dateFormat(controller
-                                      .listChatBetweenUsers[index].createdAt
-                                      .toString())),
+                                  child: Column(
+                                    children: [
+                                      BubbleSpecialThree(
+                                        isSender: controller
+                                                .listChatBetweenUsers[index]
+                                                .sender_email!
+                                                .contains(widget.receiverEmail)
+                                            ? true
+                                            : false,
+                                        // isSender: controller
+                                        //     .listChatBetweenUsers[index].sender_email,
+                                        text: controller
+                                            .listChatBetweenUsers[index].message
+                                            .toString(),
+                                        color: controller
+                                                .listChatBetweenUsers[index]
+                                                .receiverId!
+                                                .contains(controller.userId)
+                                            ? Colors.grey.shade300
+                                            : Colors.green,
+                                        // color: Colors.green,
+                                        tail: false,
+                                        textStyle: TextStyle(
+                                            color: controller
+                                                    .listChatBetweenUsers[index]
+                                                    .receiverId!
+                                                    .contains(controller.userId)
+                                                ? Colors.black
+                                                : Colors.green,
+                                            fontSize: 16),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsetsDirectional.only(
+                                                end: 0),
+                                        child: Align(
+                                          alignment: controller
+                                                  .listChatBetweenUsers[index]
+                                                  .receiverId!
+                                                  .contains(controller.userId)
+                                              ? Alignment.centerRight
+                                              : Alignment.centerLeft,
+                                          child: Text(dateFormat(controller
+                                              .listChatBetweenUsers[index]
+                                              .createdAt
+                                              .toString())),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  // child: Text(
+                                  //   controller
+                                  //       .listChatBetweenUsers[index].message
+                                  //       .toString(),
+                                  // ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     );

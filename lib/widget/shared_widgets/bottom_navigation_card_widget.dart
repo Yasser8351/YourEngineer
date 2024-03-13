@@ -27,6 +27,7 @@ class BottomNavigationCardWidget extends StatefulWidget {
     // required this.onTap,
     this.isowner = false,
     this.isoBoth = false,
+    this.isPofileEng = false,
     this.widget = null,
   }) : super(key: key);
   final Size size;
@@ -36,6 +37,7 @@ class BottomNavigationCardWidget extends StatefulWidget {
   final UserProfileModel userProfileModel;
   final bool isowner;
   final bool isoBoth;
+  final bool isPofileEng;
   final File? myfile;
   final Widget? widget;
   // XFile? xfile;
@@ -70,7 +72,7 @@ class _BottomNavigationCardWidgetState
                 ? Builder(builder: (context) {
                     if (widget.expandedIndex == 0) {
                       return buildPersonalProfile(widget.colorScheme,
-                          widget.size, widget.userProfileModel);
+                          widget.size, widget.userProfileModel, widget.isowner);
                     }
                     if (widget.expandedIndex == 1) {
                       return ReviewsWidget(
@@ -129,8 +131,11 @@ class _BottomNavigationCardWidgetState
                         } else if (widget.expandedIndex == 3) {
                           return buildPaymentHistory(widget.colorScheme);
                         }
-                        return buildPersonalProfile(widget.colorScheme,
-                            widget.size, widget.userProfileModel);
+                        return buildPersonalProfile(
+                            widget.colorScheme,
+                            widget.size,
+                            widget.userProfileModel,
+                            widget.isowner);
                       }),
           ),
         ),
@@ -139,8 +144,8 @@ class _BottomNavigationCardWidgetState
   }
 }
 
-buildPersonalProfile(
-    ColorScheme colorScheme, Size size, UserProfileModel userProfileModel) {
+buildPersonalProfile(ColorScheme colorScheme, Size size,
+    UserProfileModel userProfileModel, isPofileEng) {
   //
   return SingleChildScrollView(
       child: Column(

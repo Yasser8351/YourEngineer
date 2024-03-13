@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:your_engineer/app_config/api_url.dart';
 import 'package:your_engineer/controller/chat_controller.dart';
 import 'package:your_engineer/screen/chat/chat_room_screen.dart';
+import 'package:your_engineer/sharedpref/user_share_pref.dart';
 import 'package:your_engineer/widget/chat_widget.dart';
 
 import '../../app_config/app_config.dart';
@@ -19,11 +20,22 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   ChatController chatController = Get.put(ChatController());
+  String email = "";
 
   @override
   void initState() {
     super.initState();
     chatController.getLastchats();
+    getEmail();
+  }
+
+  getEmail() async {
+    SharedPrefUser prefs = SharedPrefUser();
+    String _email = await prefs.getEmail();
+
+    setState(() {
+      email = _email;
+    });
   }
 
   @override
@@ -84,7 +96,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ));
                         },
                         child: ChatWidget(
-                          userEmail: controller.email,
+                          userEmail: email,
                           messageModel: controller.lastChatsList[index],
                         ),
                       );

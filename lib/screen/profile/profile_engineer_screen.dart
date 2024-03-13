@@ -20,12 +20,14 @@ class ProfileEngineerScreen extends StatefulWidget {
       {Key? key,
       this.showEngeneerById = false,
       this.hidePersonalInfo = false,
+      this.isPofileEng = false,
       required this.engeneerId})
       : super(key: key);
   // final TopEngineerRatingModel engineerModel;
   final String engeneerId;
   final bool showEngeneerById;
   final bool hidePersonalInfo;
+  final bool isPofileEng;
 
   @override
   State<ProfileEngineerScreen> createState() => _ProfileEngineerScreenState();
@@ -206,6 +208,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                       BottomNavigationCardWidget(
                         userProfileModel: controller.userProfile,
                         size: size,
+                        isPofileEng: widget.isPofileEng,
                         hidePersonalInfo: widget.hidePersonalInfo,
                         colorScheme: colorScheme,
                         expandedIndex: expandedIndex,

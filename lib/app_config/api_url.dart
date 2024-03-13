@@ -35,7 +35,7 @@ class ApiUrl {
   /// chat url
   static String getLastchats(
       {required int page, required int size, String search = ''}) {
-    return '$_root/conversations/lastchats?page=1&size=10&search=$search';
+    return '$_root/conversations/lastchats?page=1&size=20&search=$search';
   }
 
   static String getChatBetweenUsers({required int page, required int size}) {

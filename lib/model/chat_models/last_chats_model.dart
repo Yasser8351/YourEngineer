@@ -82,8 +82,8 @@ class Chats {
         senderEmail: json["sender_email"] ?? '',
         senderName: json["sender_name"] ?? '',
         senderImg: json["sender_img"] ?? '',
-        recieverEmail: json["reciever_email"] ?? '',
-        recieverName: json["reciever_name"] ?? '',
+        recieverEmail: json["receiver_email"] ?? '',
+        recieverName: json["receiver_name"] ?? '',
         recieverImg: json["reciever_img"] ?? '',
         seqnum: json["seqnum"] ?? 0,
       );

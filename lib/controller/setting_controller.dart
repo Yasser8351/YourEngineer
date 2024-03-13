@@ -27,7 +27,7 @@ class SettingControoler extends GetxController {
   onProfileTap() {
     log(status);
     if (status == 'ENGINEER') {
-      Get.to(() => ProfileEngineerScreen(engeneerId: ''));
+      Get.to(() => ProfileEngineerScreen(engeneerId: '', isPofileEng: true));
       return;
     }
     if (status == 'OWNER') {

@@ -38,6 +38,7 @@ class ChatBetweenUsers {
   String? messageType;
   String? fileUrl;
   String? createdAt;
+  String? sender_email;
 
   ChatBetweenUsers(
       {this.senderId,
@@ -45,6 +46,7 @@ class ChatBetweenUsers {
       this.message,
       this.messageType,
       this.fileUrl,
+      this.sender_email,
       this.createdAt});
 
   ChatBetweenUsers.fromJson(Map<String, dynamic> json) {
@@ -52,6 +54,7 @@ class ChatBetweenUsers {
     receiverId = json['receiver_id'] ?? '';
     message = json['message'] ?? '';
     messageType = json['message_type'] ?? '';
+    sender_email = json['sender_email'] ?? '';
     fileUrl = json['fileUrl'] ?? '';
     createdAt = json['createdAt'] ?? '';
   }
