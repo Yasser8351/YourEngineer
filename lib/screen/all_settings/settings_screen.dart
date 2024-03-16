@@ -86,7 +86,6 @@ class SettingsScreen extends StatelessWidget {
                 AppConfig.support.tr,
                 Icons.support_agent_rounded,
                 () => {
-                  //  launchUrl(Uri.parse("tel://+249992705348"));
                   launchUrl(
                       mode: LaunchMode.externalApplication,
                       Uri.parse("tel://+249992705348")),
