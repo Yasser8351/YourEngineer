@@ -32,6 +32,7 @@ class AppConfig {
   static const String profileUser = "User Profile";
   static const String profileEngineer = "Engineer Profile";
   static const String support = "Support";
+  static const String complaint = "Submit a complaint or suggestion";
   static const String language = "Language";
 
   static const String login = "Login";

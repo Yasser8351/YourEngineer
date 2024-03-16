@@ -37,13 +37,13 @@ class ChatWidget extends StatelessWidget {
         ),
         Spacer(),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               TextWidget(
-                  // title: userEmail,
+                  // title: messageModel.senderName,
                   title: messageModel.senderEmail.contains(userEmail)
                       ? messageModel.recieverName
                       : messageModel.senderName,

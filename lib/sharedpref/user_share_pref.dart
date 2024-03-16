@@ -47,8 +47,8 @@ class SharedPrefUser {
     await _prefs.setString('id', userId);
   }
 
-  Future<bool> saveToken(String token, String status,
-      [String email = '', String userId = '']) async {
+  Future<bool> saveToken(String token, String status, String email,
+      [String userId = '']) async {
     _prefs = await SharedPreferences.getInstance();
 
     await _prefs.setString('token', token);
@@ -87,7 +87,6 @@ class SharedPrefUser {
   Future<String> getId() async {
     _prefs = await SharedPreferences.getInstance();
     String userId = _prefs.getString('id') ?? '';
-    log("userId userId userId $userId");
 
     return _prefs.getString('id') ?? '';
   }
@@ -95,6 +94,8 @@ class SharedPrefUser {
   Future<String> getEmail() async {
     _prefs = await SharedPreferences.getInstance();
     String email = _prefs.getString('email') ?? '';
+    log("email email email $email");
+
     return email;
   }
 

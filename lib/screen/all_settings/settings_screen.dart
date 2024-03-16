@@ -4,6 +4,7 @@ import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../controller/setting_controller.dart';
 import '../../widget/shared_widgets/text_widget.dart';
@@ -75,9 +76,21 @@ class SettingsScreen extends StatelessWidget {
               buildDivider(),
               buildCardItem(
                 context,
+                AppConfig.complaint.tr,
+                Icons.send,
+                () => {Navigator.of(context).pushNamed(AppConfig.support)},
+              ),
+              buildDivider(),
+              buildCardItem(
+                context,
                 AppConfig.support.tr,
                 Icons.support_agent_rounded,
-                () => {Navigator.of(context).pushNamed(AppConfig.support)},
+                () => {
+                  //  launchUrl(Uri.parse("tel://+249992705348"));
+                  launchUrl(
+                      mode: LaunchMode.externalApplication,
+                      Uri.parse("tel://+249992705348")),
+                },
               ),
               buildDivider(),
               // buildCardItem(

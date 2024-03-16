@@ -25,6 +25,8 @@ class ChatController extends GetxController {
   String email = '';
   String message = "";
 
+  bool isLoadingMessage = false;
+
   List<Chats> lastChatsList = [];
   List<ChatBetweenUsers> listChatBetweenUsers = [];
 
@@ -40,6 +42,11 @@ class ChatController extends GetxController {
     email = await _pref.getEmail();
     update();
     myLog("email", email);
+  }
+
+  isLoadin() {
+    isLoadingMessage = !isLoadingMessage;
+    update();
   }
 
   getUserId() async {
@@ -109,6 +116,7 @@ class ChatController extends GetxController {
       var token = await _pref.getToken();
 
       final data = {
+        // "receiver_id": "a5d6eae4-952f-4254-95d9-2d5cf9c1b822",
         "receiver_id": receiver_id,
       };
 
@@ -124,8 +132,7 @@ class ChatController extends GetxController {
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      myLog("response.statusCode methode", "${response.statusCode} ");
-      myLog("response data", "${response.data}");
+      myLog("response data getChatBetweenUsers :", "${response.data}");
 
       if (response.statusCode == 200) {
         var chatBetweenUsersModel =
@@ -193,10 +200,7 @@ class ChatController extends GetxController {
       myLog("response.statusCode methode", "${response.statusCode} ");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // var chatBetweenUsersModel =
-        //     ChatBetweenUsersModel.fromJson(response.data);
-
-        // listChatBetweenUsers = chatBetweenUsersModel.results!;
+        listChatBetweenUsers.add(ChatBetweenUsers.fromJson3(response.data));
 
         loadingStateChat(LoadingState.loaded);
 

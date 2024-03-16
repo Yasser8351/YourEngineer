@@ -66,6 +66,14 @@ class ChatBetweenUsers {
     fileUrl = json['fileUrl'] ?? '';
     createdAt = json['time'] ?? '';
   }
+  ChatBetweenUsers.fromJson3(Map<String, dynamic> json) {
+    senderId = json['sender_id'] ?? '';
+    receiverId = json['receiver_id'] ?? '';
+    message = json['message'] ?? '';
+    messageType = json['message_type'] ?? '';
+    fileUrl = json['fileUrl'] ?? '';
+    createdAt = json['createdAt'] ?? '';
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
