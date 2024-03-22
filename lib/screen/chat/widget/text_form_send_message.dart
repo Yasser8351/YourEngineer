@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/controller/chat_controller.dart';
 
-class TextFormSendMessage extends StatelessWidget {
+class TextFormSendMessage extends GetView<ChatController> {
   const TextFormSendMessage(
       {super.key,
       required this.onTapSendMessage,
@@ -26,7 +26,9 @@ class TextFormSendMessage extends StatelessWidget {
               width: Get.width * .03,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                controller.getImageFromGallery();
+              },
               child: Container(
                 height: 30,
                 width: 30,
@@ -44,15 +46,30 @@ class TextFormSendMessage extends StatelessWidget {
             SizedBox(
               width: 15,
             ),
-            Expanded(
-              child: TextField(
-                controller: messageController,
-                decoration: InputDecoration(
-                    hintText: "Write message...",
-                    hintStyle: TextStyle(color: Colors.black54),
-                    border: InputBorder.none),
-              ),
-            ),
+            GetBuilder<ChatController>(builder: (_) {
+              return Expanded(
+                child: controller.imageMessage != null
+                    ? Row(
+                        children: [
+                          Image.file(
+                            controller.imageMessage!,
+                            // width: 200,
+                            height: Get.height * 1,
+                          ),
+                          IconButton(
+                              onPressed: () => controller.clearImageMessage(),
+                              icon: Icon(Icons.close)),
+                        ],
+                      )
+                    : TextField(
+                        controller: messageController,
+                        decoration: InputDecoration(
+                            hintText: "Write message...",
+                            hintStyle: TextStyle(color: Colors.black54),
+                            border: InputBorder.none),
+                      ),
+              );
+            }),
             SizedBox(
               width: 15,
             ),

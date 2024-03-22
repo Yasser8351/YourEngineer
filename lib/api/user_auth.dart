@@ -24,6 +24,7 @@ class UserAuth {
 
   final _shared = SharedPrefUser();
   String? roleId;
+  RxString errorMessage = "".obs;
   List<RolesModel> listrole = [];
   var loadingState = LoadingState.initial.obs;
 
@@ -135,15 +136,6 @@ class UserAuth {
       String password, int selectedrole, File imageFile, File imageId) async {
     myLog('start methode', 'userSignup');
 
-    // final data = {
-    //   ApiParameters.email: userModel.email,
-    //   ApiParameters.fullname: userModel.fistName + " " + userModel.lastName,
-    //   ApiParameters.password: password,
-    //   ApiParameters.phone: userModel.phone,
-    //   ApiParameters.roleId: listrole[selectedrole].id,
-    //   ApiParameters.profileImage: userModel.userImage,
-    // };
-
     final headers = {
       'Accept': '*/*',
       'Content-Type': 'multipart/form-data',
@@ -164,8 +156,6 @@ class UserAuth {
       ),
     });
 
-    myLog("imageFile", imageFile.path);
-
     try {
       var response = await Dio()
           .post(
@@ -185,29 +175,50 @@ class UserAuth {
       if (response.statusCode == 201) {
         status = true;
         setValueResponse(true);
-        await _shared.login(userModel, selectedrole);
+        UserDataLogin userDataLogin = UserDataLogin(
+            userId: response.data["id"] ?? "",
+            isActive: response.data["is_active"] ?? false,
+            email: response.data["email"] ?? "",
+            password: response.data["password"] ?? "",
+            role_id: response.data["role_id"] ?? "",
+            fullName: response.data["fullname"] ?? "",
+            phone: response.data["phone"] ?? "",
+            createdAt: response.data["createdAt"] ?? "",
+            updatedAt: response.data["updatedAt"] ?? "");
+        await _shared.login(userDataLogin);
+        // await _shared.login(userModel, selectedrole);
         dialogApp();
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
+
+        errorMessage = response.data['msg'].obs;
 
         setValueResponse(false);
         status = false;
       }
     } catch (error) {
       status = false;
-      if (error is DioError) {
-        Helper.showError(
-            context: context,
-            subtitle:
-                error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
-      }
       setValueResponse(false);
       myLog('error', error);
 
-      if (error.toString().contains('TimeoutException')) {
-        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      if (error is DioError) {
+        if (error.response!.statusCode == 400) {
+          errorMessage = 'الايميل او رقم الهاتف مسجل مسبقا'.obs;
+        } else {
+          errorMessage = AppConfig.errorOoccurred.tr.obs;
+        }
+        // Helper.showError(
+        //     context: context, subtitle: error.response!.data['msg'].toString());
+      } else if (error.toString().contains('TimeoutException') ||
+          error.toString().contains("SocketException") ||
+          error.toString().contains("Network is unreachable")) {
+        errorMessage = 'يبدو ان اتصال الانترنت ضعيف'.obs;
+        Helper.showError(
+            context: context, subtitle: 'يبدو ان اتصال الانترنت ضعيف');
       } else {
+        errorMessage = AppConfig.errorOoccurred.tr.obs;
+
         Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
       }
     }

@@ -9,6 +9,7 @@ import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/model/roles_model.dart';
 import 'package:your_engineer/model/user_model.dart';
+import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/button_widget.dart';
 
 import 'package:your_engineer/widget/shared_widgets/text_faild_widget.dart';
@@ -313,14 +314,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               setState(() => isLoading = false);
 
                               if (isSignup) {
-                                Navigator.of(context)
-                                    .pushNamed(AppConfig.login);
-                                Helper.showseuess(
-                                    context: context,
-                                    subtitle: "تم انشاء حسابك بنجاح");
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                );
+                                dialogApp();
+
                                 //userSignup sucssufuly
                                 // ignore: use_build_context_synchronously
                               } else {
+                                Helper.showError(
+                                    context: context,
+                                    subtitle: userAuth.errorMessage.value);
+                                // subtitle: 'حث خطأ في الاتصال');
+
                                 //userSignup faild try again later
                               }
                             },

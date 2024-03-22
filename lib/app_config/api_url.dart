@@ -4,6 +4,7 @@ class ApiUrl {
   // static const String _root = 'http://194.195.87.30:91/api/v1';
 
   static const String root = _root;
+  //http://62.171.175.75:83/uploads/2024-03-22T18_19_59.517Zuse_chat.PNG",
   static const String imageUrl = "http://62.171.175.75:83/";
 
   static String get signup => '$_root/auth/signup';
@@ -72,7 +73,7 @@ class ApiUrl {
     return '$_root/project/$projectId';
   }
 
-  static int get timeoutDuration => 20;
+  static int get timeoutDuration => 30;
 
   static Map<String, String> getHeader({required String token}) {
     return <String, String>{

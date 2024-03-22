@@ -7,6 +7,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/utils.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 // import 'package:get/get.dart';
 import 'package:your_engineer/model/chat_models/chat_between_users_model.dart';
@@ -29,6 +31,10 @@ class ChatController extends GetxController {
 
   List<Chats> lastChatsList = [];
   List<ChatBetweenUsers> listChatBetweenUsers = [];
+
+  //////
+  final ImagePicker _picker = ImagePicker();
+  File? imageMessage;
 
   @override
   onInit() {
@@ -116,11 +122,10 @@ class ChatController extends GetxController {
       var token = await _pref.getToken();
 
       final data = {
-        // "receiver_id": "a5d6eae4-952f-4254-95d9-2d5cf9c1b822",
         "receiver_id": receiver_id,
       };
 
-      myLog("start methode \n $receiver_id", "getChatBetweenUsers");
+      myLog("start methode getChatBetweenUsers \n ", "$receiver_id");
 
       var response = await Dio()
           .post(
@@ -131,8 +136,6 @@ class ChatController extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-
-      myLog("response data getChatBetweenUsers :", "${response.data}");
 
       if (response.statusCode == 200) {
         var chatBetweenUsersModel =
@@ -175,11 +178,17 @@ class ChatController extends GetxController {
 
       FormData data = FormData.fromMap({
         "receiver_id": receiver_id,
-        "message": message,
-        "message_type": "text",
-        "attachment": ""
+        "message": message.isEmpty ? "image" : message,
+        "message_type": imageMessage == null ? "message" : "file",
+        "attachment": imageMessage == null
+            ? ""
+            : await MultipartFile.fromFile(
+                imageMessage!.path,
+                contentType:
+                    MediaType("image", "${imageMessage!.path.split(".").last}"),
+              ),
         // "attachment": await MultipartFile.fromFile(
-        //   imageId.path,
+        //   imageMessage.path,
         //   contentType: MediaType("image", "${imageId.path.split(".").last}"
         // ),
         // ),
@@ -200,6 +209,7 @@ class ChatController extends GetxController {
       myLog("response.statusCode methode", "${response.statusCode} ");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        clearImageMessage();
         listChatBetweenUsers.add(ChatBetweenUsers.fromJson3(response.data));
 
         loadingStateChat(LoadingState.loaded);
@@ -229,5 +239,22 @@ class ChatController extends GetxController {
 
       myLog("catch createChat", error.toString());
     }
+  }
+
+  Future<void> getImageFromGallery() async {
+    /// get Image User Profile From Gallery
+    final imageFile =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+    if (imageFile == null) {
+      return;
+    }
+    imageMessage = File(imageFile.path);
+    update();
+  }
+
+  clearImageMessage() {
+    imageMessage = null;
+    update();
   }
 }

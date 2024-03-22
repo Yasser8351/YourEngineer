@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/app_config/api_url.dart';
-import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 
 import '../model/chat_models/last_chats_model.dart';
 
@@ -16,7 +16,6 @@ class ChatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("userEmail " + userEmail.toString());
     var senderImg = ApiUrl.imageUrl + messageModel.senderImg;
 
     return Row(
@@ -28,7 +27,7 @@ class ChatWidget extends StatelessWidget {
                 builder: (context) => FullImage(imageUrl: senderImg)));
           },
           child: CircleAvatar(
-            radius: 30.0,
+            radius: Get.width * .06,
             // child: Image.network(senderImg),
             backgroundImage: NetworkImage(
               senderImg,
@@ -43,27 +42,31 @@ class ChatWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               TextWidget(
-                  // title: messageModel.senderName,
                   title: messageModel.senderEmail.contains(userEmail)
                       ? messageModel.recieverName
                       : messageModel.senderName,
                   fontSize: 16,
                   isTextEnd: true,
                   color: Colors.black),
+              SizedBox(height: Get.width * .02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  messageModel.senderEmail.contains(userEmail)
-                      ? Icon(Icons.done_all,
-                          color: Colors.green, size: Get.width * .05)
-                      : const SizedBox(),
+                  // messageModel.senderEmail.contains(userEmail)
+                  //     ? Icon(Icons.done_all,
+                  //         color: Colors.green, size: Get.width * .05)
+                  //     : const SizedBox(),
                   SizedBox(width: 30),
                   Container(
                     height: Get.width * .1,
-                    // width: Get.width * .31,
-                    child: Center(
+                    // color: Colors.red,
+                    width: Get.width * .6,
+                    child: Align(
+                      alignment: AlignmentDirectional.centerEnd,
                       child: TextWidget(
-                          title: messageModel.message,
+                          title: messageModel.messageType.contains("file")
+                              ? "صورة"
+                              : messageModel.message,
                           textOverflow: TextOverflow.clip,
                           isTextEnd: true,
                           fontSize: 14,
@@ -72,48 +75,16 @@ class ChatWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(dateFormat(messageModel.createdAt)),
+              SizedBox(height: Get.width * .02),
+              Text(
+                GetTimeAgo.parse(DateTime.parse(messageModel.createdAt),
+                    pattern: "dd-MM-yyyy hh:mm aa", locale: 'ar'),
+                textAlign: TextAlign.start,
+              ),
             ],
           ),
         ),
       ],
     );
-
-    // return ListTile(
-    //   title: TextWidget(
-    //       title: messageModel.recieverName, fontSize: 14, color: Colors.black),
-    //   subtitle: Row(
-    //     children: [
-    //       messageModel.senderEmail.contains(userEmail)
-    //           ? Icon(Icons.done_all, color: Colors.green, size: Get.width * .05)
-    //           : const SizedBox(),
-    //       Container(
-    //         height: Get.width * .1,
-    //         width: Get.width * .31,
-    //         child: Center(
-    //           child: TextWidget(
-    //               title: messageModel.message,
-    //               textOverflow: TextOverflow.clip,
-    //               fontSize: 14,
-    //               color: Colors.black),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    //   // trailing: Text(dateFormat(messageModel.createdAt)),
-    //   leading: InkWell(
-    //     onTap: () {
-    //       Navigator.of(context).push(MaterialPageRoute(
-    //           builder: (context) => FullImage(imageUrl: senderImg)));
-    //     },
-    //     child: CircleAvatar(
-    //       radius: 30.0,
-    //       // child: Image.network(senderImg),
-    //       backgroundImage: NetworkImage(
-    //         senderImg,
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

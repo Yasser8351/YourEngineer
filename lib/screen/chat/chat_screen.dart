@@ -33,17 +33,18 @@ class _ChatScreenState extends State<ChatScreen> {
   getEmail() async {
     SharedPrefUser prefs = SharedPrefUser();
     String _email = await prefs.getEmail();
+    String _id = await prefs.getId();
 
     setState(() {
       email = _email;
+      userId = _id;
       myLog("$_email", "_email");
+      myLog("$userId", "userId");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    myLog("$email", "_email");
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: GetBuilder<ChatController>(
@@ -82,6 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatRoomScreen22222(
+                                userId: userId,
                                 userEmail: email,
                                 chatsModel: controller.lastChatsList[index]),
                           ));

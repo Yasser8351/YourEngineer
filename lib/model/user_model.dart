@@ -19,3 +19,27 @@ class UserModel {
   String userId;
   String userImage;
 }
+
+class UserDataLogin {
+  UserDataLogin({
+    required this.userId,
+    required this.isActive,
+    required this.email,
+    required this.password,
+    required this.role_id,
+    required this.fullName,
+    required this.phone,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  String userId;
+  bool isActive;
+  String email;
+  String password;
+  String fullName;
+  String phone;
+  String role_id;
+  String updatedAt;
+  String createdAt;
+}

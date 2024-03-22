@@ -6,21 +6,27 @@ import '/model/user_model.dart';
 
 class SharedPrefUser {
   late SharedPreferences _prefs;
-  Future<bool> login(UserModel userModel, int selectedrole) async {
+  Future<bool> login(UserDataLogin userModel) async {
     _prefs = await SharedPreferences.getInstance();
 
     await _prefs.setString('id', userModel.userId);
-    await _prefs.setString('fist_name', userModel.fistName);
-    await _prefs.setString('last_name', userModel.lastName);
-    await _prefs.setString(
-        'full_name', '${userModel.fistName} ${userModel.lastName}');
-    await _prefs.setString('token', userModel.token);
+    await _prefs.setString('fullName', userModel.fullName);
     await _prefs.setString('phone', userModel.phone);
     await _prefs.setString('email', userModel.email);
-    await _prefs.setString('image', userModel.userImage);
-    await _prefs.setInt('roleid', selectedrole);
+    await _prefs.setBool('isActive', userModel.isActive);
+    await _prefs.setString('roleId', userModel.role_id);
+    await _prefs.setString('updatedAt', userModel.updatedAt);
+    await _prefs.setString('createdAt', userModel.createdAt);
+    // await _prefs.setString('token', userModel.token);
 
+    myLog('userId', userModel.userId);
+    myLog('fullName', userModel.fullName);
+    myLog('phone', userModel.phone);
     myLog('email', userModel.email);
+    myLog('isActive', userModel.isActive);
+    myLog('role_id', userModel.role_id);
+    myLog('updatedAt', userModel.updatedAt);
+    myLog('createdAt', userModel.createdAt);
 
     return await _prefs.setBool('login', true);
   }
@@ -66,9 +72,9 @@ class SharedPrefUser {
     return _prefs.getBool('login') ?? false;
   }
 
-  Future<int> getID() async {
+  Future<String> getID() async {
     _prefs = await SharedPreferences.getInstance();
-    return (_prefs.getInt('id') ?? -1);
+    return _prefs.getString('userId') ?? '';
   }
 
   // get role id
@@ -88,7 +94,7 @@ class SharedPrefUser {
     _prefs = await SharedPreferences.getInstance();
     String userId = _prefs.getString('id') ?? '';
 
-    return _prefs.getString('id') ?? '';
+    return userId;
   }
 
   Future<String> getEmail() async {
