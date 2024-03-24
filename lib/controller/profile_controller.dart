@@ -15,7 +15,6 @@ import 'package:your_engineer/model/portfolio_model.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
-import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 import '../model/user_profile_model.dart';
 import '../sharedpref/user_share_pref.dart';
@@ -70,7 +69,6 @@ class ProfileUserController extends GetxController {
 
     try {
       var token = await _shared.getToken();
-      myLog("strtmethod", "getUsersShow");
       var response = await Dio()
           .post(
             // ApiUrl.getUsersById,
@@ -82,11 +80,6 @@ class ProfileUserController extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-
-      myLog(
-        'statusCode : ${response.statusCode} \n',
-        'response  getUsersShow : ${response.data}',
-      );
 
       if (response.statusCode == 200) {
         userProfile = userProfileModelFromJson(jsonEncode(response.data));
@@ -120,7 +113,6 @@ class ProfileUserController extends GetxController {
 
       if (error is TimeoutException) {
         message = AppConfig.timeOut;
-        myLog("catch error getUsersShow: error", error.toString());
 
         showseuessToast(error.toString());
       } else if (error.toString().contains(
@@ -131,8 +123,6 @@ class ProfileUserController extends GetxController {
 
         showseuessToast(error.toString());
       }
-
-      myLog("catch error getUsersShow: error", error.toString());
     }
     update();
     return apiResponse;
@@ -140,8 +130,6 @@ class ProfileUserController extends GetxController {
 
   Future<bool> accountChargeRequest(
       BuildContext context, File imageFile) async {
-    myLog('start methode', 'accountChargeRequest');
-
     var token = await _shared.getToken();
 
     FormData data = FormData.fromMap({
@@ -166,12 +154,6 @@ class ProfileUserController extends GetxController {
             ),
           )
           .timeout(const Duration(seconds: 20));
-
-      myLog(
-        'statusCode : ${response.statusCode} \n',
-        ''
-            'response : ${response.data}',
-      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         statuse = true;
@@ -200,14 +182,12 @@ class ProfileUserController extends GetxController {
       } else {
         Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
       }
-      myLog('catch error accountChargeRequest :', '$error');
     }
 
     return status;
   }
 
   Future<bool> addPaypal(BuildContext context) async {
-    myLog('start methode', 'addPaypal');
     // myLog('projectId', projectId);
 
     var token = await _shared.getToken();
@@ -230,12 +210,6 @@ class ProfileUserController extends GetxController {
           )
           .timeout(const Duration(seconds: 20));
 
-      myLog(
-        'statusCode : ${response.statusCode} \n',
-        ''
-            'response : ${response.data}',
-      );
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         statuse = true;
         update();
@@ -252,8 +226,6 @@ class ProfileUserController extends GetxController {
       statuse = false;
       update();
 
-      myLog('error', error);
-
       if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
       } else if (error.toString().contains('Http status error [401]')) {
@@ -262,7 +234,6 @@ class ProfileUserController extends GetxController {
       } else {
         Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
       }
-      myLog('catch  erroor', '$error');
     }
 
     return status;
@@ -281,8 +252,6 @@ class ProfileUserController extends GetxController {
     try {
       var token = await _shared.getToken();
 
-      myLog("start methode", "getPortfolioEngenneir");
-
       var response = await Dio()
           .get(
             ApiUrl.addprotofilio,
@@ -291,8 +260,6 @@ class ProfileUserController extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-
-      myLog("response data : ", "${response.data}");
 
       if (response.statusCode == 200) {
         PortfolioModel listportfolioModel =
@@ -315,13 +282,10 @@ class ProfileUserController extends GetxController {
       } else {
         showseuessToast(AppConfig.errorOoccurred.tr);
       }
-
-      myLog("catch getPortfolioEngenneir", error.toString());
     }
   }
 
   Future<bool> addVisa(BuildContext context) async {
-    myLog('start methode', 'addPaypal');
     // myLog('projectId', projectId);
 
     var token = await _shared.getToken();
@@ -354,12 +318,6 @@ class ProfileUserController extends GetxController {
           )
           .timeout(const Duration(seconds: 20));
 
-      myLog(
-        'statusCode : ${response.statusCode} \n',
-        ''
-            'response : ${response.data}',
-      );
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         statuse = true;
         update();
@@ -376,8 +334,6 @@ class ProfileUserController extends GetxController {
       statuse = false;
       update();
 
-      myLog('error', error);
-
       if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
       } else if (error.toString().contains('Http status error [401]')) {
@@ -386,7 +342,6 @@ class ProfileUserController extends GetxController {
       } else {
         Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
       }
-      myLog('catch  erroor', '$error');
     }
 
     return status;
@@ -400,8 +355,6 @@ class ProfileUserController extends GetxController {
     try {
       var token = await _shared.getToken();
 
-      myLog("start methode", "getCurrentrateCommission");
-
       var response = await Dio()
           .get(
             ApiUrl.getCurrentrateCommission,
@@ -410,8 +363,6 @@ class ProfileUserController extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-
-      myLog("response.statusCode methode", "${response.statusCode}");
 
       if (response.statusCode == 200) {
         // final allNotificationModel =
@@ -441,8 +392,6 @@ class ProfileUserController extends GetxController {
 
         showseuessToast(AppConfig.errorOoccurred.tr);
       }
-
-      myLog("catch getCurrentrateCommission", error.toString());
     }
   }
 }

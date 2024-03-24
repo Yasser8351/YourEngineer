@@ -1,10 +1,10 @@
 // ChatRoomScreen22222
+
 import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 import 'package:your_engineer/app_config/api_url.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/controller/chat_controller.dart';
@@ -15,7 +15,6 @@ import 'package:your_engineer/screen/chat/widget/chat_list_message.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
 import 'dart:async';
-import 'package:socket_io_client/socket_io_client.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -41,34 +40,24 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
   late IO.Socket socket;
   bool onConnectError = false;
 
+  // final StreamController<String> _streamController = StreamController<String>();
+  // Stream<String> get messagesStream => _streamController.stream;
+
   @override
   initState() {
-    upgradedWebsocket();
     connectSocket();
+
     getChatBetweenUsers();
     super.initState();
   }
 
-  upgradedWebsocket() async {
-    Random r = new Random();
-    String key = base64.encode(List<int>.generate(8, (_) => r.nextInt(256)));
+  @override
+  dispose() {
+    super.dispose();
+    socket.dispose();
+    // _streamController.close();
 
-    HttpClient client = HttpClient(/* optional security context here */);
-    HttpClientRequest request = await client.get('echo.websocket.org', 80,
-        '/foo/ws?api_key=myapikey'); // form the correct url here
-    request.headers.add('Connection', 'upgrade');
-    request.headers.add('Upgrade', 'websocket');
-    request.headers
-        .add('sec-websocket-version', '13'); // insert the correct version here
-    request.headers.add('sec-websocket-key', key);
-    HttpClientResponse response = await request.close();
-    // todo check the status code, key etc
-    var socket = await response.detachSocket();
-
-    WebSocket ws = WebSocket.fromUpgradedSocket(
-      socket,
-      serverSide: false,
-    );
+    myLog("socket.dispose", '');
   }
 
   /////////////////////////
@@ -76,19 +65,18 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
     try {
       socket = IO.io(
           'http://62.171.175.75:84',
-          // 'http://194.195.87.30:89',
           OptionBuilder()
               .setTransports(['websocket']) // for Flutter or Dart VM
               .disableAutoConnect() // disable auto-connection
               .setExtraHeaders(
                   {'Connection': 'upgrade', 'Upgrade': 'websocket'})
               .build());
-      myLog('start methode', socket.connected);
       socket.connect();
       socket.onConnect((data) {
         myLog('onConnect', socket.connected);
       });
       socket.emit('addUser', chatController.email);
+      // socket.on('getMessage', (data) {});
       socket.on('getMessage', handleMessage);
       socket.onDisconnect((data) => {
             myLog("message", data),
@@ -103,8 +91,54 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
             },
           ));
       socket.on('fromServer', (_) => myLog("fromServer", '_'));
+
+      // io.listen(3000);
     } catch (e) {
       myLog('catch error', e.toString());
+    }
+  }
+
+  sendChat() {
+    try {
+      if (messageController.text.isEmpty) return;
+      Map map = {
+        'senderId': "test@gmail.com",
+        'receiverId': "ali@g1.com",
+        'text': messageController.text,
+        'fileUrl': '',
+        'message_type': 'text',
+        'time': DateTime.now().toIso8601String(),
+      };
+      var mapbody = json.encode(map);
+      // socket.emit('sendMessage', mapbody);
+      createChat();
+      myLog('start ', "$mapbody");
+    } catch (error) {
+      myLog('error sendChat', "$error");
+    }
+  }
+
+  ////////////////// sendMessage ///////////
+  sendMessage() {
+    try {
+      if (messageController.text.isEmpty) return;
+
+      Map map = {
+        'senderId': "test@gmail.com",
+        'receiverId': "ali@g1.com",
+        // 'senderId': widget.userEmail,
+        // 'receiverId': widget.chatsModel.recieverEmail.contains(widget.userEmail)
+        //     ? widget.chatsModel.senderEmail
+        //     : widget.chatsModel.recieverEmail,
+
+        'text': messageController.text,
+        'fileUrl': '',
+        'message_type': 'text',
+        'time': DateTime.now().toIso8601String(),
+      };
+      socket.emit('sendMessage', map);
+    } catch (error) {
+      myLog('error', "$error");
     }
   }
 
@@ -120,7 +154,9 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
     return chatController
         .createChat(
             message: messageController.text,
-            receiver_id: widget.chatsModel.receiverId)
+            receiver_id: widget.chatsModel.senderId.contains(widget.userId)
+                ? widget.chatsModel.receiverId
+                : widget.chatsModel.senderId)
         .then((value) => {
               chatController.isLoadin(),
               messageController.clear(),
@@ -129,94 +165,143 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
 
   ////////////////////
   handleMessage(dynamic data) {
-    myLog("getMessage", "");
+    myLog('', " * getMessage");
     var d = data as Map<String, dynamic>;
-    myLog(data.toString(), "");
-    chatController.listChatBetweenUsers.add(ChatBetweenUsers.fromJson2(d));
-    setState(() {});
+    var json = ChatBetweenUsers.fromJson2(d);
+    // chatController.listChatBetweenUsers.add(json);
+
+    // if (this.mounted) {
+    setState(() {
+      chatController.listChatBetweenUsers.add(json);
+      myLog('', " * setstate");
+    });
+
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        flexibleSpace: SafeArea(
-          child: Container(
-            padding: EdgeInsets.only(right: 16),
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
+        appBar: AppBar(
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          flexibleSpace: SafeArea(
+            child: Container(
+              padding: EdgeInsets.only(right: 16),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 2,
-                ),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      ApiUrl.imageUrl + widget.chatsModel.senderImg),
-                  maxRadius: 20,
-                ),
-                SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        widget.chatsModel.senderName,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                  SizedBox(
+                    width: 2,
                   ),
-                ),
-                Icon(
-                  Icons.settings,
-                  color: Colors.black54,
-                ),
-              ],
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        ApiUrl.imageUrl + widget.chatsModel.senderImg),
+                    maxRadius: 20,
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          widget.chatsModel.senderName,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.settings,
+                    color: Colors.black54,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      body: GetBuilder<ChatController>(
-        builder: (controller) {
-          if (controller.loadingState.value == LoadingState.initial ||
-              controller.loadingState.value == LoadingState.loading) {
-            return Center(child: LoadingWidget());
-          } else if (controller.loadingState.value == LoadingState.error ||
-              controller.loadingState.value == LoadingState.noDataFound) {
-            return Center(
-              child: ReyTryErrorWidget(
-                  title: AppConfig.errorOoccurred.tr,
-                  onTap: () {
-                    controller.getChatBetweenUsers(
-                        receiver_id: widget.chatsModel.senderId);
-                  }),
-            );
-          } else {
-            return RefreshIndicator(
-              onRefresh: () => getChatBetweenUsers(),
-              child: ChatListMessage(
-                  messageController: messageController,
-                  onTapSendMessage: () => createChat(),
-                  listChatBetweenUsers: controller.listChatBetweenUsers,
-                  receiverId: widget.chatsModel.receiverId),
-            );
-          }
-        },
-      ),
+        body: BodyListCathRoom(
+            scrollController: chatController.scrollController,
+            getChatBetweenUsers: getChatBetweenUsers,
+            sendMessage: createChat,
+            // sendMessage: sendChat,
+            messageController: messageController,
+            receiverId: widget.chatsModel.receiverId));
+  }
+}
+
+class BodyListCathRoom extends GetView<ChatController> {
+  const BodyListCathRoom(
+      {super.key,
+      required this.getChatBetweenUsers,
+      required this.sendMessage,
+      required this.scrollController,
+      required this.messageController,
+      required this.receiverId});
+  final Function() getChatBetweenUsers;
+  final Function() sendMessage;
+  final TextEditingController messageController;
+  final String receiverId;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<ChatController>(
+      builder: (controller) {
+        if (controller.loadingState.value == LoadingState.initial ||
+            controller.loadingState.value == LoadingState.loading) {
+          return Center(child: LoadingWidget());
+        } else if (controller.loadingState.value == LoadingState.error ||
+            controller.loadingState.value == LoadingState.noDataFound) {
+          return Center(
+            child: ReyTryErrorWidget(
+                title: AppConfig.errorOoccurred.tr,
+                onTap: () {
+                  getChatBetweenUsers();
+                }),
+          );
+        } else {
+          return RefreshIndicator(
+            onRefresh: () => getChatBetweenUsers(),
+            child: ChatListMessage(
+                controller: scrollController,
+                messageController: messageController,
+                // onTapSendMessage: () {
+                //   createChat();
+                // },
+                onTapSendMessage: () => sendMessage(),
+                listChatBetweenUsers: controller.listChatBetweenUsers,
+                receiverId: receiverId),
+          );
+        }
+      },
     );
   }
 }
+/*
+ StreamBuilder<String>(
+              stream: messagesStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                return Padding( 
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: ListTile(
+                    title: Text("Received Message: ${snapshot.data ?? ""}"),
+                  ),
+                );
+*/

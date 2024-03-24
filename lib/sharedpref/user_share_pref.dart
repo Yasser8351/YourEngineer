@@ -62,7 +62,7 @@ class SharedPrefUser {
     await _prefs.setString('email', email);
     await _prefs.setString('id', userId);
 
-    log("email form SharedPreferences :   $email");
+    log("userId form SharedPreferences :   $userId");
 
     return await _prefs.setBool('login', true);
   }

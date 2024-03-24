@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/model/populer_services_model.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
@@ -50,8 +49,6 @@ class PopulerServicesController extends GetxController {
     try {
       var token = await _pref.getToken();
 
-      myLog("start methode", "getCategorys");
-      myLog("toook================= : $token", '');
       // loadingState = LoadingState.loading.obs;
       // var response = await Dio()
       //     .get(
@@ -65,9 +62,6 @@ class PopulerServicesController extends GetxController {
         Uri.parse(ApiUrl.geCategory),
         headers: ApiUrl.getHeader(token: token),
       );
-
-      myLog("start methode", "${loadingState.value}");
-      myLog("statusCode=================${response.body}", '');
 
       if (response.statusCode == 200) {
         _listPopulerServices = populerServicesModelFromJson(response.body);
@@ -87,7 +81,6 @@ class PopulerServicesController extends GetxController {
         //     _listPopulerServices, LoadingState.error.obs);
       } else {
         loadingState(LoadingState.token);
-        myLog("errrrrrrrorrrr", "${response.statusCode}");
 
         // setApiResponseValue(AppConfig.errorOoccurred, false,
         //     _listPopulerServices, LoadingState.error.obs);
@@ -107,7 +100,6 @@ class PopulerServicesController extends GetxController {
         // showseuessToast(error.toString());
       }
 
-      // myLog("catch error", error.toString());
     }
     return apiResponse;
   }

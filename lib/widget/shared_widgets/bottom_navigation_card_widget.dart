@@ -54,6 +54,8 @@ class _BottomNavigationCardWidgetState
   // XFile? xfile;
   @override
   Widget build(BuildContext context) {
+    myLog("isPofileEng", widget.isPofileEng);
+    myLog("isowner", widget.isowner);
     String locale = Localizations.localeOf(context).languageCode;
     ProfileUserController controller = Get.put(ProfileUserController());
 
@@ -95,6 +97,9 @@ class _BottomNavigationCardWidgetState
                         context,
                         widget.myfile,
                         widget.widget,
+                        widget.isowner,
+                        widget.isPofileEng,
+
                         // onTap: widget.onTap,
                       );
                     }
@@ -112,6 +117,9 @@ class _BottomNavigationCardWidgetState
                           context,
                           widget.myfile,
                           widget.widget,
+                          widget.isowner,
+                          widget.isPofileEng,
+
                           // onTap: widget.onTap,
                         );
                       })
@@ -145,7 +153,7 @@ class _BottomNavigationCardWidgetState
 }
 
 buildPersonalProfile(ColorScheme colorScheme, Size size,
-    UserProfileModel userProfileModel, isPofileEng) {
+    UserProfileModel userProfileModel, isowner) {
   //
   return SingleChildScrollView(
       child: Column(
@@ -161,12 +169,14 @@ buildPersonalProfile(ColorScheme colorScheme, Size size,
       const SizedBox(height: 10),
 
       userProfileModel.userprofiles.aboutUser.isEmpty
-          ? ElevatedButton(
-              onPressed: () => Get.to(() => const AddInfoAboutMeSreen()),
-              child: Text(
-                "اضف معلومات عنك",
-                style: TextStyle(color: Colors.white),
-              ))
+          ? !isowner
+              ? const SizedBox()
+              : ElevatedButton(
+                  onPressed: () => Get.to(() => const AddInfoAboutMeSreen()),
+                  child: Text(
+                    "اضف معلومات عنك",
+                    style: TextStyle(color: Colors.white),
+                  ))
           : Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -248,6 +258,8 @@ buildPaypal(
   BuildContext context,
   myfile,
   widget,
+  isowner,
+  isPofileEng,
   // {required Function() onTap}
 ) {
   return SingleChildScrollView(

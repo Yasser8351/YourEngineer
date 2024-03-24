@@ -75,8 +75,6 @@ class AddProjectController extends GetxController {
     try {
       var token = await _pref.getToken();
 
-      myLog("start methode", "getCategorys");
-      myLog("toook================= : $token", '');
       // loadingState = LoadingState.loading.obs;
       // var response = await Dio()
       //     .get(
@@ -90,9 +88,6 @@ class AddProjectController extends GetxController {
         Uri.parse(ApiUrl.geCategory),
         headers: ApiUrl.getHeader(token: token),
       );
-
-      myLog("start methode", "${loadingState.value}");
-      myLog("statusCode=================${response.body}", '');
 
       if (response.statusCode == 200) {
         _listPopulerServices = populerServicesModelFromJson(response.body);
@@ -305,7 +300,6 @@ class AddProjectController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         _status = true;
         // await _shared.saveToken(response.body['token']);
-
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());

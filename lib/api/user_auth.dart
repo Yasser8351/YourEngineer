@@ -11,7 +11,6 @@ import 'package:your_engineer/model/user_profile_model.dart';
 
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
-import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 import '../model/roles_model.dart';
 import '../model/user_model.dart';
@@ -30,7 +29,6 @@ class UserAuth {
 
   Future<void> getUsersShow(String token) async {
     try {
-      myLog("strt method", "getUsersShow");
       var response = await Dio()
           .post(
             ApiUrl.getUsersShow,
@@ -40,18 +38,11 @@ class UserAuth {
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      myLog(
-        'statusCode : ${response.statusCode} \n',
-        'response  getUsersShow : ${response.data}',
-      );
-
       if (response.statusCode == 200) {
         await _shared.saveUserId(
             userId: userProfileModelFromJson(jsonEncode(response.data)).id);
       }
-    } catch (error) {
-      myLog("catch error getUsersShow: ", error.toString());
-    }
+    } catch (error) {}
   }
 
   Future<List<RolesModel>> getRoles() async {
@@ -63,8 +54,6 @@ class UserAuth {
     try {
       var token = await _shared.getToken();
 
-      myLog("start methode", "getRoles");
-
       var response = await Dio()
           .get(
             // "http://194.195.87.30:91/api/v1/roles?page=1&size=10",
@@ -74,8 +63,6 @@ class UserAuth {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-
-      myLog("response", "$response");
 
       if (response.statusCode == 200) {
         var roles = rolesModelFromJson(jsonEncode(response.data));
@@ -102,15 +89,11 @@ class UserAuth {
         //     _listPopulerServices, LoadingState.error.obs);
       }
     } catch (error) {
-      myLog("response", "$error");
-
       loadingState(LoadingState.error);
       // setApiResponseValue(error.toString(), false, _listPopulerServices,
       //     LoadingState.error.obs);
       if (error is DioError) {
-        if (error.response!.statusCode == 401) {
-          myLog("************************", "${loadingState.value}");
-        }
+        if (error.response!.statusCode == 401) {}
         showseuessToast(
             error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
       }
@@ -122,8 +105,6 @@ class UserAuth {
       } else {
         showseuessToast(error.toString());
       }
-
-      myLog("catch error", error.toString());
     }
     return listrole;
   }
@@ -134,8 +115,6 @@ class UserAuth {
 
   Future<bool> userSignup(BuildContext context, UserModel userModel,
       String password, int selectedrole, File imageFile, File imageId) async {
-    myLog('start methode', 'userSignup');
-
     final headers = {
       'Accept': '*/*',
       'Content-Type': 'multipart/form-data',
@@ -167,11 +146,6 @@ class UserAuth {
           )
           .timeout(const Duration(seconds: 15));
 
-      myLog(
-        'statusCode : ${response.statusCode} \n',
-        'response : ${response.data}',
-      );
-
       if (response.statusCode == 201) {
         status = true;
         setValueResponse(true);
@@ -200,7 +174,6 @@ class UserAuth {
     } catch (error) {
       status = false;
       setValueResponse(false);
-      myLog('error', error);
 
       if (error is DioError) {
         if (error.response!.statusCode == 400) {
@@ -250,12 +223,8 @@ class UserAuth {
 
       if (response.statusCode == 200) {
         getUsersShow(response.data['token']);
-        await _shared.saveToken(
-            response.data['token'], response.data['status'], email);
-        myLog(
-          'statusCode : ${response.statusCode} \n',
-          'response : $response',
-        );
+        await _shared.saveToken(response.data['token'], response.data['status'],
+            email, response.data['id']);
 
         setValueResponse(true);
         status = true;
@@ -275,7 +244,6 @@ class UserAuth {
             context: context,
             subtitle:
                 error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
-        myLog('catch error', error.response!.data['msg']);
       } else if (error.toString().contains('TimeoutException')) {
         Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
       } else if (error.toString().contains('Http status error [401]')) {
@@ -289,10 +257,6 @@ class UserAuth {
   }
 
   Future<bool> resetPassword(BuildContext context, String email) async {
-    myLog('start methode', 'resetPasseord');
-
-    // var token = _shared.getToken();
-
     final data = {
       ApiParameters.email: email,
     };
@@ -312,11 +276,6 @@ class UserAuth {
             ),
           )
           .timeout(const Duration(seconds: 20));
-
-      myLog(
-        'statusCode : ${response.statusCode} \n',
-        'response : ${response.data}',
-      );
 
       if (response.statusCode == 200) {
         status = true;

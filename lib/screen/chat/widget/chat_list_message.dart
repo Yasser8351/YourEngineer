@@ -13,9 +13,11 @@ class ChatListMessage extends StatelessWidget {
     required this.receiverId,
     required this.onTapSendMessage,
     required this.messageController,
+    required this.controller,
   });
 
   final List<ChatBetweenUsers> listChatBetweenUsers;
+  final ScrollController controller;
   final String receiverId;
   final Function() onTapSendMessage;
   final TextEditingController messageController;
@@ -25,6 +27,7 @@ class ChatListMessage extends StatelessWidget {
     return Stack(
       children: [
         ListView.builder(
+          controller: controller,
           itemCount: listChatBetweenUsers.length,
           shrinkWrap: true,
           padding: EdgeInsets.only(top: 10, bottom: Get.height * .08),

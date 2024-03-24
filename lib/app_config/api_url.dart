@@ -25,7 +25,7 @@ class ApiUrl {
   static String get getNotificationUnRead => '$_root/users/me';
   static String get getFaq => '$_root/questions';
   static String get getUsersShow => '$_root/users/show';
-  static String get resetPassword => '$_root/reset';
+  static String get resetPassword => '$_root/auth/forgot-password';
   static String get contactUs => '$_root/support';
   static String get getPaypal => '$_root/site/paypal';
   static String get getCurrentrateCommission => '$_root/site/currentrate';

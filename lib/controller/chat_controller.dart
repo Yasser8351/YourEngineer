@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'package:dio/dio.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -9,6 +11,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/utils.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 // import 'package:get/get.dart';
 import 'package:your_engineer/model/chat_models/chat_between_users_model.dart';
@@ -26,11 +29,14 @@ class ChatController extends GetxController {
   String userId = "";
   String email = '';
   String message = "";
+  ScrollController scrollController = ScrollController();
 
   bool isLoadingMessage = false;
+  bool onConnectError = false;
 
   List<Chats> lastChatsList = [];
   List<ChatBetweenUsers> listChatBetweenUsers = [];
+  late IO.Socket socket;
 
   //////
   final ImagePicker _picker = ImagePicker();
@@ -143,6 +149,7 @@ class ChatController extends GetxController {
 
         // listChatBetweenUsers = chatBetweenUsersModel.results!;
         listChatBetweenUsers = chatBetweenUsersModel.results!.reversed.toList();
+        // scrollToBottom();
 
         loadingState(LoadingState.loaded);
 
@@ -169,12 +176,22 @@ class ChatController extends GetxController {
     }
   }
 
+  void scrollToBottom() {
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+  }
+
   Future<void> createChat(
       {required String message, required String receiver_id}) async {
     loadingStateChat(LoadingState.loading);
 
     try {
       var token = await _pref.getToken();
+
+      myLog("receiver_id", receiver_id);
 
       FormData data = FormData.fromMap({
         "receiver_id": receiver_id,
@@ -256,5 +273,50 @@ class ChatController extends GetxController {
   clearImageMessage() {
     imageMessage = null;
     update();
+  }
+
+  ////////////////////////////////// chat methode helper ////////////////////////////
+  connectSocket() async {
+    try {
+      socket = IO.io(
+          'http://62.171.175.75:84',
+          OptionBuilder()
+              .setTransports(['websocket']) // for Flutter or Dart VM
+              .disableAutoConnect() // disable auto-connection
+              .setExtraHeaders(
+                  {'Connection': 'upgrade', 'Upgrade': 'websocket'})
+              .build());
+      socket.connect();
+      socket.onConnect((data) {
+        myLog('onConnect', socket.connected);
+      });
+      socket.emit('addUser', email);
+      socket.on('getMessage', handleMessage);
+      socket.onDisconnect((data) => {
+            myLog("message", data),
+            update(),
+          });
+      socket.onConnectError((data) => {
+            onConnectError = true,
+            myLog("onConnectError", data),
+            update(),
+          });
+      socket.on('fromServer', (_) => myLog("fromServer", '_'));
+    } catch (e) {
+      myLog('catch error', e.toString());
+    }
+  }
+
+  handleMessage(dynamic data) {
+    myLog('', " * getMessage");
+    var d = data as Map<String, dynamic>;
+    myLog(data.toString(), " * getMessage");
+    listChatBetweenUsers.add(ChatBetweenUsers.fromJson2(d));
+
+    // if (this.mounted) {
+    //   setState(() {
+    //     myLog('', " * setstate");
+    //   });
+    // }
   }
 }

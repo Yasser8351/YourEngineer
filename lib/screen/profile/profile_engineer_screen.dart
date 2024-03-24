@@ -18,6 +18,7 @@ import 'add_pro_skills_screen.dart';
 class ProfileEngineerScreen extends StatefulWidget {
   const ProfileEngineerScreen(
       {Key? key,
+      this.isFromHomeScreen = false,
       this.showEngeneerById = false,
       this.hidePersonalInfo = false,
       this.isPofileEng = false,
@@ -27,6 +28,7 @@ class ProfileEngineerScreen extends StatefulWidget {
   final String engeneerId;
   final bool showEngeneerById;
   final bool hidePersonalInfo;
+  final bool isFromHomeScreen;
   final bool isPofileEng;
 
   @override
@@ -181,6 +183,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                         ),
                       ),
                       CardProfilePersonalInfo(
+                        isFromHomeScreen: widget.isFromHomeScreen,
                         userProfileModel: controller.userProfile,
                         isMyProfile: widget.engeneerId.isEmpty ? true : false,
                         hidePersonalInfo: widget.hidePersonalInfo,

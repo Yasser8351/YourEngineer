@@ -12,6 +12,7 @@ import 'shared_widgets/rating_bar.dart';
 class ListTopEngineerRatingWidget extends StatelessWidget {
   const ListTopEngineerRatingWidget(
       {Key? key,
+      this.isFromHomeScreen = false,
       this.fit = BoxFit.fill,
       required this.topEngineerRatingModel,
       required this.colorScheme,
@@ -20,14 +21,16 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
   final Result topEngineerRatingModel;
   final ColorScheme colorScheme;
   final Size size;
+  final bool isFromHomeScreen;
   final BoxFit fit;
 
   @override
   Widget build(BuildContext context) {
     return CardDecoration(
       onTap: () {
-        Get.to(
-            () => ProfileEngineerScreen(engeneerId: topEngineerRatingModel.id));
+        Get.to(() => ProfileEngineerScreen(
+            engeneerId: topEngineerRatingModel.id,
+            isFromHomeScreen: isFromHomeScreen));
         // Get.to(() => ChatRoomScreen(
         //       receiverId: topEngineerRatingModel.id,
         //       receiverEmail: topEngineerRatingModel.email,

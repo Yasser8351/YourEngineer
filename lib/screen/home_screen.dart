@@ -291,6 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               topEngineerController.listTopEngineer.length,
                           itemBuilder: (context, index) {
                             return ListTopEngineerRatingWidget(
+                              isFromHomeScreen: true,
                               topEngineerRatingModel:
                                   topEngineerController.listTopEngineer[index],
                               colorScheme: colorScheme,

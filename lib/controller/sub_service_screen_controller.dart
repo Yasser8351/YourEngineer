@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
-import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 import '../model/sub_catigory.dart';
 import '../sharedpref/user_share_pref.dart';
@@ -43,7 +42,6 @@ class SubServiceScreenController extends GetxController {
     id = Get.arguments['id'];
     title = Get.arguments['title'];
     getSubCatigory(id);
-    myLog("start methode  ''''''''''''''''''''''''''", "${scatidvvv}");
     String scatid = scatidvvv;
     getProjectBySubCatigory(scatid);
     update();
@@ -59,7 +57,6 @@ class SubServiceScreenController extends GetxController {
     try {
       var token = await _pref.getToken();
 
-      myLog("start methode", "getCategorys");
       var response = await Dio()
           .get(
             "${ApiUrl.getSubCatigory}${id}",
@@ -69,15 +66,11 @@ class SubServiceScreenController extends GetxController {
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      myLog("statusCode${response.statusCode}", '');
-      myLog("statusCode${response.data}", '');
-
       loadingState(LoadingState.loaded);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         _listSubServices = subCatigoryFromJson(jsonEncode(response.data));
         scatidvvv = _listSubServices[selectedscat].id.toString();
-        // myLog("start methode  _listSubServices_listSubServices", "${scatid}");
 
         if (_listSubServices.isEmpty) {
           loadingState(LoadingState.noDataFound);
@@ -94,7 +87,6 @@ class SubServiceScreenController extends GetxController {
         //     _listPopulerServices, LoadingState.error.obs);
       } else {
         loadingState(LoadingState.token);
-        myLog("errrrrrrrorrrr", "${response.statusCode}");
 
         // setApiResponseValue(AppConfig.errorOoccurred, false,
         //     _listPopulerServices, LoadingState.error.obs);
@@ -113,10 +105,7 @@ class SubServiceScreenController extends GetxController {
       } else {
         // showseuessToast(error.toString());
       }
-
-      myLog("catch error", error.toString());
     }
-    // myLog("start methode  _listSubServices", "${_listSubServices}");
 
     return apiResponse;
   }
@@ -131,8 +120,6 @@ class SubServiceScreenController extends GetxController {
     try {
       var token = await _pref.getToken();
 
-      myLog("start methode", "getProjectBySubCatigory");
-
       var response = await Dio()
           .get(
             "${ApiUrl.getProjectBySubCatigory}${id}",
@@ -142,8 +129,6 @@ class SubServiceScreenController extends GetxController {
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      myLog("statusCode=================${response.statusCode}", '');
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         results = response.data['results'];
         int totalItems = response.data['totalItems'];
@@ -151,8 +136,6 @@ class SubServiceScreenController extends GetxController {
         int currentPage = response.data['currentPage'];
         isLoadingProject = false;
         loadingState(LoadingState.loaded);
-
-        myLog("isLoadingProject", isLoadingProject);
 
         if (results.isEmpty) {
           loadingState(LoadingState.noDataFound);
@@ -168,7 +151,6 @@ class SubServiceScreenController extends GetxController {
         //     _listPopulerServices, LoadingState.error.obs);
       } else {
         // loadingState(LoadingState.token);
-        myLog("errrrrrrrorrrr", "${response.statusCode}");
 
         // setApiResponseValue(AppConfig.errorOoccurred, false,
         //     _listPopulerServices, LoadingState.error.obs);
@@ -187,10 +169,7 @@ class SubServiceScreenController extends GetxController {
       } else {
         // showseuessToast(error.toString());
       }
-
-      myLog("catch error", error.toString());
     }
-    myLog("start methode  results", "${results}");
 
     return apiResponse;
   }

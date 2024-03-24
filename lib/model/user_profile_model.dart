@@ -195,7 +195,7 @@ class Wallet {
         id: json["id"] ?? '',
         user_id: json["user_id"] ?? '',
         createdAt: json["createdAt"] ?? '',
-        credit: json["credit"] ?? '',
+        credit: json["credit"] ?? '0.0',
         updatedAt: json["updatedAt"] ?? '',
       );
 }

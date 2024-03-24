@@ -65,6 +65,10 @@ class ChatBetweenUsers {
     messageType = json['message_type'] ?? '';
     fileUrl = json['fileUrl'] ?? '';
     createdAt = json['time'] ?? '';
+
+    //  {senderId: ali@g1.com, receiverId: test@gmail.com,
+    //text: hi, fileUrl: http://62.171.175.75:83/hi,
+    // message_type: text, time: 2024-03-23T20:43:27.000Z} :
   }
   ChatBetweenUsers.fromJson3(Map<String, dynamic> json) {
     senderId = json['sender_id'] ?? '';
@@ -85,5 +89,16 @@ class ChatBetweenUsers {
     data['createdAt'] = this.createdAt;
 
     return data;
+  }
+
+  factory ChatBetweenUsers.toJson(Map<String, dynamic> json) {
+    return ChatBetweenUsers(
+      senderId: json['senderId'] ?? "",
+      receiverId: json['receiverId'] ?? "",
+      message: json['text'] ?? "",
+      messageType: json['message_type'] ?? "",
+      fileUrl: json['fileUrl'] ?? "",
+      createdAt: json['time'] ?? "",
+    );
   }
 }

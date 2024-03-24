@@ -14,6 +14,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
     required this.size,
     required this.colorScheme,
     required this.onTap,
+    this.isFromHomeScreen = false,
     this.isMyProfile = true,
     this.isOwinr = false,
     this.hidePersonalInfo = false,
@@ -23,6 +24,8 @@ class CardProfilePersonalInfo extends StatelessWidget {
   final ColorScheme colorScheme;
   final Function() onTap;
   final isMyProfile;
+
+  final bool isFromHomeScreen;
   final bool isOwinr;
   final hidePersonalInfo;
   final UserProfileModel userProfileModel;
@@ -70,8 +73,9 @@ class CardProfilePersonalInfo extends StatelessWidget {
                     isOwinr
                         ? // RatingBar
                         TextWidget(
-                            title:
-                                "Your balance \$ ${userProfileModel.wallet.credit} ",
+                            title: userProfileModel.wallet.credit.isEmpty
+                                ? "Your balance is   0.0"
+                                : " Your balance \$ ${userProfileModel.wallet.credit} ",
                             fontSize: 18,
                             color: colorScheme.onSecondary)
                         : Row(
@@ -79,7 +83,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                             children: [
                               RatingBar(
                                 color: Colors.amber,
-                                rating: 4.5,
+                                rating: 5,
                                 sizeIcon: 22,
                                 onRatingChanged: (rating) {
                                   // setState(() => this.rating = rating)
@@ -89,7 +93,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 6),
                                 child: TextWidget(
-                                  title: 4.5.toString(),
+                                  title: 5.toString(),
                                   fontSize: 17,
                                   color: colorScheme.onSecondary,
                                 ),
@@ -119,17 +123,19 @@ class CardProfilePersonalInfo extends StatelessWidget {
                     const SizedBox(height: 7),
                     hidePersonalInfo
                         ? SizedBox()
-                        : InkWell(
-                            onTap: onTap,
-                            child: CircleAvatar(
-                              radius: 13.0,
-                              backgroundColor: colorScheme.primary,
-                              child: Icon(
-                                Icons.add,
-                                color: colorScheme.surface,
+                        : isFromHomeScreen
+                            ? SizedBox()
+                            : InkWell(
+                                onTap: onTap,
+                                child: CircleAvatar(
+                                  radius: 13.0,
+                                  backgroundColor: colorScheme.primary,
+                                  child: Icon(
+                                    Icons.add,
+                                    color: colorScheme.surface,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
                   ],
                 ),
               ],

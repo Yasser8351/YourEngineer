@@ -98,14 +98,12 @@ dialogApp() {
                   size: Get.height * .05,
                 ),
               ),
-
               SizedBox(height: Get.height * .027),
               TextWidget(
-                  title:
-                      "تم تسجيل حسابك بنجاح \n سيتم مراجعة حسابك وتأكيدة خلال 24 ساعة",
+                  title: "شكرا لك \n تم تسجيل حسابك بنجاح ",
+                  // "تم تسجيل حسابك بنجاح \n سيتم مراجعة حسابك وتأكيدة خلال 24 ساعة",
                   fontSize: Get.height * .02,
                   color: Colors.black),
-              // ElevatedButton(onPressed: onPressed, child: )
             ],
           ),
         ),
