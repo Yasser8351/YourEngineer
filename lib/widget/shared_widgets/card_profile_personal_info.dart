@@ -117,6 +117,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                                 NetworkImage(controller.imggProfile)
                             // backgroundImage: AssetImage(
                             //     isMyProfile ? AppImage.img : AppImage.img11),
+//
                             ),
                       );
                     }),
