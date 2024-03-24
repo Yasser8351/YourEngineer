@@ -496,6 +496,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  paginated_list:
+    dependency: "direct main"
+    description:
+      name: paginated_list
+      sha256: bc079d4c0cd83b63440a884c954ad79d8901f5628c22bf41f6c38acaac0c972f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.3"
   path:
     dependency: transitive
     description:
@@ -829,6 +837,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  visibility_detector:
+    dependency: transitive
+    description:
+      name: visibility_detector
+      sha256: dd5cc11e13494f432d15939c3aa8ae76844c42b723398643ce9addb88a5ed420
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0+2"
   win32:
     dependency: transitive
     description:

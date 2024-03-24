@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
@@ -66,6 +67,8 @@ class SubServiceScreenController extends GetxController {
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
+      myLog("getSubCatigory ", response);
+
       loadingState(LoadingState.loaded);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -92,6 +95,8 @@ class SubServiceScreenController extends GetxController {
         //     _listPopulerServices, LoadingState.error.obs);
       }
     } catch (error) {
+      myLog("getSubCatigory error", error);
+
       loadingState(LoadingState.error);
       message = AppConfig.noData;
       // setApiResponseValue(error.toString(), false, _listPopulerServices,

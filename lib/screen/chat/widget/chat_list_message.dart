@@ -103,6 +103,7 @@ class ChatListMessage extends StatelessWidget {
             );
           },
         ),
+        SizedBox(height: 40),
         TextFormSendMessage(
             onTapSendMessage: onTapSendMessage,
             messageController: messageController),

@@ -21,14 +21,17 @@ class TopEngineerController extends GetxController {
 
   List<dynamic> get listTopEngineer => _listTopEngineer;
   String message = '';
-
+  int totalItems = 0;
+  int totalPages = 0;
+  TopEngineerRatingModel modelEngineer = TopEngineerRatingModel(
+      results: [], totalItems: 0, totalPages: 0, currentPage: 0);
   @override
   onInit() {
     super.onInit();
-    getTopEngineer();
+    getTopEngineer(1, 5);
   }
 
-  Future<ApiResponse> getTopEngineer() async {
+  Future<ApiResponse> getTopEngineer(page, size) async {
     /// This function call the data from the API
     /// The Post type function takes the search value from the body
     /// get List of Top Engineer Rating in Home Screen
@@ -41,7 +44,7 @@ class TopEngineerController extends GetxController {
 
       var response = await Dio()
           .post(
-            ApiUrl.getTopEngineer,
+            ApiUrl.getTopEngineer(page: page, size: size),
             options: Options(
               headers: ApiUrl.getHeader(token: token),
             ),
@@ -56,7 +59,11 @@ class TopEngineerController extends GetxController {
 
         var _modelEngineer =
             topEngineerRatingModelFromJson(jsonEncode(response.data));
-        myLog("_modelEngineer", "${_modelEngineer}");
+
+        totalItems = _modelEngineer.totalItems ?? 0;
+        totalPages = _modelEngineer.totalPages ?? 0;
+        myLog("totalItems", "${totalItems}");
+        myLog("totalPages", "${totalPages}");
 
         _listTopEngineer = _modelEngineer.results;
         // _listTopEngineer = _modelEngineer.results;
@@ -103,6 +110,41 @@ class TopEngineerController extends GetxController {
     return apiResponse;
   }
 
+  getMoreEng({bool isMore = false}) async {
+    var token = await _pref.getToken();
+
+    totalPages++;
+
+    try {
+      var response = await Dio()
+          .post(
+            ApiUrl.getTopEngineer(page: 1, size: 4),
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      if (response.statusCode == 200) {
+        modelEngineer =
+            topEngineerRatingModelFromJson(jsonEncode(response.data));
+
+        update();
+
+        myLog("response", response);
+        myLog("length", modelEngineer.results.length);
+      }
+      // .then((value) => {
+      //       myLog("value", value),
+      //       modelEngineer.results.addAll(
+      //         value.data,
+      //       ),
+      //       update()
+      //     });
+    } catch (error) {
+      // changeLoadingStateProduct(LoadingState.empty);
+    }
+  }
   // setApiResponseValue(
   //     String message, bool status, List<dynamic> data, Rx<LoadingState> state) {
   //   apiResponse.message = message;

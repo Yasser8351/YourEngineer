@@ -10,7 +10,6 @@ class ApiUrl {
   static String get signup => '$_root/auth/signup';
   static String get signin => '$_root/auth/signin';
   static String get geCategory => '$_root/category';
-  static String get getTopEngineer => '$_root/users/enginners?page=1&size=5';
   static String get getProject => '$_root/project?page=1&size=10&search=';
   static String get addProject => '$_root/project';
   static String get addoffer => '$_root/offer';
@@ -41,6 +40,11 @@ class ApiUrl {
 
   static String getChatBetweenUsers({required int page, required int size}) {
     return '$_root/conversations/chat?page=$page&size=$size';
+  }
+
+  static String getTopEngineer({required int page, required int size}) {
+    // return '$_root/conversations/chat?page=$page&size=$size';
+    return '$_root/users/enginners?page=$page&size=$size';
   }
 
   static String get createChat => '$_root/conversations';

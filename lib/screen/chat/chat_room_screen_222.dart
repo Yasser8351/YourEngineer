@@ -1,7 +1,5 @@
 // ChatRoomScreen22222
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -40,9 +38,6 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
   late IO.Socket socket;
   bool onConnectError = false;
 
-  // final StreamController<String> _streamController = StreamController<String>();
-  // Stream<String> get messagesStream => _streamController.stream;
-
   @override
   initState() {
     connectSocket();
@@ -54,7 +49,9 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
   @override
   dispose() {
     super.dispose();
+    socket.disconnect();
     socket.dispose();
+    chatController.scrollController.dispose();
     // _streamController.close();
 
     myLog("socket.dispose", '');
@@ -76,7 +73,6 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
         myLog('onConnect', socket.connected);
       });
       socket.emit('addUser', chatController.email);
-      // socket.on('getMessage', (data) {});
       socket.on('getMessage', handleMessage);
       socket.onDisconnect((data) => {
             myLog("message", data),
@@ -98,85 +94,74 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
     }
   }
 
-  sendChat() {
-    try {
-      if (messageController.text.isEmpty) return;
-      Map map = {
-        'senderId': "test@gmail.com",
-        'receiverId': "ali@g1.com",
-        'text': messageController.text,
-        'fileUrl': '',
-        'message_type': 'text',
-        'time': DateTime.now().toIso8601String(),
-      };
-      var mapbody = json.encode(map);
-      // socket.emit('sendMessage', mapbody);
-      createChat();
-      myLog('start ', "$mapbody");
-    } catch (error) {
-      myLog('error sendChat', "$error");
-    }
-  }
-
   ////////////////// sendMessage ///////////
-  sendMessage() {
+  sendMessage(
+    String fileUrl,
+    String messageType,
+  ) {
     try {
       if (messageController.text.isEmpty) return;
 
       Map map = {
-        'senderId': "test@gmail.com",
-        'receiverId': "ali@g1.com",
-        // 'senderId': widget.userEmail,
-        // 'receiverId': widget.chatsModel.recieverEmail.contains(widget.userEmail)
-        //     ? widget.chatsModel.senderEmail
-        //     : widget.chatsModel.recieverEmail,
-
+        'senderId': widget.userEmail,
+        'receiverId': widget.chatsModel.recieverEmail.contains(widget.userEmail)
+            ? widget.chatsModel.senderEmail
+            : widget.chatsModel.recieverEmail,
         'text': messageController.text,
-        'fileUrl': '',
-        'message_type': 'text',
+        'fileUrl': fileUrl,
+        'message_type': messageType,
         'time': DateTime.now().toIso8601String(),
       };
       socket.emit('sendMessage', map);
+      myLog('sendMessage ', "$map");
     } catch (error) {
       myLog('error', "$error");
     }
   }
 
   ////////////// getChatBetweenUsers //////////////
-  Future<void> getChatBetweenUsers() => chatController.getChatBetweenUsers(
-      receiver_id: widget.chatsModel.senderId.contains(widget.userId)
-          ? widget.chatsModel.receiverId
-          : widget.chatsModel.senderId);
+  Future<void> getChatBetweenUsers() => chatController
+          .getChatBetweenUsers(
+              receiver_id: widget.chatsModel.senderId.contains(widget.userId)
+                  ? widget.chatsModel.receiverId
+                  : widget.chatsModel.senderId)
+          .then((value) {
+        // chatController.scrollToBottom();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (chatController.scrollController.hasClients) {
+            chatController.scrollToBottom();
+          }
+        });
+      });
 
   ///////////// createChat //////////////
   Future<void> createChat() {
     chatController.isLoadin();
     return chatController
-        .createChat(
+        .addCreateChat(
             message: messageController.text,
             receiver_id: widget.chatsModel.senderId.contains(widget.userId)
                 ? widget.chatsModel.receiverId
                 : widget.chatsModel.senderId)
         .then((value) => {
-              chatController.isLoadin(),
-              messageController.clear(),
+              if (value != null)
+                {
+                  myLog('addCreateChat',
+                      "receiverId : ${value.receiverId} \n senderId ${value.senderId}"),
+                  sendMessage(value.fileUrl!, value.messageType!),
+                  chatController.scrollToBottom(),
+                  chatController.isLoadin(),
+                  messageController.clear(),
+                }
             });
   }
 
   ////////////////////
   handleMessage(dynamic data) {
-    myLog('', " * getMessage");
     var d = data as Map<String, dynamic>;
     var json = ChatBetweenUsers.fromJson2(d);
-    // chatController.listChatBetweenUsers.add(json);
-
-    // if (this.mounted) {
-    setState(() {
-      chatController.listChatBetweenUsers.add(json);
-      myLog('', " * setstate");
-    });
-
-    // }
+    chatController.listChatBetweenUsers.add(json);
+    chatController.scrollToBottom();
   }
 
   @override
@@ -237,7 +222,7 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
             scrollController: chatController.scrollController,
             getChatBetweenUsers: getChatBetweenUsers,
             sendMessage: createChat,
-            // sendMessage: sendChat,
+            // sendMessage: sendMessage,
             messageController: messageController,
             receiverId: widget.chatsModel.receiverId));
   }

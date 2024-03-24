@@ -149,7 +149,6 @@ class ChatController extends GetxController {
 
         // listChatBetweenUsers = chatBetweenUsersModel.results!;
         listChatBetweenUsers = chatBetweenUsersModel.results!.reversed.toList();
-        // scrollToBottom();
 
         loadingState(LoadingState.loaded);
 
@@ -178,10 +177,11 @@ class ChatController extends GetxController {
 
   void scrollToBottom() {
     scrollController.animateTo(
-      scrollController.position.maxScrollExtent,
+      scrollController.position.maxScrollExtent * 2,
       duration: Duration(milliseconds: 500),
       curve: Curves.easeOut,
     );
+    update();
   }
 
   Future<void> createChat(
@@ -256,6 +256,82 @@ class ChatController extends GetxController {
 
       myLog("catch createChat", error.toString());
     }
+  }
+
+  Future<ChatBetweenUsers?> addCreateChat(
+      {required String message, required String receiver_id}) async {
+    loadingStateChat(LoadingState.loading);
+
+    try {
+      var token = await _pref.getToken();
+
+      myLog("receiver_id", receiver_id);
+
+      FormData data = FormData.fromMap({
+        "receiver_id": receiver_id,
+        "message": message.isEmpty ? "image" : message,
+        "message_type": imageMessage == null ? "message" : "file",
+        "attachment": imageMessage == null
+            ? ""
+            : await MultipartFile.fromFile(
+                imageMessage!.path,
+                contentType:
+                    MediaType("image", "${imageMessage!.path.split(".").last}"),
+              ),
+        // "attachment": await MultipartFile.fromFile(
+        //   imageMessage.path,
+        //   contentType: MediaType("image", "${imageId.path.split(".").last}"
+        // ),
+        // ),
+      });
+
+      myLog("start methode", "createChat");
+
+      var response = await Dio()
+          .post(
+            ApiUrl.createChat,
+            data: data,
+            options: Options(
+              headers: ApiUrl.getHeaderImage(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog("response.statusCode methode", "${response.statusCode} ");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        clearImageMessage();
+        listChatBetweenUsers.add(ChatBetweenUsers.fromJson3(response.data));
+
+        loadingStateChat(LoadingState.loaded);
+
+        update();
+        return ChatBetweenUsers.fromJson3(response.data);
+      } else {
+        var msg = jsonEncode(response.data);
+
+        Get.defaultDialog(title: msg.toString());
+        loadingStateChat(LoadingState.error);
+      }
+    } catch (error) {
+      if (error is DioError) {
+        Get.defaultDialog(title: '', middleText: error.response!.data['msg']);
+
+        myLog("response", "${error.response!.data['msg']} ");
+      }
+      loadingStateChat(LoadingState.error);
+      if (error is TimeoutException) {
+        Get.defaultDialog(title: AppConfig.timeOut.tr);
+      }
+      if (error is SocketException) {
+        Get.defaultDialog(title: AppConfig.failedInternet.tr);
+      } else {
+        Get.defaultDialog(title: AppConfig.errorOoccurred.tr);
+      }
+
+      myLog("catch createChat", error.toString());
+    }
+    return null;
   }
 
   Future<void> getImageFromGallery() async {

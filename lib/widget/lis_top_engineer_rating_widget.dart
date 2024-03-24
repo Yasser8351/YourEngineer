@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:your_engineer/app_config/api_url.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
 import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
 import 'package:your_engineer/widget/shared_widgets/image_network.dart';
@@ -26,6 +27,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    myLog(topEngineerRatingModel, topEngineerRatingModel);
     return CardDecoration(
       onTap: () {
         Get.to(() => ProfileEngineerScreen(
@@ -84,7 +86,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     RatingBar(
                       sizeIcon: 15,
                       color: Colors.amber,
-                      rating: 4.5,
+                      rating: 5,
                       // rating: topEngineerRatingModel.user.rating,
                       onRatingChanged: (rating) {
                         // setState(() => this.rating = rating)
@@ -94,7 +96,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: TextWidget(
-                        title: 4.5.toString(),
+                        title: 5.toString(),
                         // title: topEngineerRatingModel.engineerRating.toString(),
                         fontSize: 15,
                         color: colorScheme.secondary,
