@@ -100,12 +100,8 @@ class _OffersScreenState extends State<OffersScreen> {
                           isTextStart: true,
                         ),
                         SizedBox(height: size.height * .031),
-                        controller.results['attatchment_file']
-                                    .toString()
-                                    .isNotEmpty &&
-                                controller.results['attatchment_file']
-                                    .toString()
-                                    .contains("null")
+
+                        controller.results['attatchment_file'] != null
                             ? InkWell(
                                 onTap: () => controller
                                         .results['attatchment_file']

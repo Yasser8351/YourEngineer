@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   initController() {
     projectController.getProjects();
     populerServicesController.getCategorys();
-    topEngineerController.getTopEngineer(1, 5);
+    topEngineerController.getTopEngineer();
   }
 
   @override
@@ -286,8 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ReyTryErrorWidget(
                                       title: topEngineerController.message,
                                       onTap: () {
-                                        topEngineerController.getTopEngineer(
-                                            1, 5);
+                                        topEngineerController.getTopEngineer();
                                       })
                                 ]);
                     } else {

@@ -252,8 +252,6 @@ class OfferController extends GetxController {
     try {
       var token = await _pref.getToken();
 
-      myLog("Project ID", "${proID}");
-
       // loadingState = LoadingState.loading.obs;
       var response = await Dio()
           .get(
@@ -263,9 +261,6 @@ class OfferController extends GetxController {
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
-
-      myLog("response.statusCode methode", "${response.statusCode}");
-      myLog("response.Data methode", "${response.data}");
 
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;

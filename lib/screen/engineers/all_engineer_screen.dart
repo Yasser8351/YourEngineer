@@ -4,8 +4,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paginated_list/paginated_list.dart';
 import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/all_shimmers_widgets.dart.dart';
 import 'package:your_engineer/widget/shared_widgets/handling_data_view.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
@@ -30,7 +32,7 @@ class AllEngineersScreen extends StatefulWidget {
 class _AllEngineersScreenState extends State<AllEngineersScreen> {
   TopEngineerController topEngineerController = Get.find();
   initState() {
-    topEngineerController.getTopEngineer(1, 20);
+    topEngineerController.getTopEngineer();
 
     super.initState();
   }
@@ -41,44 +43,55 @@ class _AllEngineersScreenState extends State<AllEngineersScreen> {
       appBar: _getAppBar(context),
       body: HandlingDataView(
         loadingState: topEngineerController.loadingState.value,
-        // errorMessage: ,
+        errorMessage: topEngineerController.message,
         shimmerType: ShimmerType.shimmerListRectangular,
-        tryAgan: () => topEngineerController.getTopEngineer(1, 20),
-        widget: Obx(() {
-          return ListView.builder(
+        tryAgan: () => topEngineerController.getTopEngineer(isMore: true),
+        widget: Obx(
+          () {
+            return PaginatedGrid(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(10.0),
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: .62,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20),
+              onLoadMore: () =>
+                  topEngineerController.getTopEngineer(isMore: true),
               shrinkWrap: true,
-              itemCount: topEngineerController.modelEngineer.results.length,
-              itemBuilder: (context, index) {
-                // return Text(
-                //     topEngineerController.modelEngineer.results[index].email);
-                return ListTopEngineerRatingWidget(
-                  fit: BoxFit.cover,
-                  topEngineerRatingModel:
-                      topEngineerController.listTopEngineer[index],
-                  colorScheme: widget.colorScheme,
-                  size: widget.size,
-                );
-              }
-              // body: GridView.builder(
-              //   physics: const BouncingScrollPhysics(),
-              //   padding: const EdgeInsets.all(10.0),
-              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 1,
-              //       childAspectRatio: 1 / .8,
-              //       mainAxisSpacing: 10,
-              //       crossAxisSpacing: 10),
-              //   itemCount: listEngineers.length,
-              //   itemBuilder: (ctx, index) {
-              //     // return Text("data");
-              //     return ListTopEngineerRatingWidget(
-              //       fit: BoxFit.cover,
-              //       topEngineerRatingModel: listEngineers[index],
-              //       colorScheme: colorScheme,
-              //       size: size,
-              //     );
-              //   },
-              // ),
-              );
+              loadingIndicator: handlingPaginationLoading(
+                  paddingstart: Get.width / 3,
+                  length: topEngineerController.modelEngineer.results.length,
+                  totalCount: topEngineerController.totalItems),
+              isRecentSearch: false,
+              isLastPage: false,
+              items: topEngineerController.modelEngineer.results,
+              builder: (item, int index) => ListTopEngineerRatingWidget(
+                fit: BoxFit.cover,
+                topEngineerRatingModel:
+                    topEngineerController.modelEngineer.results[index],
+                colorScheme: widget.colorScheme,
+                size: widget.size,
+              ),
+            );
+          },
+
+          // return ListView.builder(
+          //     shrinkWrap: true,
+          //     itemCount: topEngineerController.modelEngineer.results.length,
+          //     itemBuilder: (context, index) {
+          //       // return Text(
+          //       //     topEngineerController.modelEngineer.results[index].email);
+          //       return ListTopEngineerRatingWidget(
+          //         fit: BoxFit.cover,
+          //         topEngineerRatingModel:
+          //             topEngineerController.listTopEngineer[index],
+          //         colorScheme: widget.colorScheme,
+          //         size: widget.size,
+          //       );
+          //     }
+
+          //     );
 
           // if (topEngineerController.loadingState.value == LoadingState.initial ||
           //     topEngineerController.loadingState.value == LoadingState.loading) {
@@ -95,7 +108,7 @@ class _AllEngineersScreenState extends State<AllEngineersScreen> {
           // } else {
 
           // }
-        }),
+        ),
       ),
     );
   }
@@ -119,7 +132,6 @@ class _AllEngineersScreenState extends State<AllEngineersScreen> {
 }
 
 /*
-  paginated_list: ^1.2.0
 
 PaginatedList(
                           shrinkWrap: true,
@@ -186,6 +198,7 @@ handlingPaginationLoading(
           : Padding(
               padding:
                   EdgeInsetsDirectional.only(top: 0, start: paddingstart ?? 0),
-              child: Center(child: CircularProgressIndicator(strokeWidth: .9)),
+              child: Center(child: ShimmerRectangular()),
+              // child: Center(child: CircularProgressIndicator(strokeWidth: .9)),
             );
 }
