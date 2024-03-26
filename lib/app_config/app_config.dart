@@ -69,7 +69,8 @@ class AppConfig {
       "No message yet \n Start a conversation with best engineers, \n and get the jop done.";
   static const String noProjectYet = "No project yet";
   static const String profile = "My Profile";
-  static const String version = "version 1.0.8";
+  static const String version = "version";
+  static const String buildNumber = "1.0.9";
   static const String termsOfServices = "Terms of service";
   static const String privacyPolicy = "Privacy Policy";
   static const String logout = "Logout";
@@ -93,6 +94,13 @@ class AppConfig {
   static const String priceRange = "Price Range";
   static const String offer = "Offer";
   static const String offerCount = "Offer count";
+
+  static const String addAmount = "Add amount";
+  static const String addAttachment = "Add Attachment";
+  static const String name = "Name";
+  static const String addYourName = "Add Your Name";
+  static const String attachment = "Attachment";
+
   static const String allFaildRequired = "All fields are required";
   static const String topEngineerRating = "Top Engineer Rating";
   static const String populerServices = "Populer Services";

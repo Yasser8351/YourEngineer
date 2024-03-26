@@ -32,7 +32,9 @@ class AllEngineersScreen extends StatefulWidget {
 class _AllEngineersScreenState extends State<AllEngineersScreen> {
   TopEngineerController topEngineerController = Get.find();
   initState() {
-    topEngineerController.getTopEngineer();
+    Future.delayed(Duration(), () {
+      topEngineerController.getTopEngineer(20, isMore: true);
+    });
 
     super.initState();
   }
@@ -40,77 +42,76 @@ class _AllEngineersScreenState extends State<AllEngineersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _getAppBar(context),
-      body: HandlingDataView(
-        loadingState: topEngineerController.loadingState.value,
-        errorMessage: topEngineerController.message,
-        shimmerType: ShimmerType.shimmerListRectangular,
-        tryAgan: () => topEngineerController.getTopEngineer(isMore: true),
-        widget: Obx(
-          () {
-            return PaginatedGrid(
+        appBar: _getAppBar(context),
+        body: Obx(() {
+          return HandlingDataView(
+            loadingState: topEngineerController.loadingState.value,
+            errorMessage: topEngineerController.message,
+            sizedBoxHeight: Get.height / 3,
+            shimmerType: ShimmerType.shimmerListRectangular,
+            tryAgan: () =>
+                topEngineerController.getTopEngineer(20, isMore: true),
+            widget: PaginatedGrid(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(10.0),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 200,
-                  childAspectRatio: .62,
+                  childAspectRatio: .75,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20),
-              onLoadMore: () =>
-                  topEngineerController.getTopEngineer(isMore: true),
+              onLoadMore: () => {},
+              // topEngineerController.getTopEngineer(isMore: true),
               shrinkWrap: true,
               loadingIndicator: handlingPaginationLoading(
                   paddingstart: Get.width / 3,
-                  length: topEngineerController.modelEngineer.results.length,
+                  length: topEngineerController.listTopPagen.length,
                   totalCount: topEngineerController.totalItems),
               isRecentSearch: false,
               isLastPage: false,
-              items: topEngineerController.modelEngineer.results,
+              items: topEngineerController.listTopPagen,
               builder: (item, int index) => ListTopEngineerRatingWidget(
                 fit: BoxFit.cover,
                 topEngineerRatingModel:
-                    topEngineerController.modelEngineer.results[index],
+                    topEngineerController.listTopPagen[index],
                 colorScheme: widget.colorScheme,
                 size: widget.size,
               ),
-            );
-          },
 
-          // return ListView.builder(
-          //     shrinkWrap: true,
-          //     itemCount: topEngineerController.modelEngineer.results.length,
-          //     itemBuilder: (context, index) {
-          //       // return Text(
-          //       //     topEngineerController.modelEngineer.results[index].email);
-          //       return ListTopEngineerRatingWidget(
-          //         fit: BoxFit.cover,
-          //         topEngineerRatingModel:
-          //             topEngineerController.listTopEngineer[index],
-          //         colorScheme: widget.colorScheme,
-          //         size: widget.size,
-          //       );
-          //     }
+              // return ListView.builder(
+              //     shrinkWrap: true,
+              //     itemCount: topEngineerController.listTopEngineer.length,
+              //     itemBuilder: (context, index) {
+              //       // return Text(
+              //       //     topEngineerController.listTopEngineer[index].email);
+              //       return ListTopEngineerRatingWidget(
+              //         fit: BoxFit.cover,
+              //         topEngineerRatingModel:
+              //             topEngineerController.listTopEngineer[index],
+              //         colorScheme: widget.colorScheme,
+              //         size: widget.size,
+              //       );
+              //     }
 
-          //     );
+              //     );
 
-          // if (topEngineerController.loadingState.value == LoadingState.initial ||
-          //     topEngineerController.loadingState.value == LoadingState.loading) {
-          //   return ShimmerWidgetList(size: widget.size);
-          // } else if (topEngineerController.loadingState.value ==
-          //     LoadingState.error) {
-          //   return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          //     ReyTryErrorWidget(
-          //         title: topEngineerController.message,
-          //         onTap: () {
-          //           topEngineerController.getTopEngineer(1, 20);
-          //         })
-          //   ]);
-          // } else {
+              // if (topEngineerController.loadingState.value == LoadingState.initial ||
+              //     topEngineerController.loadingState.value == LoadingState.loading) {
+              //   return ShimmerWidgetList(size: widget.size);
+              // } else if (topEngineerController.loadingState.value ==
+              //     LoadingState.error) {
+              //   return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              //     ReyTryErrorWidget(
+              //         title: topEngineerController.message,
+              //         onTap: () {
+              //           topEngineerController.getTopEngineer(1, 20);
+              //         })
+              //   ]);
+              // } else {
 
-          // }
-        ),
-      ),
-    );
+              // }
+            ),
+          );
+        }));
   }
 
   _getAppBar(BuildContext context) {

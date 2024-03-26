@@ -137,11 +137,11 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                           child: TextWidget(
                               isTextStart: true,
                               title:
-                                  "${AppConfig.appCommissionIs.tr} ${controller.commission}%  \n ${AppConfig.attachReceipt.tr}",
-                              fontSize: 15,
+                                  "${AppConfig.appCommissionIs.tr} ${controller.commission}%  \n  ${AppConfig.attachReceipt.tr}",
+                              fontSize: Get.height * .017,
                               color: Colors.white),
                         ),
-                        const SizedBox(height: 15),
+                        SizedBox(height: Get.height * .04),
                         ListProfileHorizontalWidget(
                           isPayScreen: true,
                           size: size,

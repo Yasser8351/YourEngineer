@@ -14,10 +14,12 @@ import '../enum/all_enum.dart';
 class TopEngineerController extends GetxController {
   ApiResponse apiResponse = ApiResponse();
   var loadingState = LoadingState.initial.obs;
+  var loadingStateAllEng = LoadingState.initial.obs;
 
   final SharedPrefUser _pref = SharedPrefUser();
 
   List<dynamic> _listTopEngineer = [];
+  List<Result> listTopPagen = [];
 
   List<dynamic> get listTopEngineer => _listTopEngineer;
   String message = '';
@@ -31,32 +33,29 @@ class TopEngineerController extends GetxController {
   onInit() {
     super.onInit();
     getUserAccount();
-    getTopEngineer();
+    getTopEngineer(5);
   }
 
   getUserAccount() async {
     userAccountType.value = await _pref.getUserAccountType();
     myLog("key", "${userAccountType.value}");
-    // userAccountType = (await _pref.getUserAccountType()) as RxString;
   }
 
-  Future<ApiResponse> getTopEngineer({bool isMore = false}) async {
+  Future<ApiResponse> getTopEngineer(int size, {bool isMore = false}) async {
     /// This function call the data from the API
     /// The Post type function takes the search value from the body
     /// get List of Top Engineer Rating in Home Screen
 
-    if (isMore) {
-      pageNumber++;
-    }
+    if (isMore) pageNumber++;
+    myLog("start pageNumber", pageNumber);
+
     loadingState(LoadingState.loading);
     try {
       var token = await _pref.getToken();
 
-      myLog("start methode", "getTopEngineer");
-
       var response = await Dio()
           .post(
-            ApiUrl.getTopEngineer(page: isMore ? pageNumber : 1, size: 5),
+            ApiUrl.getTopEngineer(page: isMore ? pageNumber : 1, size: size),
             options: Options(
               headers: ApiUrl.getHeader(token: token),
             ),
@@ -70,7 +69,7 @@ class TopEngineerController extends GetxController {
         totalItems = _modelEngineer.totalItems ?? 0;
 
         _listTopEngineer = _modelEngineer.results;
-        // _listTopEngineer = _modelEngineer.results;
+        listTopPagen.addAll(_modelEngineer.results);
 
         if (_listTopEngineer.isEmpty) {
           message = AppConfig.noData.tr;

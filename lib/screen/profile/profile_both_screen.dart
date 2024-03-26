@@ -188,10 +188,10 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                               isTextStart: true,
                               title:
                                   "${AppConfig.appCommissionIs.tr} ${controller.commission}% \n${AppConfig.attachReceipt.tr}",
-                              fontSize: Get.height * .016,
+                              fontSize: Get.height * .017,
                               color: Colors.white),
                         ),
-                        const SizedBox(height: 15),
+                        SizedBox(height: Get.height * .04),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

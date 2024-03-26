@@ -114,8 +114,8 @@ class SettingsScreen extends StatelessWidget {
               buildDivider(),
               const SizedBox(height: 20),
               TextWidget(
-                  title: AppConfig.version.tr,
-                  fontSize: 18,
+                  title: "${AppConfig.version.tr} ${AppConfig.buildNumber.tr}",
+                  fontSize: Get.height * .02,
                   color: Theme.of(context).colorScheme.secondary),
             ],
           ),

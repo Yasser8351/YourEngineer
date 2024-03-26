@@ -68,7 +68,7 @@ class AppLocalization implements Translations {
           AppConfig.logout: "تسجيل الخروج",
           AppConfig.privacyPolicy: "سياسة الخصوصية",
           AppConfig.termsOfServices: "الشروط والأحكام",
-          AppConfig.version: "الاصدار 1.0.8",
+          AppConfig.version: "الاصدار",
           AppConfig.profile: "الملف الشخصي",
           AppConfig.noProjectYet: "لايوجد مشروع",
           AppConfig.search: "بحث",
@@ -84,6 +84,13 @@ class AppLocalization implements Translations {
           AppConfig.aboutme: "وصف مختصر",
           AppConfig.ok: "موافق",
           AppConfig.dollar: "دولار",
+
+          AppConfig.addAttachment: "اضف مرفق",
+          AppConfig.attachment: "مرفق",
+          AppConfig.name: "الاسم",
+          AppConfig.addYourName: "ادخل الاسم",
+
+          AppConfig.addAmount: "ادخل المبلغ",
           AppConfig.addSuccesfuly: "تمت الاضافة بنجاح",
 
           AppConfig.cannotaddOffer: "حدث خطأ لم يتم اضافة عرضك",
@@ -162,6 +169,7 @@ class AppLocalization implements Translations {
           AppConfig.editMyProject: AppConfig.editMyProject,
           AppConfig.noData: AppConfig.noData,
           AppConfig.complaint: AppConfig.complaint,
+          AppConfig.addAmount: AppConfig.addAmount,
           AppConfig.aboutme: "About me",
           AppConfig.amount: AppConfig.amount,
           AppConfig.transferReceipt: AppConfig.transferReceipt,
@@ -218,6 +226,11 @@ class AppLocalization implements Translations {
           AppConfig.topEngineerRating: AppConfig.topEngineerRating,
           AppConfig.populerServices: AppConfig.populerServices,
           AppConfig.allFaildRequired: AppConfig.allFaildRequired,
+          AppConfig.addAttachment: AppConfig.addAttachment,
+          AppConfig.attachment: AppConfig.attachment,
+          AppConfig.name: AppConfig.name,
+          AppConfig.addYourName: AppConfig.addYourName,
+
           AppConfig.amountLess: AppConfig.amountLess,
           AppConfig.cannotaddOffer: "Can not add Offer",
           AppConfig.addOfferSuccesfuly: "add offer Succesfuly",

@@ -109,7 +109,7 @@ class RetryWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
-                      color: errorMessageColor ?? Colors.red,
+                      color: errorMessageColor ?? Colors.black,
                     ),
                   ),
                   const SizedBox(height: 40),
@@ -121,7 +121,7 @@ class RetryWidget extends StatelessWidget {
                             width: Get.width * .45,
                             height: Get.height * .06,
                             decoration: BoxDecoration(
-                              // color: kcAccent,
+                              color: Colors.green,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Row(
