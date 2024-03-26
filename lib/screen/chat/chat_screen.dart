@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paginated_list/paginated_list.dart';
 import 'package:your_engineer/controller/chat_controller.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/screen/chat/chat_room_screen_222.dart';
+import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
 import 'package:your_engineer/widget/chat_widget.dart';
 
@@ -46,6 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(automaticallyImplyLeading: false),
       backgroundColor: Colors.white,
       body: GetBuilder<ChatController>(
         builder: (controller) {
@@ -74,44 +77,64 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  ListView.separated(
-                    separatorBuilder: (context, index) => const Divider(),
+                  // ListView.separated(
+                  //   separatorBuilder: (context, index) => const Divider(),
+                  //   shrinkWrap: true,
+                  //   itemCount: controller.lastChatsList.length,
+                  //   itemBuilder: (context, index) {
+                  PaginatedList(
+                    // prototypeItem: const Divider(),
                     shrinkWrap: true,
-                    itemCount: controller.lastChatsList.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ChatRoomScreen22222(
-                                userId: userId,
-                                userEmail: email,
-                                chatsModel: controller.lastChatsList[index]),
-                          ));
-                        },
-                        // onTap: () {
-                        //   Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => ChatRoomScreen(
-                        //       image: ApiUrl.imageUrl +
-                        //           controller.lastChatsList[index].senderImg,
-                        //       receiverName:
-                        //           controller.lastChatsList[index].senderName,
-                        //       receiverEmail:
-                        //           controller.lastChatsList[index].senderEmail,
-                        //       senderId:
-                        //           controller.lastChatsList[index].receiverId,
-                        //       receiverId:
-                        //           controller.lastChatsList[index].senderId,
-                        //       // receiverId: controller.userId ==
-                        //       //         controller.lastChatsList[index].senderId
-                        //       //     ? controller.lastChatsList[index].receiverId
-                        //       //     : controller.lastChatsList[index].senderId,
-                        //     ),
-                        //   ));
-                        // },
-                        child: ChatWidget(
-                          userEmail: email,
-                          messageModel: controller.lastChatsList[index],
-                        ),
+                    loadingIndicator: handlingPaginationLoading(
+                        length: controller.lastChatsList.length,
+                        totalCount: controller.totalItems),
+                    padding: const EdgeInsets.only(top: 0, left: 10, right: 10),
+                    items: controller.lastChatsList,
+                    isRecentSearch: false,
+                    isLastPage: false,
+                    onLoadMore: (index) {
+                      controller.getLastchats();
+                    },
+                    builder: (item, int index) {
+                      return Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ChatRoomScreen22222(
+                                    userId: userId,
+                                    userEmail: email,
+                                    chatsModel:
+                                        controller.lastChatsList[index]),
+                              ));
+                            },
+                            // onTap: () {
+                            //   Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) => ChatRoomScreen(
+                            //       image: ApiUrl.imageUrl +
+                            //           controller.lastChatsList[index].senderImg,
+                            //       receiverName:
+                            //           controller.lastChatsList[index].senderName,
+                            //       receiverEmail:
+                            //           controller.lastChatsList[index].senderEmail,
+                            //       senderId:
+                            //           controller.lastChatsList[index].receiverId,
+                            //       receiverId:
+                            //           controller.lastChatsList[index].senderId,
+                            //       // receiverId: controller.userId ==
+                            //       //         controller.lastChatsList[index].senderId
+                            //       //     ? controller.lastChatsList[index].receiverId
+                            //       //     : controller.lastChatsList[index].senderId,
+                            //     ),
+                            //   ));
+                            // },
+                            child: ChatWidget(
+                              userEmail: email,
+                              messageModel: controller.lastChatsList[index],
+                            ),
+                          ),
+                          const Divider(),
+                        ],
                       );
                     },
                   ),

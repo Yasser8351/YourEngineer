@@ -21,6 +21,8 @@ class TopEngineerController extends GetxController {
 
   List<dynamic> get listTopEngineer => _listTopEngineer;
   String message = '';
+  RxString userAccountType = "".obs;
+
   int totalItems = 0;
   int totalPages = 0;
   TopEngineerRatingModel modelEngineer = TopEngineerRatingModel(
@@ -28,7 +30,14 @@ class TopEngineerController extends GetxController {
   @override
   onInit() {
     super.onInit();
+    getUserAccount();
     getTopEngineer(1, 5);
+  }
+
+  getUserAccount() async {
+    userAccountType.value = await _pref.getUserAccountType();
+    myLog("key", "${userAccountType.value}");
+    // userAccountType = (await _pref.getUserAccountType()) as RxString;
   }
 
   Future<ApiResponse> getTopEngineer(page, size) async {

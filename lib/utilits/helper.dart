@@ -2,9 +2,88 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
+import 'package:dio/dio.dart';
+
+/*
+ /// methode helper
+  changeLoadingState(LoadingState state, LoadingType loadingType) {
+    if (loadingType == LoadingType.uploadPayment) {
+      loadingStateUploadPayment = state;
+    } else {
+      loadingStateGenerateReceipt = state;
+    }
+
+    update();
+  }
+
+  errorMessageUpdate(String error) {
+    errorMessage = error;
+    update();
+  }
+
+
+  getData() async {
+    changeLoadingState(LoadingState.loading, LoadingType.login);
+
+    try {
+      var response = await transactionServices
+          .getTransactionsByUser(userId: "")
+          .timeout(Duration(seconds: ApiUrl.timeLimit));
+
+      changeLoadingState(LoadingState.loaded, LoadingType.login);
+      if (response.code == 0) {
+        listTransactions = response.data;
+      } else {}
+    } catch (error) {
+      log("error message : $error");
+
+      changeLoadingState(LoadingState.error, LoadingType.login);
+
+      
+        handlingCatchError(
+          error: error,
+          changeLoadingState: () =>
+              changeLoadingState(LoadingState.error, LoadingType.login),
+          errorMessageUpdate: (message) => errorMessageUpdate(message),
+        );
+      
+    }
+  }
+*/
+
+handlingCatchError({
+  String? messageNoData,
+  required Object error,
+  required Function() changeLoadingState,
+  bool showSnackbar = false,
+  // Function()? tryAgain,
+  required Function(String message) errorMessageUpdate,
+}) {
+  changeLoadingState();
+
+  if (error is DioError) {
+    if (error.toString().contains("TimeoutException") ||
+        error.toString().contains("connection timeout")) {
+      errorMessageUpdate(AppConfig.noNet.tr);
+    } else if (error.toString().contains("SocketException") ||
+        error.toString().contains("Network is unreachable")) {
+      errorMessageUpdate(AppConfig.noNet.tr);
+    } else if (error.response!.statusCode == 400) {
+      errorMessageUpdate(error.response!.data['message'].toString());
+      // errorMessageUpdate(messageNoData ?? AppConfig.noData.tr);
+    } else if (error.response!.statusCode == 500) {
+      errorMessageUpdate(error.response!.data['message'].toString());
+    } else {
+      if (error.response != null) {
+        errorMessageUpdate(error.response!.data['message']);
+      }
+    }
+  }
+}
 
 clearText(TextEditingController controller) {
   controller.clear();

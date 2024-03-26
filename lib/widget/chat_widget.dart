@@ -46,9 +46,10 @@ class ChatWidget extends StatelessWidget {
                       ? messageModel.recieverName
                       : messageModel.senderName,
                   fontSize: 16,
+                  fontWeight: FontWeight.w700,
                   isTextEnd: true,
                   color: Colors.black),
-              SizedBox(height: Get.width * .02),
+              // SizedBox(height: Get.width * .005),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -75,7 +76,7 @@ class ChatWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: Get.width * .02),
+              // SizedBox(height: Get.width * .005),
               Text(
                 GetTimeAgo.parse(DateTime.parse(messageModel.createdAt),
                     pattern: "dd-MM-yyyy hh:mm aa", locale: 'ar'),

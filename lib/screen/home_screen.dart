@@ -6,6 +6,7 @@ import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
+import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/shimmer_widget.dart';
@@ -16,7 +17,6 @@ import '../app_config/app_config.dart';
 import '../controller/notification_controller.dart';
 import '../controller/populer_services_controller.dart';
 import '../enum/all_enum.dart';
-import '../widget/lis_top_engineer_rating_widget.dart';
 import '../widget/list_populer_services_widget.dart';
 import '../widget/shared_widgets/row_two_with_text.dart';
 
@@ -243,22 +243,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 40),
 
                 // Text Top Engineer Rating and See All
-                RowWithTwoText(
-                  title: AppConfig.topEngineerRating.tr,
-                  description: AppConfig.seeAll.tr,
-                  colorScheme: colorScheme.onSecondary,
-                  colorScheme2: colorScheme.primary,
-                  onTap: (() => navigatorToNewScreen(
-                        context,
-                        AllEngineersScreen(
-                            // topEngineerController: topEngineerController,
-                            // listEngineers:
-                            //     topEngineerController.listTopEngineer,
-                            // topEngineerController.listTopEngineer,
-                            colorScheme: colorScheme,
-                            size: size),
-                      )),
-                ),
+                Obx(() {
+                  return topEngineerController.userAccountType
+                          .toUpperCase()
+                          .contains("ENGINEER")
+                      ? const SizedBox()
+                      : RowWithTwoText(
+                          title: AppConfig.topEngineerRating.tr,
+                          description: AppConfig.seeAll.tr,
+                          colorScheme: colorScheme.onSecondary,
+                          colorScheme2: colorScheme.primary,
+                          onTap: (() => navigatorToNewScreen(
+                                context,
+                                AllEngineersScreen(
+                                    // topEngineerController: topEngineerController,
+                                    // listEngineers:
+                                    //     topEngineerController.listTopEngineer,
+                                    // topEngineerController.listTopEngineer,
+                                    colorScheme: colorScheme,
+                                    size: size),
+                              )),
+                        );
+                }),
 
                 // ListTopEngineerRatingWidget
                 Obx(
@@ -270,15 +276,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ShimmerWidget(size: size);
                     } else if (topEngineerController.loadingState.value ==
                         LoadingState.error) {
-                      return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ReyTryErrorWidget(
-                                title: topEngineerController.message,
-                                onTap: () {
-                                  topEngineerController.getTopEngineer(1, 5);
-                                })
-                          ]);
+                      return topEngineerController.userAccountType
+                              .toUpperCase()
+                              .contains("ENGINEER")
+                          ? const SizedBox()
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                  ReyTryErrorWidget(
+                                      title: topEngineerController.message,
+                                      onTap: () {
+                                        topEngineerController.getTopEngineer(
+                                            1, 5);
+                                      })
+                                ]);
                     } else {
                       return SizedBox(
                         height: size.height * .26,

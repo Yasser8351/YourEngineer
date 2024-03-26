@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
-import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
-import 'package:your_engineer/widget/shared_widgets/shimmer_widget.dart';
+import 'package:your_engineer/widget/shared_widgets/handling_data_view.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../../app_config/app_config.dart';
@@ -40,20 +39,12 @@ class _AllEngineersScreenState extends State<AllEngineersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _getAppBar(context),
-      body: Obx(() {
-        if (topEngineerController.loadingState.value == LoadingState.initial ||
-            topEngineerController.loadingState.value == LoadingState.loading) {
-          return ShimmerWidgetList(size: widget.size);
-        } else if (topEngineerController.loadingState.value ==
-            LoadingState.error) {
-          return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            ReyTryErrorWidget(
-                title: topEngineerController.message,
-                onTap: () {
-                  topEngineerController.getTopEngineer(1, 20);
-                })
-          ]);
-        } else {
+      body: HandlingDataView(
+        loadingState: topEngineerController.loadingState.value,
+        // errorMessage: ,
+        shimmerType: ShimmerType.shimmerListRectangular,
+        tryAgan: () => topEngineerController.getTopEngineer(1, 20),
+        widget: Obx(() {
           return ListView.builder(
               shrinkWrap: true,
               itemCount: topEngineerController.modelEngineer.results.length,
@@ -88,8 +79,24 @@ class _AllEngineersScreenState extends State<AllEngineersScreen> {
               //   },
               // ),
               );
-        }
-      }),
+
+          // if (topEngineerController.loadingState.value == LoadingState.initial ||
+          //     topEngineerController.loadingState.value == LoadingState.loading) {
+          //   return ShimmerWidgetList(size: widget.size);
+          // } else if (topEngineerController.loadingState.value ==
+          //     LoadingState.error) {
+          //   return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          //     ReyTryErrorWidget(
+          //         title: topEngineerController.message,
+          //         onTap: () {
+          //           topEngineerController.getTopEngineer(1, 20);
+          //         })
+          //   ]);
+          // } else {
+
+          // }
+        }),
+      ),
     );
   }
 

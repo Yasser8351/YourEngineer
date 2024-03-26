@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/utilits/helper.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 
 import '../model/notification_model/all_notification_model.dart';
 
@@ -47,8 +47,14 @@ class NoticationWidget extends StatelessWidget {
                   height: 10,
                 ),
                 SizedBox(
-                    width: size.width / 1.5,
-                    child: Text(dateFormat(notifcationModel.createdAt))),
+                  width: size.width / 1.5,
+                  child: Text(
+                    GetTimeAgo.parse(DateTime.parse(notifcationModel.createdAt),
+                        pattern: "dd-MM-yyyy hh:mm aa", locale: 'ar'),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                // child: Text(dateFormat(notifcationModel.createdAt))),
               ],
             ),
           ],

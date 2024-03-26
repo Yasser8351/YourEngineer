@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/screen/pdf_screen.dart';
+import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/no_data.dart';
 import 'package:your_engineer/widget/shared_widgets/row_two_with_text.dart';
 
@@ -78,25 +80,54 @@ class _OffersScreenState extends State<OffersScreen> {
                         SizedBox(height: size.height * .03),
                         TextWidget(
                             title: "${AppConfig.projectTitle.tr} :",
-                            fontSize: size.height * .025,
+                            fontSize: size.height * .018,
                             color: colorScheme.background),
                         SizedBox(height: size.height * .02),
                         TextWidget(
                             title: controller.results['proj_title'],
-                            fontSize: size.height * .025,
+                            fontSize: size.height * .018,
                             color: colorScheme.primary),
                         SizedBox(height: size.height * .02),
                         TextWidget(
                             title: "${AppConfig.projectDetails.tr} :",
-                            fontSize: size.height * .025,
+                            fontSize: size.height * .018,
                             color: colorScheme.background),
                         SizedBox(height: size.height * .02),
                         TextWidget(
                           title: controller.results['proj_description'],
-                          fontSize: size.height * .025,
+                          fontSize: size.height * .018,
                           color: colorScheme.primary,
                           isTextStart: true,
                         ),
+                        SizedBox(height: size.height * .031),
+                        controller.results['attatchment_file']
+                                    .toString()
+                                    .isNotEmpty &&
+                                controller.results['attatchment_file']
+                                    .toString()
+                                    .contains("null")
+                            ? InkWell(
+                                onTap: () => controller
+                                        .results['attatchment_file']
+                                        .toString()
+                                        .contains('pdf')
+                                    ? Get.to(() => PDFScreen(
+                                        filePath: controller
+                                            .results['attatchment_file']
+                                            .toString()))
+                                    : Get.to(() => FullImage(
+                                        imageUrl: controller
+                                            .results['attatchment_file']
+                                            .toString())),
+                                child: TextWidget(
+                                  title: controller.results['attatchment_file']
+                                      .toString(),
+                                  fontSize: size.height * .015,
+                                  color: Colors.blue,
+                                  isTextStart: true,
+                                ),
+                              )
+                            : SizedBox(),
                         SizedBox(height: size.height * .031),
                         Row(
                           children: [
@@ -108,7 +139,7 @@ class _OffersScreenState extends State<OffersScreen> {
                             SizedBox(width: 3),
                             TextWidget(
                                 title: "\$",
-                                fontSize: Get.height * .025,
+                                fontSize: Get.height * .018,
                                 color: colorScheme.primary)
                           ],
                         ),
@@ -124,6 +155,13 @@ class _OffersScreenState extends State<OffersScreen> {
                             controller.results['proj_period'].toString(),
                             size,
                             colorScheme),
+
+                        // buildRowText(
+                        //   "ملفات مرفقة",
+                        //   controller.results['attatchment_file'].toString(),
+                        //   size,
+                        //   colorScheme,
+                        // ),
                         SizedBox(height: size.height * .031),
                         buildRowText(AppConfig.skills.tr,
                             controller.results['skills'], size, colorScheme),
@@ -156,7 +194,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                 ? SizedBox()
                                 : TextWidget(
                                     title: AppConfig.addOffer.tr,
-                                    fontSize: size.height * .025,
+                                    fontSize: size.height * .018,
                                     color: colorScheme.onSecondary,
                                     isTextStart: true,
                                   ),
@@ -510,7 +548,7 @@ class _OffersScreenState extends State<OffersScreen> {
         ),
         TextWidget(
           title: body.toString(),
-          fontSize: size.height * .025,
+          fontSize: size.height * .017,
           color: colorScheme.primary,
           isTextStart: true,
         ),

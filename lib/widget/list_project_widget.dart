@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:your_engineer/app_config/app_config.dart';
-import 'package:your_engineer/utilits/helper.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../controller/listProject_controller.dart';
@@ -91,7 +91,7 @@ class ListProjectWidget extends StatelessWidget {
                           colorScheme,
                           Icons.watch_later),
                       buildRowList(
-                          AppConfig.priceRange +
+                          AppConfig.priceRange.tr +
                               ": " +
                               results['PriceRange']['range_name'].toString(),
                           colorScheme,
@@ -100,8 +100,13 @@ class ListProjectWidget extends StatelessWidget {
                           ? buildRowList(results['skills'].toString(),
                               colorScheme, Icons.person)
                           : SizedBox(),
-                      buildRowList(dateFormat(results['CreatedAt']),
-                          colorScheme, Icons.today),
+                      buildRowList(
+                          GetTimeAgo.parse(DateTime.parse(results['CreatedAt']),
+                              pattern: "dd-MM-yyyy hh:mm aa", locale: 'ar'),
+
+                          // buildRowList(dateFormat(results['CreatedAt']),
+                          colorScheme,
+                          Icons.today),
                       buildRowList(
                         results['ProjStatus']['stat_name'],
                         colorScheme,
@@ -116,9 +121,9 @@ class ListProjectWidget extends StatelessWidget {
                                     : Icons.local_dining,
                       ),
                       buildRowList(
-                        results['OffersCount'].toString() +
+                        AppConfig.offerCount.tr +
                             " " +
-                            AppConfig.offer,
+                            results['OffersCount'].toString(),
                         colorScheme,
                         Icons.post_add,
                       ),

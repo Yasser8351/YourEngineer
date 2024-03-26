@@ -20,7 +20,67 @@ class NotificationController extends GetxController {
   List<Result> results = [];
 
   int unreadCount = 0;
+  String errorMessage = '';
   String imggProfile = '';
+  int pageNumber = 0;
+  int pageSize = 4;
+  int totalItems = 0;
+
+  getNotificationMore({bool isMore = false}) async {
+    pageNumber++;
+    myLog("start methode ", "pageNumber : $pageNumber");
+    // myLog("              ", "pageSize : $pageSize");
+
+    loadingState(LoadingState.loading);
+
+    var token = await _pref.getToken();
+
+    try {
+      var response = await Dio()
+          .get(
+            ApiUrl.getAllNotification(pageNumber, 5),
+            options: Options(
+              headers: ApiUrl.getHeader2(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+      if (response.statusCode == 200) {
+        final allNotificationModel =
+            AllNotificationModel.fromJson(response.data);
+
+        totalItems = allNotificationModel.totalItems;
+
+        results.addAll(allNotificationModel.results);
+
+        if (results.isEmpty) {
+          loadingState(LoadingState.noDataFound);
+        } else {
+          loadingState(LoadingState.loaded);
+        }
+        await _pref.save(
+            userId: response.data['id'] ?? '',
+            fullname: response.data['fullname'] ?? '',
+            phone: response.data['phone'] ?? '',
+            email: response.data['email'] ?? '',
+            userImage: response.data['imgPath'] ?? '');
+      } else {
+        loadingState(LoadingState.error);
+      }
+    } catch (error) {
+      loadingState(LoadingState.error);
+      handlingCatchError(
+        error: error,
+        changeLoadingState: () {},
+        errorMessageUpdate: (message) => errorMessageUpdate(message),
+      );
+    }
+    update();
+  }
+
+  errorMessageUpdate(String error) {
+    errorMessage = error;
+    update();
+  }
 
   Future<void> getAllNotification() async {
     loadingState(LoadingState.loading);
@@ -32,7 +92,7 @@ class NotificationController extends GetxController {
 
       var response = await Dio()
           .get(
-            ApiUrl.getAllNotification(1, 25),
+            ApiUrl.getAllNotification(pageNumber, pageSize),
             options: Options(
               headers: ApiUrl.getHeader2(token: token),
             ),
@@ -44,6 +104,9 @@ class NotificationController extends GetxController {
       if (response.statusCode == 200) {
         final allNotificationModel =
             AllNotificationModel.fromJson(response.data);
+
+        allNotificationModel.totalPages;
+        pageNumber = allNotificationModel.currentPage;
 
         results = allNotificationModel.results;
 

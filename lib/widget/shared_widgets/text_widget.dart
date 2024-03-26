@@ -5,6 +5,7 @@ class TextWidget extends StatelessWidget {
     Key? key,
     required this.title,
     required this.fontSize,
+    this.fontWeight,
     required this.color,
     this.isTextStart = false,
     this.isTextEnd = false,
@@ -18,6 +19,7 @@ class TextWidget extends StatelessWidget {
   final bool isTextEnd;
   final bool isTextJustify;
   final TextOverflow? textOverflow;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,8 @@ class TextWidget extends StatelessWidget {
       maxLines: 6,
       title,
       overflow: textOverflow,
-      style: TextStyle(fontSize: fontSize, color: color),
+      style:
+          TextStyle(fontSize: fontSize, color: color, fontWeight: fontWeight),
       textAlign: isTextStart
           ? TextAlign.start
           : isTextEnd

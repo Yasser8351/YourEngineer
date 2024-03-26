@@ -12,3 +12,12 @@ enum ProjectStatus {
   inProgress,
   close,
 }
+
+enum ShimmerType {
+  shimmerCircular,
+  shimmerHorizontal,
+  shimmerRectangular,
+  shimmerListRectangular,
+  circularProgressIndicator,
+  none
+}

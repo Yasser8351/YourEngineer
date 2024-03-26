@@ -33,6 +33,8 @@ class ChatController extends GetxController {
 
   bool isLoadingMessage = false;
   bool onConnectError = false;
+  int pageNumber = 0;
+  int totalItems = 0;
 
   List<Chats> lastChatsList = [];
   List<ChatBetweenUsers> listChatBetweenUsers = [];
@@ -64,31 +66,31 @@ class ChatController extends GetxController {
   getUserId() async {
     userId = await _pref.getId();
     update();
-    myLog("getUserId", userId);
   }
 
   Future<void> getLastchats() async {
+    pageNumber++;
+
     loadingState(LoadingState.loading);
 
-    myLog("start methode", "getLastchats");
+    myLog("pageNumber", "${pageNumber}");
+
     try {
       var token = await _pref.getToken();
 
       var response = await Dio()
           .post(
-            ApiUrl.getLastchats(page: 1, size: 20, search: ''),
+            ApiUrl.getLastchats(page: pageNumber, size: 10, search: ''),
             options: Options(
               headers: ApiUrl.getHeader2(token: token),
             ),
           )
           .timeout(Duration(seconds: ApiUrl.timeoutDuration));
 
-      print("${response}");
-      myLog("response.statusCode methode", "${response}");
-      myLog("response data", "${response.data}");
-
       if (response.statusCode == 200) {
+        totalItems = LastchatsModel.fromJson(response.data).totalItems;
         lastChatsList = LastchatsModel.fromJson(response.data).results;
+        myLog("lastChatsList", "${lastChatsList.length}");
 
         if (lastChatsList.length == 0) {
           loadingState(LoadingState.noDataFound);

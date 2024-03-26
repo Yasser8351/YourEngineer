@@ -137,7 +137,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                           child: TextWidget(
                               isTextStart: true,
                               title:
-                                  "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n ${AppConfig.attachReceipt.tr}",
+                                  "${AppConfig.appCommissionIs.tr} ${controller.commission}%  \n ${AppConfig.attachReceipt.tr}",
                               fontSize: 15,
                               color: Colors.white),
                         ),

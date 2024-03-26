@@ -187,7 +187,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                           child: TextWidget(
                               isTextStart: true,
                               title:
-                                  "${AppConfig.appCommissionIs.tr} ${controller.commission} ${AppConfig.dollar.tr} \n${AppConfig.attachReceipt.tr}",
+                                  "${AppConfig.appCommissionIs.tr} ${controller.commission}% \n${AppConfig.attachReceipt.tr}",
                               fontSize: Get.height * .016,
                               color: Colors.white),
                         ),
