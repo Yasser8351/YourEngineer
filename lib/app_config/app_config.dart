@@ -97,6 +97,7 @@ class AppConfig {
   static const String offerCount = "Offer count";
 
   static const String addAmount = "Add amount";
+  static const String offerDetails = "Offer details";
   static const String addAttachment = "Add Attachment";
   static const String name = "Name";
   static const String addYourName = "Add Your Name";

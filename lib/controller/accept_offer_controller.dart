@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/controller/chat_controller.dart';
 import 'package:your_engineer/controller/offers_controller.dart';
 import 'package:your_engineer/model/resp.dart';
 
@@ -17,8 +18,8 @@ class AcceptOfferController extends GetxController {
   bool status = false;
   RxBool isLoading = false.obs;
 
-  Future<bool> acceptOfferMyProject(
-      BuildContext context, String projectId, String offerId) async {
+  Future<bool> acceptOfferMyProject(BuildContext context, String projectId,
+      String offerId, String chatIdEng) async {
     myLog('start methode', 'acceptOffer');
     var token = await _pref.getToken();
     final data = {
@@ -42,11 +43,16 @@ class AcceptOfferController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         OfferController controller = Get.find();
+        ChatController chatController = Get.find();
         Helper.showseuess(
             context: context,
             subtitle: responseModelFromJson(response.body.toString()).msg);
 
         controller.getProjectsById(projectId, 0);
+        await chatController.createChat(
+            message: "مبروك تم اختيارك للعمل علي المشروع",
+            receiver_id: chatIdEng);
+
         status = true;
         isLoading(false);
       } else {

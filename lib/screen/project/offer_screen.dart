@@ -284,7 +284,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                                       horizontal: 25,
                                                       vertical: 15),
                                               child: TextWidget(
-                                                  title: AppConfig.addOffer,
+                                                  title: AppConfig.addOffer.tr,
                                                   fontSize: 20,
                                                   color: colorScheme.surface),
                                             ),
@@ -403,13 +403,14 @@ class _OffersScreenState extends State<OffersScreen> {
 
       if (isAddProject) {
         controller.clearController();
-        Helper.showseuess(
-            context: context, subtitle: AppConfig.addOfferSuccesfuly.tr);
+        // Helper.showseuess(
+        //     context: context, subtitle: AppConfig.addOfferSuccesfuly.tr);
         controller.getProjectsOffers(controller.results['id']);
-      } else {
-        Helper.showError(
-            context: context, subtitle: AppConfig.cannotaddOffer.tr);
       }
+      // } else {
+      //   Helper.showError(
+      //       context: context, subtitle: AppConfig.cannotaddOffer.tr);
+      // }
     }
   }
 

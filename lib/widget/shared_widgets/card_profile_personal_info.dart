@@ -77,7 +77,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                         TextWidget(
                             title: userProfileModel.wallet.credit.isEmpty
                                 ? "${AppConfig.yourBalance.tr}   0.00"
-                                : "${AppConfig.yourBalance.tr} \$ ${userProfileModel.wallet.credit} ",
+                                : "${AppConfig.yourBalance.tr} ${userProfileModel.wallet.credit}\$ ",
                             fontSize: Get.width * .045,
                             color: colorScheme.onSecondary)
                         : Row(

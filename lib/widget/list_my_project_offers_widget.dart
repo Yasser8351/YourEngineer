@@ -95,7 +95,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                             RatingBar(
                               sizeIcon: 15,
                               color: Colors.amber,
-                              rating: 4.5,
+                              rating: 5,
                               //  offersEngineerModel.engineerRating,
                               onRatingChanged: (rating) {
                                 // setState(() => this.rating = rating)
@@ -103,7 +103,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                             ),
                             const SizedBox(width: 7),
                             TextWidget(
-                              title: '4.5',
+                              title: '5',
                               //  offersEngineerModel.engineerRating
                               //     .toString(),
                               fontSize: 15,
@@ -118,7 +118,8 @@ class ListMyProjectOffersWidget extends StatelessWidget {
               ),
               SizedBox(height: size.height * .03),
               TextWidget(
-                title: AppConfig.price.tr + " " + resulte['price'] + "\$",
+                title:
+                    AppConfig.price.tr + "         " + resulte['price'] + "\$",
                 fontSize: size.height * .02,
                 color: colorScheme.primary,
                 isTextStart: true,
@@ -135,7 +136,8 @@ class ListMyProjectOffersWidget extends StatelessWidget {
               ),
               SizedBox(height: size.height * .02),
               TextWidget(
-                title: "تفاصيل العرض" + " : " + resulte['message_desc'],
+                title:
+                    AppConfig.offerDetails.tr + " : " + resulte['message_desc'],
                 //  offersEngineerModel.offersDetails,
                 fontSize: size.height * .022,
                 textOverflow: TextOverflow.ellipsis,
@@ -160,6 +162,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                           controller,
                           offerId: resulte['id'],
                           projectId: projectId,
+                          chatIdEng: resulte['client']['id'],
                         );
                       },
                     ),
@@ -176,9 +179,11 @@ class ListMyProjectOffersWidget extends StatelessWidget {
   }
 
   acceptOffer(BuildContext context, AcceptOfferController controller,
-      {required String projectId, required String offerId}) async {
-    bool done =
-        await controller.acceptOfferMyProject(context, projectId, offerId);
+      {required String projectId,
+      required String offerId,
+      required String chatIdEng}) async {
+    bool done = await controller.acceptOfferMyProject(
+        context, projectId, offerId, chatIdEng);
 
     if (!done) {}
   }

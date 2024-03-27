@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,7 +72,6 @@ class OfferController extends GetxController {
       'OfferAttach': '',
     };
     //
-
     try {
       var response = await http
           .post(
@@ -86,16 +86,14 @@ class OfferController extends GetxController {
         ''
             'response : ${response.body}',
       );
+      final Map parsed = json.decode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         status = true;
-
-        // getProjectsOffers(projectId);
-        // await _shared.saveToken(response.body['token']);
       } else {
-        Helper.showError(
-            context: context, subtitle: response.statusCode.toString());
-        print("nnnnnnnnnnonnnnoooooooooooo");
+        // {"msg":"user credentials are not verified"}
+        Helper.showError(context: context, subtitle: parsed['msg']);
+        ;
 
         status = false;
       }
@@ -104,11 +102,17 @@ class OfferController extends GetxController {
 
       myLog('error', error);
 
-      if (error.toString().contains('TimeoutException')) {
-        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
-      } else if (error.toString().contains('Http status error [401]')) {
-        Helper.showError(
-            context: context, subtitle: "خطأ في اسم المستخدم او كلمة المرور");
+      if (error is DioError) {
+        if (error.toString().contains('TimeoutException') ||
+            error.toString().contains("SocketException") ||
+            error.toString().contains("Network is unreachable")) {
+          Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+        } else {
+          Helper.showError(
+              context: context,
+              subtitle:
+                  error.response!.data['msg'] ?? AppConfig.errorOoccurred.tr);
+        }
       } else {
         Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
       }
@@ -303,4 +307,14 @@ class OfferController extends GetxController {
     descriptionController.clear();
     priceController.clear();
   }
+}
+
+class ResponseModel {
+  final String message;
+
+  ResponseModel({required this.message});
+
+  factory ResponseModel.fromJson(Map<String, dynamic> json) => ResponseModel(
+        message: json["msg"] ?? '',
+      );
 }

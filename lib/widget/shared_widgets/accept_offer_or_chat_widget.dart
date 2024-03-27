@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
+import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/model/chat_models/last_chats_model.dart';
 import 'package:your_engineer/screen/chat/chat_room_screen_222.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
@@ -61,7 +63,7 @@ class _AcceptOfferOrChatWidgetState extends State<AcceptOfferOrChatWidget> {
             : ElevatedButton(
                 onPressed: () async => widget.acceptOffer(context),
                 child: Text(
-                  "قبول العرض",
+                  AppConfig.acceptOffer.tr,
                   style: TextStyle(color: Colors.white),
                 )),
         SizedBox(width: 30),
@@ -69,6 +71,7 @@ class _AcceptOfferOrChatWidgetState extends State<AcceptOfferOrChatWidget> {
             onPressed: () {
               Get.to(ChatRoomScreen22222(
                 userId: userId,
+                showAllLink: true,
                 userEmail: email,
                 chatsModel: Chats(
                   createdAt: "",
@@ -79,7 +82,7 @@ class _AcceptOfferOrChatWidgetState extends State<AcceptOfferOrChatWidget> {
                   recieverName: widget.receiverName,
                   senderImg: widget.image,
                   seqnum: 0,
-                  senderName: "",
+                  senderName: widget.receiverName,
                   updatedAt: "",
                   receiverId: widget.receiverId,
                   recieverEmail: widget.receiverEmail,
@@ -98,7 +101,7 @@ class _AcceptOfferOrChatWidgetState extends State<AcceptOfferOrChatWidget> {
               ));
             },
             child: Text(
-              "محادثة",
+              AppConfig.chatEng.tr,
               style: TextStyle(color: Colors.white),
             )),
       ],

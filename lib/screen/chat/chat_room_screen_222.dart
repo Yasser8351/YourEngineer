@@ -10,6 +10,7 @@ import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/model/chat_models/chat_between_users_model.dart';
 import 'package:your_engineer/model/chat_models/last_chats_model.dart';
 import 'package:your_engineer/screen/chat/widget/chat_list_message.dart';
+import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
 import 'dart:async';
@@ -23,9 +24,11 @@ class ChatRoomScreen22222 extends StatefulWidget {
     required this.chatsModel,
     required this.userEmail,
     required this.userId,
+    this.showAllLink = false,
   });
   final Chats chatsModel;
   final String userEmail;
+  final bool showAllLink;
   final String userId;
 
   @override
@@ -188,10 +191,17 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
                   SizedBox(
                     width: 2,
                   ),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        ApiUrl.imageUrl + widget.chatsModel.senderImg),
-                    maxRadius: 20,
+                  InkWell(
+                    onTap: () => Get.to(() => FullImage(
+                        imageUrl: widget.showAllLink
+                            ? widget.chatsModel.senderImg
+                            : ApiUrl.imageUrl + widget.chatsModel.senderImg)),
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(widget.showAllLink
+                          ? widget.chatsModel.senderImg
+                          : ApiUrl.imageUrl + widget.chatsModel.senderImg),
+                      maxRadius: 20,
+                    ),
                   ),
                   SizedBox(
                     width: 12,
@@ -208,10 +218,6 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
                         ),
                       ],
                     ),
-                  ),
-                  Icon(
-                    Icons.settings,
-                    color: Colors.black54,
                   ),
                 ],
               ),

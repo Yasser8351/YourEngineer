@@ -83,6 +83,8 @@ class ProfileUserController extends GetxController {
       if (response.statusCode == 200) {
         userProfile = userProfileModelFromJson(jsonEncode(response.data));
 
+        print("nnnnnnnnnnonnnnoooooooooooo   $response");
+
         update();
 
         if (userProfile == null) {
@@ -160,7 +162,6 @@ class ProfileUserController extends GetxController {
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
-        print("nnnnnnnnnnonnnnoooooooooooo");
 
         statuse = false;
         update();
@@ -212,7 +213,6 @@ class ProfileUserController extends GetxController {
       } else {
         Helper.showError(
             context: context, subtitle: response.statusCode.toString());
-        print("nnnnnnnnnnonnnnoooooooooooo");
 
         statuse = false;
         update();

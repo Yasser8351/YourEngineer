@@ -241,6 +241,7 @@ class _ListOffersEngineerWidgetState extends State<ListOffersEngineerWidget> {
                     ElevatedButton(
                         onPressed: () {
                           Get.to(ChatRoomScreen22222(
+                            showAllLink: true,
                             userId: userId,
                             userEmail: email,
                             chatsModel: Chats(
