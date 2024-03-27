@@ -101,7 +101,6 @@ class UserAuth {
         showseuessToast(error.toString());
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
-        showseuessToast(AppConfig.unAutaristion);
       } else {
         showseuessToast(error.toString());
       }

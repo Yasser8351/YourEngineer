@@ -41,7 +41,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
 
   var profileList = [
     ListHorizontalProfile(
-      AppConfig.personalProfile,
+      AppConfig.personalProfile.tr,
       Icons.person,
       Icon(
         Icons.person,
@@ -50,7 +50,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.reviews,
+      AppConfig.reviews.tr,
       Icons.star,
       Icon(
         Icons.star,
@@ -59,7 +59,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.businessFair,
+      AppConfig.businessFair.tr,
       Icons.badge,
       Icon(
         Icons.person,
@@ -68,7 +68,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.paymentHistory,
+      AppConfig.paymentHistory.tr,
       Icons.monetization_on_outlined,
       Icon(
         Icons.person,
@@ -77,7 +77,7 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.paypal,
+      AppConfig.paypal.tr,
       Icons.payment,
       image: AppImage.paypal,
       Image.asset(
@@ -87,9 +87,9 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.visa,
+      AppConfig.visa.tr,
       Icons.visibility,
-      image: AppImage.visa,
+      image: AppImage.visa.tr,
       Image.asset(
         AppImage.visa,
         width: 25,
@@ -181,13 +181,22 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                             );
                           }),
                         ),
-                        // SizedBox(height: Get.height * .01),
+                        SizedBox(height: Get.height * .008),
                         Align(
                           alignment: AlignmentDirectional.centerStart,
                           child: TextWidget(
                               isTextStart: true,
                               title:
-                                  "${AppConfig.appCommissionIs.tr} ${controller.commission}% \n${AppConfig.attachReceipt.tr}",
+                                  "${AppConfig.appCommissionIs.tr} ${controller.commission}%",
+                              fontSize: Get.height * .017,
+                              color: Colors.white),
+                        ),
+                        SizedBox(height: Get.height * .013),
+                        Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: TextWidget(
+                              isTextStart: true,
+                              title: "${AppConfig.attachReceipt.tr}",
                               fontSize: Get.height * .017,
                               color: Colors.white),
                         ),

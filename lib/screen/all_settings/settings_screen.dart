@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:url_launcher/url_launcher.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/screen/all_settings/contact_watsapp_screen.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/sharedpref/user_share_pref.dart';
@@ -86,10 +86,8 @@ class SettingsScreen extends StatelessWidget {
                 AppConfig.support.tr,
                 Icons.support_agent_rounded,
                 () => {
-                  Navigator.of(context).pushNamed(AppConfig.support)
-                  // launchUrl(
-                  //     mode: LaunchMode.externalApplication,
-                  //     Uri.parse("tel://+249992705348")),
+                  // Navigator.of(context).pushNamed(AppConfig.support)
+                  Get.to(() => const ContactWatsappScreen())
                 },
               ),
               buildDivider(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 import '../../app_config/app_config.dart';
 import '../../app_config/app_image.dart';
@@ -16,7 +17,7 @@ class PayWithPaypal extends StatefulWidget {
 class _PayWithPaypalState extends State<PayWithPaypal> {
   var profileList = [
     ListHorizontalProfile(
-      AppConfig.paypal,
+      AppConfig.paypal.tr,
       Icons.payment,
       image: AppImage.paypal,
       Image.asset(
@@ -26,7 +27,7 @@ class _PayWithPaypalState extends State<PayWithPaypal> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.visa,
+      AppConfig.visa.tr,
       Icons.visibility,
       image: AppImage.visa,
       Image.asset(

@@ -68,7 +68,9 @@ class TopEngineerController extends GetxController {
 
         totalItems = _modelEngineer.totalItems ?? 0;
 
-        _listTopEngineer = _modelEngineer.results;
+        _listTopEngineer = _modelEngineer.results
+            .where((element) => !element.roleId.toUpperCase().contains("ADMIN"))
+            .toList();
         listTopPagen.addAll(_modelEngineer.results);
 
         if (_listTopEngineer.isEmpty) {

@@ -72,16 +72,11 @@ handlingCatchError({
     } else if (error.toString().contains("SocketException") ||
         error.toString().contains("Network is unreachable")) {
       errorMessageUpdate(AppConfig.noNet.tr);
-    } else if (error.response!.statusCode == 400) {
-      errorMessageUpdate(error.response!.data['message'].toString());
-      // errorMessageUpdate(messageNoData ?? AppConfig.noData.tr);
-    } else if (error.response!.statusCode == 500) {
-      errorMessageUpdate(error.response!.data['message'].toString());
     } else {
-      if (error.response != null) {
-        errorMessageUpdate(error.response!.data['message']);
-      }
+      errorMessageUpdate(AppConfig.errorOoccurred.tr);
     }
+  } else {
+    errorMessageUpdate(AppConfig.errorOoccurred.tr);
   }
 }
 

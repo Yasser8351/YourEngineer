@@ -31,6 +31,7 @@ class ApiUrl {
   static String get getCreditcard => '$_root/site/creditcard';
   static String get getCommission => '$_root/site/currentrate';
   static String get getPrivacyPolicy => '$_root/site/privacy';
+  static String get getContactNumber => '$_root/site/contact';
 
   /// chat url
   static String getLastchats(

@@ -79,6 +79,7 @@ class AppConfig {
   static const String servicesDetail = "Services Detail";
   static const String personalProfile = "Personal Profile";
   static const String reviews = "Reviews";
+  static const String addShortDescription = "Add a short description";
   static const String businessFair = "Business Fair";
   static const String paymentHistory = "Payment History";
   static const String history = "History";
@@ -109,8 +110,9 @@ class AppConfig {
   static const String completedProjects = "Completed projects";
   static const String specialization = "Specialization";
   static const String dateofRegistration = "Date of registration";
-  static const String projectsWorksOn = "Projects he works on";
+  static const String projectsWorksOn = "Projects works on it";
   static const String totalReviews = "Total Reviews";
+  static const String yourBalance = "Your balance";
 
   static const String addTitle = "Add the project title ";
   static const String linkProject = "link Project";

@@ -112,9 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(height: Get.height * .02),
                         TextWidget(
                             title: AppConfig.noProjectsFound.tr,
-                            fontSize: 16,
+                            fontSize: size.width * .06,
                             color: Colors.black),
-                        SizedBox(height: Get.height * .02),
+                        SizedBox(height: Get.height * .045),
                         InkWell(
                           onTap: () => Get.to(() => const AddProjectScreen()),
                           child: Container(
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else if (projectController.loadingState.value ==
                       LoadingState.error) {
                     return ReyTryErrorWidget(
-                        title: projectController.apiResponse.message,
+                        title: projectController.errorMessage.value,
                         onTap: () {
                           projectController.getProjects();
                         });

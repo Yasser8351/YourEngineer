@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../model/owner_project_model.dart';
 import '../screen/project/my_project_offers_screen.dart';
-import '../utilits/helper.dart';
 import 'shared_widgets/card_decoration.dart';
 
 class ListMyProjectWidget extends StatelessWidget {
@@ -131,7 +131,11 @@ class ListMyProjectWidget extends StatelessWidget {
                         description: "ميزانية المشروع",
                       ),
                       BuildRowList(
-                        title: dateFormat(ownerProjectModel.createdAt),
+                        title: GetTimeAgo.parse(
+                            DateTime.parse(ownerProjectModel.createdAt),
+                            pattern: "dd-MM-yyyy hh:mm aa",
+                            locale: 'ar'),
+                        // title: dateFormat(ownerProjectModel.createdAt),
                         colorScheme: colorScheme,
                         icon: Icons.watch_later,
                         description: "تاريخ الانشاء",

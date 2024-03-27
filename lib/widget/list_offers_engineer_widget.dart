@@ -2,16 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/controller/offers_controller.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/enum/all_enum.dart';
-import 'package:your_engineer/screen/chat/chat_room_screen.dart';
-import 'package:your_engineer/utilits/helper.dart';
+import 'package:your_engineer/model/chat_models/last_chats_model.dart';
+
+import 'package:your_engineer/screen/chat/chat_room_screen_222.dart';
+import 'package:your_engineer/sharedpref/user_share_pref.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 import 'shared_widgets/card_decoration.dart';
 
-class ListOffersEngineerWidget extends StatelessWidget {
+class ListOffersEngineerWidget extends StatefulWidget {
   const ListOffersEngineerWidget(
       {Key? key,
       required this.resulte,
@@ -27,6 +31,33 @@ class ListOffersEngineerWidget extends StatelessWidget {
   final int index;
 
   @override
+  State<ListOffersEngineerWidget> createState() =>
+      _ListOffersEngineerWidgetState();
+}
+
+class _ListOffersEngineerWidgetState extends State<ListOffersEngineerWidget> {
+  String email = "";
+  String userId = "";
+
+  @override
+  void initState() {
+    myLog("resulte resulte", widget.resulte);
+    super.initState();
+    getEmail();
+  }
+
+  getEmail() async {
+    SharedPrefUser prefs = SharedPrefUser();
+    String _email = await prefs.getEmail();
+    String _id = await prefs.getId();
+
+    setState(() {
+      email = _email;
+      userId = _id;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
@@ -35,8 +66,8 @@ class ListOffersEngineerWidget extends StatelessWidget {
       ),
       child: CardDecoration(
         onTap: () {},
-        height: size.height * .28,
-        width: size.width,
+        height: widget.size.height * .28,
+        width: widget.size.width,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -49,20 +80,20 @@ class ListOffersEngineerWidget extends StatelessWidget {
                     onTap: () {},
                     child: CircleAvatar(
                       radius: 45.0,
-                      backgroundColor: colorScheme.primary,
-                      backgroundImage:
-                          NetworkImage(resulte['client']['imgPath'].toString()),
+                      backgroundColor: widget.colorScheme.primary,
+                      backgroundImage: NetworkImage(
+                          widget.resulte['client']['imgPath'].toString()),
                     ),
                   ),
-                  SizedBox(height: size.height * .05),
+                  SizedBox(height: widget.size.height * .05),
                   Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextWidget(
-                          title: resulte['client']['fullname'],
+                          title: widget.resulte['client']['fullname'],
                           fontSize: Get.height * .022,
-                          color: colorScheme.onSecondary,
+                          color: widget.colorScheme.onSecondary,
                           isTextStart: false,
                         ),
                       ),
@@ -73,11 +104,11 @@ class ListOffersEngineerWidget extends StatelessWidget {
                           title: '', // engineerspecialist
                           fontSize: Get.height * .02,
 
-                          color: colorScheme.secondary,
+                          color: widget.colorScheme.secondary,
                           isTextStart: true,
                         ),
                       ),
-                      SizedBox(height: size.height * .01),
+                      SizedBox(height: widget.size.height * .01),
 
                       Row(
                         children: [
@@ -90,20 +121,21 @@ class ListOffersEngineerWidget extends StatelessWidget {
                                 TextWidget(
                                   title: AppConfig.price.tr,
                                   fontSize: Get.height * .02,
-                                  color: colorScheme.secondary,
+                                  color: widget.colorScheme.secondary,
                                 ),
                                 const SizedBox(width: 7),
                                 TextWidget(
-                                  title: "\$" + resulte['price'].toString(),
+                                  title:
+                                      "\$" + widget.resulte['price'].toString(),
                                   fontSize: Get.height * .02,
-                                  color: colorScheme.secondary,
+                                  color: widget.colorScheme.secondary,
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: size.height * .01),
+                      SizedBox(height: widget.size.height * .01),
 
                       Row(
                         children: [
@@ -116,20 +148,21 @@ class ListOffersEngineerWidget extends StatelessWidget {
                                 TextWidget(
                                   title: AppConfig.daysToDeliver.tr,
                                   fontSize: 15,
-                                  color: colorScheme.secondary,
+                                  color: widget.colorScheme.secondary,
                                 ),
                                 const SizedBox(width: 7),
                                 TextWidget(
-                                  title: resulte['days_to_deliver'].toString(),
+                                  title: widget.resulte['days_to_deliver']
+                                      .toString(),
                                   fontSize: 15,
-                                  color: colorScheme.secondary,
+                                  color: widget.colorScheme.secondary,
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: size.height * .01),
+                      SizedBox(height: widget.size.height * .01),
 
                       // Row(
                       //   children: [
@@ -164,24 +197,27 @@ class ListOffersEngineerWidget extends StatelessWidget {
                       //   ],
                       // ),
                       TextWidget(
-                        title: dateFormat(resulte['createdAt']),
+                        title: GetTimeAgo.parse(
+                            DateTime.parse(widget.resulte['createdAt'] ?? ""),
+                            pattern: "dd-MM-yyyy hh:mm aa",
+                            locale: 'ar'),
                         fontSize: Get.height * .02,
-                        color: colorScheme.secondary,
+                        color: widget.colorScheme.secondary,
                       ),
                     ],
                   ),
                 ],
               ),
-              SizedBox(height: size.height * .02),
+              SizedBox(height: widget.size.height * .02),
               Container(
-                height: size.height * .06,
+                height: widget.size.height * .06,
                 child: Padding(
                   padding: const EdgeInsetsDirectional.only(start: 10),
                   child: TextWidget(
                     textOverflow: TextOverflow.ellipsis,
-                    title: resulte['message_desc'],
+                    title: widget.resulte['message_desc'],
                     fontSize: Get.height * .02,
-                    color: colorScheme.onSecondary,
+                    color: widget.colorScheme.onSecondary,
                     isTextStart: true,
                   ),
                 ),
@@ -189,11 +225,11 @@ class ListOffersEngineerWidget extends StatelessWidget {
 
               // SizedBox(height: size.height * .01),
 
-              if (offerController.isProjectOwner == 1)
+              if (widget.offerController.isProjectOwner == 1)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    offerController.loadingState == LoadingState.loading
+                    widget.offerController.loadingState == LoadingState.loading
                         ? LoadingWidget()
                         : ElevatedButton(
                             onPressed: () async => acceptOffer(context),
@@ -204,12 +240,28 @@ class ListOffersEngineerWidget extends StatelessWidget {
                     SizedBox(width: 30),
                     ElevatedButton(
                         onPressed: () {
-                          Get.to(ChatRoomScreen(
-                            receiverId: '',
-                            senderId: resulte['client']['id'],
-                            receiverEmail: '',
-                            image: resulte['client']['imgPath'],
-                            receiverName: resulte['client']['fullname'],
+                          Get.to(ChatRoomScreen22222(
+                            userId: userId,
+                            userEmail: email,
+                            chatsModel: Chats(
+                              receiverId: widget.resulte['client']['id'],
+                              senderId: userId,
+                              createdAt: "",
+                              id: "",
+                              message: "",
+                              messageType: "",
+                              recieverEmail: widget.resulte['client']['email'],
+                              recieverImg: widget.resulte['client']['imgPath'],
+                              recieverName: widget.resulte['client']
+                                  ['fullname'],
+                              senderImg: "",
+                              seqnum: 0,
+                              senderName: "",
+                              updatedAt: "",
+                              senderEmail: email,
+                              // image: resulte['client']['imgPath'],
+                              // receiverName: resulte['client']['fullname'],
+                            ),
                           ));
                         },
                         child: Text(
@@ -227,11 +279,14 @@ class ListOffersEngineerWidget extends StatelessWidget {
   }
 
   acceptOffer(BuildContext context) async {
-    bool done = await offerController.acceptOffer(
-        context, resulte['id'], offerController.offerId[index]['id']);
+    bool done = await widget.offerController.acceptOffer(
+        context,
+        widget.resulte['id'],
+        widget.offerController.offerId[widget.index]['id']);
 
     if (!done) {
-      offerController.getProjectsById(resulte['id'], index);
+      widget.offerController
+          .getProjectsById(widget.resulte['id'], widget.index);
     }
   }
 }

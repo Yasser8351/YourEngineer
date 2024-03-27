@@ -40,7 +40,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
 
   var profileList = [
     ListHorizontalProfile(
-      AppConfig.paypal,
+      AppConfig.paypal.tr,
       Icons.payment,
       image: AppImage.paypal,
       Image.asset(
@@ -50,7 +50,7 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.visa,
+      AppConfig.visa.tr,
       Icons.visibility,
       image: AppImage.visa,
       Image.asset(
@@ -131,13 +131,22 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
                             },
                           );
                         }),
-                        const SizedBox(height: 35),
+                        SizedBox(height: Get.height * .008),
                         Align(
                           alignment: AlignmentDirectional.centerStart,
                           child: TextWidget(
                               isTextStart: true,
                               title:
-                                  "${AppConfig.appCommissionIs.tr} ${controller.commission}%  \n  ${AppConfig.attachReceipt.tr}",
+                                  "${AppConfig.appCommissionIs.tr} ${controller.commission}%",
+                              fontSize: Get.height * .017,
+                              color: Colors.white),
+                        ),
+                        SizedBox(height: Get.height * .013),
+                        Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: TextWidget(
+                              isTextStart: true,
+                              title: "${AppConfig.attachReceipt.tr}",
                               fontSize: Get.height * .017,
                               color: Colors.white),
                         ),

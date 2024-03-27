@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/widget/shared_widgets/accept_offer_or_chat_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/rating_bar.dart';
@@ -11,7 +12,6 @@ import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
 import '../controller/accept_offer_controller.dart';
 import '../enum/all_enum.dart';
-import '../utilits/helper.dart';
 import 'shared_widgets/card_decoration.dart';
 
 class ListMyProjectOffersWidget extends StatelessWidget {
@@ -78,7 +78,10 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                         ),
 
                         TextWidget(
-                          title: dateFormat(resulte['createdAt']),
+                          title: GetTimeAgo.parse(
+                              DateTime.parse(resulte['createdAt'] ?? ""),
+                              pattern: "dd-MM-yyyy hh:mm aa",
+                              locale: 'ar'),
                           // offersEngineerModel.offersDate,
                           fontSize: size.height * .022,
 

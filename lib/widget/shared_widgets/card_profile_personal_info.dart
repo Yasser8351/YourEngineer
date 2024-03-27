@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
+import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/controller/notification_controller.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import '../../model/user_profile_model.dart';
@@ -57,26 +59,26 @@ class CardProfilePersonalInfo extends StatelessWidget {
                         // userModel.fullName,
                         fontSize: 18,
                         color: colorScheme.onSecondary),
-                    const SizedBox(height: 4),
+                    SizedBox(height: Get.width * .02),
                     TextWidget(
                         title: userProfileModel.email,
                         // userModel.email,
                         fontSize: 18,
                         color: colorScheme.onSecondary),
-                    const SizedBox(height: 4),
+                    SizedBox(height: Get.width * .02),
                     TextWidget(
                         title: isOwinr ? "صاحب مشاريع" : "مهندس",
                         // userModel.email,
-                        fontSize: 18,
+                        fontSize: Get.width * .045,
                         color: colorScheme.onSecondary),
-                    const SizedBox(height: 4),
+                    SizedBox(height: Get.width * .02),
                     isOwinr
                         ? // RatingBar
                         TextWidget(
                             title: userProfileModel.wallet.credit.isEmpty
-                                ? "Your balance is   0.0"
-                                : " Your balance \$ ${userProfileModel.wallet.credit} ",
-                            fontSize: 18,
+                                ? "${AppConfig.yourBalance.tr}   0.00"
+                                : "${AppConfig.yourBalance.tr} \$ ${userProfileModel.wallet.credit} ",
+                            fontSize: Get.width * .045,
                             color: colorScheme.onSecondary)
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -94,7 +96,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                                 padding: const EdgeInsets.only(top: 6),
                                 child: TextWidget(
                                   title: 5.toString(),
-                                  fontSize: 17,
+                                  fontSize: Get.width * .05,
                                   color: colorScheme.onSecondary,
                                 ),
                               ),

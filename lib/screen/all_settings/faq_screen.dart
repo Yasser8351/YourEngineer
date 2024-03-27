@@ -45,7 +45,6 @@ class _FAQScreenState extends State<FAQScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("${controller.message}"),
                     ReyTryErrorWidget(
                         title: controller.loadingState.value ==
                                 LoadingState.noDataFound

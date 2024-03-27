@@ -2,13 +2,14 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/screen/profile/add_info_about_me_screen.dart';
+import 'package:your_engineer/sharedpref/user_share_pref.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/image_network.dart';
 import 'package:your_engineer/widget/shared_widgets/reviews_widget.dart';
-import 'package:intl/intl.dart';
 import '../../controller/profile_controller.dart';
 import '../../debugger/my_debuger.dart';
 import '../../model/user_profile_model.dart';
@@ -50,12 +51,25 @@ class BottomNavigationCardWidget extends StatefulWidget {
 
 class _BottomNavigationCardWidgetState
     extends State<BottomNavigationCardWidget> {
-  // File? myfile;
-  // XFile? xfile;
+  @override
+  void initState() {
+    super.initState();
+    getUserStatus();
+  }
+
+  String email = '';
+
+  getUserStatus() async {
+    SharedPrefUser prefs = SharedPrefUser();
+    String _email = await prefs.getEmail();
+
+    setState(() {
+      email = _email;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    myLog("isPofileEng", widget.isPofileEng);
-    myLog("isowner", widget.isowner);
     String locale = Localizations.localeOf(context).languageCode;
     ProfileUserController controller = Get.put(ProfileUserController());
 
@@ -74,7 +88,7 @@ class _BottomNavigationCardWidgetState
                 ? Builder(builder: (context) {
                     if (widget.expandedIndex == 0) {
                       return buildPersonalProfile(widget.colorScheme,
-                          widget.size, widget.userProfileModel, widget.isowner);
+                          widget.size, widget.userProfileModel, email);
                     }
                     if (widget.expandedIndex == 1) {
                       return ReviewsWidget(
@@ -139,11 +153,8 @@ class _BottomNavigationCardWidgetState
                         } else if (widget.expandedIndex == 3) {
                           return buildPaymentHistory(widget.colorScheme);
                         }
-                        return buildPersonalProfile(
-                            widget.colorScheme,
-                            widget.size,
-                            widget.userProfileModel,
-                            widget.isowner);
+                        return buildPersonalProfile(widget.colorScheme,
+                            widget.size, widget.userProfileModel, email);
                       }),
           ),
         ),
@@ -153,7 +164,7 @@ class _BottomNavigationCardWidgetState
 }
 
 buildPersonalProfile(ColorScheme colorScheme, Size size,
-    UserProfileModel userProfileModel, isowner) {
+    UserProfileModel userProfileModel, String email) {
   //
   return SingleChildScrollView(
       child: Column(
@@ -161,7 +172,7 @@ buildPersonalProfile(ColorScheme colorScheme, Size size,
       Align(
         alignment: AlignmentDirectional.centerStart,
         child: TextWidget(
-          title: AppConfig.aboutme,
+          title: AppConfig.aboutme.tr,
           fontSize: Get.height * .02,
           color: colorScheme.onSecondary,
         ),
@@ -169,12 +180,12 @@ buildPersonalProfile(ColorScheme colorScheme, Size size,
       const SizedBox(height: 10),
 
       userProfileModel.userprofiles.aboutUser.isEmpty
-          ? !isowner
+          ? !userProfileModel.email.contains(email)
               ? const SizedBox()
               : ElevatedButton(
                   onPressed: () => Get.to(() => const AddInfoAboutMeSreen()),
                   child: Text(
-                    "اضف معلومات عنك",
+                    AppConfig.addShortDescription.tr,
                     style: TextStyle(color: Colors.white),
                   ))
           : Row(
@@ -227,7 +238,7 @@ buildPersonalProfile(ColorScheme colorScheme, Size size,
       Align(
         alignment: AlignmentDirectional.centerStart,
         child: TextWidget(
-          title: AppConfig.skills,
+          title: AppConfig.skills.tr,
           fontSize: Get.width * .04,
           color: colorScheme.onSecondary,
         ),
@@ -511,7 +522,7 @@ buildBusinessFair(
   // List<PortfolioModel> listBusinessFair
 ) {
   log(userProfileModel.userportfolio!.length.toString());
-  dynamic d = DateFormat('yyyy MM dd').format(DateTime.now());
+  // dynamic d = DateFormat('yyyy MM dd').format(DateTime.now());
 
   return SingleChildScrollView(
       child: Column(
@@ -554,7 +565,11 @@ buildBusinessFair(
             const SizedBox(height: 13),
             buildRowReviews(
                 "${userProfileModel.userportfolio![index]!.title}",
-                dateFormat(userProfileModel.userportfolio![index]!.createdAt!),
+                GetTimeAgo.parse(
+                    DateTime.parse(
+                        userProfileModel.userportfolio![index]!.createdAt!),
+                    pattern: "dd-MM-yyyy hh:mm aa",
+                    locale: 'ar'),
                 colorScheme),
             const SizedBox(height: 10),
           ],

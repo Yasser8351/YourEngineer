@@ -19,14 +19,18 @@ class FaqController extends GetxController {
   onInit() {
     super.onInit();
     getFaq();
+    getContactNumber();
   }
 
   var loadingState = LoadingState.initial.obs;
+  var loadingPhoneNumber = LoadingState.initial;
   final _shared = SharedPrefUser();
   List<FaqtModel> faq = [];
   ApiResponse apiResponse = ApiResponse();
   bool isloding = false;
   String message = "";
+  String errorMessage = "";
+  String whatsappPhoneNumber = "";
   bool get status => _status;
   bool _status = false;
   PrivacyPolicyModel privacyPolicyModel =
@@ -142,5 +146,54 @@ class FaqController extends GetxController {
 
       myLog("catch getPrivacyPolicy", error.toString());
     }
+  }
+
+  Future<void> getContactNumber() async {
+    changeLoadingState(LoadingState.loading);
+
+    try {
+      var token = await _shared.getToken();
+
+      var response = await Dio()
+          .get(
+            ApiUrl.getContactNumber,
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog("response.statusCode methode", "${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        changeLoadingState(LoadingState.loaded);
+        whatsappPhoneNumber = response.data['phone'].toString();
+      } else {
+        errorMessage = AppConfig.errorOoccurred.tr;
+        changeLoadingState(
+          LoadingState.error,
+        );
+      }
+    } catch (error) {
+      changeLoadingState(LoadingState.error);
+
+      handlingCatchError(
+          error: error,
+          changeLoadingState: changeLoadingState(loadingPhoneNumber),
+          errorMessageUpdate: errorMessageUpdate(errorMessage));
+    }
+  }
+
+  ///////////////////////////////////
+
+  changeLoadingState(LoadingState _isLoading) {
+    loadingPhoneNumber = _isLoading;
+
+    update();
+  }
+
+  errorMessageUpdate(String error) {
+    errorMessage = error;
+    update();
   }
 }

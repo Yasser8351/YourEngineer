@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:get/utils.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:your_engineer/model/commission_model.dart';
 import 'package:your_engineer/model/portfolio_model.dart';
@@ -113,15 +112,11 @@ class ProfileUserController extends GetxController {
 
       if (error is TimeoutException) {
         message = AppConfig.timeOut;
-
-        showseuessToast(error.toString());
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
-        showseuessToast(AppConfig.unAutaristion);
+        message = AppConfig.unAutaristion;
       } else {
         message = AppConfig.noNet;
-
-        showseuessToast(error.toString());
       }
     }
     update();
@@ -272,15 +267,15 @@ class ProfileUserController extends GetxController {
     } catch (error) {
       loadingState(LoadingState.error);
       if (error is DioError) {
-        showseuessToast(error.response!.data['msg']);
+        // showseuessToast(error.response!.data['msg']);
       }
       if (error is TimeoutException) {
-        showseuessToast(AppConfig.timeOut.tr);
+        // showseuessToast(AppConfig.timeOut.tr);
       }
       if (error is SocketException) {
-        showseuessToast(AppConfig.failedInternet.tr);
+        // showseuessToast(AppConfig.failedInternet.tr);
       } else {
-        showseuessToast(AppConfig.errorOoccurred.tr);
+        // showseuessToast(AppConfig.errorOoccurred.tr);
       }
     }
   }
@@ -377,20 +372,20 @@ class ProfileUserController extends GetxController {
     } catch (error) {
       loadingState(LoadingState.error);
       if (error is DioError) {
-        showseuessToast(error.response!.data['msg']);
+        // showseuessToast(error.response!.data['msg']);
         // Get.defaultDialog(title: AppConfig.timeOut.tr);
       }
       if (error is TimeoutException) {
-        showseuessToast(AppConfig.timeOut.tr);
+        // showseuessToast(AppConfig.timeOut.tr);
         // Get.defaultDialog(title: AppConfig.timeOut.tr);
       }
       if (error is SocketException) {
         // Get.defaultDialog(title: AppConfig.failedInternet.tr);
-        showseuessToast(AppConfig.failedInternet.tr);
+        // showseuessToast(AppConfig.failedInternet.tr);
       } else {
         // Get.defaultDialog(title: AppConfig.errorOoccurred.tr);
 
-        showseuessToast(AppConfig.errorOoccurred.tr);
+        // showseuessToast(AppConfig.errorOoccurred.tr);
       }
     }
   }

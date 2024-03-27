@@ -54,7 +54,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
 
   var profileList = [
     ListHorizontalProfile(
-      AppConfig.personalProfile,
+      AppConfig.personalProfile.tr,
       Icons.person,
       Icon(
         Icons.person,
@@ -78,7 +78,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.businessFair,
+      AppConfig.businessFair.tr,
       Icons.badge,
       Icon(
         Icons.person,
@@ -87,7 +87,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.paymentHistory,
+      AppConfig.paymentHistory.tr,
       Icons.monetization_on_outlined,
       Icon(
         Icons.person,
@@ -99,7 +99,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
 
   var profileList2 = [
     ListHorizontalProfile(
-      AppConfig.personalProfile,
+      AppConfig.personalProfile.tr,
       Icons.person,
       Icon(
         Icons.person,
@@ -108,7 +108,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.reviews,
+      AppConfig.reviews.tr,
       Icons.star,
       Icon(
         Icons.star,
@@ -117,7 +117,7 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
       ),
     ),
     ListHorizontalProfile(
-      AppConfig.businessFair,
+      AppConfig.businessFair.tr,
       Icons.badge,
       Icon(
         Icons.badge,

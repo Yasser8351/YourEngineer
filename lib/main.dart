@@ -7,7 +7,6 @@ import 'package:your_engineer/binding/binding_app.dart';
 import 'package:your_engineer/controller/app_language_controller.dart';
 import 'package:your_engineer/screen/all_settings/faq_screen.dart';
 import 'package:your_engineer/screen/all_settings/privacy_policy_screen.dart';
-import 'package:your_engineer/screen/chat/chat_room_screen_222.dart';
 import 'package:your_engineer/screen/login_screen.dart';
 import 'package:your_engineer/screen/profile/add_protofilo.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
@@ -20,7 +19,6 @@ import 'package:your_engineer/screen/splash_screen.dart';
 import 'package:your_engineer/utilits/localization/app_localization.dart';
 
 import 'debugger/my_debuger.dart';
-import 'screen/chat/chat_room_screen.dart';
 import 'screen/project/edit_my_project_screen.dart';
 import 'screen/services/services_detail_screen.dart';
 import 'screen/services/sub_services_screen.dart';
@@ -87,7 +85,7 @@ class MyApp extends StatelessWidget {
       ),
       locale: contoller.local ?? Get.deviceLocale,
       translations: AppLocalization(),
-      // home: const ChatRoomScreen22222(),
+      // home: const PDFScreen(filePath: ''),
       home: const SplashScreen(),
       initialBinding: BinindingApp(),
       initialRoute: '/',
@@ -151,15 +149,15 @@ class MyApp extends StatelessWidget {
           name: AppRouting.notifcation,
           page: () => const NotifcationScreen(),
         ),
-        GetPage(
-          name: AppRouting.chatRoom,
-          page: () => const ChatRoomScreen(
-              image: '',
-              receiverName: '',
-              receiverId: '',
-              senderId: '',
-              receiverEmail: ''), //receiverName: ''
-        ),
+        // GetPage(
+        //   name: AppRouting.chatRoom,
+        //   page: () => const ChatRoomScreen(
+        //       image: '',
+        //       receiverName: '',
+        //       receiverId: '',
+        //       senderId: '',
+        //       receiverEmail: ''), //receiverName: ''
+        // ),
         GetPage(
           name: AppRouting.language,
           page: () => const LanguageScreen(),

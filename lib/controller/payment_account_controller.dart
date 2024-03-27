@@ -9,7 +9,6 @@ import '../enum/all_enum.dart';
 import '../model/payment_accounts_model/credit_card_model.dart';
 import '../model/payment_accounts_model/paypal_model.dart';
 import '../sharedpref/user_share_pref.dart';
-import '../utilits/helper.dart';
 import 'package:http/http.dart' as http;
 
 class PaymentAccountsController extends GetxController {
@@ -62,23 +61,16 @@ class PaymentAccountsController extends GetxController {
         loadingState(LoadingState.error);
       }
     } on SocketException {
-      message = AppConfig.noNet;
+      message = AppConfig.noNet.tr;
 
       loadingState(LoadingState.error);
     } catch (error) {
       loadingState(LoadingState.error);
 
       if (error is TimeoutException) {
-        message = AppConfig.timeOut;
-
-        showseuessToast(error.toString());
-      } else if (error.toString().contains(
-          'DioError [DioErrorType.response]: Http status error [401]')) {
-        showseuessToast(AppConfig.unAutaristion);
+        message = AppConfig.timeOut.tr;
       } else {
-        message = AppConfig.noNet;
-
-        showseuessToast(error.toString());
+        message = AppConfig.noNet.tr;
       }
 
       myLog("catch error getPaypal: ", error.toString());
@@ -116,23 +108,19 @@ class PaymentAccountsController extends GetxController {
         loadingState(LoadingState.error);
       }
     } on SocketException {
-      message = AppConfig.noNet;
+      message = AppConfig.noNet.tr;
 
       loadingState(LoadingState.error);
     } catch (error) {
       loadingState(LoadingState.error);
 
       if (error is TimeoutException) {
-        message = AppConfig.timeOut;
-
-        showseuessToast(error.toString());
+        message = AppConfig.timeOut.tr;
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
-        showseuessToast(AppConfig.unAutaristion);
+        message = AppConfig.unAutaristion.tr;
       } else {
-        message = AppConfig.noNet;
-
-        showseuessToast(error.toString());
+        message = AppConfig.noNet.tr;
       }
 
       myLog("catch error getCreditcard: ", error.toString());

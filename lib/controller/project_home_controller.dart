@@ -2,6 +2,7 @@ import 'dart:async';
 // import 'dart:html';
 
 import 'package:dio/dio.dart';
+import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/screen/login_screen.dart';
@@ -26,6 +27,7 @@ class ProjectControllerHome extends GetxController {
   String priceRange = '';
   String projPeriod = '';
   List<dynamic> results = [];
+  RxString errorMessage = ''.obs;
   @override
   onInit() {
     super.onInit();
@@ -70,24 +72,22 @@ class ProjectControllerHome extends GetxController {
         if (results.isEmpty) {
           loadingState(LoadingState.noDataFound);
         }
-      } else if (response.statusCode == 401) {
-        loadingState(LoadingState.error);
-      } else {
-        loadingState(LoadingState.error);
       }
     } catch (error) {
       loadingState(LoadingState.error);
 
       if (error is DioError) {
-        if (error.response!.statusCode == 403) {
+        if (error.toString().contains('TimeoutException') ||
+            error.toString().contains("SocketException") ||
+            error.toString().contains("Network is unreachable")) {
+          errorMessage = AppConfig.failedInternet.tr.obs;
+        } else if (error.toString().contains("403")) {
           Get.offAll(() => LoginScreen());
-          // Get.offAll(() => LoginScreen());
+        } else {
+          errorMessage = AppConfig.errorOoccurred.tr.obs;
+          // errorMessage = error.response!.data['msg'].obs;
         }
       }
-      if (error is TimeoutException) {
-      } else if (error.toString().contains(
-          'DioError [DioErrorType.response]: Http status error [401]')) {
-      } else {}
 
       myLog("catch error", error.toString());
       // myLog("start _listprojects", "${_listprojects}");
