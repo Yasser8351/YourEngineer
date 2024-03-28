@@ -61,6 +61,7 @@ class _FAQScreenState extends State<FAQScreen> {
                     children: [
                       ListView.builder(
                         shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         itemCount: controller.faq.length,
                         itemBuilder: (context, index) {
                           return FAQWidget(

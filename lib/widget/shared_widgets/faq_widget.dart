@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:your_engineer/model/faq_model.dart';
 
 class FAQWidget extends StatelessWidget {
@@ -15,25 +17,20 @@ class FAQWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return AnimatedTextWIthCard(
-    //   title: faqModel.title,
-    //   discreption: faqModel.discreption,
-    //   expand: expand,
-    //   onTap: onTap,
-    // );
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
         title: Text(
           faqModel.question!,
-          textAlign: TextAlign.end,
+          style: TextStyle(fontSize: Get.height * .02),
+          textAlign: TextAlign.start,
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 15),
           child: Text(
             faqModel.answer!,
-            textAlign: TextAlign.end,
+            style: TextStyle(fontSize: Get.height * .02),
+            textAlign: TextAlign.start,
           ),
         ),
       ),

@@ -66,13 +66,7 @@ class SettingsScreen extends StatelessWidget {
                 Icons.change_circle_outlined,
                 () => {Navigator.of(context).pushNamed(AppConfig.language)},
               ),
-              buildDivider(),
-              buildCardItem(
-                context,
-                AppConfig.faq.tr,
-                Icons.note_alt_outlined,
-                () => {Navigator.of(context).pushNamed(AppConfig.faq)},
-              ),
+
               buildDivider(),
               buildCardItem(
                 context,
@@ -90,15 +84,16 @@ class SettingsScreen extends StatelessWidget {
                   Get.to(() => const ContactWatsappScreen())
                 },
               ),
+
               buildDivider(),
-              // buildCardItem(
-              //   context,
-              //   AppConfig.privacyPolicy,
-              //   Icons.security,
-              //   () =>
-              //       {Navigator.of(context).pushNamed(AppConfig.privacyPolicy)},
-              // ),
-              // buildDivider(),
+              buildCardItem(
+                context,
+                AppConfig.faq.tr,
+                Icons.note_alt_outlined,
+                () => {Navigator.of(context).pushNamed(AppConfig.faq)},
+              ),
+              buildDivider(),
+
               buildCardItem(
                   context,
                   AppConfig.privacyPolicy.tr,
