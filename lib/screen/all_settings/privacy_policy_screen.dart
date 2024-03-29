@@ -58,6 +58,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               child: TextWidget(
                   title: controller.privacyPolicyModel.description,
                   isTextStart: true,
+                  maxLines: 10000,
                   fontSize: Get.height * .02,
                   color: Colors.black),
             ),

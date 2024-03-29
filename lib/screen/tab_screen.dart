@@ -29,7 +29,7 @@ class _TabScreenState extends State<TabScreen> {
   final List<Widget> _pages = [
     const HomeScreen(),
     const ChatScreen(),
-    const ProjectScreen(),
+    ProjectScreen(isMyProject: true),
     const SettingsScreen(),
   ];
 

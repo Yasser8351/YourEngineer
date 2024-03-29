@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/binding/binding_app.dart';
 import 'package:your_engineer/controller/app_language_controller.dart';
@@ -16,6 +17,7 @@ import 'package:your_engineer/screen/language_screen.dart';
 import 'package:your_engineer/screen/notifcation_screen.dart';
 import 'package:your_engineer/screen/profile/pay_with_visa.dart';
 import 'package:your_engineer/screen/splash_screen.dart';
+import 'package:your_engineer/utilits/app_info.dart';
 import 'package:your_engineer/utilits/localization/app_localization.dart';
 
 import 'debugger/my_debuger.dart';
@@ -27,6 +29,18 @@ import 'screen/tab_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await setupNotifcation();
+  var pref = await SharedPreferences.getInstance();
+
+  AppInfo.initAppInfo(
+    accountType: pref.getString("status"),
+    // currentLocale: PrefRepo(pref).preferredLocale,
+  );
+
+  runApp(const MyApp());
+}
+
+setupNotifcation() async {
   try {
     await Firebase.initializeApp();
     await FirebaseMessaging.instance
@@ -49,8 +63,6 @@ void main() async {
       sound: true,
     );
   } catch (e) {}
-
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

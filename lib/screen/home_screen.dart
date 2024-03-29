@@ -6,6 +6,7 @@ import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
 import 'package:your_engineer/screen/project/add_project_screen.dart';
 import 'package:your_engineer/screen/project_screen.dart';
 import 'package:your_engineer/screen/services/all_populer_services_screen.dart';
+import 'package:your_engineer/utilits/app_info.dart';
 import 'package:your_engineer/widget/lis_top_engineer_rating_widget.dart';
 import 'package:your_engineer/widget/list_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
@@ -115,23 +116,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: size.width * .06,
                             color: Colors.black),
                         SizedBox(height: Get.height * .045),
-                        InkWell(
-                          onTap: () => Get.to(() => const AddProjectScreen()),
-                          child: Container(
-                            width: size.width * .35,
-                            height: size.height * .06,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                                child: TextWidget(
-                              title: AppConfig.addProjectScreen.tr,
-                              color: Colors.white,
-                              fontSize: size.height * .02,
-                            )),
-                          ),
-                        ),
+                        AppInfo.instance.accountType.contains("ENGINEER")
+                            ? const SizedBox()
+                            : InkWell(
+                                onTap: () =>
+                                    Get.to(() => const AddProjectScreen()),
+                                child: Container(
+                                  width: size.width * .35,
+                                  height: size.height * .06,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                      child: TextWidget(
+                                    title: AppConfig.addProjectScreen.tr,
+                                    color: Colors.white,
+                                    fontSize: size.height * .02,
+                                  )),
+                                ),
+                              ),
                         SizedBox(height: Get.height * .02),
                       ],
                     );

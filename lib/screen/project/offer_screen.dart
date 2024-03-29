@@ -28,7 +28,10 @@ class OffersScreen extends StatefulWidget {
 }
 
 class _OffersScreenState extends State<OffersScreen> {
-  OfferController controller = Get.put(OfferController());
+  OfferController controller = Get.find();
+
+  // OfferController controller = Get.put(OfferController());
+
   bool isLoading = false;
   bool isAddProject = false;
   int priceRange = 0;

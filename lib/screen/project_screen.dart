@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/utilits/app_info.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 import '../app_config/app_config.dart';
 import '../controller/project_screen_controller.dart';
@@ -20,25 +21,26 @@ class ProjectScreen extends StatelessWidget {
       onRefresh: () => controller.getOwnerProject(),
       child: Scaffold(
         appBar: AppBar(
-          title: InkWell(
-            onTap: () {
-              controller.goToAddProjectScreen();
-            },
-            // Navigator.of(context).pushNamed(AppConfig.addProjectScreen)),
-            child: Row(
-              children: [
-                Icon(Icons.content_paste_go, color: Colors.white),
-                SizedBox(width: size.width * .03),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: TextWidget(
-                      title: AppConfig.addProjectScreen.tr,
-                      fontSize: size.height * .025,
-                      color: Colors.white),
+          title: AppInfo.instance.accountType.contains("ENGINEER")
+              ? const SizedBox()
+              : InkWell(
+                  onTap: () {
+                    controller.goToAddProjectScreen();
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.content_paste_go, color: Colors.white),
+                      SizedBox(width: size.width * .03),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: TextWidget(
+                            title: AppConfig.addProjectScreen.tr,
+                            fontSize: size.height * .025,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
         ),
         body: Obx(() {
           if (controller.loadingState.value == LoadingState.initial ||

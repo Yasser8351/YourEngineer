@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_time_ago/get_time_ago.dart';
+import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/controller/fag_controller.dart';
+import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
@@ -24,6 +27,8 @@ class ListMyProjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FaqController controller = Get.find();
+
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
@@ -40,7 +45,10 @@ class ListMyProjectWidget extends StatelessWidget {
                   ),
               arguments: {'projectId': ownerProjectModel.id});
         },
-        height: size.height * .33,
+        height: isMyProject &&
+                ownerProjectModel.projStatus!.statName!.contains("In-Progress")
+            ? size.height * .42
+            : size.height * .33,
         width: size.width * .7,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -49,7 +57,7 @@ class ListMyProjectWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "اسم المشروع",
+                AppConfig.projectName.tr,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -71,7 +79,7 @@ class ListMyProjectWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                "وصف المشروع",
+                AppConfig.projectDescription.tr,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -100,19 +108,11 @@ class ListMyProjectWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BuildRowList(
-                        title: ownerProjectModel.projStatus!.statName,
+                        title: getTitleStatusProject(),
+                        // title: ownerProjectModel.projStatus!.statName,
                         colorScheme: colorScheme,
-                        icon: ownerProjectModel.projStatus!.statName!
-                                .contains("Open")
-                            ? Icons.open_in_browser
-                            : ownerProjectModel.projStatus!.statName!
-                                    .contains("In-Progress")
-                                ? Icons.blinds
-                                : ownerProjectModel.projStatus!.statName!
-                                        .contains("Close")
-                                    ? Icons.close
-                                    : Icons.local_dining,
-                        description: "حالة المشروع",
+                        icon: getIconStatusProject(),
+                        description: AppConfig.projectState.tr,
                       ),
                       BuildRowList(
                         title: isMyProject
@@ -122,23 +122,22 @@ class ListMyProjectWidget extends StatelessWidget {
                             : ownerProjectModel.offersCount.toString(),
                         colorScheme: colorScheme,
                         icon: Icons.post_add,
-                        description: "عدد العروض",
+                        description: AppConfig.offerCount.tr,
                       ),
                       BuildRowList(
                         title: ownerProjectModel.priceRange!.rangeName,
                         colorScheme: colorScheme,
                         icon: CupertinoIcons.money_dollar,
-                        description: "ميزانية المشروع",
+                        description: AppConfig.projectBudget.tr,
                       ),
                       BuildRowList(
                         title: GetTimeAgo.parse(
                             DateTime.parse(ownerProjectModel.createdAt),
                             pattern: "dd-MM-yyyy hh:mm aa",
                             locale: 'ar'),
-                        // title: dateFormat(ownerProjectModel.createdAt),
                         colorScheme: colorScheme,
                         icon: Icons.watch_later,
-                        description: "تاريخ الانشاء",
+                        description: AppConfig.dateOfPublication.tr,
                       ),
                     ],
                   ),
@@ -161,54 +160,61 @@ class ListMyProjectWidget extends StatelessWidget {
                             Icons.edit,
                             color: Colors.white,
                           ))
-                      : const SizedBox()
+                      : const SizedBox(),
                 ],
-              )
+              ),
+              isMyProject &&
+                      ownerProjectModel.projStatus!.statName!
+                          .contains("In-Progress")
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Obx(
+                        () => controller.loadingStateCompleteProject ==
+                                LoadingState.loading
+                            ? Center(child: CircularProgressIndicator())
+                            : Center(
+                                child: ElevatedButton(
+                                  onPressed: () => controller.completeProject(
+                                      context, ownerProjectModel.id),
+                                  child: Text(
+                                    AppConfig.receivingProject.tr,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),
       ),
     );
   }
+
+  IconData getIconStatusProject() {
+    if (ownerProjectModel.projStatus!.statName!.contains("Open")) {
+      return Icons.open_in_browser;
+    } else if (ownerProjectModel.projStatus!.statName!
+        .contains("In-Progress")) {
+      return Icons.blinds;
+    } else if (ownerProjectModel.projStatus!.statName!.contains("Completed")) {
+      return Icons.check_box;
+    } else {
+      return Icons.close;
+    }
+  }
+
+  String getTitleStatusProject() {
+    if (ownerProjectModel.projStatus!.statName!.contains("Open")) {
+      return AppConfig.open.tr;
+    } else if (ownerProjectModel.projStatus!.statName!
+        .contains("In-Progress")) {
+      return AppConfig.inProgress.tr;
+    } else if (ownerProjectModel.projStatus!.statName!.contains("Completed")) {
+      return AppConfig.completed.tr;
+    } else {
+      return AppConfig.close.tr;
+    }
+  }
 }
-
-// buildRowList(title, ColorScheme colorScheme, icon, description) {
-//   return Padding(
-//     padding: const EdgeInsets.symmetric(vertical: 3),
-//     child: Row(
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: [
-//         Icon(
-//           icon,
-//           size: 20,
-//           color: colorScheme.primary,
-//         ),
-//         const SizedBox(
-//           width: 10,
-//         ),
-//         Padding(
-//           padding: const EdgeInsets.only(top: 2),
-//           child: TextWidget(
-//             title: description,
-//             fontSize: 15,
-//             color: colorScheme.secondary,
-//           ),
-//         ),
-//         TextWidget(
-//           title: "  :  ",
-//           fontSize: 15,
-//           color: colorScheme.secondary,
-//         ),
-//         Padding(
-//           padding: const EdgeInsets.only(top: 2),
-//           child: TextWidget(
-//             title: title,
-//             fontSize: 15,
-//             color: colorScheme.secondary,
-//           ),
-//         ),
-//       ],
-//     ),
-//   );
-
-// }

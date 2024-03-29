@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
+import 'package:http_parser/http_parser.dart';
 // import 'package:get/get.dart';
 
 import '../api/api_response.dart';
@@ -46,6 +47,7 @@ class AddProjectController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
     getCategorys();
     // selectedCat = listPopulerServices[0].id;
     // myLog("caaaaat idddddd", "$selectedCat");
@@ -267,7 +269,10 @@ class AddProjectController extends GetxController {
       'price_range_id': selectedPriceRange,
       'proj_period': daysController.text,
       'skills': skillsController.text,
-      "ProjectAttach": "",
+      "ProjectAttach": imageFile == null
+          ? ""
+          : await MultipartFile.fromFile(imageFile.path,
+              filename: 'upload.jpg'),
       // "ProjectAttach": imageFile == null
       //     ? ""
       //     : await MultipartFile.fromFile(

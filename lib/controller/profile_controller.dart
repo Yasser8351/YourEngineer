@@ -144,7 +144,7 @@ class ProfileUserController extends GetxController {
       update();
       var response = await Dio()
           .post(
-            ApiUrl.accountChargeRequest,
+            ApiUrl.getTransactionsHistory(page: 1),
             data: data,
             options: Options(
               headers: ApiUrl.getHeader(token: token),

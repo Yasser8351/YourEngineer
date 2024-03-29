@@ -4,6 +4,8 @@ class AppConfig {
   static const String submitYourProtofilo = "submitYourProtofilo";
   static const String skills = "Skills";
   static const String engineer = "Engineers";
+  static const String eng = "Engineer";
+  static const String both = "Engineer and Project Owner";
   static const String projectOwner = "Project Owner";
   static const String amountLess = "The bid amount must not be less than";
   static const String emal = "email";
@@ -14,10 +16,15 @@ class AppConfig {
   static const String addSuccesfuly = "Added successfully";
   static const String comfirmPassword = "comfirm password";
 
+  static const String open = "Open";
+  static const String inProgress = "In Progress";
+  static const String completed = "Completed";
+  static const String close = "Closed";
+
   static const String cannotaddOffer = "cannotaddOffer";
   static const String resetPassword = "resetPassword";
   static const String signUp = "Sign Up";
-  static const String noNet = "no enter connection";
+  static const String noNet = "No internet connection";
   static const String forgetPassword = "forget password?";
   static const String tabScreen = "tab Screen";
   static const String addProjectScreen = "Add Project";
@@ -36,7 +43,10 @@ class AppConfig {
   static const String language = "Language";
 
   static const String login = "Login";
+  static const String projectBudget = "Project budget";
+  static const String dateOfPublication = "Date created";
   static const String tryAgain = "tryAgain";
+  static const String receivingProject = "Receiving the project";
   static const String timeOut = "يبدو ان اتصال الانترنت لديك ضعيف";
   static const String splashScreen = "splashScreen";
   static const String signUpWithEmail = "Sign Up with Email";
@@ -85,6 +95,7 @@ class AppConfig {
   static const String history = "History";
   static const String chooseCategory = "Choose a category";
   static const String search = "Search";
+  static const String projectState = "Project status";
   static const String submitYourProject = "Submit Your Project";
   static const String sendMessage = "send message";
   static const String addOffer = "Add your offer now";
@@ -149,7 +160,10 @@ class AppConfig {
   /*
   static const String  ="";
   */
-  static const String ok = "ok";
+  static const String ok = "Ok";
+  static const String cancel = "Cancel";
+  static const String projectName = "Project name";
+  static const String projectDescription = "Project description";
   static const String loading = "loading...";
   static const String unAutaristion = "unAuthorized";
   static const String serverError = "server Error";

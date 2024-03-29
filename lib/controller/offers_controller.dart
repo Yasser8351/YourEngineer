@@ -16,17 +16,21 @@ import '../utilits/helper.dart';
 import 'package:http/http.dart' as http;
 
 class OfferController extends GetxController {
-  late dynamic results;
+  dynamic results = [];
   int index = 0;
   late SharedPreferences shared;
   String typeAccount = '';
+  bool hide = false;
 
   @override
   void onInit() {
     getUserInfo();
+
     results = Get.arguments['results'];
-    getProjectsOffers(results['id']);
-    getProjectsById(results['id'], index);
+
+    getProjectsOffers(results['id'] ?? '');
+    getProjectsById(results['id'] ?? '', index);
+
     super.onInit();
   }
 
@@ -209,10 +213,10 @@ class OfferController extends GetxController {
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;
 
-        resulte = map['results'];
-        totalPages = map["totalPages"];
-        totalItems = map["totalItems"];
-        currentPage = map["currentPage"];
+        resulte = map['results'] ?? [];
+        totalPages = map["totalPages"] ?? 0;
+        totalItems = map["totalItems"] ?? 0;
+        currentPage = map["currentPage"] ?? 0;
         // offerId = map['projectoffers']['id'];
         // ProjectModel projectModel =
         //     projectModelFromJson(jsonDecode(response.data));

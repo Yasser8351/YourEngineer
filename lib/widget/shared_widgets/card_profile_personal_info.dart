@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/controller/notification_controller.dart';
+import 'package:your_engineer/utilits/app_info.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import '../../model/user_profile_model.dart';
 import 'card_with_image.dart';
@@ -35,7 +36,8 @@ class CardProfilePersonalInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var primaryColor = Theme.of(context).colorScheme.primary;
-    // final _shared = SharedPrefUser();
+    // final _shared = SharedPrefUser(); userModel.role_id
+    // myLog("userProfileModel", userProfileModel.);
 
     return CardWithImage(
       height: size.height * .17,
@@ -67,8 +69,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                         color: colorScheme.onSecondary),
                     SizedBox(height: Get.width * .02),
                     TextWidget(
-                        title: isOwinr ? "صاحب مشاريع" : "مهندس",
-                        // userModel.email,
+                        title: getAccountType(),
                         fontSize: Get.width * .045,
                         color: colorScheme.onSecondary),
                     SizedBox(height: Get.width * .02),
@@ -147,5 +148,16 @@ class CardProfilePersonalInfo extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  getAccountType() {
+    String accountType = AppInfo.instance.accountType.toUpperCase();
+    if (accountType.contains("BOTH")) {
+      return AppConfig.both;
+    } else if (accountType.contains("ENGINEER")) {
+      return AppConfig.eng;
+    } else {
+      return AppConfig.projectOwner;
+    }
   }
 }

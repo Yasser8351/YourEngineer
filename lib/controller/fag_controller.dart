@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
@@ -25,6 +27,9 @@ class FaqController extends GetxController {
   var loadingState = LoadingState.initial.obs;
   var loadingPhoneNumber = LoadingState.initial;
   final _shared = SharedPrefUser();
+
+  var loadingStateCompleteProject = LoadingState.initial.obs;
+
   List<FaqtModel> faq = [];
   ApiResponse apiResponse = ApiResponse();
   bool isloding = false;
@@ -179,8 +184,63 @@ class FaqController extends GetxController {
 
       handlingCatchError(
           error: error,
-          changeLoadingState: changeLoadingState(loadingPhoneNumber),
-          errorMessageUpdate: errorMessageUpdate(errorMessage));
+          changeLoadingState: () => changeLoadingState(loadingPhoneNumber),
+          errorMessageUpdate: (meesgae) => errorMessageUpdate(meesgae));
+    }
+  }
+
+  Future<bool> completeProject(BuildContext context, String projectId) async {
+    var token = await _shared.getToken();
+
+    dialogConfirm(
+      onCancel: () => Get.back(),
+      onOk: () async {
+        await confirmComplete(projectId, token, context);
+      },
+    );
+
+    return status;
+  }
+
+  Future<void> confirmComplete(
+      String projectId, String token, BuildContext context) async {
+    Get.back();
+    loadingStateCompleteProject(LoadingState.loading);
+    try {
+      var response = await http
+          .put(
+            Uri.parse(ApiUrl.completeProject(projectId: projectId)),
+            headers: ApiUrl.getHeader2(token: token),
+          )
+          .timeout(const Duration(seconds: 20));
+
+      myLog(
+        'statusCode : ${response.statusCode} \n',
+        'response : ${response.body}',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        loadingStateCompleteProject(LoadingState.loaded);
+      } else {
+        loadingStateCompleteProject(LoadingState.error);
+        final Map parsed = json.decode(response.body);
+
+        Helper.showError(context: context, subtitle: parsed['msg'].toString());
+      }
+    } catch (error) {
+      loadingStateCompleteProject(LoadingState.error);
+      if (error.toString().contains('TimeoutException') ||
+          error.toString().contains("SocketException") ||
+          error.toString().contains("Network is unreachable")) {
+        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else if (error is DioError) {
+        Helper.showError(
+            context: context, subtitle: error.response!.data['msg']);
+      } else {
+        Helper.showError(
+            context: context, subtitle: AppConfig.errorOoccurred.tr);
+      }
+      myLog('catch  erroor', '$error');
     }
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:your_engineer/screen/all_settings/transaction_moble.dart';
+import 'package:your_engineer/model/transactions_history_model.dart';
 import 'package:your_engineer/utilits/helper.dart';
 // import '/util/all_enum.dart';
 
@@ -39,22 +39,22 @@ class TransactionItemWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        // Text(
+                        //   history.user.email,
+                        //   overflow: TextOverflow.clip,
+                        //   style: TextStyle(
+                        //       fontSize: 18,
+                        //       fontWeight: FontWeight.w600,
+                        //       color: colorScheme.primary),
+                        //   softWrap: true,
+                        // ),
+                        // SizedBox(
+                        //   height: size.height * 0.01,
+                        // ),
                         Text(
-                          "withDraw",
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.primary),
-                          softWrap: true,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.01,
-                        ),
-                        Text(
-                          history.amount.toString(),
+                          history.amount.toString() + " + ",
                           overflow: TextOverflow.clip,
                           style: TextStyle(
                             fontSize: 16,
@@ -63,7 +63,8 @@ class TransactionItemWidget extends StatelessWidget {
                                 // transactionsType == TransactionsType.deposit
                                 //     ? colorScheme.secondary
                                 //     :
-                                Colors.red.shade500,
+                                Colors.green.shade500,
+                            // Colors.red.shade500,
                           ),
                           softWrap: true,
                         ),
@@ -71,22 +72,26 @@ class TransactionItemWidget extends StatelessWidget {
                     ),
                   ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "date",
+                        history.user.email,
                         overflow: TextOverflow.clip,
                         style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.primary),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey,
+
+                          // color: colorScheme.primary,
+                        ),
                         softWrap: true,
                       ),
                       SizedBox(
                         height: size.height * 0.01,
                       ),
                       Text(
-                        dateFormat("dd-MM-yyyy").format(history.date),
+                        dateFormat(history.createdAt),
                         overflow: TextOverflow.clip,
                         style: TextStyle(
                           fontSize: 16,

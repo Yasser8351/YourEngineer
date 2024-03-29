@@ -164,7 +164,8 @@ class _ProfileBothScreenState extends State<ProfileBothScreen> {
                           colorScheme: colorScheme,
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => AddProtofiloScreen()));
+                                builder: (context) =>
+                                    const AddProtofiloScreen()));
                           },
                         ),
                         const SizedBox(height: 35),

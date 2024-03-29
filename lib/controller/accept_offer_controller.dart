@@ -68,16 +68,17 @@ class AcceptOfferController extends GetxController {
       isLoading(false);
       status = false;
       myLog('error', error);
-      if (error is DioError) {
+      if (error.toString().contains('TimeoutException') ||
+          error.toString().contains("SocketException")) {
+        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+      } else if (error is DioError) {
         Helper.showError(
             context: context, subtitle: error.response!.data['msg']);
-      }
-
-      if (error.toString().contains('TimeoutException')) {
-        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
       } else {
         Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
       }
+
+      //msg
       myLog('catch  erroor', '$error');
     }
 

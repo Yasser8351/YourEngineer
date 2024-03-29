@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/model/chat_models/last_chats_model.dart';
 import 'package:your_engineer/model/horizontal_profile.dart';
+import 'package:your_engineer/screen/chat/chat_room_screen_222.dart';
 import 'package:your_engineer/widget/shared_widgets/list_profile_horizontal.dart';
 
 import '../../controller/profile_controller.dart';
@@ -193,7 +195,67 @@ class _ProfileEngineerScreenState extends State<ProfileEngineerScreen> {
                           Get.to(() => const AddPortifolioSkillsScreen());
                         },
                       ),
-                      const SizedBox(height: 35),
+                      SizedBox(height: Get.height * .03),
+                      widget.isFromHomeScreen
+                          ? Padding(
+                              padding: EdgeInsetsDirectional.symmetric(
+                                  horizontal: Get.width * .28),
+                              child: InkWell(
+                                  onTap: () {
+                                    Get.to(
+                                      () => ChatRoomScreen22222(
+                                        showAllLink: true,
+                                        userId: controller.userProfile.id,
+                                        userEmail: controller.userProfile.email,
+                                        chatsModel: Chats(
+                                          receiverId: controller.userProfile.id,
+                                          senderId: controller.userProfile.id,
+                                          createdAt: "",
+                                          id: "",
+                                          message: "",
+                                          messageType: "",
+                                          recieverEmail: widget.engeneerId,
+                                          recieverImg:
+                                              controller.userProfile.imgpath,
+                                          recieverName:
+                                              controller.userProfile.fullname,
+                                          senderImg: "",
+                                          seqnum: 0,
+                                          senderName: "",
+                                          updatedAt: "",
+                                          senderEmail:
+                                              controller.userProfile.email,
+                                          // image: resulte['client']['imgPath'],
+                                          // receiverName: resulte['client']['fullname'],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 25, vertical: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          AppConfig.chatEng.tr,
+                                          style: TextStyle(color: Colors.green),
+                                        ),
+                                        SizedBox(width: Get.width * .02),
+                                        Icon(Icons.chat, color: Colors.green),
+                                      ],
+                                    ),
+                                  )),
+                            )
+                          : const SizedBox(),
+                      SizedBox(height: Get.height * .03),
                       ListProfileHorizontalWidget(
                         size: size,
                         colorScheme: colorScheme,

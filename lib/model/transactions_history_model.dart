@@ -1,19 +1,20 @@
-class TransactionsHistory {
-  TransactionsHistory({
+class TransactionsHistoryModel {
+  TransactionsHistoryModel({
     required this.totalItems,
-    required this.results,
+    required this.transactionsHistory,
     required this.totalPages,
     required this.currentPage,
   });
   late final int totalItems;
-  late final List<Results> results;
+  late final List<TransactionsHistory> transactionsHistory;
   late final int totalPages;
   late final int currentPage;
 
-  TransactionsHistory.fromJson(Map<String, dynamic> json) {
+  TransactionsHistoryModel.fromJson(Map<String, dynamic> json) {
     totalItems = json['totalItems'] ?? 0;
-    results =
-        List.from(json['results']).map((e) => Results.fromJson(e)).toList();
+    transactionsHistory = List.from(json['results'])
+        .map((e) => TransactionsHistory.fromJson(e))
+        .toList();
     totalPages = json['totalPages'] ?? 0;
     currentPage = json['currentPage'] ?? 0;
   }
@@ -21,15 +22,15 @@ class TransactionsHistory {
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['totalItems'] = totalItems;
-    _data['results'] = results.map((e) => e.toJson()).toList();
+    _data['results'] = transactionsHistory.map((e) => e.toJson()).toList();
     _data['totalPages'] = totalPages;
     _data['currentPage'] = currentPage;
     return _data;
   }
 }
 
-class Results {
-  Results({
+class TransactionsHistory {
+  TransactionsHistory({
     required this.id,
     required this.amount,
     required this.attachment,
@@ -46,7 +47,7 @@ class Results {
   late final String createdAt;
   late final User user;
 
-  Results.fromJson(Map<String, dynamic> json) {
+  TransactionsHistory.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? "";
     amount = json['amount'] ?? "";
     attachment = json['attachment'] ?? "";

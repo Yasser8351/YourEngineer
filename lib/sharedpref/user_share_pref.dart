@@ -21,7 +21,7 @@ class SharedPrefUser {
 
     myLog('userId', userModel.userId);
     myLog('fullName', userModel.fullName);
-    myLog('phone', userModel.phone);
+    myLog('roleId', userModel.role_id);
     myLog('email', userModel.email);
     myLog('isActive', userModel.isActive);
     myLog('role_id', userModel.role_id);
@@ -41,7 +41,6 @@ class SharedPrefUser {
 
     await _prefs.setString('id', userId);
     await _prefs.setString('full_name', fullname);
-    await _prefs.setString('email', email);
     await _prefs.setString('image', userImage);
     await _prefs.setString('phone', phone);
   }
@@ -84,6 +83,13 @@ class SharedPrefUser {
     return (_prefs.getInt('roleid') ?? -1);
   }
 
+  Future<String> getRoleName() async {
+    _prefs = await SharedPreferences.getInstance();
+
+    myLog("role_id pref", _prefs.getString('roleId'));
+    return (_prefs.getString('roleId') ?? '');
+  }
+
   /// get the Representive token from share
   Future<String> getToken() async {
     _prefs = await SharedPreferences.getInstance();
@@ -100,7 +106,6 @@ class SharedPrefUser {
   Future<String> getEmail() async {
     _prefs = await SharedPreferences.getInstance();
     String email = _prefs.getString('email') ?? '';
-    log("email email email $email");
 
     return email;
   }

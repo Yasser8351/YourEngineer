@@ -13,7 +13,7 @@ class ApiUrl {
   static String get getProject => '$_root/project?page=1&size=10&search=';
   static String get addProject => '$_root/project';
   static String get addoffer => '$_root/offer';
-  static String get accountChargeRequest => '$_root/payments/feed';
+
   static String get addPaypal => '$_root/payments/withdraw/paypal ';
   static String get addVisa => '$_root/payments/withdraw/creditcard ';
   static String get addprotofilio => '$_root/profile/portfolio';
@@ -33,10 +33,17 @@ class ApiUrl {
   static String get getPrivacyPolicy => '$_root/site/privacy';
   static String get getContactNumber => '$_root/site/contact';
 
-  /// chat url
+  static String completeProject({required String projectId}) {
+    return '$_root/offer/project/complete/$projectId';
+  }
+
   static String getLastchats(
       {required int page, required int size, String search = ''}) {
     return '$_root/conversations/lastchats?page=1&size=20&search=$search';
+  }
+
+  static String getTransactionsHistory({required int page}) {
+    return '$_root/payments/feed?page=$page&size=20';
   }
 
   static String getChatBetweenUsers({required int page, required int size}) {
@@ -70,7 +77,7 @@ class ApiUrl {
   static String get getPricerange => '$_root/pricerange';
   static String get getSubCatigory => '$_root/category/subcat/';
   static String get getProjectBySubCatigory =>
-      '$_root/project/subcat?page=1&size=10&scatid=';
+      '$_root/project/subcat?page=1&size=20&scatid=';
 
   static String getProjectById(String projectId) {
     return '$_root/project/$projectId';

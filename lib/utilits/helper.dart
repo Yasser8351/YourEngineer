@@ -59,22 +59,21 @@ handlingCatchError({
   String? messageNoData,
   required Object error,
   required Function() changeLoadingState,
-  bool showSnackbar = false,
-  // Function()? tryAgain,
+  // bool showSnackbar = false,
   required Function(String message) errorMessageUpdate,
 }) {
   changeLoadingState();
 
-  if (error is DioError) {
-    if (error.toString().contains("TimeoutException") ||
-        error.toString().contains("connection timeout")) {
-      errorMessageUpdate(AppConfig.noNet.tr);
-    } else if (error.toString().contains("SocketException") ||
-        error.toString().contains("Network is unreachable")) {
-      errorMessageUpdate(AppConfig.noNet.tr);
-    } else {
-      errorMessageUpdate(AppConfig.errorOoccurred.tr);
-    }
+  myLog("catchError", error);
+
+  if (error.toString().contains("TimeoutException") ||
+      error.toString().contains("connection timeout")) {
+    errorMessageUpdate(AppConfig.noNet.tr);
+  } else if (error.toString().contains("SocketException") ||
+      error.toString().contains("Network is unreachable")) {
+    errorMessageUpdate(AppConfig.noNet.tr);
+  } else if (error is DioError) {
+    errorMessageUpdate(AppConfig.errorOoccurred.tr);
   } else {
     errorMessageUpdate(AppConfig.errorOoccurred.tr);
   }
@@ -178,6 +177,60 @@ dialogApp() {
                   // "تم تسجيل حسابك بنجاح \n سيتم مراجعة حسابك وتأكيدة خلال 24 ساعة",
                   fontSize: Get.height * .02,
                   color: Colors.black),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+dialogConfirm({Function()? onOk, Function()? onCancel}) {
+// dialogConfirm({VoidCallback? onOk, VoidCallback? onCancel}) {
+  Get.dialog(
+    Dialog(
+      backgroundColor: Colors.white70,
+      child: WillPopScope(
+        onWillPop: () async => true,
+        child: Container(
+          height: Get.height * .3,
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: Get.height * .017),
+              TextWidget(
+                  title: "هل تريد استلام المشروع؟",
+                  fontSize: Get.height * .02,
+                  color: Colors.black),
+              SizedBox(height: Get.height * .017),
+              TextWidget(
+                  title:
+                      "قبل اكمال المشروع تأكد انك استلمت جميع الملفات الخاصة بالمشروع",
+                  fontSize: Get.height * .02,
+                  color: Colors.black),
+              SizedBox(height: Get.height * .032),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: onOk,
+                    child: Text(
+                      AppConfig.ok.tr,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  ElevatedButton(
+                      onPressed: onCancel,
+                      child: Text(
+                        AppConfig.cancel.tr,
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              )
             ],
           ),
         ),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/screen/tab_screen.dart';
 
 import '../app_config/app_image.dart';
@@ -32,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
     String _userId = await prefs.getId();
     String _userAccountType = await prefs.getUserAccountType();
     String _email = await prefs.getEmail();
-    var getToken = await FirebaseMessaging.instance.getToken();
 
     setState(() {
       userStatus = currentStatus;
@@ -40,10 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
       email = _email;
 
       userAccountType = _userAccountType;
-      myLog("log  getToken", getToken);
-      myLog("log userId", userId);
-      myLog("log  email", email);
-      myLog("log  userAccountType", userAccountType);
+
       /*
       log userId :  affb7863-9757-4ef3-9fba-ec1e30550c1d
 [log]  log  email :  khalid@gmail.com
@@ -58,11 +53,11 @@ class _SplashScreenState extends State<SplashScreen> {
     getUserStatus();
     // .subscribeToTopic("affb7863-9757-4ef3-9fba-ec1e30550c1d");
 
-    if (userAccountType.isNotEmpty) {
-      FirebaseMessaging.instance.subscribeToTopic(userAccountType);
-    }
     if (userId.isNotEmpty) {
       FirebaseMessaging.instance.subscribeToTopic(userId);
+    }
+    if (userAccountType.isNotEmpty) {
+      FirebaseMessaging.instance.subscribeToTopic(userAccountType);
     }
 
     Timer(

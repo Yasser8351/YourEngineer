@@ -6,6 +6,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:your_engineer/app_config/api_url.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/controller/chat_controller.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/model/chat_models/chat_between_users_model.dart';
 import 'package:your_engineer/model/chat_models/last_chats_model.dart';
@@ -14,7 +15,6 @@ import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/loading_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/reytry_error_widget.dart';
 import 'dart:async';
-import 'package:your_engineer/debugger/my_debuger.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -43,6 +43,9 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
 
   @override
   initState() {
+    myLog("userEmail", widget.userEmail);
+    myLog("userId", widget.userId);
+    myLog("recieverName", widget.chatsModel.recieverName);
     connectSocket();
 
     getChatBetweenUsers();
