@@ -56,8 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     getUserStatus();
-    FirebaseMessaging.instance
-        .subscribeToTopic("affb7863-9757-4ef3-9fba-ec1e30550c1d");
+    // .subscribeToTopic("affb7863-9757-4ef3-9fba-ec1e30550c1d");
 
     if (userAccountType.isNotEmpty) {
       FirebaseMessaging.instance.subscribeToTopic(userAccountType);
