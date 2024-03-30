@@ -5,7 +5,8 @@ import 'package:your_engineer/controller/wallet_controller.dart';
 import 'package:your_engineer/enum/all_enum.dart';
 import 'package:your_engineer/widget/transactions_item_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/handling_data_view.dart';
-// import 'package:wasel/api/store.dart';
+import 'package:my_fatoorah/my_fatoorah.dart';
+import 'dart:developer';
 
 class WalletScreen extends StatefulWidget {
   // final Wallet wallet;
@@ -120,9 +121,15 @@ class _WalletScreenState extends State<WalletScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             RechargeWidget(
-                                text: "Recharge", icon: Icons.add_circle),
+                                text: "Recharge",
+                                icon: Icons.add_circle,
+                                onTap: () {
+                                  startPayment(context);
+                                }),
                             RechargeWidget(
-                                text: "Remove", icon: Icons.remove_circle),
+                                text: "Remove",
+                                icon: Icons.remove_circle,
+                                onTap: () {}),
                           ],
                         ),
                       ],
@@ -165,10 +172,28 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 }
 
+startPayment(context) async {
+  var response = await MyFatoorah.startPayment(
+    context: context,
+    request: MyfatoorahRequest.test(
+      currencyIso: Country.SaudiArabia,
+      successUrl: "Your success call back",
+      errorUrl: "Your error call back",
+      invoiceAmount: 100,
+      language: ApiLanguage.Arabic,
+      token:
+          'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
+    ),
+  );
+  log(response.toString());
+}
+
 class RechargeWidget extends StatelessWidget {
-  const RechargeWidget({super.key, required this.text, required this.icon});
+  const RechargeWidget(
+      {super.key, required this.text, required this.icon, required this.onTap});
   final String text;
   final IconData icon;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -176,15 +201,15 @@ class RechargeWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         InkWell(
-          onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) =>
-            //         const RechargeCreditCardScreen(),
-            //   ),
-            // );
-          },
+          onTap: onTap,
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) =>
+          //         const RechargeCreditCardScreen(),
+          //   ),
+          // );
+
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: Get.size.width * 0.022,

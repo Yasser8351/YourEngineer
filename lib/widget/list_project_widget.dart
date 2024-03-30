@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 import 'package:your_engineer/app_config/app_config.dart';
+import 'package:your_engineer/widget/list_my_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/card_with_image.dart';
 
 import '../controller/listProject_controller.dart';
@@ -34,7 +35,7 @@ class ListProjectWidget extends StatelessWidget {
         onTap: () {
           controller.goToOfferScreen(results);
         },
-        height: size.height,
+        height: size.height * .38,
         width: size.width * .8,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -43,7 +44,7 @@ class ListProjectWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "اسم المشروع" + " : " + results['proj_title'],
+                AppConfig.projectName.tr + " : " + results['proj_title'],
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -54,8 +55,8 @@ class ListProjectWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                "الوصف" + " : " + results['proj_description'],
-                maxLines: 1,
+                AppConfig.descreiption.tr + " : " + results['proj_description'],
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: Get.height * .02,
@@ -108,17 +109,11 @@ class ListProjectWidget extends StatelessWidget {
                           colorScheme,
                           Icons.today),
                       buildRowList(
-                        results['ProjStatus']['stat_name'],
+                        getTitleStatusProject(
+                            results['ProjStatus']['stat_name']),
                         colorScheme,
-                        results['ProjStatus']['stat_name'].contains("Open")
-                            ? Icons.open_in_browser
-                            : results['ProjStatus']['stat_name']
-                                    .contains("In-Progress")
-                                ? Icons.blinds
-                                : results['ProjStatus']['stat_name']
-                                        .contains("Close")
-                                    ? Icons.close
-                                    : Icons.local_dining,
+                        getIconStatusProject(
+                            results['ProjStatus']['stat_name']),
                       ),
                       buildRowList(
                         AppConfig.offerCount.tr +

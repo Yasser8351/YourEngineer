@@ -40,12 +40,12 @@ class SubServiceScreenController extends GetxController {
 
   @override
   void onInit() {
-    id = Get.arguments['id'];
-    title = Get.arguments['title'];
-    getSubCatigory(id);
-    String scatid = scatidvvv;
-    getProjectBySubCatigory(scatid);
-    update();
+    id = Get.arguments['id'] ?? "";
+    title = Get.arguments['title'] ?? "";
+    // getSubCatigory(id);
+    // String scatid = scatidvvv;
+    // getProjectBySubCatigory(scatid);
+    // update();
     super.onInit();
   }
 
@@ -111,6 +111,7 @@ class SubServiceScreenController extends GetxController {
         // showseuessToast(error.toString());
       }
     }
+    update();
 
     return apiResponse;
   }
@@ -120,7 +121,7 @@ class SubServiceScreenController extends GetxController {
     /// The Post type function takes the search value from the body
     /// get List of Cars in Home Screen
 
-    // loadingState(LoadingState.loading);
+    myLog("start getProjectBySubCatigory", "");
     isLoadingProject = true;
     try {
       var token = await _pref.getToken();
@@ -141,6 +142,8 @@ class SubServiceScreenController extends GetxController {
         int currentPage = response.data['currentPage'];
         isLoadingProject = false;
         loadingState(LoadingState.loaded);
+
+        myLog("response", response);
 
         if (results.isEmpty) {
           loadingState(LoadingState.noDataFound);
@@ -175,7 +178,7 @@ class SubServiceScreenController extends GetxController {
         // showseuessToast(error.toString());
       }
     }
-
+    update();
     return apiResponse;
   }
 }

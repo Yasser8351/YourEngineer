@@ -99,19 +99,11 @@ class PopulerServicesController extends GetxController {
       } else {
         // showseuessToast(error.toString());
       }
-
     }
     return apiResponse;
   }
 
   goToSubServicesScreen(String id, String title) {
-    Get.to(SubServicesScreen(), arguments: {'id': id, 'title': title});
+    Get.to(() => SubServicesScreen(), arguments: {'id': id, 'title': title});
   }
-  // setApiResponseValue(
-  //     String message, bool status, List<dynamic> data, Rx<LoadingState> state) {
-  //   apiResponse.message = message;
-  //   apiResponse.status = status;
-  //   // apiResponse.data = data;
-  //   loadingState = state;
-  // }
 }

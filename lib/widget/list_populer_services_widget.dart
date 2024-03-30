@@ -35,13 +35,6 @@ class ListPopulerServicesWidget extends StatelessWidget {
         onTap: () {
           controller.goToSubServicesScreen(
               populerServicesModel.id, populerServicesModel.titleServices);
-          // Navigator.of(context).push(MaterialPageRoute(
-          //   builder: (context) => SubServicesScreen(
-          //     titleServices: populerServicesModel.id,
-          //     listSubServices: const [],
-          //   ),
-          // )
-          // );
         },
         height: 300,
         width: 200,

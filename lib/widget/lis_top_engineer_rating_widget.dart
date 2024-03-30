@@ -86,7 +86,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     RatingBar(
                       sizeIcon: 15,
                       color: Colors.amber,
-                      rating: 5,
+                      rating: 0,
                       // rating: topEngineerRatingModel.user.rating,
                       onRatingChanged: (rating) {
                         // setState(() => this.rating = rating)
@@ -96,7 +96,7 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: TextWidget(
-                        title: 5.toString(),
+                        title: 0.toString(),
                         // title: topEngineerRatingModel.engineerRating.toString(),
                         fontSize: 15,
                         color: colorScheme.secondary,

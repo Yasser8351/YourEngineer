@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:your_engineer/screen/pdf_screen.dart';
+import 'package:your_engineer/utilits/app_ui_helpers.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import 'package:your_engineer/widget/shared_widgets/no_data.dart';
 import 'package:your_engineer/widget/shared_widgets/row_two_with_text.dart';
@@ -29,8 +30,6 @@ class OffersScreen extends StatefulWidget {
 
 class _OffersScreenState extends State<OffersScreen> {
   OfferController controller = Get.find();
-
-  // OfferController controller = Get.put(OfferController());
 
   bool isLoading = false;
   bool isAddProject = false;
@@ -144,14 +143,16 @@ class _OffersScreenState extends State<OffersScreen> {
                         ),
                         SizedBox(height: size.height * .031),
                         buildRowText(
-                            AppConfig.offer.tr,
+                            AppConfig.offerCount.tr,
                             controller.results['OffersCount'].toString(),
                             size,
                             colorScheme),
                         SizedBox(height: size.height * .031),
                         buildRowText(
                             AppConfig.dateProject.tr,
-                            controller.results['proj_period'].toString(),
+                            controller.results['proj_period'].toString() +
+                                " " +
+                                AppConfig.day.tr,
                             size,
                             colorScheme),
 
@@ -162,16 +163,30 @@ class _OffersScreenState extends State<OffersScreen> {
                         //   colorScheme,
                         // ),
                         SizedBox(height: size.height * .031),
-                        buildRowText(AppConfig.skills.tr,
-                            controller.results['skills'], size, colorScheme),
+                        controller.results['skills'].toString().isEmpty
+                            ? const SizedBox()
+                            : buildRowText(
+                                AppConfig.skills.tr,
+                                controller.results['skills'],
+                                size,
+                                colorScheme),
                         SizedBox(height: size.height * .03),
                       ],
                     ),
                   ),
                 )),
 
-                SizedBox(height: size.height * .07),
+                SizedBox(height: size.height * .05),
                 const Divider(),
+                SizedBox(height: px10),
+
+                TextWidget(
+                  title: AppConfig.allOffer.tr,
+                  fontSize: size.width * .052,
+                  color: colorScheme.primary,
+                  isTextStart: false,
+                ),
+                SizedBox(height: size.height * .01),
 
                 Builder(builder: (context) {
                   return Obx(

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 
@@ -83,7 +84,7 @@ class ProfileUserController extends GetxController {
       if (response.statusCode == 200) {
         userProfile = userProfileModelFromJson(jsonEncode(response.data));
 
-        print("nnnnnnnnnnonnnnoooooooooooo   $response");
+        log("nnnnnnnnnnonnnnoooooooooooo   $response");
 
         update();
 

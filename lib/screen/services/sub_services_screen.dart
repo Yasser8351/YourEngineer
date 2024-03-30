@@ -28,6 +28,18 @@ class _SubServicesScreenState extends State<SubServicesScreen> {
   String search = '';
   List<ProjectModel> listProject = [];
   int expandeIndex = 0;
+
+  @override
+  void initState() {
+    Future.delayed(Duration(), () {
+      controller.getSubCatigory(controller.id).then((value) {
+        String scatid = controller.scatidvvv;
+        controller.getProjectBySubCatigory(scatid);
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;

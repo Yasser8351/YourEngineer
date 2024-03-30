@@ -12,7 +12,7 @@ class AppConfig {
   static const String phone = "phone";
   static const String projectTitle = "projectTitle";
   static const String password = "password";
-  static const String addOfferSuccesfuly = "addOfferSuccesfuly";
+  static const String addOfferSuccesfuly = "Add Offer Succesfuly";
   static const String addSuccesfuly = "Added successfully";
   static const String comfirmPassword = "comfirm password";
 
@@ -31,7 +31,7 @@ class AppConfig {
   static const String addProtofilo = "Add Protofilo";
   static const String offerScreen = "Add Offer";
   static const String paypal = "Paypal";
-  static const String addSkills = "Add Skill";
+  static const String addSkills = "Add Skills (optinal)";
   static const String visa = "Visa";
   static const String chatRoom = "chat Room";
   static const String addSomeProject = "add some project";
@@ -57,6 +57,7 @@ class AppConfig {
   static const String home = "Home";
   static const String statusAccount = "Status Account";
   static const String days = "Days";
+  static const String day = "Day";
   static const String add = "Add";
   static const String chatEng = "Chat";
   static const String acceptOffer = "Accept offer";
@@ -71,6 +72,7 @@ class AppConfig {
   static const String exitApp = "Exit App";
   static const String send = "Send";
   static const String noData = "No data found";
+  static const String addedProjetSuccesfuly = "Succesfuly Added Projet";
   static const String editMyProject = "Edit My Project";
   static const String projectDetails = "Project details";
   static const String noMessageSuppoerYet =
@@ -113,6 +115,7 @@ class AppConfig {
   static const String name = "Name";
   static const String addYourName = "Add Your Name";
   static const String attachment = "Attachment";
+  static const String attachFile = "Attach file";
 
   static const String allFaildRequired = "All fields are required";
   static const String topEngineerRating = "Top Engineer Rating";
@@ -138,7 +141,9 @@ class AppConfig {
       "Note: Make the transfer and attach the receipt";
   static const String appCommissionIs = "app commission is";
   static const String yourBudget = "what's your budgets?";
+  static const String addBudgets = "your budget";
   static const String dateProject = "Date of Project";
+  static const String messages = "Messages";
   static const String noProjectsFound = "noProjectsFound";
   static const String withKeySearch = "withKeySearch";
   static const String projectDelivered =
@@ -156,6 +161,8 @@ class AppConfig {
 
   static const String cardNumber = "Card Number";
   static const String selectImageProject = "Selectd image of project";
+  static const String selectCategory = "Selectd category";
+  static const String selectSubCategory = "Selectd sub category";
   ////////////////////////////////
   /*
   static const String  ="";

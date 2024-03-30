@@ -86,7 +86,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                             children: [
                               RatingBar(
                                 color: Colors.amber,
-                                rating: 5,
+                                rating: 0,
                                 sizeIcon: 22,
                                 onRatingChanged: (rating) {
                                   // setState(() => this.rating = rating)
@@ -96,7 +96,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 6),
                                 child: TextWidget(
-                                  title: 5.toString(),
+                                  title: 0.toString(),
                                   fontSize: Get.width * .05,
                                   color: colorScheme.onSecondary,
                                 ),

@@ -108,10 +108,12 @@ class ListMyProjectWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BuildRowList(
-                        title: getTitleStatusProject(),
+                        title: getTitleStatusProject(
+                            ownerProjectModel.projStatus!.statName!),
                         // title: ownerProjectModel.projStatus!.statName,
                         colorScheme: colorScheme,
-                        icon: getIconStatusProject(),
+                        icon: getIconStatusProject(
+                            ownerProjectModel.projStatus!.statName!),
                         description: AppConfig.projectState.tr,
                       ),
                       BuildRowList(
@@ -191,30 +193,28 @@ class ListMyProjectWidget extends StatelessWidget {
       ),
     );
   }
+}
 
-  IconData getIconStatusProject() {
-    if (ownerProjectModel.projStatus!.statName!.contains("Open")) {
-      return Icons.open_in_browser;
-    } else if (ownerProjectModel.projStatus!.statName!
-        .contains("In-Progress")) {
-      return Icons.blinds;
-    } else if (ownerProjectModel.projStatus!.statName!.contains("Completed")) {
-      return Icons.check_box;
-    } else {
-      return Icons.close;
-    }
+IconData getIconStatusProject(String statName) {
+  if (statName.contains("Open")) {
+    return Icons.open_in_browser;
+  } else if (statName.contains("In-Progress")) {
+    return Icons.blinds;
+  } else if (statName.contains("Completed")) {
+    return Icons.check_box;
+  } else {
+    return Icons.close;
   }
+}
 
-  String getTitleStatusProject() {
-    if (ownerProjectModel.projStatus!.statName!.contains("Open")) {
-      return AppConfig.open.tr;
-    } else if (ownerProjectModel.projStatus!.statName!
-        .contains("In-Progress")) {
-      return AppConfig.inProgress.tr;
-    } else if (ownerProjectModel.projStatus!.statName!.contains("Completed")) {
-      return AppConfig.completed.tr;
-    } else {
-      return AppConfig.close.tr;
-    }
+String getTitleStatusProject(String statName) {
+  if (statName.contains("Open")) {
+    return AppConfig.open.tr;
+  } else if (statName.contains("In-Progress")) {
+    return AppConfig.inProgress.tr;
+  } else if (statName.contains("Completed")) {
+    return AppConfig.completed.tr;
+  } else {
+    return AppConfig.close.tr;
   }
 }

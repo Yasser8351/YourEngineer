@@ -2,10 +2,13 @@
 // import 'dart:html';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:your_engineer/screen/tab_screen.dart';
+import 'package:your_engineer/utilits/app_ui_helpers.dart';
+import 'package:your_engineer/widget/shared_widgets/text_faild_input.dart';
 
 import '../../app_config/app_config.dart';
 import '../../controller/add_project_controller.dart';
@@ -47,299 +50,256 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           );
         } else {
           return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: size.height * .02),
-                buildTextFormFaild(
-                  addProjectController.titleController,
-                  AppConfig.addTitle,
-                  false,
-                  TextInputType.text,
-                  const Icon(Icons.add),
-                  colorScheme,
-                  30,
-                  1,
-                ),
-                buildTextFormFaild(
-                  addProjectController.descriptionController,
-                  AppConfig.addDiscription,
-                  false,
-                  TextInputType.text,
-                  const Icon(Icons.add),
-                  colorScheme,
-                  300,
-                  5,
-                ),
-                ///////////////////////////////////////
-                ///
-                TextWidget(
-                  title: AppConfig.chooseCategory,
-                  fontSize: 16,
-                  color: colorScheme.secondary,
-                  isTextStart: true,
-                ),
-                // buildRowList(
-                //     context, AppConfig.chooseCategory, colorScheme, Icons.category),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.category),
-                    ),
-                    Container(
-                      width: 300,
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: DropdownButton(
-                        hint: Text("Select Category"),
-                        items: addProjectController.listPopulerServices
-                            .map((e) => DropdownMenuItem(
-                                  child: Text(e.titleServices),
-                                  value: e.id,
-                                ))
-                            .toList(),
-                        onChanged: (val) {
-                          setState(() {
-                            addProjectController.selectedCat = val.toString();
-                            isLoadingSubCategory = true;
-                            myLog('val', val);
-                            addProjectController
-                                .getsubCatigory(val.toString())
-                                .then((value) => {
-                                      setState(() {
-                                        isLoadingSubCategory = false;
-                                      })
-                                    });
-                          });
-                        },
-                        value: addProjectController.selectedCat,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: px5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: size.height * .02),
+                  buildTextFormFaild(
+                    addProjectController.titleController,
+                    AppConfig.addTitle.tr,
+                    false,
+                    TextInputType.text,
+                    const Icon(Icons.add),
+                    colorScheme,
+                    30,
+                    1,
+                  ),
+                  buildTextFormFaild(
+                    addProjectController.descriptionController,
+                    AppConfig.addDiscription.tr,
+                    false,
+                    TextInputType.text,
+                    const Icon(Icons.add),
+                    colorScheme,
+                    300,
+                    5,
+                  ),
+                  ///////////////////////////////////////
+                  ///
+                  // TextWidget(
+                  //   title: AppConfig.chooseCategory.tr,
+                  //   fontSize: px16,
+                  //   color: colorScheme.secondary,
+                  //   isTextStart: true,
+                  // ),
+                  // buildRowList(
+                  //     context, AppConfig.chooseCategory, colorScheme, Icons.category),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(CupertinoIcons.app_badge),
+                        // child: Icon(Icons.category),
                       ),
-                    ),
-                  ],
-                ),
-
-                /////////////////////////////////////////////////
-                ///
-
-                TextWidget(
-                  title: "Choose Sub Category",
-                  fontSize: 16,
-                  color: colorScheme.secondary,
-                  isTextStart: true,
-                ),
-                // buildRowList(
-                //     context, AppConfig.chooseCategory, colorScheme, Icons.category),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.category),
-                    ),
-                    Container(
-                      width: 300,
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: isLoadingSubCategory
-                          ? Center(child: CircularProgressIndicator())
-                          : DropdownButton(
-                              hint: Text("Select Sub Category"),
-                              items: addProjectController.listSubCat
-                                  .map((e) => DropdownMenuItem(
-                                        child: Text(e.name!),
-                                        value: e.id,
-                                      ))
-                                  .toList(),
-                              onChanged: (val) {
-                                setState(() {
-                                  myLog('val', val);
-                                  addProjectController.selectedSubCat =
-                                      val.toString();
-                                });
-                              },
-                              value: addProjectController.selectedSubCat,
-                            ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 11),
-                TextWidget(
-                  title: AppConfig.projectDelivered,
-                  fontSize: 16,
-                  color: colorScheme.secondary,
-                  isTextStart: true,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildRowList(context, AppConfig.delivaryTime, colorScheme,
-                        Icons.timelapse),
-                    SizedBox(
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 0),
-                        child: buildTextFormFaild(
-                          addProjectController.daysController,
-                          "days",
-                          false,
-                          TextInputType.number,
-                          const Icon(Icons.data_array_sharp),
-                          colorScheme,
-                          20,
-                          1,
+                      Container(
+                        width: 300,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: DropdownButton(
+                          hint: Text(
+                            AppConfig.selectCategory.tr,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          items: addProjectController.listPopulerServices
+                              .map((e) => DropdownMenuItem(
+                                    child: Text(e.titleServices),
+                                    value: e.id,
+                                  ))
+                              .toList(),
+                          onChanged: (val) {
+                            setState(() {
+                              addProjectController.selectedCat = val.toString();
+                              isLoadingSubCategory = true;
+                              myLog('val', val);
+                              addProjectController
+                                  .getsubCatigory(val.toString())
+                                  .then((value) => {
+                                        setState(() {
+                                          isLoadingSubCategory = false;
+                                        })
+                                      });
+                            });
+                          },
+                          value: addProjectController.selectedCat,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 25),
-                TextWidget(
-                  title: AppConfig.yourBudget.tr,
-                  fontSize: 16,
-                  color: colorScheme.secondary,
-                  isTextStart: true,
-                ),
-                Row(
-                  children: [
-                    buildRowList(context, AppConfig.budget, colorScheme,
-                        Icons.attach_money_outlined),
-                    Container(
-                      width: 200,
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      child: DropdownButton(
-                        hint: Text("your budget"),
-                        items: addProjectController.listPriceRange
-                            .map((e) => DropdownMenuItem(
-                                  child: Text(e.rangeName!),
-                                  value: e.id,
-                                ))
-                            .toList(),
-                        onChanged: (val) {
-                          setState(() {
-                            myLog('val', val);
-                            addProjectController.selectedPriceRange =
-                                val.toString();
-                          });
-                        },
-                        value: addProjectController.selectedPriceRange,
+                    ],
+                  ),
+
+                  /////////////////////////////////////////////////
+                  ///
+                  verticalSpaceMedium,
+                  // TextWidget(
+                  //   title: "Choose Sub Category",
+                  //   fontSize: px16,
+                  //   color: colorScheme.secondary,
+                  //   isTextStart: true,
+                  // ),
+                  // buildRowList(
+                  //     context, AppConfig.chooseCategory, colorScheme, Icons.category),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(CupertinoIcons.app_badge),
+                      ),
+                      Container(
+                        width: 300,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: isLoadingSubCategory
+                            ? Center(child: CircularProgressIndicator())
+                            : DropdownButton(
+                                hint: Text(
+                                  AppConfig.selectSubCategory.tr,
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                items: addProjectController.listSubCat
+                                    .map((e) => DropdownMenuItem(
+                                          child: Text(e.name!),
+                                          value: e.id,
+                                        ))
+                                    .toList(),
+                                onChanged: (val) {
+                                  setState(() {
+                                    addProjectController.selectedSubCat =
+                                        val.toString();
+                                  });
+                                },
+                                value: addProjectController.selectedSubCat,
+                              ),
+                      ),
+                    ],
+                  ),
+                  verticalSpaceMedium,
+
+                  const SizedBox(height: 11),
+                  TextWidget(
+                    title: AppConfig.projectDelivered.tr,
+                    fontSize: px16,
+                    color: colorScheme.secondary,
+                    isTextStart: true,
+                  ),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildRowList(context, AppConfig.delivaryTime.tr,
+                          colorScheme, Icons.timelapse),
+                      SizedBox(
+                        width: 150,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 0),
+                          child: buildTextFormFaild(
+                            addProjectController.daysController,
+                            AppConfig.days.tr,
+                            false,
+                            TextInputType.number,
+                            const Icon(Icons.data_array_sharp),
+                            colorScheme,
+                            20,
+                            1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 25),
+                  TextWidget(
+                    title: AppConfig.yourBudget.tr,
+                    fontSize: px16,
+                    color: colorScheme.secondary,
+                    isTextStart: true,
+                  ),
+
+                  Row(
+                    children: [
+                      buildRowList(context, AppConfig.budget.tr, colorScheme,
+                          Icons.attach_money_outlined),
+                      Container(
+                        width: px200,
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: DropdownButton(
+                          hint: Text(
+                            AppConfig.budget.tr,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          items: addProjectController.listPriceRange
+                              .map((e) => DropdownMenuItem(
+                                    child: Text(e.rangeName!),
+                                    value: e.id,
+                                  ))
+                              .toList(),
+                          onChanged: (val) {
+                            setState(() {
+                              addProjectController.selectedPriceRange =
+                                  val.toString();
+                            });
+                          },
+                          value: addProjectController.selectedPriceRange,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  buildTextFormFaild(
+                    addProjectController.skillsController,
+                    AppConfig.addSkills.tr,
+                    false,
+                    TextInputType.text,
+                    const Icon(Icons.add),
+                    colorScheme,
+                    300,
+                    5,
+                  ),
+                  verticalSpaceMedium,
+                  InkWell(
+                    onTap: () async {
+                      XFile? xfile = await ImagePicker()
+                          .pickImage(source: ImageSource.gallery);
+                      myfile = File(xfile!.path);
+                      setState(() {});
+                    },
+                    child: Center(
+                      child: Container(
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.grey.shade300,
+                            ),
+                            borderRadius: BorderRadius.circular(10)),
+                        //
+                        width: size.width * .60,
+                        height: size.height * .15,
+                        child: myfile != null
+                            ? Image.file(
+                                myfile!,
+                                fit: BoxFit.fill,
+                              )
+                            : Center(child: Text(AppConfig.attachFile.tr)),
                       ),
                     ),
-                  ],
-                ),
-
-                buildTextFormFaild(
-                  addProjectController.skillsController,
-                  'Add Skills',
-                  false,
-                  TextInputType.text,
-                  const Icon(Icons.add),
-                  colorScheme,
-                  300,
-                  5,
-                ),
-
-                InkWell(
-                  onTap: () async {
-                    XFile? xfile = await ImagePicker()
-                        .pickImage(source: ImageSource.gallery);
-                    // Navigator.of(context).pop();
-                    myfile = File(xfile!.path);
-                    setState(() {});
-
-                    // showModalBottomSheet(
-                    //     context: context,
-                    //     builder: (context) => Container(
-                    //           height: 200,
-                    //           child: Column(
-                    //             children: [
-                    //               const SizedBox(height: 20),
-                    //               Container(
-                    //                 width: double.infinity,
-                    //                 alignment: Alignment.center,
-                    //                 margin: const EdgeInsets.all(10),
-                    //                 padding: const EdgeInsets.symmetric(
-                    //                     vertical: 15, horizontal: 10),
-                    //                 color: Colors.blueAccent,
-                    //                 child: InkWell(
-                    //                   onTap: () async {
-                    //                     xfile = await ImagePicker()
-                    //                         .pickImage(
-                    //                             source: ImageSource.camera);
-                    //                     Navigator.of(context).pop();
-                    //                     myfile = File(xfile!.path);
-                    //                     setState(() {});
-                    //                   },
-                    //                   child: const Text(
-                    //                     "Chose Image From Camera",
-                    //                     style: TextStyle(
-                    //                         fontSize: 15,
-                    //                         fontWeight: FontWeight.bold,
-                    //                         color: Colors.white),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               const SizedBox(height: 10),
-                    //               Container(
-                    //                 width: double.infinity,
-                    //                 alignment: Alignment.center,
-                    //                 margin: const EdgeInsets.all(10),
-                    //                 padding: const EdgeInsets.symmetric(
-                    //                     vertical: 15, horizontal: 10),
-                    //                 color: Theme.of(context)
-                    //                     .colorScheme
-                    //                     .primary,
-                    //                 child: InkWell(
-                    //                   onTap: () async {
-                    //                     XFile? xfile = await ImagePicker()
-                    //                         .pickImage(
-                    //                             source:
-                    //                                 ImageSource.gallery);
-                    //                     Navigator.of(context).pop();
-                    //                     myfile = File(xfile!.path);
-                    //                     setState(() {});
-                    //                   },
-                    //                   child: const Text(
-                    //                     "Chose Image From Galary",
-                    //                     style: TextStyle(
-                    //                         fontSize: 15,
-                    //                         fontWeight: FontWeight.bold,
-                    //                         color: Colors.white),
-                    //                   ),
-                    //                 ),
-                    //               )
-                    //             ],
-                    //           ),
-                    //         ));
-                  },
-                  child: Center(
-                    child: Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                            color: Colors.grey.shade300,
-                          ),
-                          borderRadius: BorderRadius.circular(10)),
-                      //
-                      width: size.width * .60,
-                      height: size.height * .15,
-                      child: myfile != null
-                          ? Image.file(
-                              myfile!,
-                              fit: BoxFit.fill,
-                            )
-                          : Center(child: Text("ارفق ملف")),
-                    ),
                   ),
-                ),
-              ],
+                  verticalSpaceMedium,
+                  bottomNavigationBar(colorScheme),
+                  verticalSpaceMedium,
+                ],
+              ),
             ),
           );
         }
       }),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 25,
+    );
+  }
+
+  bottomNavigationBar(colorScheme) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: px10,
+          horizontal: px25,
         ),
         child: ElevatedButton(
           onPressed: () async {
@@ -365,7 +325,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             if (isAddProject) {
               addProjectController.clearController();
               Helper.showseuess(
-                  context: context, subtitle: "Succesfuly Added Projet");
+                  context: context,
+                  subtitle: AppConfig.addedProjetSuccesfuly.tr);
 
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => TabScreen(selectIndex: 2)));
@@ -375,14 +336,14 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: px32, vertical: px16),
             child: isLoading
                 ? CircularProgressIndicator(color: Colors.white)
                 : TextWidget(
                     title: widget.isMyProject
-                        ? AppConfig.editMyProject
-                        : AppConfig.submitYourProject,
-                    fontSize: 20,
+                        ? AppConfig.editMyProject.tr
+                        : AppConfig.submitYourProject.tr,
+                    fontSize: px16,
                     color: colorScheme.surface),
           ),
         ),
@@ -419,8 +380,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
         padding: const EdgeInsets.only(top: 10),
         child: TextWidget(
             title: isMyProject
-                ? AppConfig.editMyProject
-                : AppConfig.addProjectScreen,
+                ? AppConfig.editMyProject.tr
+                : AppConfig.addProjectScreen.tr,
             fontSize: 18,
             color: Colors.white),
       ),
@@ -461,15 +422,29 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
           onSurface: Colors.black,
         ),
       ),
-      child: TextField(
+      child: TextFaildInput(
+        padingTop: px10,
+        padingRigth: px16,
+        padingLeft: px16,
         controller: controller,
-        keyboardType: inputType,
+        inputType: inputType,
         maxLength: maxLength,
-        textInputAction: TextInputAction.next,
+        inputAction: TextInputAction.next,
         maxLines: maxLines,
-        scribbleEnabled: true,
-        decoration: InputDecoration(hintText: label),
+        // label: label,
+        hint: label,
+        // scribbleEnabled: true,
+        // decoration: InputDecoration(hintText: label),
       ),
+      // child: TextField(
+      //   controller: controller,
+      //   keyboardType: inputType,
+      //   maxLength: maxLength,
+      //   textInputAction: TextInputAction.next,
+      //   maxLines: maxLines,
+      //   scribbleEnabled: true,
+      //   decoration: InputDecoration(hintText: label),
+      // ),
     );
   }
 }

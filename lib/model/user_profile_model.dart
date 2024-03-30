@@ -48,7 +48,7 @@ class UserProfileModel {
         fullname: json["fullname"] ?? '',
         phone: json["phone"] ?? '',
         imgpath: json["imgpath"] ?? '',
-        review_avg: json["review_avg"].toString(),
+        review_avg: json["review_avg"] ?? "0.0",
         isActive: json["is_active"] ?? false,
         userprofiles: json["userprofiles"] == null
             ? Userprofiles(aboutUser: '', specialization: '')

@@ -87,7 +87,7 @@ class _TabScreenState extends State<TabScreen> {
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.chat_bubble_outline_rounded),
-                      label: AppConfig.chat.tr,
+                      label: AppConfig.messages.tr,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.content_paste_go),
