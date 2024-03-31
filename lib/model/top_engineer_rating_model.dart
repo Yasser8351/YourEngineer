@@ -59,7 +59,8 @@ class Result {
     required this.imgPath,
     required this.createdAt,
     required this.updatedAt,
-    required this.isActive,
+    this.isActive = 0,
+    this.review_avg = 0,
   });
 
   String id;
@@ -71,7 +72,8 @@ class Result {
   String imgPath;
   String createdAt;
   String updatedAt;
-  bool isActive;
+  int isActive;
+  double review_avg;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"] ?? '',
@@ -83,7 +85,8 @@ class Result {
         imgPath: json["imgPath"] ?? '',
         createdAt: json["createdAt"] ?? '',
         updatedAt: json["updatedAt"] ?? '',
-        isActive: json["is_active"] ?? false,
+        isActive: json["is_active"] ?? 0,
+        review_avg: json["review_avg"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

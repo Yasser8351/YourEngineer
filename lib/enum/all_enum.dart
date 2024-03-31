@@ -13,6 +13,11 @@ enum ProjectStatus {
   close,
 }
 
+enum LodingType {
+  addReview,
+  loadingPhoneNumber,
+}
+
 enum ShimmerType {
   shimmerCircular,
   shimmerHorizontal,

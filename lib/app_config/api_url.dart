@@ -32,6 +32,7 @@ class ApiUrl {
   static String get getCommission => '$_root/site/currentrate';
   static String get getPrivacyPolicy => '$_root/site/privacy';
   static String get getContactNumber => '$_root/site/contact';
+  static String get addReviews => '$_root/reviews';
 
   static String completeProject({required String projectId}) {
     return '$_root/offer/project/complete/$projectId';

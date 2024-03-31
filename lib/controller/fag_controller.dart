@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:your_engineer/screen/profile/add_review_screen.dart';
 import '../api/api_response.dart';
 import '../app_config/api_url.dart';
 import '../app_config/app_config.dart';
@@ -26,6 +27,7 @@ class FaqController extends GetxController {
 
   var loadingState = LoadingState.initial.obs;
   var loadingPhoneNumber = LoadingState.initial;
+  var loadingAddReview = LoadingState.initial;
   final _shared = SharedPrefUser();
 
   var loadingStateCompleteProject = LoadingState.initial.obs;
@@ -94,15 +96,10 @@ class FaqController extends GetxController {
       //     LoadingState.error.obs);
       if (error is TimeoutException) {
         message = AppConfig.timeOut;
-
-        showseuessToast(error.toString());
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
-        showseuessToast(AppConfig.unAutaristion);
       } else {
         message = AppConfig.noNet;
-
-        showseuessToast(error.toString());
       }
 
       myLog("catch error getFaq: ", error.toString());
@@ -154,7 +151,7 @@ class FaqController extends GetxController {
   }
 
   Future<void> getContactNumber() async {
-    changeLoadingState(LoadingState.loading);
+    changeLoadingState(LoadingState.loading, LodingType.loadingPhoneNumber);
 
     try {
       var token = await _shared.getToken();
@@ -171,20 +168,19 @@ class FaqController extends GetxController {
       myLog("response.statusCode methode", "${response.statusCode}");
 
       if (response.statusCode == 200) {
-        changeLoadingState(LoadingState.loaded);
+        changeLoadingState(LoadingState.loaded, LodingType.loadingPhoneNumber);
         whatsappPhoneNumber = response.data['phone'].toString();
       } else {
         errorMessage = AppConfig.errorOoccurred.tr;
-        changeLoadingState(
-          LoadingState.error,
-        );
+        changeLoadingState(LoadingState.error, LodingType.loadingPhoneNumber);
       }
     } catch (error) {
-      changeLoadingState(LoadingState.error);
+      changeLoadingState(LoadingState.error, LodingType.loadingPhoneNumber);
 
       handlingCatchError(
           error: error,
-          changeLoadingState: () => changeLoadingState(loadingPhoneNumber),
+          changeLoadingState: () => changeLoadingState(
+              loadingPhoneNumber, LodingType.loadingPhoneNumber),
           errorMessageUpdate: (meesgae) => errorMessageUpdate(meesgae));
     }
   }
@@ -218,12 +214,15 @@ class FaqController extends GetxController {
         'statusCode : ${response.statusCode} \n',
         'response : ${response.body}',
       );
-
+      final Map parsed = json.decode(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         loadingStateCompleteProject(LoadingState.loaded);
+
+        Helper.showseuess(context: context, subtitle: parsed['msg']);
+
+        Get.to(() => const AddReviewScreen());
       } else {
         loadingStateCompleteProject(LoadingState.error);
-        final Map parsed = json.decode(response.body);
 
         Helper.showError(context: context, subtitle: parsed['msg'].toString());
       }
@@ -232,7 +231,7 @@ class FaqController extends GetxController {
       if (error.toString().contains('TimeoutException') ||
           error.toString().contains("SocketException") ||
           error.toString().contains("Network is unreachable")) {
-        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
+        Helper.showError(context: context, subtitle: AppConfig.noNet.tr);
       } else if (error is DioError) {
         Helper.showError(
             context: context, subtitle: error.response!.data['msg']);
@@ -244,10 +243,54 @@ class FaqController extends GetxController {
     }
   }
 
+  Future<void> addReviews() async {
+    changeLoadingState(LoadingState.loading, LodingType.addReview);
+
+    try {
+      var token = await _shared.getToken();
+
+      var response = await Dio()
+          .post(
+            ApiUrl.addReviews,
+            data: {
+              "talent_id": "dac20c02-74e8-419f-a924-84753252c36c",
+              "comment": "This is a nice working",
+              "star_rate": 5,
+              "proj_id": "d0da3a92-f7a0-4446-8ede-8386512c16e7"
+            },
+            options: Options(
+              headers: ApiUrl.getHeader(token: token),
+            ),
+          )
+          .timeout(Duration(seconds: ApiUrl.timeoutDuration));
+
+      myLog("response", "${response}");
+
+      if (response.statusCode == 200) {
+        changeLoadingState(LoadingState.loaded, LodingType.addReview);
+      } else {
+        errorMessage = AppConfig.errorOoccurred.tr;
+        changeLoadingState(LoadingState.error, LodingType.addReview);
+      }
+    } catch (error) {
+      changeLoadingState(LoadingState.error, LodingType.addReview);
+
+      handlingCatchError(
+          error: error,
+          changeLoadingState: () =>
+              changeLoadingState(loadingPhoneNumber, LodingType.addReview),
+          errorMessageUpdate: (meesgae) => errorMessageUpdate(meesgae));
+    }
+  }
+
   ///////////////////////////////////
 
-  changeLoadingState(LoadingState _isLoading) {
-    loadingPhoneNumber = _isLoading;
+  changeLoadingState(LoadingState _isLoading, LodingType lodingType) {
+    if (lodingType == LodingType.addReview) {
+      loadingAddReview = _isLoading;
+    } else {
+      loadingPhoneNumber = _isLoading;
+    }
 
     update();
   }

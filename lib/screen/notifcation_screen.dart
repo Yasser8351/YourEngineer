@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paginated_list/paginated_list.dart';
 import 'package:your_engineer/screen/engineers/all_engineer_screen.dart';
+import 'package:your_engineer/utilits/app_ui_helpers.dart';
 import 'package:your_engineer/widget/shared_widgets/no_data.dart';
 
 import '../app_config/app_config.dart';
@@ -36,7 +37,7 @@ class _NotifcationScreenState extends State<NotifcationScreen> {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: _getAppBar(context),
+      appBar: getAppBar(context, AppConfig.notifcation.tr),
       body: GetBuilder<NotificationController>(
         builder: (controller) {
           if (controller.loadingState.value == LoadingState.noDataFound)
@@ -75,6 +76,7 @@ class _NotifcationScreenState extends State<NotifcationScreen> {
               builder: (item, int index) {
                 return Column(
                   children: [
+                    verticalSpaceSmall,
                     InkWell(
                       onTap: () {
                         Get.defaultDialog(
@@ -105,23 +107,22 @@ class _NotifcationScreenState extends State<NotifcationScreen> {
       ),
     );
   }
+}
 
-  _getAppBar(BuildContext context) {
-    return AppBar(
-      title: const Padding(
-        padding: EdgeInsets.only(top: 10),
-        child: TextWidget(
-            title: AppConfig.notifcation, fontSize: 18, color: Colors.white),
-      ),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.navigate_before, size: 40),
-        color: Colors.white,
-      ),
-    );
-  }
+getAppBar(BuildContext context, String title) {
+  return AppBar(
+    title: Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: TextWidget(title: title, fontSize: 18, color: Colors.white),
+    ),
+    leading: IconButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+      icon: const Icon(Icons.navigate_before, size: 40),
+      color: Colors.white,
+    ),
+  );
 }
 
 /*

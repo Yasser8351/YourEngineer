@@ -92,7 +92,9 @@ class _BottomNavigationCardWidgetState
                     }
                     if (widget.expandedIndex == 1) {
                       return ReviewsWidget(
-                          size: widget.size, colorScheme: widget.colorScheme);
+                          talentreview: widget.userProfileModel.talentreview,
+                          size: widget.size,
+                          colorScheme: widget.colorScheme);
                     } else if (widget.expandedIndex == 2) {
                       return buildBusinessFair(
                         widget.colorScheme,
@@ -140,6 +142,8 @@ class _BottomNavigationCardWidgetState
                     : Builder(builder: (context) {
                         if (widget.expandedIndex == 1) {
                           return ReviewsWidget(
+                              talentreview:
+                                  widget.userProfileModel.talentreview,
                               size: widget.size,
                               colorScheme: widget.colorScheme);
                         } else if (widget.expandedIndex == 2) {
@@ -223,12 +227,8 @@ buildPersonalProfile(ColorScheme colorScheme, Size size,
           colorScheme),
       buildRowItem(AppConfig.specialization.tr,
           userProfileModel.userprofiles.specialization, colorScheme),
-      buildRowItem(
-          AppConfig.totalReviews.tr,
-          userProfileModel.review_avg.contains('null')
-              ? "0"
-              : userProfileModel.review_avg,
-          colorScheme),
+      buildRowItem(AppConfig.totalReviews.tr,
+          userProfileModel.review_avg.toString(), colorScheme),
       buildRowItem(AppConfig.completedProjects.tr, "0", colorScheme),
       buildRowItem(AppConfig.projectsWorksOn.tr, "0", colorScheme),
       buildRowItem(AppConfig.dateofRegistration.tr, "----", colorScheme),

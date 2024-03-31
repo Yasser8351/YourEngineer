@@ -17,7 +17,7 @@ class UserProfileModel {
     required this.fullname,
     required this.phone,
     required this.imgpath,
-    required this.review_avg,
+    this.review_avg = 0,
     required this.isActive,
     required this.userprofiles,
     required this.usercredentials,
@@ -31,7 +31,7 @@ class UserProfileModel {
   String email;
   String fullname;
   String phone;
-  String review_avg;
+  int review_avg;
   String imgpath;
   bool isActive;
   Userprofiles userprofiles;
@@ -39,7 +39,9 @@ class UserProfileModel {
   List<Userskill?> userskills;
   List<Userportfolio?>? userportfolio;
   Wallet wallet;
-  List<dynamic> talentreview;
+  List<Talentreview> talentreview;
+
+  // List<dynamic> talentreview;
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) =>
       UserProfileModel(
@@ -48,7 +50,7 @@ class UserProfileModel {
         fullname: json["fullname"] ?? '',
         phone: json["phone"] ?? '',
         imgpath: json["imgpath"] ?? '',
-        review_avg: json["review_avg"] ?? "0.0",
+        review_avg: json["review_avg"] ?? 0,
         isActive: json["is_active"] ?? false,
         userprofiles: json["userprofiles"] == null
             ? Userprofiles(aboutUser: '', specialization: '')
@@ -66,7 +68,9 @@ class UserProfileModel {
             ? Wallet(
                 id: '', user_id: '', credit: '', createdAt: '', updatedAt: '')
             : Wallet.fromJson(json["wallet"]),
-        talentreview: json["talentreview"] ?? '',
+        talentreview: List.from(json['talentreview'])
+            .map((e) => Talentreview.fromJson(e))
+            .toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -198,4 +202,95 @@ class Wallet {
         credit: json["credit"] ?? '0.0',
         updatedAt: json["updatedAt"] ?? '',
       );
+}
+
+class Talentreview {
+  Talentreview({
+    required this.comment,
+    required this.starRate,
+    required this.createdAt,
+    required this.owner,
+    required this.project,
+  });
+  late final String comment;
+  late final int starRate;
+  late final String createdAt;
+  late final Owner owner;
+  late final Project project;
+
+  Talentreview.fromJson(Map<String, dynamic> json) {
+    comment = json['comment'] ?? "";
+    starRate = json['star_rate'] ?? 0;
+    createdAt = json['createdAt'] ?? "";
+    owner = Owner.fromJson(json['owner']);
+    project = Project.fromJson(json['Project']);
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['comment'] = comment;
+    _data['star_rate'] = starRate;
+    _data['createdAt'] = createdAt;
+    _data['owner'] = owner.toJson();
+    _data['Project'] = project.toJson();
+    return _data;
+  }
+}
+
+class Owner {
+  Owner({
+    required this.id,
+    required this.email,
+    required this.fullname,
+    required this.phone,
+    required this.imgpath,
+  });
+  late final String id;
+  late final String email;
+  late final String fullname;
+  late final String phone;
+  late final String imgpath;
+
+  Owner.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? "";
+    email = json['email'] ?? "";
+    fullname = json['fullname'] ?? "";
+    phone = json['phone'] ?? "";
+    imgpath = json['imgpath'] ?? "";
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['email'] = email;
+    _data['fullname'] = fullname;
+    _data['phone'] = phone;
+    _data['imgpath'] = imgpath;
+    return _data;
+  }
+}
+
+class Project {
+  Project({
+    required this.projTitle,
+    required this.projDescription,
+    required this.projPeriod,
+  });
+  late final String projTitle;
+  late final String projDescription;
+  late final int projPeriod;
+
+  Project.fromJson(Map<String, dynamic> json) {
+    projTitle = json['proj_title'] ?? "";
+    projDescription = json['proj_description'] ?? "";
+    projPeriod = json['proj_period'] ?? 0;
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['proj_title'] = projTitle;
+    _data['proj_description'] = projDescription;
+    _data['proj_period'] = projPeriod;
+    return _data;
+  }
 }

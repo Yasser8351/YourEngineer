@@ -30,6 +30,7 @@ class NoticationWidget extends StatelessWidget {
                 onPressed: () {},
                 icon: const Icon(
                   Icons.notifications_none,
+                  color: Colors.green,
                   size: 30,
                 ),
                 color: colorScheme.secondary,

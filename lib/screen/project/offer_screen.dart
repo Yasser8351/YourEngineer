@@ -179,7 +179,6 @@ class _OffersScreenState extends State<OffersScreen> {
                 SizedBox(height: size.height * .05),
                 const Divider(),
                 SizedBox(height: px10),
-
                 TextWidget(
                   title: AppConfig.allOffer.tr,
                   fontSize: size.width * .052,

@@ -9,11 +9,13 @@ class AppConfig {
   static const String projectOwner = "Project Owner";
   static const String amountLess = "The bid amount must not be less than";
   static const String emal = "email";
-  static const String phone = "phone";
   static const String projectTitle = "projectTitle";
   static const String password = "password";
   static const String addOfferSuccesfuly = "Add Offer Succesfuly";
   static const String addSuccesfuly = "Added successfully";
+  static const String phone = "phone";
+  static const String addReview = "Add review";
+  static const String noReviewsFound = "No reviews found";
   static const String comfirmPassword = "comfirm password";
 
   static const String open = "Open";
@@ -82,7 +84,7 @@ class AppConfig {
   static const String noProjectYet = "No project yet";
   static const String profile = "My Profile";
   static const String version = "version";
-  static const String buildNumber = "1.0.10";
+  static const String buildNumber = "1.0.11";
   static const String termsOfServices = "Terms of service";
   static const String privacyPolicy = "Privacy Policy";
   static const String logout = "Logout";

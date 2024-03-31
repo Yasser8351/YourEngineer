@@ -21,6 +21,9 @@ final double px10 = Get.height * .0128535;
 /// 12.0 pix
 final double px12 = Get.height * .015425;
 
+/// 15.0 pix
+final double px15 = Get.height * .02;
+
 /// 16.0 pix
 final double px16 = Get.height * .020566;
 

@@ -44,7 +44,6 @@ class ProfileUserController extends GetxController {
           Wallet(id: '', user_id: '', credit: '', createdAt: '', updatedAt: ''),
       phone: '',
       imgpath: '',
-      review_avg: '',
       isActive: false);
   ApiResponse apiResponse = ApiResponse();
   bool isLoding = false;

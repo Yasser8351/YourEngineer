@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     AppLanguageContoller contoller = Get.put(AppLanguageContoller());
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: '',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Changa',
@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
       ),
       locale: contoller.local ?? Get.deviceLocale,
       translations: AppLocalization(),
-      // home: const PDFScreen(filePath: ''),
+      // home: const AddReviewScreen(),
       home: const SplashScreen(),
       initialBinding: BinindingApp(),
       initialRoute: '/',

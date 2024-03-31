@@ -4,6 +4,7 @@ import 'package:your_engineer/app_config/api_url.dart';
 import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/model/top_engineer_rating_model.dart';
 import 'package:your_engineer/screen/profile/profile_engineer_screen.dart';
+import 'package:your_engineer/utilits/app_ui_helpers.dart';
 import 'package:your_engineer/widget/shared_widgets/image_network.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
@@ -84,10 +85,11 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     RatingBar(
-                      sizeIcon: 15,
+                      sizeIcon: px15,
                       color: Colors.amber,
-                      rating: 0,
-                      // rating: topEngineerRatingModel.user.rating,
+                      // rating: 0,
+                      rating: double.parse(
+                          topEngineerRatingModel.review_avg.toString()),
                       onRatingChanged: (rating) {
                         // setState(() => this.rating = rating)
                       },
@@ -96,9 +98,9 @@ class ListTopEngineerRatingWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: TextWidget(
-                        title: 0.toString(),
-                        // title: topEngineerRatingModel.engineerRating.toString(),
-                        fontSize: 15,
+                        // title: 0.toString(),
+                        title: topEngineerRatingModel.review_avg.toString(),
+                        fontSize: px15,
                         color: colorScheme.secondary,
                       ),
                     ),

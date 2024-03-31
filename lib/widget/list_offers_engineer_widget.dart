@@ -67,179 +67,187 @@ class _ListOffersEngineerWidgetState extends State<ListOffersEngineerWidget> {
       child: Card(
         borderOnForeground: true,
         elevation: 5,
-        child: Expanded(
-          flex: 1,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () {},
-                      child: CircleAvatar(
-                        radius: 45.0,
-                        backgroundColor: widget.colorScheme.primary,
-                        backgroundImage: NetworkImage(
-                            widget.resulte['client']['imgPath'].toString()),
-                      ),
-                    ),
-                    SizedBox(height: widget.size.height * .14),
-                    Column(
+                    Row(
                       children: [
-                        // SizedBox(height: widget.size.height * .0),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: TextWidget(
-                            title: widget.resulte['client']['fullname'],
-                            fontSize: Get.height * .022,
-                            color: widget.colorScheme.onSecondary,
-                            isTextStart: false,
+                        InkWell(
+                          onTap: () {},
+                          child: CircleAvatar(
+                            radius: 45.0,
+                            backgroundColor: widget.colorScheme.primary,
+                            backgroundImage: NetworkImage(
+                                widget.resulte['client']['imgPath'].toString()),
                           ),
                         ),
-                        SizedBox(height: widget.size.height * .01),
-                        Row(
+                        SizedBox(height: widget.size.height * .14),
+                        Column(
                           children: [
+                            // SizedBox(height: widget.size.height * .0),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextWidget(
-                                    title: AppConfig.price.tr,
-                                    fontSize: Get.height * .02,
-                                    color: widget.colorScheme.secondary,
-                                  ),
-                                  const SizedBox(width: 7),
-                                  TextWidget(
-                                    title: "\$" +
-                                        widget.resulte['price'].toString(),
-                                    fontSize: Get.height * .02,
-                                    color: widget.colorScheme.secondary,
-                                  ),
-                                ],
+                              child: TextWidget(
+                                title: widget.resulte['client']['fullname'],
+                                fontSize: Get.height * .022,
+                                color: widget.colorScheme.onSecondary,
+                                isTextStart: false,
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(height: widget.size.height * .01),
-                        Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextWidget(
-                                    title: AppConfig.daysToDeliver.tr,
-                                    fontSize: 15,
-                                    color: widget.colorScheme.secondary,
+                            SizedBox(height: widget.size.height * .01),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextWidget(
+                                        title: AppConfig.price.tr,
+                                        fontSize: Get.height * .02,
+                                        color: widget.colorScheme.secondary,
+                                      ),
+                                      const SizedBox(width: 7),
+                                      TextWidget(
+                                        title: "\$" +
+                                            widget.resulte['price'].toString(),
+                                        fontSize: Get.height * .02,
+                                        color: widget.colorScheme.secondary,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(width: 7),
-                                  TextWidget(
-                                    title: widget.resulte['days_to_deliver']
-                                            .toString() +
-                                        "" +
-                                        AppConfig.day.tr,
-                                    fontSize: px16,
-                                    color: widget.colorScheme.secondary,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: widget.size.height * .01),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextWidget(
+                                        title: AppConfig.daysToDeliver.tr,
+                                        fontSize: 15,
+                                        color: widget.colorScheme.secondary,
+                                      ),
+                                      const SizedBox(width: 7),
+                                      TextWidget(
+                                        title: widget.resulte['days_to_deliver']
+                                                .toString() +
+                                            "" +
+                                            AppConfig.day.tr,
+                                        fontSize: px16,
+                                        color: widget.colorScheme.secondary,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: widget.size.height * .01),
+                            TextWidget(
+                              title: GetTimeAgo.parse(
+                                  DateTime.parse(
+                                      widget.resulte['createdAt'] ?? ""),
+                                  pattern: "dd-MM-yyyy hh:mm aa",
+                                  locale: 'ar'),
+                              fontSize: Get.height * .02,
+                              color: widget.colorScheme.secondary,
                             ),
                           ],
-                        ),
-                        SizedBox(height: widget.size.height * .01),
-                        TextWidget(
-                          title: GetTimeAgo.parse(
-                              DateTime.parse(widget.resulte['createdAt'] ?? ""),
-                              pattern: "dd-MM-yyyy hh:mm aa",
-                              locale: 'ar'),
-                          fontSize: Get.height * .02,
-                          color: widget.colorScheme.secondary,
                         ),
                       ],
                     ),
-                  ],
-                ),
-                SizedBox(height: widget.size.height * .02),
-                Container(
-                  // height: widget.size.height * .06,
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.only(start: px10, bottom: px10),
-                    child: TextWidget(
-                      textOverflow: TextOverflow.ellipsis,
-                      maxLines: 150,
-                      title: widget.resulte['message_desc'],
-                      fontSize: Get.height * .02,
-                      color: widget.colorScheme.onSecondary,
-                      isTextStart: true,
+                    SizedBox(height: widget.size.height * .02),
+                    Container(
+                      // height: widget.size.height * .06,
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.only(
+                            start: px10, bottom: px10),
+                        child: TextWidget(
+                          textOverflow: TextOverflow.ellipsis,
+                          maxLines: 150,
+                          title: widget.resulte['message_desc'],
+                          fontSize: Get.height * .02,
+                          color: widget.colorScheme.onSecondary,
+                          isTextStart: true,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
 
-                // SizedBox(height: size.height * .01),
+                    // SizedBox(height: size.height * .01),
 
-                if (widget.offerController.isProjectOwner == 1)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      widget.offerController.loadingState ==
-                              LoadingState.loading
-                          ? LoadingWidget()
-                          : ElevatedButton(
-                              onPressed: () async => acceptOffer(context),
+                    if (widget.offerController.isProjectOwner == 1)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          widget.offerController.loadingState ==
+                                  LoadingState.loading
+                              ? LoadingWidget()
+                              : ElevatedButton(
+                                  onPressed: () async => acceptOffer(context),
+                                  child: Text(
+                                    AppConfig.acceptOffer.tr,
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                          SizedBox(width: 30),
+                          ElevatedButton(
+                              onPressed: () {
+                                Get.to(ChatRoomScreen22222(
+                                  showAllLink: true,
+                                  userId: userId,
+                                  userEmail: email,
+                                  chatsModel: Chats(
+                                    receiverId: widget.resulte['client']['id'],
+                                    senderId: userId,
+                                    createdAt: "",
+                                    id: "",
+                                    message: "",
+                                    messageType: "",
+                                    recieverEmail: widget.resulte['client']
+                                        ['email'],
+                                    recieverImg: widget.resulte['client']
+                                        ['imgPath'],
+                                    recieverName: widget.resulte['client']
+                                        ['fullname'],
+                                    senderImg: "",
+                                    seqnum: 0,
+                                    senderName: "",
+                                    updatedAt: "",
+                                    senderEmail: email,
+                                    // image: resulte['client']['imgPath'],
+                                    // receiverName: resulte['client']['fullname'],
+                                  ),
+                                ));
+                              },
                               child: Text(
-                                AppConfig.acceptOffer.tr,
+                                AppConfig.chatEng.tr,
+                                // "محادثة",
                                 style: TextStyle(color: Colors.white),
                               )),
-                      SizedBox(width: 30),
-                      ElevatedButton(
-                          onPressed: () {
-                            Get.to(ChatRoomScreen22222(
-                              showAllLink: true,
-                              userId: userId,
-                              userEmail: email,
-                              chatsModel: Chats(
-                                receiverId: widget.resulte['client']['id'],
-                                senderId: userId,
-                                createdAt: "",
-                                id: "",
-                                message: "",
-                                messageType: "",
-                                recieverEmail: widget.resulte['client']
-                                    ['email'],
-                                recieverImg: widget.resulte['client']
-                                    ['imgPath'],
-                                recieverName: widget.resulte['client']
-                                    ['fullname'],
-                                senderImg: "",
-                                seqnum: 0,
-                                senderName: "",
-                                updatedAt: "",
-                                senderEmail: email,
-                                // image: resulte['client']['imgPath'],
-                                // receiverName: resulte['client']['fullname'],
-                              ),
-                            ));
-                          },
-                          child: Text(
-                            AppConfig.chatEng.tr,
-                            // "محادثة",
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    ],
-                  ),
-              ],
+                        ],
+                      ),
+                  ],
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

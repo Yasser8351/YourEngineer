@@ -43,7 +43,6 @@ class MyProjectOffersScreenController extends GetxController {
       var token = await _pref.getToken();
 
       myLog("start methode", "getProjectsOffers");
-      myLog("Project ID", "${proID}");
 
       // loadingState = LoadingState.loading.obs;
       var response = await Dio()
@@ -58,8 +57,7 @@ class MyProjectOffersScreenController extends GetxController {
 
       // var projectModel = projectModelFromJson(jsonEncode(response.data));
       // _listprojects = projectModel.results;
-      myLog("response.statusCode methode", "${response.statusCode}");
-      myLog("response.Data methode", "${response.data}");
+      myLog("getProjectsOffers", "${response.data}");
 
       if (response.statusCode == 200) {
         Map<String, dynamic> map = response.data;

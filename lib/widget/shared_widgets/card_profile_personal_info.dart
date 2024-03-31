@@ -86,7 +86,8 @@ class CardProfilePersonalInfo extends StatelessWidget {
                             children: [
                               RatingBar(
                                 color: Colors.amber,
-                                rating: 0,
+                                rating: double.parse(
+                                    userProfileModel.review_avg.toString()),
                                 sizeIcon: 22,
                                 onRatingChanged: (rating) {
                                   // setState(() => this.rating = rating)
@@ -96,7 +97,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 6),
                                 child: TextWidget(
-                                  title: 0.toString(),
+                                  title: userProfileModel.review_avg.toString(),
                                   fontSize: Get.width * .05,
                                   color: colorScheme.onSecondary,
                                 ),

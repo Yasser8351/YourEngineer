@@ -1,7 +1,5 @@
 // List Offers Engineer Widget
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_time_ago/get_time_ago.dart';
@@ -35,7 +33,6 @@ class ListMyProjectOffersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("resulte $resulte");
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
@@ -76,6 +73,16 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                           color: colorScheme.onSecondary,
                           isTextStart: false,
                         ),
+                        TextWidget(
+                          title: resulte['client']['userprofiles'] == null
+                              ? ""
+                              : resulte['client']['userprofiles']
+                                      ['specialization']
+                                  .toString(),
+                          fontSize: size.height * .022,
+                          color: colorScheme.onSecondary,
+                          isTextStart: false,
+                        ),
 
                         TextWidget(
                           title: GetTimeAgo.parse(
@@ -96,7 +103,7 @@ class ListMyProjectOffersWidget extends StatelessWidget {
                               sizeIcon: 15,
                               color: Colors.amber,
                               rating: 5,
-                              //  offersEngineerModel.engineerRating,
+                              // offersEngineerModel.engineerRating,
                               onRatingChanged: (rating) {
                                 // setState(() => this.rating = rating)
                               },
