@@ -48,7 +48,7 @@ class ListMyProjectWidget extends StatelessWidget {
         height: isMyProject &&
                 ownerProjectModel.projStatus!.statName!.contains("In-Progress")
             ? size.height * .42
-            : size.height * .33,
+            : size.height * .36,
         width: size.width * .7,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),

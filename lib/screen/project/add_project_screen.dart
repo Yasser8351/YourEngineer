@@ -324,15 +324,12 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
             if (isAddProject) {
               addProjectController.clearController();
-              Helper.showseuess(
-                  context: context,
-                  subtitle: AppConfig.addedProjetSuccesfuly.tr);
+              showseuessToast(AppConfig.addedProjetSuccesfuly.tr);
 
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => TabScreen(selectIndex: 2)));
             } else {
-              Helper.showError(
-                  context: context, subtitle: addProjectController.message);
+              // showseuessToast(addProjectController.message);
             }
           },
           child: Padding(

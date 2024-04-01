@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:your_engineer/model/commission_model.dart';
 import 'package:your_engineer/model/portfolio_model.dart';
@@ -66,6 +67,8 @@ class ProfileUserController extends GetxController {
   Future<ApiResponse> getUsersShow(String engeneerId) async {
     loadingState(LoadingState.loading);
 
+    log("getUsersShow  ");
+
     try {
       var token = await _shared.getToken();
       var response = await Dio()
@@ -82,8 +85,6 @@ class ProfileUserController extends GetxController {
 
       if (response.statusCode == 200) {
         userProfile = userProfileModelFromJson(jsonEncode(response.data));
-
-        log("nnnnnnnnnnonnnnoooooooooooo   $response");
 
         update();
 
@@ -111,14 +112,15 @@ class ProfileUserController extends GetxController {
       loadingState(LoadingState.error);
     } catch (error) {
       loadingState(LoadingState.error);
+      log("error   $error");
 
       if (error is TimeoutException) {
         message = AppConfig.timeOut;
       } else if (error.toString().contains(
           'DioError [DioErrorType.response]: Http status error [401]')) {
-        message = AppConfig.unAutaristion;
+        message = AppConfig.unAutaristion.tr;
       } else {
-        message = AppConfig.noNet;
+        message = AppConfig.errorOoccurred.tr;
       }
     }
     update();

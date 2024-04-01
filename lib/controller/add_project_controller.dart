@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:http_parser/http_parser.dart';
 // import 'package:get/get.dart';
@@ -271,8 +272,20 @@ class AddProjectController extends GetxController {
       'skills': skillsController.text,
       "ProjectAttach": imageFile == null
           ? ""
-          : await MultipartFile.fromFile(imageFile.path,
-              filename: 'upload.jpg'),
+          : await MultipartFile.fromFile(
+              imageFile.path,
+              contentType:
+                  MediaType("image", "${imageFile.path.split(".").last}"),
+            ),
+      // "ProjectAttach": imageFile == null
+      //     ? ""
+      //     : await MultipartFile.fromFile(
+      //         imageFile.path,
+      //         contentType: MediaType(
+      //           "image",
+      //           "${imageFile.path.split(".").last}",
+      //         ),
+      //       ),
       // "ProjectAttach": imageFile == null
       //     ? ""
       //     : await MultipartFile.fromFile(
@@ -301,14 +314,12 @@ class AddProjectController extends GetxController {
         ''
             'data : ${response.data}',
       );
-
+      // Map res = json.decode(response.data);
       if (response.statusCode == 200 || response.statusCode == 201) {
         _status = true;
         // await _shared.saveToken(response.body['token']);
       } else {
-        Helper.showError(
-            context: context, subtitle: response.statusCode.toString());
-        print("nnnnnnnnnnonnnnoooooooooooo");
+        showErrorToast(response.data['msg'].toString());
 
         _status = false;
       }
@@ -316,17 +327,12 @@ class AddProjectController extends GetxController {
       _status = false;
       if (error is DioError) {
         message = error.response!.data['msg'];
-        Helper.showError(
-            context: context, subtitle: error.response!.data['msg']);
-      }
 
-      if (error.toString().contains('TimeoutException')) {
-        Helper.showError(context: context, subtitle: 'اتصال الانترنت ضعيف');
-      } else if (error.toString().contains('Http status error [401]')) {
-        Helper.showError(
-            context: context, subtitle: "خطأ في اسم المستخدم او كلمة المرور");
+        showErrorToast(message);
+      } else if (error.toString().contains('TimeoutException')) {
+        showErrorToast(AppConfig.noNet.tr);
       } else {
-        Helper.showError(context: context, subtitle: 'حث خطأ في الاتصال');
+        showErrorToast(AppConfig.errorOoccurred.tr);
       }
       myLog('catch  erroor', '$error');
     }

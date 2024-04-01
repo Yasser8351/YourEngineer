@@ -85,7 +85,11 @@ class MyButton extends StatelessWidget {
                 ),
               if (leadingIcon != null && !busy)
                 //horizontalSpaceTiny,
-                if (!busy) Text(text),
+                if (!busy)
+                  Text(
+                    text,
+                    style: TextStyle(color: Colors.white),
+                  ),
               if (busy)
                 SizedBox(
                   height: 24.0,

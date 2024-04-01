@@ -10,10 +10,13 @@ import 'package:your_engineer/widget/shared_widgets/my_button.dart';
 import 'package:your_engineer/widget/shared_widgets/rating_bar.dart';
 import 'package:your_engineer/widget/shared_widgets/text_widget.dart';
 
+import '../../enum/all_enum.dart';
 import '../../widget/shared_widgets/fcb_input.dart';
 
 class AddReviewScreen extends StatefulWidget {
-  const AddReviewScreen({super.key});
+  const AddReviewScreen({super.key, required this.projectId});
+  // final String talentId;
+  final String projectId;
 
   @override
   State<AddReviewScreen> createState() => _AddReviewScreenState();
@@ -21,7 +24,6 @@ class AddReviewScreen extends StatefulWidget {
 
 class _AddReviewScreenState extends State<AddReviewScreen> {
   var rating = 0.0;
-  TextEditingController commentController = TextEditingController();
   FaqController faqController = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFaildInput(
-              controller: commentController,
+              controller: faqController.commentController,
               inputAction: TextInputAction.next,
               hint: "Comment",
               maxLines: 3,
@@ -64,15 +66,28 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                 ],
               ),
             ),
-//loadingAddReview
-            MyButton(
-              text: AppConfig.addReview.tr,
-              color: Colors.green,
-              onTap: () => faqController.addReviews(),
-            ),
+            GetBuilder<FaqController>(builder: (_) {
+              return MyButton(
+                busy: handlingLoadinButton(faqController.loadingAddReview),
+                text: AppConfig.addReview.tr,
+                color: Colors.green,
+                onTap: () => faqController.addReviews(
+                    talentId: "widget.talentId",
+                    projectId: widget.projectId,
+                    starRate: rating),
+              );
+            }),
           ],
         ),
       ),
     );
+  }
+}
+
+handlingLoadinButton(LoadingState loadingState) {
+  if (loadingState == LoadingState.loading) {
+    return true;
+  } else {
+    return false;
   }
 }

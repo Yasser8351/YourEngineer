@@ -351,7 +351,7 @@ class _OffersScreenState extends State<OffersScreen> {
                       return NoData(
                         color: Colors.white,
                         height: size.height * .4,
-                        textMessage: "لاتوجد عروض بعد",
+                        textMessage: AppConfig.noOfferYet.tr,
                       );
                     }
 

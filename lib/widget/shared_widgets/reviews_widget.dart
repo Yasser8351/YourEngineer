@@ -20,118 +20,122 @@ class ReviewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (talentreview.length == 0)
-          Padding(
-            padding: EdgeInsets.only(top: Get.size.height * .23),
-            child: TextWidget(
-              title: AppConfig.noReviewsFound.tr,
-              fontSize: px20,
-              color: colorScheme.onSecondary,
-              isTextStart: true,
-            ),
-          ),
-
-        buildRowReviews("${AppConfig.reviews.tr}   ${talentreview.length}", '',
-            colorScheme),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: talentreview.length,
-          itemBuilder: (context, index) => Column(
-            children: [
-              // verticalSpaceSemiLarge,
-              buildRowItem(talentreview[index].project.projTitle,
-                  AppConfig.completed.tr, colorScheme),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 30.0,
-                      backgroundImage:
-                          NetworkImage(talentreview[index].owner.imgpath),
-                    ),
-                    const SizedBox(width: 10),
-                    TextWidget(
-                      title:
-                          "${talentreview[index].owner.fullname} \n ${AppConfig.projectOwner.tr}",
-                      fontSize: px16,
-                      color: colorScheme.onSecondary,
-                    ),
-                    Spacer(),
-                    buildRating(talentreview[index].starRate, colorScheme)
-                  ],
-                ),
-              ),
-              TextWidget(
-                title: talentreview[index].comment,
-                fontSize: px16,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          if (talentreview.length == 0) ...[
+            Padding(
+              padding: EdgeInsets.only(top: Get.size.height * .23),
+              child: TextWidget(
+                title: AppConfig.noReviewsFound.tr,
+                fontSize: px20,
                 color: colorScheme.onSecondary,
                 isTextStart: true,
               ),
-              const SizedBox(height: 20),
-              const Divider(),
-            ],
-          ),
-        )
+            ),
+          ] else
+            buildRowReviews("${AppConfig.reviews.tr}   ${talentreview.length}",
+                '', colorScheme),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: talentreview.length,
+            itemBuilder: (context, index) => Column(
+              children: [
+                // verticalSpaceSemiLarge,
+                buildRowItem(talentreview[index].project.projTitle,
+                    AppConfig.completed.tr, colorScheme),
+                Padding(
+                  padding: EdgeInsets.only(bottom: px15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 30.0,
+                        backgroundImage:
+                            NetworkImage(talentreview[index].owner.imgpath),
+                      ),
+                      const SizedBox(width: 10),
+                      TextWidget(
+                        title:
+                            "${talentreview[index].owner.fullname} \n ${AppConfig.projectOwner.tr}",
+                        fontSize: px16,
+                        color: colorScheme.onSecondary,
+                      ),
+                      Spacer(),
+                      buildRating(talentreview[index].starRate, colorScheme)
+                    ],
+                  ),
+                ),
+                TextWidget(
+                  title: talentreview[index].comment,
+                  fontSize: px16,
+                  color: colorScheme.onSecondary,
+                  isTextStart: true,
+                ),
+                SizedBox(height: px20),
+                const Divider(),
+                verticalSpaceRegular,
+              ],
+            ),
+          )
 
-        // const SizedBox(height: 10),
-        // buildRowItem("House map design", "completed", colorScheme),
-        // buildRowItem("Review", "5.0", colorScheme),
-        // buildRowItem("Project completion date", "12/01/2022", colorScheme),
-        // const Divider(),
-        // Padding(
-        //   padding: const EdgeInsets.only(bottom: 15, top: 15),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.start,
-        //     children: [
-        //       const CircleAvatar(
-        //         radius: 30.0,
-        //         backgroundImage: AssetImage(AppImage.img2),
-        //       ),
-        //       const SizedBox(width: 10),
-        //       TextWidget(
-        //         title: "Mohammed Ali \n project owner",
-        //         fontSize: 16,
-        //         color: colorScheme.onSecondary,
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        // TextWidget(
-        //   title: "Thank you very much for completing the project",
-        //   fontSize: 16,
-        //   color: colorScheme.onSecondary,
-        //   isTextStart: true,
-        // ),
-        // const SizedBox(height: 20),
-        // Padding(
-        //   padding: const EdgeInsets.only(bottom: 15, top: 15),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.start,
-        //     children: [
-        //       const CircleAvatar(
-        //         radius: 30.0,
-        //         backgroundImage: AssetImage(AppImage.img),
-        //       ),
-        //       const SizedBox(width: 10),
-        //       TextWidget(
-        //         title: "Yasser Abubaker \n engineer",
-        //         fontSize: 16,
-        //         color: colorScheme.onSecondary,
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        // TextWidget(
-        //   title: "Thank you Mohammed Ali.",
-        //   fontSize: 16,
-        //   color: colorScheme.onSecondary,
-        //   isTextStart: true,
-        // ),
-      ],
+          // const SizedBox(height: 10),
+          // buildRowItem("House map design", "completed", colorScheme),
+          // buildRowItem("Review", "5.0", colorScheme),
+          // buildRowItem("Project completion date", "12/01/2022", colorScheme),
+          // const Divider(),
+          // Padding(
+          //   padding: const EdgeInsets.only(bottom: 15, top: 15),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.start,
+          //     children: [
+          //       const CircleAvatar(
+          //         radius: 30.0,
+          //         backgroundImage: AssetImage(AppImage.img2),
+          //       ),
+          //       const SizedBox(width: 10),
+          //       TextWidget(
+          //         title: "Mohammed Ali \n project owner",
+          //         fontSize: 16,
+          //         color: colorScheme.onSecondary,
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // TextWidget(
+          //   title: "Thank you very much for completing the project",
+          //   fontSize: 16,
+          //   color: colorScheme.onSecondary,
+          //   isTextStart: true,
+          // ),
+          // const SizedBox(height: 20),
+          // Padding(
+          //   padding: const EdgeInsets.only(bottom: 15, top: 15),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.start,
+          //     children: [
+          //       const CircleAvatar(
+          //         radius: 30.0,
+          //         backgroundImage: AssetImage(AppImage.img),
+          //       ),
+          //       const SizedBox(width: 10),
+          //       TextWidget(
+          //         title: "Yasser Abubaker \n engineer",
+          //         fontSize: 16,
+          //         color: colorScheme.onSecondary,
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // TextWidget(
+          //   title: "Thank you Mohammed Ali.",
+          //   fontSize: 16,
+          //   color: colorScheme.onSecondary,
+          //   isTextStart: true,
+          // ),
+        ],
+      ),
     );
   }
 }

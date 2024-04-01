@@ -85,7 +85,9 @@ clearText(TextEditingController controller) {
 
 showErrorToast(message) {
   Get.snackbar(message, '',
-      snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red);
 }
 
 showseuessToast(message) {

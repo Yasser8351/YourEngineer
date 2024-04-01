@@ -25,10 +25,17 @@ class FaqController extends GetxController {
     getContactNumber();
   }
 
+  @override
+  void dispose() {
+    commentController.dispose();
+    super.dispose();
+  }
+
   var loadingState = LoadingState.initial.obs;
   var loadingPhoneNumber = LoadingState.initial;
   var loadingAddReview = LoadingState.initial;
   final _shared = SharedPrefUser();
+  TextEditingController commentController = TextEditingController();
 
   var loadingStateCompleteProject = LoadingState.initial.obs;
 
@@ -220,7 +227,8 @@ class FaqController extends GetxController {
 
         Helper.showseuess(context: context, subtitle: parsed['msg']);
 
-        Get.to(() => const AddReviewScreen());
+        Get.to(() => AddReviewScreen(projectId: projectId));
+        //, talentId: talentId
       } else {
         loadingStateCompleteProject(LoadingState.error);
 
@@ -243,7 +251,11 @@ class FaqController extends GetxController {
     }
   }
 
-  Future<void> addReviews() async {
+  Future<void> addReviews({
+    required String talentId,
+    required String projectId,
+    required double starRate,
+  }) async {
     changeLoadingState(LoadingState.loading, LodingType.addReview);
 
     try {
@@ -254,9 +266,10 @@ class FaqController extends GetxController {
             ApiUrl.addReviews,
             data: {
               "talent_id": "dac20c02-74e8-419f-a924-84753252c36c",
-              "comment": "This is a nice working",
-              "star_rate": 5,
-              "proj_id": "d0da3a92-f7a0-4446-8ede-8386512c16e7"
+              // "talent_id": talentId,
+              "comment": commentController.text,
+              "star_rate": starRate,
+              "proj_id": projectId,
             },
             options: Options(
               headers: ApiUrl.getHeader(token: token),

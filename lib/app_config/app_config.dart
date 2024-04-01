@@ -18,6 +18,9 @@ class AppConfig {
   static const String noReviewsFound = "No reviews found";
   static const String comfirmPassword = "comfirm password";
 
+  static const String recharge = "Recharge";
+  static const String withdrawal = "Withdrawal";
+
   static const String open = "Open";
   static const String inProgress = "In Progress";
   static const String completed = "Completed";
@@ -77,6 +80,8 @@ class AppConfig {
   static const String addedProjetSuccesfuly = "Succesfuly Added Projet";
   static const String editMyProject = "Edit My Project";
   static const String projectDetails = "Project details";
+  static const String noOfferYet = "No Offers yet";
+
   static const String noMessageSuppoerYet =
       "If you have any problem, contact with support directly";
   static const String noMessageYet =

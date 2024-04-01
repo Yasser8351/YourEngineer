@@ -17,7 +17,7 @@ class UserProfileModel {
     required this.fullname,
     required this.phone,
     required this.imgpath,
-    this.review_avg = 0,
+    this.review_avg = '',
     required this.isActive,
     required this.userprofiles,
     required this.usercredentials,
@@ -31,7 +31,7 @@ class UserProfileModel {
   String email;
   String fullname;
   String phone;
-  int review_avg;
+  String review_avg;
   String imgpath;
   bool isActive;
   Userprofiles userprofiles;
@@ -50,7 +50,7 @@ class UserProfileModel {
         fullname: json["fullname"] ?? '',
         phone: json["phone"] ?? '',
         imgpath: json["imgpath"] ?? '',
-        review_avg: json["review_avg"] ?? 0,
+        review_avg: json["review_avg"].toString(),
         isActive: json["is_active"] ?? false,
         userprofiles: json["userprofiles"] == null
             ? Userprofiles(aboutUser: '', specialization: '')
@@ -72,6 +72,14 @@ class UserProfileModel {
             .map((e) => Talentreview.fromJson(e))
             .toList(),
       );
+
+  // static double checkDouble(dynamic value) {
+  //   if (value is String) {
+  //     return double.parse(value);
+  //   } else {
+  //     return value;
+  //   }
+  // }
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -213,14 +221,14 @@ class Talentreview {
     required this.project,
   });
   late final String comment;
-  late final int starRate;
+  late final String starRate;
   late final String createdAt;
   late final Owner owner;
   late final Project project;
 
   Talentreview.fromJson(Map<String, dynamic> json) {
     comment = json['comment'] ?? "";
-    starRate = json['star_rate'] ?? 0;
+    starRate = json['star_rate'].toString();
     createdAt = json['createdAt'] ?? "";
     owner = Owner.fromJson(json['owner']);
     project = Project.fromJson(json['Project']);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_time_ago/get_time_ago.dart';
+import 'package:your_engineer/utilits/app_ui_helpers.dart';
+import 'package:your_engineer/widget/list_my_project_widget.dart';
 import 'package:your_engineer/widget/shared_widgets/build_row_list.dart';
 
 import '../../app_config/app_config.dart';
@@ -10,7 +12,6 @@ import '../../enum/all_enum.dart';
 import '../../model/owner_project_model.dart';
 import '../../utilits/helper.dart';
 import '../../widget/list_my_project_offers_widget.dart';
-import '../../widget/shared_widgets/card_decoration.dart';
 import '../../widget/shared_widgets/reytry_error_widget.dart';
 import '../../widget/shared_widgets/text_widget.dart';
 
@@ -73,118 +74,114 @@ class MyProjectOffersScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: size.height * .02),
                   ClipRRect(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10),
                     ),
-                    child: CardDecoration(
-                      onTap: () {},
-                      height: size.height * .36,
-                      width: size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "اسم المشروع",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: colorScheme.onSecondary,
-                                fontWeight: FontWeight.w600,
+                    child: Expanded(
+                      flex: 2,
+                      child: Card(
+                        borderOnForeground: true,
+                        elevation: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 15),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "اسم المشروع",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: colorScheme.onSecondary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              ownerProjectModel.projTitle,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              "وصف المشروع",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: colorScheme.onSecondary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              height: size.height * .06,
-                              child: Text(
-                                ownerProjectModel.projDescription,
+                              const SizedBox(height: 8),
+                              Text(
+                                ownerProjectModel.projTitle,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: colorScheme.primary,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    BuildRowList(
-                                      title: ownerProjectModel
-                                          .projStatus!.statName,
-                                      colorScheme: colorScheme,
-                                      icon: ownerProjectModel
-                                              .projStatus!.statName!
-                                              .contains("Open")
-                                          ? Icons.open_in_browser
-                                          : ownerProjectModel
-                                                  .projStatus!.statName!
-                                                  .contains("In-Progress")
-                                              ? Icons.blinds
-                                              : ownerProjectModel
-                                                      .projStatus!.statName!
-                                                      .contains("Close")
-                                                  ? Icons.close
-                                                  : Icons.local_dining,
-                                      description: "حالة المشروع",
-                                    ),
-                                    BuildRowList(
-                                      title: GetTimeAgo.parse(
-                                          DateTime.parse(
-                                              ownerProjectModel.createdAt),
-                                          pattern: "dd-MM-yyyy hh:mm aa",
-                                          locale: 'ar'),
-                                      colorScheme: colorScheme,
-                                      icon: Icons.watch_later,
-                                      description: "تاريخ الانشاء",
-                                    ),
-                                    BuildRowList(
-                                      title: ownerProjectModel.offersCount
-                                          .toString(),
-                                      colorScheme: colorScheme,
-                                      icon: Icons.post_add,
-                                      description: "عدد العروض",
-                                    ),
-                                  ],
+                              const SizedBox(height: 8),
+                              Text(
+                                "وصف المشروع",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: colorScheme.onSecondary,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ],
-                            )
-                          ],
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                // height: size.height * .06,
+                                child: Text(
+                                  ownerProjectModel.projDescription,
+                                  // maxLines: 200,
+                                  // overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: px16,
+                                    color: colorScheme.primary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      BuildRowList(
+                                        title: getTitleStatusProject(
+                                            ownerProjectModel
+                                                    .projStatus!.statName ??
+                                                ""),
+                                        colorScheme: colorScheme,
+                                        icon: getIconStatusProject(
+                                            ownerProjectModel
+                                                    .projStatus!.statName ??
+                                                ""),
+                                        description: "حالة المشروع",
+                                      ),
+                                      BuildRowList(
+                                        title: GetTimeAgo.parse(
+                                            DateTime.parse(
+                                                ownerProjectModel.createdAt),
+                                            pattern: "dd-MM-yyyy hh:mm aa",
+                                            locale: 'ar'),
+                                        colorScheme: colorScheme,
+                                        icon: Icons.watch_later,
+                                        description: "تاريخ الانشاء",
+                                      ),
+                                      BuildRowList(
+                                        title: ownerProjectModel.offersCount
+                                            .toString(),
+                                        colorScheme: colorScheme,
+                                        icon: Icons.post_add,
+                                        description: "عدد العروض",
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -194,7 +191,7 @@ class MyProjectOffersScreen extends StatelessWidget {
                       children: [
                         SizedBox(height: size.height / 5.5),
                         TextWidget(
-                            title: "لاتوجد عروض بعد",
+                            title: AppConfig.noOfferYet.tr,
                             fontSize: 20,
                             color: Colors.black),
                       ],

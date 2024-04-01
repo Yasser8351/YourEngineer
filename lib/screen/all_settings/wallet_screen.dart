@@ -121,13 +121,13 @@ class _WalletScreenState extends State<WalletScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             RechargeWidget(
-                                text: "Recharge",
+                                text: AppConfig.recharge.tr,
                                 icon: Icons.add_circle,
                                 onTap: () {
                                   startPayment(context);
                                 }),
                             RechargeWidget(
-                                text: "Remove",
+                                text: AppConfig.withdrawal.tr,
                                 icon: Icons.remove_circle,
                                 onTap: () {}),
                           ],
