@@ -43,6 +43,8 @@ class SharedPrefUser {
     await _prefs.setString('full_name', fullname);
     await _prefs.setString('image', userImage);
     await _prefs.setString('phone', phone);
+
+    myLog('save UserId', userId);
   }
 
   Future<void> saveUserId({required String userId}) async {
@@ -52,8 +54,8 @@ class SharedPrefUser {
     await _prefs.setString('id', userId);
   }
 
-  Future<bool> saveToken(String token, String status, String email,
-      [String userId = '']) async {
+  Future<bool> saveToken(
+      String token, String status, String email, String userId) async {
     _prefs = await SharedPreferences.getInstance();
 
     await _prefs.setString('token', token);

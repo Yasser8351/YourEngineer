@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/screen/tab_screen.dart';
+import 'package:your_engineer/utilits/app_info.dart';
 
 import '../app_config/app_image.dart';
 import '../sharedpref/user_share_pref.dart';
@@ -38,13 +40,15 @@ class _SplashScreenState extends State<SplashScreen> {
       email = _email;
 
       userAccountType = _userAccountType;
-
-      /*
-      log userId :  affb7863-9757-4ef3-9fba-ec1e30550c1d
-[log]  log  email :  khalid@gmail.com
-[log]  log  userAccountType :  OWNER
-      */
     });
+
+    if (AppInfo.instance.userId.isNotEmpty) {
+      FirebaseMessaging.instance.subscribeToTopic(userId.toString());
+      myLog("userId", userId);
+    }
+    if (AppInfo.instance.accountType.isNotEmpty) {
+      FirebaseMessaging.instance.subscribeToTopic(userAccountType.toString());
+    }
   }
 
   @override
@@ -52,13 +56,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     getUserStatus();
     // .subscribeToTopic("affb7863-9757-4ef3-9fba-ec1e30550c1d");
-
-    if (userId.isNotEmpty) {
-      FirebaseMessaging.instance.subscribeToTopic(userId);
-    }
-    if (userAccountType.isNotEmpty) {
-      FirebaseMessaging.instance.subscribeToTopic(userAccountType);
-    }
 
     Timer(
       const Duration(seconds: 2),

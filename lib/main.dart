@@ -34,6 +34,7 @@ void main() async {
 
   AppInfo.initAppInfo(
     accountType: pref.getString("status"),
+    userId: pref.getString("id"),
     // currentLocale: PrefRepo(pref).preferredLocale,
   );
 

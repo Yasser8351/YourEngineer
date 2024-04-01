@@ -66,7 +66,7 @@ class ListProjectWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                "المهارات" + " : " + results['skills'],
+                "المهارات" + " : " + results['skills'].toString(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -83,8 +83,8 @@ class ListProjectWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildRowList(results['owner']['fullname'], colorScheme,
-                          Icons.person),
+                      buildRowList(results['owner']['fullname'].toString(),
+                          colorScheme, Icons.person),
                       buildRowList(
                           results['proj_period'].toString() +
                               " " +
@@ -102,18 +102,20 @@ class ListProjectWidget extends StatelessWidget {
                               colorScheme, Icons.person)
                           : SizedBox(),
                       buildRowList(
-                          GetTimeAgo.parse(DateTime.parse(results['CreatedAt']),
-                              pattern: "dd-MM-yyyy hh:mm aa", locale: 'ar'),
+                          GetTimeAgo.parse(
+                              DateTime.parse(results['CreatedAt'].toString()),
+                              pattern: "dd-MM-yyyy hh:mm aa",
+                              locale: 'ar'),
 
                           // buildRowList(dateFormat(results['CreatedAt']),
                           colorScheme,
                           Icons.today),
                       buildRowList(
                         getTitleStatusProject(
-                            results['ProjStatus']['stat_name']),
+                            results['ProjStatus']['stat_name'].toString()),
                         colorScheme,
                         getIconStatusProject(
-                            results['ProjStatus']['stat_name']),
+                            results['ProjStatus']['stat_name'].toString()),
                       ),
                       buildRowList(
                         AppConfig.offerCount.tr +

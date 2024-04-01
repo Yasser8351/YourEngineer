@@ -229,7 +229,7 @@ class UserAuth {
         status = true;
       } else {
         Helper.showError(
-            context: context, subtitle: response.statusCode.toString());
+            context: context, subtitle: response.data['msg'].toString());
 
         setValueResponse(false);
         status = false;

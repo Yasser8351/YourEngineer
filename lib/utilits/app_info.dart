@@ -5,6 +5,7 @@ class AppInfo {
   // String? _buildNumber;
   // Locale? _locale;
   String? _accountType;
+  String? _userId;
   AppInfo._();
   static AppInfo? _instance;
   static AppInfo get instance {
@@ -15,14 +16,20 @@ class AppInfo {
   static void initAppInfo({
     Locale? currentLocale,
     String? accountType,
+    String? userId,
   }) {
     _instance ??= AppInfo._();
     _instance!._accountType = accountType;
+    _instance!._userId = userId;
     // _instance!._locale = currentLocale;
   }
 
   String get buildNumber => AppConfig.buildNumber;
   String get accountType => _accountType ?? "";
+  String get userId => _userId ?? "";
+
+
+  
   // String get langCode {
   //   if (_locale == null) return "1";
   //   return _locale!.languageCode == "en" ? "1" : "0";
