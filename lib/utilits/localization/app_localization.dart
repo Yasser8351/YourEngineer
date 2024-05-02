@@ -80,6 +80,7 @@ class AppLocalization implements Translations {
           AppConfig.projectsWorksOn: "مشاريع يعمل عليها",
           AppConfig.profile: "الملف الشخصي",
           AppConfig.noProjectYet: "لايوجد مشروع",
+          AppConfig.cancel: "الغاء",
           AppConfig.search: "بحث",
           AppConfig.day: "يوم",
           AppConfig.dayProject: "يوم",
@@ -287,6 +288,7 @@ class AppLocalization implements Translations {
           AppConfig.attachment: AppConfig.attachment,
           AppConfig.name: AppConfig.name,
           AppConfig.addYourName: AppConfig.addYourName,
+          AppConfig.cancel: AppConfig.cancel,
 
           AppConfig.amountLess: AppConfig.amountLess,
           AppConfig.cannotaddOffer: "Can not add Offer",

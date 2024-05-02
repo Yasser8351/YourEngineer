@@ -67,7 +67,8 @@ class _ChatRoomScreen22222State extends State<ChatRoomScreen22222> {
   connectSocket() async {
     try {
       socket = IO.io(
-          'http://62.171.175.75:84',
+          "https://api.architect-app.com",
+          // 'http://62.171.175.75:84',
           OptionBuilder()
               .setTransports(['websocket']) // for Flutter or Dart VM
               .disableAutoConnect() // disable auto-connection

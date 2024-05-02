@@ -1,16 +1,15 @@
 class ApiUrl {
-  static const String _root = 'http://62.171.175.75:83/api/v1';
-  // static const String _root = 'http://62.171.175.75:3000/api';
-  // static const String _root = 'http://194.195.87.30:91/api/v1';
-
+  static const String _root = 'https://api.architect-app.com/api/v1';
   static const String root = _root;
-  //http://62.171.175.75:83/uploads/2024-03-22T18_19_59.517Zuse_chat.PNG",
-  static const String imageUrl = "http://62.171.175.75:83/";
+  static const String imageUrl = "https://api.architect-app.com/";
+
+  // static const String _root = 'http://62.171.175.75:83/api/v1';
+  // static const String imageUrl = "http://62.171.175.75:83/";
 
   static String get signup => '$_root/auth/signup';
   static String get signin => '$_root/auth/signin';
   static String get geCategory => '$_root/category';
-  static String get getProject => '$_root/project?page=1&size=10&search=';
+  static String get getProject => '$_root/project?page=1&size=20&search=';
   static String get addProject => '$_root/project';
   static String get addoffer => '$_root/offer';
 
