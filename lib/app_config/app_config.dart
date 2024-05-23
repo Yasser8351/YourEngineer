@@ -89,7 +89,7 @@ class AppConfig {
   static const String noProjectYet = "No project yet";
   static const String profile = "My Profile";
   static const String version = "version";
-  static const String buildNumber = "1.0.11";
+  static const String buildNumber = "1.0.12";
   static const String termsOfServices = "Terms of service";
   static const String privacyPolicy = "Privacy Policy";
   static const String logout = "Logout";
