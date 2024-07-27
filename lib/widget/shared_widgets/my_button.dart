@@ -96,7 +96,7 @@ class MyButton extends StatelessWidget {
                   width: 24.0,
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation(
-                        Theme.of(context).primaryColorDark),
+                        Theme.of(context).colorScheme.primary),
                     strokeWidth: 3.0,
                   ),
                 )
@@ -112,13 +112,13 @@ class MyButton extends StatelessWidget {
       : busy
           ? Colors.grey
           : _buttonType == _ButtonType.filled
-              ? color ?? Theme.of(context).primaryColorDark
+              ? color ?? Theme.of(context).colorScheme.primary
               : Colors.transparent;
   Color getTextColor(BuildContext context) => disable
       ? Colors.grey
       : _buttonType == _ButtonType.filled
           ? Colors.white
-          : color ?? Theme.of(context).primaryColorDark;
+          : color ?? Theme.of(context).colorScheme.primary;
 }
 
 enum _ButtonType { filled, outlined, text }

@@ -85,8 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
               snackPosition: SnackPosition.TOP,
             );
             showTopSnackBar(
-              animationDuration: Duration(seconds: 7),
-              context,
+              Overlay.of(context),
               Material(
                 child: Column(
                   children: [

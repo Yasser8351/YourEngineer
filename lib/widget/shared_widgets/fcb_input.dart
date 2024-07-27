@@ -106,18 +106,19 @@ class TextFaildInput extends StatelessWidget {
             textInputAction: inputAction,
             maxLength: maxLength,
             maxLines: maxLines ?? 1,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodySmall,
+            // .bodyText1,
             textDirection: textDirection,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             validator: validationMessages,
-
             // selectionControls: CupertinoTextSelectionControls(),
             enableInteractiveSelection: enableInteractiveSelection == false
                 ? enableInteractiveSelection
                 : !password,
             // textAlign: ,
             decoration: InputDecoration(
-              helperStyle: Theme.of(context).textTheme.overline,
+              helperStyle: Theme.of(context).textTheme.bodySmall,
+              // .overline,
               prefixIcon: leadingIcon,
               prefixText: leadingText,
               suffixIcon: trailingIcon,
@@ -127,7 +128,8 @@ class TextFaildInput extends StatelessWidget {
               hintMaxLines: 1,
               hintStyle: Theme.of(context)
                   .textTheme
-                  .bodyText2
+                  .bodySmall
+                  // .bodyText2
                   ?.copyWith(color: Colors.grey[350]),
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -146,10 +148,13 @@ class TextFaildInput extends StatelessWidget {
               focusedBorder: _outlinedBorder.copyWith(
                   // borderSide: const BorderSide(color: kcAccentDark),
                   ),
-              counterStyle: Theme.of(context).textTheme.caption,
+              counterStyle: Theme.of(context).textTheme.bodySmall,
+              //  counterStyle: Theme.of(context).textTheme.caption,
+
               errorStyle: Theme.of(context)
                   .textTheme
-                  .caption
+                  .bodySmall
+                  // .caption
                   ?.copyWith(color: Colors.red),
             ),
           ),
