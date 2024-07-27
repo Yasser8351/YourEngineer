@@ -76,7 +76,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: '',
       debugShowCheckedModeBanner: false,
-
       theme: ThemeData(
         useMaterial3: false,
         fontFamily: 'Changa',
@@ -85,14 +84,13 @@ class MyApp extends StatelessWidget {
           onPrimary: Color.fromARGB(255, 1, 71, 38),
           secondary: Color(0xff999999),
           onSecondary: Color(0xff555555),
-          // background: Color(0xff0E0E0E),
+          background: Color(0xff0E0E0E),
           surface: Colors.white,
-          error: Color(0xff636363),
-          //////////////////////////////
+          error: Color(0xff636363), //////////////////
           onError: Colors.red,
-          // onBackground: Colors.black,
+          onBackground: Colors.black,
+          // Colors.grey[350],
           //#636363
-
           onSurface: Colors.black,
           brightness: Brightness.light,
         ),

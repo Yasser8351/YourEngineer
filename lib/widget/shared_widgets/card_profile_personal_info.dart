@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:get/state_manager.dart';
 import 'package:your_engineer/app_config/app_config.dart';
 import 'package:your_engineer/controller/notification_controller.dart';
+import 'package:your_engineer/debugger/my_debuger.dart';
 import 'package:your_engineer/utilits/app_info.dart';
 import 'package:your_engineer/widget/shared_widgets/full_image.dart';
 import '../../model/user_profile_model.dart';
@@ -37,7 +38,7 @@ class CardProfilePersonalInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     var primaryColor = Theme.of(context).colorScheme.primary;
     // final _shared = SharedPrefUser(); userModel.role_id
-    // myLog("userProfileModel", userProfileModel.);
+    myLog("review_avg :", userProfileModel.review_avg);
 
     return CardWithImage(
       height: size.height * .17,
@@ -86,8 +87,13 @@ class CardProfilePersonalInfo extends StatelessWidget {
                             children: [
                               RatingBar(
                                 color: Colors.amber,
-                                rating: double.parse(
-                                    userProfileModel.review_avg.toString()),
+                                rating: userProfileModel.review_avg
+                                        .toString()
+                                        .contains("null")
+                                    ? 0.0
+                                    : double.parse(
+                                        userProfileModel.review_avg.toString()),
+                                //  double.parse(userProfileModel.review_avg.toString()),
                                 sizeIcon: 22,
                                 onRatingChanged: (rating) {
                                   // setState(() => this.rating = rating)
@@ -97,7 +103,11 @@ class CardProfilePersonalInfo extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 6),
                                 child: TextWidget(
-                                  title: userProfileModel.review_avg.toString(),
+                                  title: userProfileModel.review_avg
+                                          .toString()
+                                          .contains("null")
+                                      ? " 0.0"
+                                      : userProfileModel.review_avg.toString(),
                                   fontSize: Get.width * .05,
                                   color: colorScheme.onSecondary,
                                 ),
